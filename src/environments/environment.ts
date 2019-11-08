@@ -2,8 +2,19 @@
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const localUrl = 'http://172.16.0.136:4200';
-export const webServerUrl = `${localUrl}/site`;
+export const localUrl = 'http://172.16.0.136:4201';
+export const webServerUrl = `${localUrl}/site/`;
+
+export const appInfo = {
+  'name': 'Alain',
+  'description': 'Ng-zorro admin panel front-end framework',
+};
+
+export const loginUserInfo = {
+  'name': 'Admin',
+  'avatar': './assets/tmp/img/avatar.jpg',
+  'email': 'cipchk@qq.com',
+};
 
 export const environment = {
   SERVER_URL: `${webServerUrl}`,

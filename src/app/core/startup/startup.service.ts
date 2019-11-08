@@ -10,6 +10,8 @@ import { ACLService } from '@delon/acl';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { ICONS_AUTO } from '../../../style-icons-auto';
 import { ICONS } from '../../../style-icons';
+import { menus } from '@env/menu';
+import { appInfo, loginUserInfo } from '@env/environment';
 
 /**
  * Used for application startup
@@ -59,7 +61,7 @@ export class StartupService {
     });
   }
   
-  private viaMock(resolve: any, reject: any) {
+/*  private viaMock(resolve: any, reject: any) {
     // const tokenData = this.tokenService.get();
     // if (!tokenData.token) {
     //   this.injector.get(Router).navigateByUrl('/passport/login');
@@ -95,7 +97,7 @@ export class StartupService {
             icon: { type: 'icon', value: 'appstore' }
           },
           {
-            text: 'Quick Menu',
+            text: '详情页面',
             icon: { type: 'icon', value: 'rocket' },
             shortcutRoot: true
           }
@@ -106,7 +108,7 @@ export class StartupService {
     this.titleService.suffix = app.name;
 
     resolve({});
-  }
+  }*/
 
   load(): Promise<any> {
     // only works with promises
@@ -115,8 +117,20 @@ export class StartupService {
       // http
       // this.viaHttp(resolve, reject);
       // mock：请勿在生产环境中这么使用，viaMock 单纯只是为了模拟一些数据使脚手架一开始能正常运行
-      this.viaMock(resolve, reject);
-
+     // this.viaMock(resolve, reject);
+    //  const res: any = appData;
+      // 应用信息：包括站点名、描述、年份
+      this.settingService.setApp(appInfo);
+      // 用户信息：包括姓名、头像、邮箱地址
+      this.settingService.setUser(loginUserInfo);
+      // ACL：设置权限为全量
+      this.aclService.setFull(true);
+      // 初始化菜单
+      this.menuService.add(menus);
+      // 设置页面标题的后缀
+      this.titleService.default = '苏州园区';
+      this.titleService.suffix = '苏州工业园';
+      return resolve();
     });
   }
 }
