@@ -17,8 +17,17 @@
   </sv-container>
   <nz-divider></nz-divider>
   <sv-container size="large" title="相关资料图">
-    <sv label="营业执照" class="img-label"><img class="img"  [src]="dataInfo.businessLicense|trustUrl" alt=""></sv>
-    <sv label="平面布置图" class="img-label"><img class="img"  [src]="dataInfo.planeLayout|trustUrl" alt=""></sv>
+    <sv label="营业执照" class="img-label"><a class="ml-sm" (click)="showPreviewModal('businessLicense')">预览</a></sv>
+    <sv label="平面布置图" class="img-label"><a class="ml-sm" (click)="showPreviewModal('planeLayout')">预览</a></sv>
   </sv-container>
   <nz-divider></nz-divider>
 </nz-card>
+
+
+<nz-modal  [nzClosable]="false"
+          [nzVisible]="isShowPreviewModal" [nzContent]="modalContent" [nzFooter]="null"
+          (nzOnCancel)="isShowPreviewModal=false">
+  <ng-template #modalContent>
+    <img [src]="showImgUrl" [ngStyle]="{ 'width': '100%' }"/>
+  </ng-template>
+</nz-modal>

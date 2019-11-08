@@ -11,28 +11,10 @@ import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-/*export interface FactoryInfoModel {
-  id: number;
-  enterpriseName: string;
-  area: string;
-  businessLicense: string;
-  nature: string;
-  industry: string;
-  address: string;
-  contacts: string;
-  telephone: string;
-  legalPerson: string;
-  scale: string;
-  planeLayout: string;
-  environment: string;
-  longitude: number; // 经度
-  latitude: number; // 纬度
-  zoom?: number; // 放大倍数
-}*/
-
-
 export class BasicInfoBasicInfoComponent implements OnInit {
   dataInfo: FactoryInfoModel;
+  showImgUrl: string;
+  isShowPreviewModal: boolean;
 
   constructor(private dataService: BasicInfoService, private msg: NzMessageService, private cdr: ChangeDetectorRef) {
     this.dataInfo = {
@@ -52,12 +34,19 @@ export class BasicInfoBasicInfoComponent implements OnInit {
       longitude: -1,
       latitude: -1,
     };
+    this.showImgUrl = '';
+    this.isShowPreviewModal = false;
+  }
+
+
+  public showPreviewModal(imgType) {
+    this.showImgUrl = this.dataInfo[imgType];
+    this.isShowPreviewModal = true;
   }
 
   async getFactoryInfo() {
     this.dataInfo = await this.dataService.getFactoryInfoModel();
     this.cdr.markForCheck();
-    console.log(this.dataInfo);
   }
 
   ngOnInit(): void {
