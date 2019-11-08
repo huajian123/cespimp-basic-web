@@ -1,11 +1,10 @@
 import { Injectable, Injector } from '@angular/core';
-import { _HttpClient } from '@delon/theme';
 import { HttpUtilService } from '@core/net/http-util.service';
-import { getwayKey } from '@env/environment';
+import { map } from 'rxjs/operators';
 
 export namespace BasicInfoServiceNs {
   export interface LoginInfoModel {
-    basicInfo: UserInfoModel;
+    basicInfo: FactoryInfoModel;
     userDTO: IsLoginUserModel;
   }
 
@@ -14,7 +13,7 @@ export namespace BasicInfoServiceNs {
     account: string;
   }
 
-  export interface UserInfoModel {
+  export interface FactoryInfoModel {
     id: number;
     enterpriseName: string;
     area: string;
@@ -34,12 +33,10 @@ export namespace BasicInfoServiceNs {
   }
 
   export class BasicInfoServiceClass {
-
-
     constructor(private http: HttpUtilService) {
     }
 
-    public getUserInfo(): Promise<UserInfoModel> {
+    public getFactoryInfoModel(): Promise<FactoryInfoModel> {
       return this.http.post('/basic/info/query', null).toPromise();
     }
   }

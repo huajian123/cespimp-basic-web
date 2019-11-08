@@ -1,66 +1,66 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent } from '@delon/abc';
-import { SFSchema } from '@delon/form';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { STColumn } from '@delon/abc';
 import { NzMessageService } from 'ng-zorro-antd';
-import { tap } from 'rxjs/operators';
-import { BasicInfoService } from '@core/biz-services/basic-info/basic-info.service';
+import { BasicInfoService, BasicInfoServiceNs } from '@core/biz-services/basic-info/basic-info.service';
+import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
 
 @Component({
   selector: 'app-basic-info-basic-info',
   templateUrl: './basic-info.component.html',
+  styleUrls: ['./basic-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BasicInfoBasicInfoComponent implements OnInit {
-  /* basicNum = 0;
-   amountNum = 0;
-   goods = this.http.get('/profile/goods').pipe(
-     tap((list: any[]) => {
-       list.forEach(item => {
-         this.basicNum += Number(item.num);
-         this.amountNum += Number(item.amount);
-       });
-     }),
-   );*/
-  goodsColumns: STColumn[] = [
-    {
-      title: '商品编号',
-      index: 'id',
-      type: 'link',
-      click: (item: any) => this.msg.success(`show ${item.id}`),
-    },
-    { title: '商品名称', index: 'name' },
-    { title: '商品条码', index: 'barcode' },
-    { title: '单价', index: 'price', type: 'currency' },
-    { title: '数量（件）', index: 'num', className: 'text-right' },
-    { title: '金额', index: 'amount', type: 'currency' },
-  ];
-  progress = '';
-  progressColumns: STColumn[] = [
-    { title: '时间', index: 'time' },
-    { title: '当前进度', index: 'rate' },
-    {
-      title: '状态',
-      index: 'status',
-      type: 'badge',
-      badge: {
-        success: { text: '成功', color: 'success' },
-        processing: { text: '进行中', color: 'processing' },
-      },
-    },
-    { title: '操作员ID', index: 'operator' },
-    { title: '耗时', index: 'cost' },
-  ];
 
-  constructor(private dataService: BasicInfoService, private msg: NzMessageService) {
+/*export interface FactoryInfoModel {
+  id: number;
+  enterpriseName: string;
+  area: string;
+  businessLicense: string;
+  nature: string;
+  industry: string;
+  address: string;
+  contacts: string;
+  telephone: string;
+  legalPerson: string;
+  scale: string;
+  planeLayout: string;
+  environment: string;
+  longitude: number; // 经度
+  latitude: number; // 纬度
+  zoom?: number; // 放大倍数
+}*/
+
+
+export class BasicInfoBasicInfoComponent implements OnInit {
+  dataInfo: FactoryInfoModel;
+
+  constructor(private dataService: BasicInfoService, private msg: NzMessageService, private cdr: ChangeDetectorRef) {
+    this.dataInfo = {
+      id: -1,
+      enterpriseName: '',
+      area: '',
+      businessLicense: '',
+      nature: '',
+      industry: '',
+      address: '',
+      contacts: '',
+      telephone: '',
+      legalPerson: '',
+      scale: '',
+      planeLayout: '',
+      environment: '',
+      longitude: -1,
+      latitude: -1,
+    };
   }
 
-  async getDataList() {
-    const dataList = await this.dataService.getUserInfo();
-    console.log(dataList);
+  async getFactoryInfo() {
+    this.dataInfo = await this.dataService.getFactoryInfoModel();
+    this.cdr.markForCheck();
+    console.log(this.dataInfo);
   }
 
   ngOnInit(): void {
-   this.getDataList();
+    this.getFactoryInfo();
   }
 }
