@@ -9,8 +9,8 @@ export const menus = [
         'icon': 'anticon-appstore',
         'children': [
           {
-            'text': '仪表盘V1',
-            'link': '/dashboard/v1',
+            'text': '基础信息',
+            'link': '/basic-info/basic-info',
           },
           {
             'text': '分析页',
