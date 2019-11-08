@@ -2,7 +2,7 @@ export const menus = [
   {
     text: '基础信息',
     group: false,
-    hideInBreadcrumb: false,
+    hideInBreadcrumb: true,
     children: [
       {
         'text': '基础信息',

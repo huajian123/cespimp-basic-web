@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const localUrl = 'http://172.16.0.136:4201';
-export const webServerUrl = `${localUrl}/site/`;
+export const webServerUrl = `${localUrl}/site`;
+
+export const getwayKey = {
+  Bs: 'bs',
+  Ius: 'ius',
+};
 
 export const appInfo = {
   'name': 'Alain',
@@ -21,6 +26,10 @@ export const environment = {
   production: false,
   useHash: true,
   hmr: false,
+  baseUrl: {
+    bs: `${webServerUrl}/gh`,
+    ius: `${webServerUrl}/ius`,
+  },
 };
 
 /*

@@ -11,6 +11,8 @@ import { DelonFormModule } from '@delon/form';
 // #region third libs
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
+import { UfastTableComponent } from '@shared/ufast-table/ufast-table.component';
+import { DirectivesModule } from '@shared/directives/directives.module';
 const THIRDMODULES = [
   NgZorroAntdModule,
   CountdownModule
@@ -18,7 +20,7 @@ const THIRDMODULES = [
 // #endregion
 
 // #region your componets & directives
-const COMPONENTS = [];
+const COMPONENTS = [UfastTableComponent];
 const DIRECTIVES = [];
 // #endregion
 
@@ -33,7 +35,8 @@ const DIRECTIVES = [];
     DelonACLModule,
     DelonFormModule,
     // third libs
-    ...THIRDMODULES
+    ...THIRDMODULES,
+    DirectivesModule
   ],
   declarations: [
     // your components
@@ -53,7 +56,8 @@ const DIRECTIVES = [];
     ...THIRDMODULES,
     // your components
     ...COMPONENTS,
-    ...DIRECTIVES
+    ...DIRECTIVES,
+    DirectivesModule
   ]
 })
 export class SharedModule { }
