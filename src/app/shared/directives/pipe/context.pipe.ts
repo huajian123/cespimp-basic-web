@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {UfastTableNs} from '../../component/platform-common/ufast-table/ufast-table.component';
+import { UfastTableNs } from '@shared/ufast-table/ufast-table.component';
+
 
 @Pipe({
   name: 'context'

@@ -4,7 +4,7 @@
     "description": "Ng-zorro admin panel front-end framework"
   },
   "user": {
-    "name": "Admin",
+    "name": "管理员",
     "avatar": "./assets/tmp/img/avatar.jpg",
     "email": "cipchk@qq.com"
   },

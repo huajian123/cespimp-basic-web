@@ -5,7 +5,6 @@ import {DisabledDirective} from './disabled.directive';
 import {ContextPipe} from './pipe/context.pipe';
 import {DebounceClickDirective} from './debounceClick.directive';
 import { TrustUrlPipe } from './pipe/trust-url.pipe';
-import {SetUeditorDirective} from './set-ueditor.directive';
 
 @NgModule({
   exports: [
@@ -15,7 +14,6 @@ import {SetUeditorDirective} from './set-ueditor.directive';
     DebounceClickDirective,
     ContextPipe,
     TrustUrlPipe,
-    SetUeditorDirective
   ],
   declarations: [
     MapPipe,
@@ -24,7 +22,6 @@ import {SetUeditorDirective} from './set-ueditor.directive';
     DebounceClickDirective,
     ContextPipe,
     TrustUrlPipe,
-    SetUeditorDirective
   ]
 })
 export class DirectivesModule {
