@@ -86,14 +86,13 @@
     <app-ufast-table [dataList]="dataList" [tableConfig]="tableConfig" [getListHandle]="getDataList.bind(this)"></app-ufast-table>
   </nz-card>
 
-  <ng-template #operationTpl  let-id="id">
-    <span class="operate-text">编辑</span>
-    <span class="operate-text">删除</span>
-  </ng-template>
+
 </ng-container>
-
-
 
 <ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
-
+  <app-basic-info-detail></app-basic-info-detail>
 </ng-container>
+<ng-template #operationTpl  let-id="id">
+  <span class="operate-text">编辑</span>
+  <span class="operate-text">删除</span>
+</ng-template>

@@ -1,18 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { STColumn } from '@delon/abc';
-import { NzMessageService } from 'ng-zorro-antd';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { BasicInfoService, BasicInfoServiceNs } from '@core/biz-services/basic-info/basic-info.service';
+import { NzMessageService } from 'ng-zorro-antd';
 import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
-import { PageTypeEnum } from '@core/vo/comm/BusinessEnum';
 
 @Component({
-  selector: 'app-basic-info-basic-info',
-  templateUrl: './basic-info.component.html',
-  styleUrls: ['./basic-info.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-basic-info-detail',
+  templateUrl: './basic-info-detail.component.html',
+  styleUrls: ['./basic-info-detail.component.scss']
 })
-
-export class BasicInfoBasicInfoComponent implements OnInit {
+export class BasicInfoDetailComponent implements OnInit {
   dataInfo: FactoryInfoModel;
   showImgUrl: string;
   isShowPreviewModal: boolean;

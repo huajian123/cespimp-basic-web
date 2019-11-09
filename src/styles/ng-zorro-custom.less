@@ -1,0 +1,133 @@
+@import "./variable";
+
+/* =========== 自定义所有滚动条样式 */
+*::-webkit-scrollbar {
+  width: @scroll-bar-width;
+  height: @scroll-bar-width;
+  background: @table-header-bg-color;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: @scroll-bar-width / 2;
+}
+
+*::-webkit-scrollbar-corner {
+  background: @table-header-bg-color;
+}
+
+/* =========== 下拉框选择item背景色 */
+.ant-select-dropdown-menu-item-selected, .ant-select-dropdown-menu-item-selected:hover {
+  background-color: #D7F3E6;
+}
+
+/* =========== 修正导航右键菜单滚动时显示位置 */
+.context-menu-backdrop + .cdk-overlay-connected-position-bounding-box > .cdk-overlay-pane {
+  right: -130px !important;
+  bottom: -32px !important;
+}
+
+/* =========== 修正进度条圆角 */
+.ant-progress-bg,
+.ant-progress-success-bg {
+  border-radius: 100px;
+}
+
+/* =========== 调整列表样式 */
+.ant-table {
+  color: #333;
+  border-radius: 0 !important;
+  border-bottom: 1px solid @table-header-bg-color;
+
+  th {
+    border-bottom-color: @table-header-bg-color !important;
+    background: @table-header-bg-color !important;
+    font-weight: bold !important;
+    color: #666 !important;
+  }
+
+  td {
+    border-bottom-color: transparent !important;
+  }
+
+  table, th {
+    text-align: center !important;
+  }
+
+  th, td {
+    border-radius: 0 !important;
+    border-right-color: #ebebeb !important;
+  }
+
+  .ant-table-tbody > tr:nth-child(even),
+  .ant-table-tbody > tr:nth-child(even) .ant-table-td-left-sticky,
+  .ant-table-tbody > tr:nth-child(even) .ant-table-td-right-sticky {
+    background-color: #f7f7f7!important;
+  }
+
+  .ant-table-tbody > tr:hover,
+  .ant-table-tbody > tr:hover .ant-table-td-left-sticky,
+  .ant-table-tbody > tr:hover .ant-table-td-right-sticky {
+    background-color: @tr-hover-bg!important;
+  }
+
+  .ant-table-tbody > tr:hover .ant-table-td-left-sticky,
+  .ant-table-tbody > tr:hover .ant-table-td-right-sticky {
+    background-color: @tr-hover-bg;
+  }
+
+  .ant-table-body {
+    margin: 0 !important;
+  }
+}
+
+
+.ant-pagination {
+  color: #666;
+  padding-right: @length-20;
+}
+
+.ant-table-fixed {
+  table-layout: fixed;
+}
+
+.ant-table-tbody {
+  > tr > td {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+.title-panel {
+  height: 35px;
+  line-height: 34px;
+  border-bottom: solid 1px #ccc;
+  padding: 0 10px;
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  i {
+    width: 0;
+    height: 14px;
+    border-left: solid 3px #f60;
+    margin-right: 5px;
+  }
+}
+
+.marker-machine {
+  width: 72px;
+  height: 85px;
+  padding-top: 18px;
+  position: relative;
+}
+
+
+
+
+/* =========== 抽屉背景图层透明度设置为0.8 */
+.ant-drawer.ant-drawer-open .ant-drawer-mask {
+  opacity: 0.8;
+  background-color: rgba(0, 0, 0, 1);
+}

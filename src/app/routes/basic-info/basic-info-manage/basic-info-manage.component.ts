@@ -24,10 +24,11 @@ export interface TankModel {
 }
 
 @Component({
-  selector: 'app-basic-info-basic-info-manage',
+  selector: 'app-basic-info-manage',
   templateUrl: './basic-info-manage.component.html',
+  styleUrls: ['./basic-info-manage.component.scss']
 })
-export class BasicInfoBasicInfoManageComponent implements OnInit {
+export class BasicInfoManageComponent implements OnInit {
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
   expandForm: boolean;
