@@ -3,6 +3,7 @@ import { STColumn } from '@delon/abc';
 import { NzMessageService } from 'ng-zorro-antd';
 import { BasicInfoService, BasicInfoServiceNs } from '@core/biz-services/basic-info/basic-info.service';
 import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
+import { PageTypeEnum } from '@core/vo/comm/BusinessEnum';
 
 @Component({
   selector: 'app-basic-info-basic-info',
@@ -15,6 +16,7 @@ export class BasicInfoBasicInfoComponent implements OnInit {
   dataInfo: FactoryInfoModel;
   showImgUrl: string;
   isShowPreviewModal: boolean;
+
 
   constructor(private dataService: BasicInfoService, private msg: NzMessageService, private cdr: ChangeDetectorRef) {
     this.dataInfo = {
@@ -36,6 +38,7 @@ export class BasicInfoBasicInfoComponent implements OnInit {
     };
     this.showImgUrl = '';
     this.isShowPreviewModal = false;
+
   }
 
 

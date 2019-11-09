@@ -39,6 +39,10 @@ export namespace BasicInfoServiceNs {
     public getFactoryInfoModel(): Promise<FactoryInfoModel> {
       return this.http.post('/basic/info/query', null).toPromise();
     }
+
+    public getFactoryList(param: any): Promise<any> {
+      return this.http.post('/basic/storageTank/page', param).toPromise();
+    }
   }
 }
 

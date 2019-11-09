@@ -25,9 +25,16 @@
 
 
 <nz-modal  [nzClosable]="false"
-          [nzVisible]="isShowPreviewModal" [nzContent]="modalContent" [nzFooter]="null"
-          (nzOnCancel)="isShowPreviewModal=false">
+           [nzVisible]="isShowPreviewModal" [nzContent]="modalContent" [nzFooter]="null"
+           (nzOnCancel)="isShowPreviewModal=false">
   <ng-template #modalContent>
     <img [src]="showImgUrl" [ngStyle]="{ 'width': '100%' }"/>
   </ng-template>
 </nz-modal>
+
+<div class="modal-footer">
+  <button nz-button type="button">关闭</button>
+</div>
+
+
+
