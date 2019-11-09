@@ -37,7 +37,7 @@ export class BasicInfoBasicInfoManageComponent implements OnInit {
 
   constructor(private dataService: BasicInfoService) {
     this.expandForm = false;
-    this.currentPage = this.pageTypeEnum.DetailOrExamine;
+    this.currentPage = this.pageTypeEnum.List;
   }
 
   private initTable(): void {
@@ -149,7 +149,7 @@ export class BasicInfoBasicInfoManageComponent implements OnInit {
     const params = {
       pageNum: pageNumber || this.tableConfig.pageNum,
       pageSize: this.tableConfig.pageSize,
-      filters: { ceshi: 1 },
+      filters: {},
     };
     await this.dataService.getFactoryList(params);
     const { total, list, pageNum } = await this.dataService.getFactoryList(params);

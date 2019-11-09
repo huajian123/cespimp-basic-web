@@ -5,7 +5,7 @@ import { BasicInfoBasicInfoManageComponent } from './basic-info-manage/basic-inf
 
 const routes: Routes = [
   // { path: 'basic-info', component: RelationComponent }
-  { path: '', redirectTo: 'basic-info-manage', pathMatch: 'full' },
+  { path: '', redirectTo: 'basic-info', pathMatch: 'full' },
   { path: 'basic-info-manage', component: BasicInfoBasicInfoManageComponent },
   { path: 'basic-info', component: BasicInfoBasicInfoComponent },
 ];
