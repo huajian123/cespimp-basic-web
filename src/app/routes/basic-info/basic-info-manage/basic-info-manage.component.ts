@@ -26,7 +26,7 @@ export interface TankModel {
 @Component({
   selector: 'app-basic-info-manage',
   templateUrl: './basic-info-manage.component.html',
-  styleUrls: ['./basic-info-manage.component.scss']
+  styleUrls: ['./basic-info-manage.component.scss'],
 })
 export class BasicInfoManageComponent implements OnInit {
   pageTypeEnum = PageTypeEnum;
@@ -40,6 +40,11 @@ export class BasicInfoManageComponent implements OnInit {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
   }
+
+  goDetail() {
+    this.currentPage = this.pageTypeEnum.DetailOrExamine;
+  }
+
 
   private initTable(): void {
     this.tableConfig = {
