@@ -72,16 +72,14 @@
       <span>新建</span>
     </button>
 
-   <!-- <app-ufast-table [dataList]="dataList" [tableConfig]="tableConfig" [getListHandle]="getDataList.bind(this)"></app-ufast-table>-->
-
-    <st #st [scroll]="{ x: '2400px', y: '240px' }" [widthMode]="{ type: 'strict' }"  [data]="dataList" [columns]="columns" class="mt-sm"></st>
+    <app-ufast-table [dataList]="dataList" [tableConfig]="tableConfig" [getListHandle]="getDataList.bind(this)"></app-ufast-table>
   </nz-card>
 
 
 </ng-container>
 
 <ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
-  <app-basic-info-detail></app-basic-info-detail>
+  <app-basic-info-detail [id]="itemId" (returnBack)="returnToList($event)"></app-basic-info-detail>
 </ng-container>
 <ng-template #operationTpl  let-id="id">
   <span class="operate-text">编辑</span>

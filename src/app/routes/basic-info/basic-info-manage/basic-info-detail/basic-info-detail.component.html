@@ -129,4 +129,6 @@
   <app-ufast-table [dataList]="dataList" [tableConfig]="tableConfig"
                    [getListHandle]="getDataList.bind(this)"></app-ufast-table>
 </nz-card>
-<nz-divider></nz-divider>
+<div class="detail-modal-footer">
+  <button nz-button type="button" (click)="returnBackToList()">返回</button>
+</div>
