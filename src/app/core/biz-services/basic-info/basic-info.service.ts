@@ -1,17 +1,13 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpUtilService } from '@core/net/http-util.service';
-import { map } from 'rxjs/operators';
+
 
 export namespace BasicInfoServiceNs {
-  export interface LoginInfoModel {
-    basicInfo: FactoryInfoModel;
-    userDTO: IsLoginUserModel;
+
+  export interface FactoryBasicInfoModel {
+
   }
 
-  export interface IsLoginUserModel {
-    id: number;
-    account: string;
-  }
 
   export interface FactoryInfoModel {
     id: number;

@@ -82,21 +82,30 @@ export class BasicInfoManageComponent implements OnInit {
       {
         title: '操作',
         fixed: 'right',
-        width: '180px',
+        width: '240px',
         buttons: [
           {
-            text: 'Edit',
+            text: '编辑',
             icon: 'edit',
-            click: (_record, modal) => console.log(_record,modal),
+            click: (_record, modal) => console.log(_record, modal),
           },
           {
-            text: 'Edit',
-            icon: 'edit',
+            text: '删除',
+            icon: 'delete',
             click: (_record, modal) => 123,
+          },
+          {
+            text: '查看',
+            icon: 'eye',
+            click: this.goDetailPage.bind(this),
           },
         ],
       },
     ];
+  }
+
+  goDetailPage(item, modal) {
+    this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
 
   async returnToList(e?: GoBackParam) {
@@ -118,6 +127,7 @@ export class BasicInfoManageComponent implements OnInit {
     this.listPageInfo.ps = pageNum;
     this.dataList = list || [];
   }
+
   ngOnInit() {
     this.initTable();
     this.getDataList();
