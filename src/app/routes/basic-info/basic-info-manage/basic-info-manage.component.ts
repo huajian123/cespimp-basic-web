@@ -1,31 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-
-import { BasicInfoService } from '@core/biz-services/basic-info/basic-info.service';
+import { BasicInfoService, BasicInfoServiceNs } from '@core/biz-services/basic-info/basic-info.service';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
-import { STColumn } from '@delon/abc';
+import { STColumn, STData } from '@delon/abc';
 import { ListPageInfo, PageTypeEnum } from '@core/vo/comm/BusinessEnum';
+import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
-
-export interface TankModel {
-  id?: number;
-  areaNo: string;
-  areaName: string;
-  areaSize: string;
-  dangerousChemicals: string;
-  dangerousNum: string;
-  geographicInfo: string;
-  embankmentSize: string;
-  tankNum: string;
-  tankDistance: string;
-  tankSeqno: string;
-  tankName: string;
-  tankShape: string;
-  tankType: string | number;
-  tankMaterial: string;
-  designedPressure: string;
-  fireLevel: string;
-}
-
 
 @Component({
   selector: 'app-basic-info-manage',
@@ -36,8 +15,7 @@ export class BasicInfoManageComponent implements OnInit {
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
   expandForm: boolean;
-  dataList: TankModel[];
-  itemId: number;
+  dataList: FactoryInfoModel[];
   columns: STColumn[];
   listPageInfo: ListPageInfo;
 
@@ -47,9 +25,10 @@ export class BasicInfoManageComponent implements OnInit {
     this.columns = [];
     this.listPageInfo = {
       total: 0,
-      pi: 10,
-      ps: 1,
+      ps: 10,//每页数量
+      pi: 1,// 当前页码
     };
+    this.dataList = [];
   }
 
   goDetail() {
@@ -59,31 +38,16 @@ export class BasicInfoManageComponent implements OnInit {
 
   private initTable(): void {
     this.columns = [
-      { title: '储罐区编号', index: 'areaNo', width: 140 },
-      { title: '储罐区名称', index: 'areaName', width: 140 },
-      { title: '储罐区面积', index: 'areaSize', width: 140 },
-      { title: '危化品名称', index: 'dangerousChemicals', width: 140 },
-      { title: '危化品数量', index: 'dangerousNum', width: 140 },
-      { title: '地理坐标', index: 'geographicInfo', width: 140 },
-      { title: '防护堤长宽高', index: 'embankmentSize', width: 140 },
-      { title: '储罐个数', index: 'tankNum', width: 140 },
-      { title: '罐间最小距离（cm）', index: 'tankDistance', width: 180 },
-      { title: '储罐序号', index: 'tankNo', width: 140 },
-      { title: '储罐名称', index: 'tankName', width: 140 },
-      { title: '储罐形状', index: 'tankShape', width: 140 },
-      {
-        title: '储罐形式',
-        index: 'tankType',
-        width: 140,
-        format: (item, _col, index) => this.format(item[_col['indexKey']], _col['indexKey']),
-      },
-      { title: '储罐材质', index: 'tankMaterial', width: 140 },
-      { title: '设计压力（kPa）', index: 'designedPressure', width: 140 },
-      { title: '火灾危险性等级', index: 'fireLevel', width: 140 },
+      { title: '企业的中文全称', index: 'entprName', width: 120 },
+      { title: '主要负责人', index: 'boss', width: 100 },
+      { title: '主要负责人移动电话', index: 'bossMobile', width: 120 },
+      { title: '经营状态', index: 'operatingStatus', width: 100,  format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey)},
+      { title: '经济类型', index: 'ecoType', width: 100 },
+      { title: '企业规模', index: 'entprScale', width: 100 },
       {
         title: '操作',
         fixed: 'right',
-        width: '240px',
+        width: '80px',
         buttons: [
           {
             text: '编辑',
@@ -118,7 +82,6 @@ export class BasicInfoManageComponent implements OnInit {
   }
 
   async returnToList(e?: GoBackParam) {
-    console.log(e);
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
       this.listPageInfo.ps = e.pageNo;
@@ -128,13 +91,13 @@ export class BasicInfoManageComponent implements OnInit {
 
   async getDataList(pageNumber?: number) {
     const params = {
-      pageNum: pageNumber || this.listPageInfo.ps,
+      pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: 10,
     };
     await this.dataService.getFactoryList(params);
     const { total, list, pageNum } = await this.dataService.getFactoryList(params);
     this.listPageInfo.total = total;
-    this.listPageInfo.ps = pageNum;
+    this.listPageInfo.pi = pageNum;
     this.dataList = list || [];
   }
 

@@ -1,43 +1,54 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpUtilService } from '@core/net/http-util.service';
+import { SearchCommonVO } from '@core/vo/comm/BusinessEnum';
+import { PageInfo } from '@core/vo/comm/PageInfo';
 
 
 export namespace BasicInfoServiceNs {
-
-  export interface FactoryBasicInfoModel {
-
-  }
-
-
   export interface FactoryInfoModel {
     id: number;
-    enterpriseName: string;
-    area: string;
-    businessLicense: string;
-    nature: string;
-    industry: string;
-    address: string;
-    contacts: string;
-    telephone: string;
-    legalPerson: string;
-    scale: string;
-    planeLayout: string;
-    environment: string;
+    entprName: string;
+    entprSimpleName?: string;
+    region?: string;
+    detailAddr?: string;
+    entprScope?: string;
     longitude: number; // 经度
     latitude: number; // 纬度
-    zoom?: number; // 放大倍数
+    legalPerson?: string;
+    legalMobile?: string;
+    boss?: string;
+    bossMobile?: string;
+    safetyManager?: string;
+    safetyMobile?: string;
+    businessScope?: string;
+    operatingStatus?: number;
+    ecoType?: number;
+    entprScale?: number;
+    regCapi?: number;
+    floorArea?: number;
+    employeeNum?: number;
+    specialOperationNum?: number;
+    standLevel?: number;
+    safetySupervisionLevel?: number;
+    localSafetyAdmin?: number;
+    majorHazardFlag?: number;
+    majorHazardLevel?: number;
   }
+
+ /* export interface BinsSearch extends SearchCommonVO{
+    name:string;
+  }*/
 
   export class BasicInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
 
     public getFactoryInfoModel(): Promise<FactoryInfoModel> {
-      return this.http.post('/basic/info/query', null).toPromise();
+      return this.http.post('basic/info/query', null).toPromise();
     }
 
-    public getFactoryList(param: any): Promise<any> {
-      return this.http.post('/basic/storageTank/page', param).toPromise();
+    public getFactoryList(param: SearchCommonVO): Promise<PageInfo<FactoryInfoModel>> {
+      return this.http.get('data/basic/enterprises', param).toPromise();
     }
   }
 }

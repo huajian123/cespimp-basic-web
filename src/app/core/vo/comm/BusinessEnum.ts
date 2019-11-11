@@ -6,6 +6,11 @@ export enum PageTypeEnum {
 
 export interface ListPageInfo {
   total: number;
-  ps: number; // 当前页码
-  pi: number; // 每页数量
+  pi: number; // 当前页码
+  ps: number; // 每页数量
+}
+
+export class SearchCommonVO {
+  pageNum: number;
+  pageSize: number;
 }

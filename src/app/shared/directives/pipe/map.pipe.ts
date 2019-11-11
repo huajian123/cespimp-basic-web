@@ -586,7 +586,14 @@ export const MapSet = {
     1: '人员定位警告',
     2: '电子围栏警告',
   },
-
+  operatingStatus: {
+    1: '营业',
+    2: '停业',
+    3: '筹建',
+    4: '关闭',
+    5: '破产',
+    99: '其他',
+  }
 };
 
 export interface MapItem {
