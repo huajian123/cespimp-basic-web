@@ -72,7 +72,9 @@
       <span>新建</span>
     </button>
 
-    <app-ufast-table [dataList]="dataList" [tableConfig]="tableConfig" [getListHandle]="getDataList.bind(this)"></app-ufast-table>
+   <!-- <app-ufast-table [dataList]="dataList" [tableConfig]="tableConfig" [getListHandle]="getDataList.bind(this)"></app-ufast-table>-->
+
+    <st #st [scroll]="{ x: '2400px', y: '240px' }" [widthMode]="{ type: 'strict' }"  [data]="dataList" [columns]="columns" class="mt-sm"></st>
   </nz-card>
 
 

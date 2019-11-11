@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { PageTypeEnum } from '@core/vo/comm/BusinessEnum';
 import { UfastTableNs } from '@shared/ufast-table/ufast-table.component';
 import { BasicInfoService } from '@core/biz-services/basic-info/basic-info.service';
+import { STColumn } from '@delon/abc';
 
 export interface TankModel {
   id?: number;
@@ -35,7 +36,39 @@ export class BasicInfoManageComponent implements OnInit {
   tableConfig: UfastTableNs.TableConfig;
   @ViewChild('operationTpl', { static: true }) operationTpl: TemplateRef<any>;
   dataList: TankModel[];
-
+  columns: STColumn[] = [
+    { title: '储罐区编号', index: 'areaNo', width: 120 },
+    { title: '储罐区名称', index: 'areaName', width: 120 },
+    { title: '储罐区面积', index: 'areaSize', width: 120 },
+    { title: '危化品名称', index: 'dangerousChemicals', width: 120 },
+    { title: '危化品数量', index: 'dangerousNum', width: 120 },
+    { title: '地理坐标', index: 'geographicInfo', width: 120 },
+    { title: '防护堤长宽高', index: 'embankmentSize', width: 120 },
+    { title: '储罐个数', index: 'tankNum', width: 120 },
+    { title: '罐间最小距离（cm）', index: 'tankDistance', width: 120 },
+    { title: '储罐序号', index: 'tankNo', width: 120 },
+    { title: '储罐名称', index: 'tankName', width: 120 },
+    { title: '储罐形状', index: 'tankShape', width: 120 },
+    { title: '储罐形式', index: 'tankType', width: 120 },
+    { title: '储罐材质', index: 'tankMaterial', width: 120 },
+    { title: '设计压力（kPa）', index: 'designedPressure', width: 120 },
+    { title: '火灾危险性等级', index: 'fireLevel', width: 120 },
+    {
+      title: '操作',
+      buttons: [
+        {
+          text: 'Edit',
+          icon: 'edit',
+          click: (_record, modal) => 123,
+        },
+        {
+          text: 'Edit',
+          icon: 'edit',
+          click: (_record, modal) => 123,
+        },
+      ],
+    },
+  ];
   constructor(private dataService: BasicInfoService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
