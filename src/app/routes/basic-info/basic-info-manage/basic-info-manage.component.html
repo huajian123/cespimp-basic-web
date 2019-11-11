@@ -7,7 +7,7 @@
           <nz-form-item>
             <nz-form-label nzFor="no">规则编号</nz-form-label>
             <nz-form-control>
-              <input nz-input  name="no" placeholder="请输入" />
+              <input nz-input name="no" placeholder="请输入"/>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -25,21 +25,21 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-        <div nz-col nzMd="8" nzSm="24"  *ngIf="expandForm">
+        <div nz-col nzMd="8" nzSm="24" *ngIf="expandForm">
           <nz-form-item>
             <nz-form-label nzFor="callNo">调用次数</nz-form-label>
             <nz-form-control>
-              <input nz-input id="callNo" />
+              <input nz-input id="callNo"/>
             </nz-form-control>
           </nz-form-item>
         </div>
-        <div nz-col nzMd="8" nzSm="24"  *ngIf="expandForm">
+        <div nz-col nzMd="8" nzSm="24" *ngIf="expandForm">
           <nz-form-item>
             <nz-form-label nzFor="updatedAt">更新日期</nz-form-label>
-            <nz-form-control> </nz-form-control>
+            <nz-form-control></nz-form-control>
           </nz-form-item>
         </div>
-        <div nz-col nzMd="8" nzSm="24"  *ngIf="expandForm">
+        <div nz-col nzMd="8" nzSm="24" *ngIf="expandForm">
           <nz-form-item>
             <nz-form-label nzFor="status2">使用状态</nz-form-label>
             <nz-form-control>
@@ -48,7 +48,7 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-        <div nz-col nzMd="8" nzSm="24"  *ngIf="expandForm">
+        <div nz-col nzMd="8" nzSm="24" *ngIf="expandForm">
           <nz-form-item>
             <nz-form-label nzFor="status3">使用状态</nz-form-label>
             <nz-form-control>
@@ -58,8 +58,8 @@
           </nz-form-item>
         </div>
         <div nz-col [nzSpan]="expandForm ? 24 : 8" [class.text-right]="expandForm">
-          <button nz-button type="submit" [nzType]="'primary'" >查询</button>
-          <button nz-button type="reset"  class="mx-sm">重置</button>
+          <button nz-button type="submit" [nzType]="'primary'">查询</button>
+          <button nz-button type="reset" class="mx-sm">重置</button>
           <a (click)="expandForm = !expandForm">
             {{ expandForm ? '收起' : '展开' }}
             <i nz-icon [nzType]="expandForm ? 'up' : 'down'"></i>
@@ -72,17 +72,14 @@
       <span>新建</span>
     </button>
 
-    <app-ufast-table [dataList]="dataList" [tableConfig]="tableConfig" [getListHandle]="getDataList.bind(this)"></app-ufast-table>
+    <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '2380px'}"
+        [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>
   </nz-card>
 
 
 </ng-container>
 
 <ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
-  <app-basic-info-detail [id]="itemId" (returnBack)="returnToList($event)"></app-basic-info-detail>
+  <app-basic-info-detail></app-basic-info-detail>
 </ng-container>
-<ng-template #operationTpl  let-id="id">
-  <span class="operate-text">编辑</span>
-  <span class="operate-text">删除</span>
-  <span class="operate-text" (click)="goDetail()">查看</span>
-</ng-template>
+
