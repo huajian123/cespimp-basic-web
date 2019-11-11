@@ -165,7 +165,7 @@ export class BasicInfoManageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.goDetail();
+   // this.goDetail();
     this.initTable();
     this.getDataList();
   }
