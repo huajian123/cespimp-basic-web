@@ -153,7 +153,7 @@ export class BasicInfoManageComponent implements OnInit {
           width: 100,
         },
         {
-          title: '储罐形式',
+          title: '储罐形式1',
           field: 'tankType',
           width: 100,
           pipe: 'tankType',
