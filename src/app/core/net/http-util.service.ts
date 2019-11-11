@@ -48,7 +48,25 @@ export namespace HttpUtilNs {
     public post<T>(path: string, params?, config?: UfastHttpConfig, body?: any): Observable<any> {
       config = config || {};
       const url = this.getFullUrl(config.gateway, path);
-      return this.http.post(url, params, body).pipe(map(item => item.data));
+      return this.http.post(url, params, body).pipe(map(item => (item as ActionResult<T>).data));
+    }
+
+    public get<T>(path: string, params?, config?: UfastHttpConfig): Observable<any> {
+      config = config || {};
+      const url = this.getFullUrl(config.gateway, path);
+      return this.http.get(url, params, config).pipe(map(item => (item as ActionResult<T>).data));
+    }
+
+    public put<T>(path: string, params?, config?: UfastHttpConfig): Observable<any> {
+      config = config || {};
+      const url = this.getFullUrl(config.gateway, path);
+      return this.http.put(url, params, config).pipe(map(item => (item as ActionResult<T>).data));
+    }
+
+    public del<T>(path: string, params?, config?: UfastHttpConfig): Observable<any> {
+      config = config || {};
+      const url = this.getFullUrl(config.gateway, path);
+      return this.http.delete(url, params, config).pipe(map(item => (item as ActionResult<T>).data));
     }
 
     public getFullUrl(baseUrlName: string, path: string, isUpload?: boolean): string {
