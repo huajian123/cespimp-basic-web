@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { PageTypeEnum } from '@core/vo/comm/BusinessEnum';
+
 import { BasicInfoService } from '@core/biz-services/basic-info/basic-info.service';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import { STColumn } from '@delon/abc';
+import { ListPageInfo, PageTypeEnum } from '@core/vo/comm/BusinessEnum';
+import { PageInfo } from '@core/vo/comm/PageInfo';
 
 export interface TankModel {
   id?: number;
@@ -24,12 +26,6 @@ export interface TankModel {
   fireLevel: string;
 }
 
-export interface PageInfo {
-  total: number;
-  ps: number; // 当前页码
-  pi: number; // 每页数量
-}
-
 
 @Component({
   selector: 'app-basic-info-manage',
@@ -43,7 +39,7 @@ export class BasicInfoManageComponent implements OnInit {
   dataList: TankModel[];
   itemId: number;
   columns: STColumn[];
-  listPageInfo: PageInfo;
+  listPageInfo: ListPageInfo;
 
   constructor(private dataService: BasicInfoService) {
     this.expandForm = false;
@@ -113,8 +109,10 @@ export class BasicInfoManageComponent implements OnInit {
   }
 
   async returnToList(e?: GoBackParam) {
+    console.log(e);
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
+      this.listPageInfo.ps = e.pageNo;
       await this.getDataList(e.pageNo);
     }
   }

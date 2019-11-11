@@ -80,7 +80,7 @@
 </ng-container>
 
 <ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
-  <app-basic-info-detail (returnBack)="returnToList($event)"></app-basic-info-detail>
+  <app-basic-info-detail [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-basic-info-detail>
 </ng-container>
 
 <ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
