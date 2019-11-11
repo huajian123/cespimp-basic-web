@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { BasicInfoService, BasicInfoServiceNs } from '@core/biz-services/basic-info/basic-info.service';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import { STColumn, STData } from '@delon/abc';
@@ -10,6 +10,7 @@ import { MapPipe } from '@shared/directives/pipe/map.pipe';
   selector: 'app-basic-info-manage',
   templateUrl: './basic-info-manage.component.html',
   styleUrls: ['./basic-info-manage.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicInfoManageComponent implements OnInit {
   pageTypeEnum = PageTypeEnum;
@@ -19,7 +20,7 @@ export class BasicInfoManageComponent implements OnInit {
   columns: STColumn[];
   listPageInfo: ListPageInfo;
 
-  constructor(private dataService: BasicInfoService) {
+  constructor(private dataService: BasicInfoService, private cdr: ChangeDetectorRef) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -35,13 +36,23 @@ export class BasicInfoManageComponent implements OnInit {
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
 
+  changePage(e) {
+    this.listPageInfo = e;
+    this.getDataList();
+  }
+
 
   private initTable(): void {
     this.columns = [
       { title: '企业的中文全称', index: 'entprName', width: 120 },
       { title: '主要负责人', index: 'boss', width: 100 },
       { title: '主要负责人移动电话', index: 'bossMobile', width: 120 },
-      { title: '经营状态', index: 'operatingStatus', width: 100,  format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey)},
+      {
+        title: '经营状态',
+        index: 'operatingStatus',
+        width: 100,
+        format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
+      },
       { title: '经济类型', index: 'ecoType', width: 100 },
       { title: '企业规模', index: 'entprScale', width: 100 },
       {
@@ -92,13 +103,13 @@ export class BasicInfoManageComponent implements OnInit {
   async getDataList(pageNumber?: number) {
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
-      pageSize: 10,
+      pageSize: this.listPageInfo.ps,
     };
-    await this.dataService.getFactoryList(params);
     const { total, list, pageNum } = await this.dataService.getFactoryList(params);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
     this.dataList = list || [];
+    this.cdr.markForCheck();
   }
 
   ngOnInit() {
