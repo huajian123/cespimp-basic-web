@@ -164,7 +164,7 @@ export class BasicInfoManageComponent implements OnInit {
           width: 100,
         },
         {
-          title: '设计压力（kPa）',
+          title: '设计压力（kPa）111',
           field: 'designedPressure',
           width: 150,
         },
