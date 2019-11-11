@@ -27,7 +27,7 @@ export const environment = {
   useHash: true,
   hmr: false,
   baseUrl: {
-    bs: `${webServerUrl}/gh`,
+    bs: `${webServerUrl}/`,
     ius: `${webServerUrl}/ius`,
   },
 };
