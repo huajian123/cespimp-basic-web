@@ -111,24 +111,24 @@
 </nz-card>
 
 <nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.EnterpriseEnvirTab">
-  <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '2400px'}"
-      [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>
+<!--  <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '2400px'}"
+      [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>-->
 </nz-card>
 
 <nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.MateriProductionTab">
-  <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '2400px'}"
-      [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>
+  <!--<st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '2400px'}"
+      [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>-->
 </nz-card>
 
 <nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.MidProductTab">
-  <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '2400px'}"
-      [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>
+  <!--<st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '2400px'}"
+      [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>-->
 </nz-card>
 
 <nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.FinalProductTab">
-  <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '2400px'}"
-      [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>
+  <!--<st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '2400px'}"
+      [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>-->
 </nz-card>
 <div class="detail-modal-footer">
-  <button nz-button type="button" (click)="returnBackToList()">返回</button>
+  <button nz-button type="button" (click)="returnBackToList()" nzType="primary">返回</button>
 </div>
