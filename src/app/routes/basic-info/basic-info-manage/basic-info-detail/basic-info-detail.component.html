@@ -1,37 +1,132 @@
-<page-header [title]="'基础详情页'"></page-header>
-<nz-card [nzHoverable]="true" [nzBordered]="false">
-  <sv-container size="large" title="企业详情">
-    <sv label="生产经营单位名称">{{dataInfo.enterpriseName}}</sv>
-    <sv label="经营规模">{{dataInfo.scale}}</sv>
-    <sv label="所属行业">{{dataInfo.industry}}</sv>
-    <sv label="所属地区">{{dataInfo.area}}</sv>
-    <sv label="详细地址">{{dataInfo.enterpriseName}}</sv>
-    <sv label="周边情况">{{dataInfo.environment}}</sv>
-    <sv label="经度">{{dataInfo.longitude}}</sv>
-    <sv label="纬度">{{dataInfo.latitude}}</sv>
+<page-header [title]="'欧德油储（南京）有限公公司'" [logo]="logo" [action]="action" [extra]="extra" [tab]="tab">
+  <ng-template #logo>
+    <img src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png" alt=""/>
+  </ng-template>
+  <ng-template #action>
+    <button nz-button [nzType]="'primary'">提交审核</button>
+  </ng-template>
+  <ng-template #extra>
+    <div nz-row>
+      <div nz-col nzXs="24" nzSm="12">
+        <p class="text-grey">审批状态</p>
+        <p class="text-lg">待审批</p>
+      </div>
+    </div>
+  </ng-template>
+  <sv-container size="small" col="3">
+    <sv label="申请人员">范宝林</sv>
+    <sv label="申请时间">2017-07-07</sv>
+    <sv label="备注">第一次提交申请</sv>
+    <sv label="审核人员">张三</sv>
+    <sv label="审核时间">2017-07-08</sv>
+    <sv label="审核意见">同意</sv>
+
+  </sv-container>
+</page-header>
+<ng-template #tab>
+  <nz-tabset (nzSelectChange)="change($event)">
+    <nz-tab nzTitle="基本信息"></nz-tab>
+    <nz-tab nzTitle="位置信息"></nz-tab>
+    <nz-tab nzTitle="证照信息"></nz-tab>
+    <nz-tab nzTitle="企业周边环境信息"></nz-tab>
+    <nz-tab nzTitle="生产原料信息"></nz-tab>
+    <nz-tab nzTitle="中间产品信息"></nz-tab>
+    <nz-tab nzTitle="最终产品信息"></nz-tab>
+  </nz-tabset>
+</ng-template>
+<nz-card [nzHoverable]="true" [nzBordered]="false" *ngIf="currentTab===tabEnum.BaseInfoTab">
+  <sv-container size="large" title="企业基础信息">
+    <sv label="企业全称">欧德油储有限公司</sv>
+    <sv label="企业简称">欧德油储</sv>
+    <sv label="行政区划">南京市建邺区</sv>
+    <sv label="详细地址">南京市建邺区138号</sv>
+    <sv label="法人代表">张三</sv>
+    <sv label="法人代表移动电话">15778515454</sv>
+    <sv label="主要负责人">李四</sv>
+    <sv label="主要负责人移动电话">15778515454</sv>
+    <sv label="安环负责人">付小小</sv>
+    <sv label="安环负责人移动电话">15778515454</sv>
   </sv-container>
   <nz-divider></nz-divider>
-  <sv-container size="large" title="联系人信息">
-    <sv label="联系人姓名">{{dataInfo.contacts}}</sv>
-    <sv label="联系电话">{{dataInfo.telephone}}</sv>
+  <sv-container size="large" title="企业经营信息">
+    <sv label="经营范围">化学品</sv>
+    <sv label="经营状态">营业</sv>
+    <sv label="经济类型">国有全资</sv>
+    <sv label="企业规模">大型</sv>
+    <sv label="从业人员数量">5万</sv>
+    <sv label="特种作业人员数量">000</sv>
   </sv-container>
   <nz-divider></nz-divider>
-  <sv-container size="large" title="相关资料图">
-    <sv label="营业执照" class="img-label"><a class="ml-sm" (click)="showPreviewModal('businessLicense')">预览</a></sv>
-    <sv label="平面布置图" class="img-label"><a class="ml-sm" (click)="showPreviewModal('planeLayout')">预览</a></sv>
+  <sv-container size="large" title="企业安全信息">
+    <sv label="标准化等级">二级</sv>
+    <sv label="安全监管等级">A</sv>
+    <sv label="是否存在重大危险源">无</sv>
+    <sv label="重大危险源等级 ">一级</sv>
   </sv-container>
+</nz-card>
+<nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.IdCardTab">
+  <nz-card nzType="inner" nzTitle="1、社会信用代码">
+    <sv-container size="large" title="">
+      <sv label="统一社会信用代码">1000000000</sv>
+      <sv label="有效期">2017-07-07 ~ 2017-08-08</sv>
+      <sv label="统一社会信用代码附件">1234123421</sv>
+    </sv-container>
+  </nz-card>
   <nz-divider></nz-divider>
+  <nz-card nzType="inner" nzTitle="2、安全许可证">
+    <sv-container size="large" title="">
+      <sv label="安全许可证编号">3214321432</sv>
+      <sv label="有效期">2017-07-07 ~ 2017-08-08</sv>
+      <sv label="安全许可证附件">16689475123</sv>
+    </sv-container>
+  </nz-card>
+  <nz-divider></nz-divider>
+  <nz-card nzType="inner" nzTitle="3、排污许可证">
+    <sv-container size="large" title="">
+      <sv label="排污许可证编号">1234123421</sv>
+      <sv label="有效期">2017-07-07 ~ 2017-08-08</sv>
+      <sv label="排污许可证附件">3214321432</sv>
+    </sv-container>
+  </nz-card>
+  <nz-divider></nz-divider>
+  <nz-card nzType="inner" nzTitle="4、安评报告">
+    <sv-container size="large" title="">
+      <sv label="安评报告名称">付小小</sv>
+      <sv label="备案时间">2017-07-07</sv>
+      <sv label="安评报告附件">菜鸟仓储</sv>
+    </sv-container>
+  </nz-card>
+  <nz-divider></nz-divider>
+  <nz-card nzType="inner" nzTitle="5、环评报告">
+    <sv-container size="large" title="">
+      <sv label="环评报告名称">营业</sv>
+      <sv label="备案时间">2017-08-08</sv>
+      <sv label="环评报告附件">1000</sv>
+    </sv-container>
+  </nz-card>
 </nz-card>
 
+<nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.PositionTab">
+  <img src="../../../../../assets/testa.png" alt="">
+</nz-card>
 
-<nz-modal  [nzClosable]="false"
-           [nzVisible]="isShowPreviewModal" [nzContent]="modalContent" [nzFooter]="null"
-           (nzOnCancel)="isShowPreviewModal=false">
-  <ng-template #modalContent>
-    <img [src]="showImgUrl" [ngStyle]="{ 'width': '100%' }"/>
-  </ng-template>
-</nz-modal>
+<nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.EnterpriseEnvirTab">
+  <app-ufast-table [dataList]="dataList" [tableConfig]="tableConfig"
+                   [getListHandle]="getDataList.bind(this)"></app-ufast-table>
+</nz-card>
 
-<div class="modal-footer">
-  <button nz-button type="button">关闭</button>
-</div>
+<nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.MateriProductionTab">
+  <app-ufast-table [dataList]="dataList" [tableConfig]="tableConfig"
+                   [getListHandle]="getDataList.bind(this)"></app-ufast-table>
+</nz-card>
+
+<nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.MidProductTab">
+  <app-ufast-table [dataList]="dataList" [tableConfig]="tableConfig"
+                   [getListHandle]="getDataList.bind(this)"></app-ufast-table>
+</nz-card>
+
+<nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.FinalProductTab">
+  <app-ufast-table [dataList]="dataList" [tableConfig]="tableConfig"
+                   [getListHandle]="getDataList.bind(this)"></app-ufast-table>
+</nz-card>
+<nz-divider></nz-divider>
