@@ -1,8 +1,18 @@
-import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { BasicInfoService, BasicInfoServiceNs } from '@core/biz-services/basic-info/basic-info.service';
 import { NzMessageService, NzTabChangeEvent } from 'ng-zorro-antd';
 import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
 import { UfastTableNs } from '@shared/ufast-table/ufast-table.component';
+
 
 enum TabEnum {
   BaseInfoTab,
@@ -20,15 +30,12 @@ enum TabEnum {
   styleUrls: ['./basic-info-detail.component.scss'],
 })
 export class BasicInfoDetailComponent implements OnInit {
+  @Output() returnBack: EventEmitter<any>;
+  @Input() currentPageNum: number;
   list: any[] = [];
   dataInfo: FactoryInfoModel;
   showImgUrl: string;
   isShowPreviewModal: boolean;
-  data = {
-    advancedOperation1: [],
-    advancedOperation2: [],
-    advancedOperation3: [],
-  };
   dataList: any[];
   tableConfig: UfastTableNs.TableConfig;
   @ViewChild('operationTpl', { static: true }) operationTpl: TemplateRef<any>;
@@ -36,6 +43,7 @@ export class BasicInfoDetailComponent implements OnInit {
   currentTab: number;
 
   constructor(private dataService: BasicInfoService, private msg: NzMessageService, private cdr: ChangeDetectorRef) {
+    this.returnBack = new EventEmitter<any>();
     this.dataInfo = {
       id: -1,
       enterpriseName: '',
@@ -66,6 +74,10 @@ export class BasicInfoDetailComponent implements OnInit {
   public showPreviewModal(imgType) {
     this.showImgUrl = this.dataInfo[imgType];
     this.isShowPreviewModal = true;
+  }
+
+  returnBackToList() {
+    this.returnBack.emit({refesh: true, pageNo: this.currentPageNum});
   }
 
   async getFactoryInfo() {
