@@ -87,7 +87,7 @@ export class BasicInfoManageComponent implements OnInit {
           {
             text: '编辑',
             icon: 'edit',
-            click: (_record, modal) => console.log(_record, modal),
+            click: this.goEditAddPage.bind(this),
           },
           {
             text: '删除',
@@ -104,6 +104,10 @@ export class BasicInfoManageComponent implements OnInit {
     ];
   }
 
+  goEditAddPage(item, modal) {
+    this.currentPage = this.pageTypeEnum.AddOrEdit;
+  }
+
   goDetailPage(item, modal) {
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
@@ -117,9 +121,8 @@ export class BasicInfoManageComponent implements OnInit {
 
   async getDataList(pageNumber?: number) {
     const params = {
-      pageNum: 1,
+      pageNum: pageNumber || this.listPageInfo.ps,
       pageSize: 10,
-      filters: {},
     };
     await this.dataService.getFactoryList(params);
     const { total, list, pageNum } = await this.dataService.getFactoryList(params);
