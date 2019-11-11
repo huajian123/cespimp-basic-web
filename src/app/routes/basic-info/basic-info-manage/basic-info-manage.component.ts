@@ -4,7 +4,7 @@ import { BasicInfoService } from '@core/biz-services/basic-info/basic-info.servi
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import { STColumn } from '@delon/abc';
 import { ListPageInfo, PageTypeEnum } from '@core/vo/comm/BusinessEnum';
-import { PageInfo } from '@core/vo/comm/PageInfo';
+import { MapPipe } from '@shared/directives/pipe/map.pipe';
 
 export interface TankModel {
   id?: number;
@@ -71,7 +71,12 @@ export class BasicInfoManageComponent implements OnInit {
       { title: '储罐序号', index: 'tankNo', width: 140 },
       { title: '储罐名称', index: 'tankName', width: 140 },
       { title: '储罐形状', index: 'tankShape', width: 140 },
-      { title: '储罐形式', index: 'tankType', width: 140 },
+      {
+        title: '储罐形式',
+        index: 'tankType',
+        width: 140,
+        format: (item, _col, index) => this.format(item[_col['indexKey']], _col['indexKey']),
+      },
       { title: '储罐材质', index: 'tankMaterial', width: 140 },
       { title: '设计压力（kPa）', index: 'designedPressure', width: 140 },
       { title: '火灾危险性等级', index: 'fireLevel', width: 140 },
@@ -98,6 +103,10 @@ export class BasicInfoManageComponent implements OnInit {
         ],
       },
     ];
+  }
+
+  format(toBeFormat, arg) {
+    return new MapPipe().transform(toBeFormat, arg);
   }
 
   goEditAddPage(item, modal) {

@@ -111,23 +111,23 @@
 </nz-card>
 
 <nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.EnterpriseEnvirTab">
-  <app-ufast-table [dataList]="dataList" [tableConfig]="tableConfig"
-                   [getListHandle]="getDataList.bind(this)"></app-ufast-table>
+  <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '2400px'}"
+      [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>
 </nz-card>
 
 <nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.MateriProductionTab">
-  <app-ufast-table [dataList]="dataList" [tableConfig]="tableConfig"
-                   [getListHandle]="getDataList.bind(this)"></app-ufast-table>
+  <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '2400px'}"
+      [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>
 </nz-card>
 
 <nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.MidProductTab">
-  <app-ufast-table [dataList]="dataList" [tableConfig]="tableConfig"
-                   [getListHandle]="getDataList.bind(this)"></app-ufast-table>
+  <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '2400px'}"
+      [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>
 </nz-card>
 
 <nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.FinalProductTab">
-  <app-ufast-table [dataList]="dataList" [tableConfig]="tableConfig"
-                   [getListHandle]="getDataList.bind(this)"></app-ufast-table>
+  <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '2400px'}"
+      [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>
 </nz-card>
 <div class="detail-modal-footer">
   <button nz-button type="button" (click)="returnBackToList()">返回</button>
