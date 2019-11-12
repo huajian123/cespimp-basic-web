@@ -1,38 +1,38 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
+import { ListPageInfo, PageTypeEnum } from '@core/vo/comm/BusinessEnum';
+import { BasicInfoService } from '@core/biz-services/basic-info/basic-info.service';
 
 @Component({
   selector: 'app-major-hazard-management-tank-list',
   templateUrl: './tank-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MajorHazardManagementTankListComponent implements OnInit {
-  url = `/user`;
-  searchSchema: SFSchema = {
-    properties: {
-      no: {
-        type: 'string',
-        title: '编号'
-      }
-    }
-  };
-  @ViewChild('st', { static: false }) st: STComponent;
-  columns: STColumn[] = [
-    { title: '编号', index: 'no' },
-    { title: '调用次数', type: 'number', index: 'callNo' },
-    { title: '头像', type: 'img', width: '50px', index: 'avatar' },
-    { title: '时间', type: 'date', index: 'updatedAt' },
-    {
-      title: '',
-      buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
-      ]
-    }
-  ];
+  pageTypeEnum = PageTypeEnum;
+  currentPage: number;
+  expandForm: boolean;
+  /*dataList: FactoryInfoModel[];*/
+  columns: STColumn[];
+  listPageInfo: ListPageInfo;
+  itemId: number;
 
-  constructor(private http: _HttpClient, private modal: ModalHelper) { }
+
+
+  constructor(private dataService: BasicInfoService, private cdr: ChangeDetectorRef) {
+    this.expandForm = false;
+    this.currentPage = this.pageTypeEnum.List;
+    this.columns = [];
+    this.listPageInfo = {
+      total: 0,
+      ps: 10,//每页数量
+      pi: 1,// 当前页码
+    };
+    /*this.dataList = [];*/
+    this.itemId = -1;
+  }
 
   ngOnInit() { }
 
