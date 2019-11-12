@@ -53,7 +53,7 @@ export const menus = [
             'link': '/major-hazard-management/warehouse-list',
           },
           {
-            'text': '生产产所列表 ',
+            'text': '生产场所列表 ',
             'link': '/major-hazard-management/production-list',
           },
           {
