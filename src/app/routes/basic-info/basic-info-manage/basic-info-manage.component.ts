@@ -9,7 +9,6 @@ import { MapPipe } from '@shared/directives/pipe/map.pipe';
 @Component({
   selector: 'app-basic-info-manage',
   templateUrl: './basic-info-manage.component.html',
-  styleUrls: ['./basic-info-manage.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicInfoManageComponent implements OnInit {
