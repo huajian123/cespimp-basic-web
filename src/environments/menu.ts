@@ -1,3 +1,5 @@
+import { RoleEnum } from '@core/vo/comm/BusinessEnum';
+
 export const menus = [
   {
     text: '基础信息',
@@ -11,6 +13,7 @@ export const menus = [
           {
             'text': '基础信息',
             'link': '/basic-info/basic-info',
+            'acl': RoleEnum[RoleEnum.ParkManage],
           },
           {
             'text': '重大危险源',

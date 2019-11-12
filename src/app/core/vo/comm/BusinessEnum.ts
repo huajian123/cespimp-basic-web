@@ -10,6 +10,12 @@ export interface ListPageInfo {
   ps: number; // 每页数量
 }
 
+export enum RoleEnum {
+  SysAdmin = 1,
+  Enterprise,
+  ParkManage
+}
+
 export class SearchCommonVO {
   pageNum: number;
   pageSize: number;

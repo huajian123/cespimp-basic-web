@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="222" height="222" viewBox="0 0 222 222">
-  <g id="组_547"  transform="translate(-931)">
-    <rect id="矩形_639"  width="43.875" height="43.875" transform="translate(1020.063)" fill="#fff"/>
-    <rect id="矩形_647"  width="43.875" height="43.875" transform="translate(1020.063 178.125)" fill="#fff"/>
-    <rect id="矩形_642"  width="43.875" height="43.875" transform="translate(1020.063 89.062)" fill="#fff"/>
-    <rect id="矩形_644"  width="43.875" height="43.875" transform="translate(1109.125 89.062)" fill="#fff"/>
-    <rect id="矩形_643"  width="43.875" height="43.875" transform="translate(931 89.062)" fill="#fff"/>
-    <rect id="矩形_640"  width="44.896" height="44.896" transform="translate(975.02 44.02)" fill="#fff"/>
-    <rect id="矩形_646"  width="44.896" height="44.896" transform="translate(975.02 133.084)" fill="#fff"/>
-    <rect id="矩形_641"  width="44.896" height="44.896" transform="translate(1064.084 44.02)" fill="#fff"/>
-    <rect id="矩形_645"  width="44.896" height="44.896" transform="translate(1064.084 133.084)" fill="#fff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44">
+  <g id="组_522" data-name="组 522" transform="translate(-931.618 -0.618)">
+    <rect id="矩形_639" data-name="矩形 639" width="9" height="8" transform="translate(949.118 0.618)" fill="#1890ff"/>
+    <rect id="矩形_647" data-name="矩形 647" width="9" height="8" transform="translate(949.118 36.618)" fill="#1890ff"/>
+    <rect id="矩形_642" data-name="矩形 642" width="9" height="9" transform="translate(949.118 18.118)" fill="#1890ff"/>
+    <rect id="矩形_644" data-name="矩形 644" width="8" height="9" transform="translate(967.618 18.118)" fill="#1890ff"/>
+    <rect id="矩形_643" data-name="矩形 643" width="8" height="9" transform="translate(931.618 18.118)" fill="#1890ff"/>
+    <rect id="矩形_640" data-name="矩形 640" width="10" height="10" transform="translate(939.39 8.39)" fill="#1890ff"/>
+    <rect id="矩形_646" data-name="矩形 646" width="10" height="10" transform="translate(939.39 26.847)" fill="#1890ff"/>
+    <rect id="矩形_641" data-name="矩形 641" width="10" height="10" transform="translate(957.847 8.39)" fill="#1890ff"/>
+    <rect id="矩形_645" data-name="矩形 645" width="10" height="10" transform="translate(957.847 26.847)" fill="#1890ff"/>
   </g>
 </svg>

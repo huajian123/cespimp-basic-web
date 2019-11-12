@@ -17,6 +17,7 @@ import { CallbackComponent } from './callback/callback.component';
 import { UserLockComponent } from './passport/lock/lock.component';
 
 const routes: Routes = [
+  {path: '', redirectTo: `passport/login`, pathMatch: 'full'},
   {
     path: '',
     component: LayoutDefaultComponent,

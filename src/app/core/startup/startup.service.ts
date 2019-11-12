@@ -27,7 +27,8 @@ export class StartupService {
     private titleService: TitleService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private httpClient: HttpClient,
-    private injector: Injector
+    private injector: Injector,
+    public aclSrv: ACLService,
   ) {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
   }
@@ -124,7 +125,7 @@ export class StartupService {
       // 用户信息：包括姓名、头像、邮箱地址
       this.settingService.setUser(loginUserInfo);
       // ACL：设置权限为全量
-      this.aclService.setFull(true);
+      // this.aclService.setFull(true);
       // 初始化菜单
       this.menuService.add(menus);
       // 设置页面标题的后缀

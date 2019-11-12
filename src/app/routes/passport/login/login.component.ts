@@ -1,4 +1,4 @@
-import { SettingsService, _HttpClient } from '@delon/theme';
+import { SettingsService, _HttpClient, MenuService } from '@delon/theme';
 import { Component, OnDestroy, Inject, Optional } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -7,6 +7,9 @@ import { SocialService, SocialOpenType, ITokenService, DA_SERVICE_TOKEN } from '
 import { ReuseTabService } from '@delon/abc';
 import { environment } from '@env/environment';
 import { StartupService } from '@core';
+import { LoginService } from '@core/biz-services/login-services/login.service';
+import { ACLService } from '@delon/acl';
+import { RoleEnum } from '@core/vo/comm/BusinessEnum';
 
 @Component({
   selector: 'passport-login',
@@ -29,6 +32,9 @@ export class UserLoginComponent implements OnDestroy {
     private startupSrv: StartupService,
     public http: _HttpClient,
     public msg: NzMessageService,
+    private loginService: LoginService,
+    private aclService: ACLService,
+    private menuSrv: MenuService
   ) {
     this.form = fb.group({
       userName: [null, [Validators.required, Validators.minLength(4)]],
@@ -45,15 +51,19 @@ export class UserLoginComponent implements OnDestroy {
   get userName() {
     return this.form.controls.userName;
   }
+
   get password() {
     return this.form.controls.password;
   }
+
   get mobile() {
     return this.form.controls.mobile;
   }
+
   get captcha() {
     return this.form.controls.captcha;
   }
+
   form: FormGroup;
   error = '';
   type = 0;
@@ -86,7 +96,7 @@ export class UserLoginComponent implements OnDestroy {
 
   // #endregion
 
-  submit() {
+  async submit() {
     this.error = '';
     if (this.type === 0) {
       this.userName.markAsDirty();
@@ -106,9 +116,18 @@ export class UserLoginComponent implements OnDestroy {
       }
     }
 
+    const data = await this.loginService.login({ username: this.userName.value, password: this.password.value });
+    // 清空路由复用信息
+    this.reuseTabService.clear();
+    this.aclService.set({ role: [RoleEnum[data.role]] });
+    this.menuSrv.resume();
+
+    this.router.navigateByUrl('/basic-info/basic-info');
     // 默认配置中对所有HTTP请求都会强制 [校验](https://ng-alain.com/auth/getting-started) 用户 Token
     // 然一般来说登录请求不需要校验，因此可以在请求URL加上：`/login?_allow_anonymous=true` 表示不触发用户 Token 校验
-    this.http
+
+
+    /*this.http
       .post('/login/account?_allow_anonymous=true', {
         type: this.type,
         userName: this.userName.value,
@@ -131,7 +150,7 @@ export class UserLoginComponent implements OnDestroy {
           }
           this.router.navigateByUrl(url);
         });
-      });
+      });*/
   }
 
   // #region social

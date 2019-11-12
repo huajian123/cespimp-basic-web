@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { BasicInfoService, BasicInfoServiceNs } from '@core/biz-services/basic-info/basic-info.service';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import { STColumn, STData } from '@delon/abc';
-import { ListPageInfo, PageTypeEnum } from '@core/vo/comm/BusinessEnum';
+import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 
@@ -12,6 +12,7 @@ import { MapPipe } from '@shared/directives/pipe/map.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicInfoManageComponent implements OnInit {
+  roleEnum = RoleEnum;
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
   expandForm: boolean;
