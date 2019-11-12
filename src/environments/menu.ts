@@ -33,21 +33,37 @@ export const menus = [
     ],
   },
   {
-    text: '危险源监控',
+    text: '重大危险源管理',
     group: false,
     hideInBreadcrumb: false,
     children: [
       {
-        'text': '危险源监控',
+        'text': '重大危险源管理',
         'icon': 'anticon-appstore',
         'children': [
           {
-            'text': '风险承诺',
-            'link': '/hazard-source-monitor/risk-commitment',
+            'text': '储罐列表',
+            'link': '/major-hazard-management/tank-list',
           },
           {
-            'text': '摄像头管理',
-            'link': '/hazard-source-monitor/camera-manage',
+            'text': '库房列表 ',
+            'link': '/major-hazard-management/warehouse-list',
+          },
+          {
+            'text': '生产产所列表 ',
+            'link': '/major-hazard-management/production-list',
+          },
+          {
+            'text': '重大危险源列表',
+            'link': '/major-hazard-management/major-hazard-list',
+          },
+          {
+            'text': '重大危险源备案列表 ',
+            'link': '/major-hazard-management/major-hazardrecord-list',
+          },
+          {
+            'text': '重大危险源统计',
+            'link': '/major-hazard-management/major-hazardstatistics-list',
           },
         ],
       },

@@ -28,6 +28,7 @@ const routes: Routes = [
       // 业务子模块
       // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
       { path: 'basic-info', loadChildren: () => import('./basic-info/basic-info.module').then(m => m.BasicInfoModule) },
+      { path: 'major-hazard-management', loadChildren: () => import('./major-hazard-management/major-hazard-management.module').then(m => m.MajorHazardManagementModule) },
     ]
   },
   // 全屏布局
