@@ -36,32 +36,32 @@
 </ng-template>
 <nz-card [nzHoverable]="true" [nzBordered]="false" *ngIf="currentTab===tabEnum.BaseInfoTab">
   <sv-container size="large" title="企业基础信息">
-    <sv label="企业全称">欧德油储有限公司</sv>
-    <sv label="企业简称">欧德油储</sv>
-    <sv label="行政区划">南京市建邺区</sv>
-    <sv label="详细地址">南京市建邺区138号</sv>
-    <sv label="法人代表">张三</sv>
-    <sv label="法人代表移动电话">15778515454</sv>
-    <sv label="主要负责人">李四</sv>
-    <sv label="主要负责人移动电话">15778515454</sv>
-    <sv label="安环负责人">付小小</sv>
-    <sv label="安环负责人移动电话">15778515454</sv>
+    <sv label="企业全称">{{dataInfo.entprName}}</sv>
+    <sv label="企业简称">{{dataInfo.entprSimpleName}}</sv>
+    <sv label="行政区划">{{dataInfo.region}}</sv>
+    <sv label="详细地址">{{dataInfo.detailAddr}}</sv>
+    <sv label="法人代表">{{dataInfo.legalPerson}}</sv>
+    <sv label="法人代表移动电话">{{dataInfo.legalMobile}}</sv>
+    <sv label="主要负责人">{{dataInfo.boss}}</sv>
+    <sv label="主要负责人移动电话">{{dataInfo.bossMobile}}</sv>
+    <sv label="安环负责人">{{dataInfo.safetyManager}}</sv>
+    <sv label="安环负责人移动电话">{{dataInfo.safetyMobile}}</sv>
   </sv-container>
   <nz-divider></nz-divider>
   <sv-container size="large" title="企业经营信息">
-    <sv label="经营范围">化学品</sv>
-    <sv label="经营状态">营业</sv>
-    <sv label="经济类型">国有全资</sv>
-    <sv label="企业规模">大型</sv>
-    <sv label="从业人员数量">5万</sv>
-    <sv label="特种作业人员数量">000</sv>
+    <sv label="经营范围">{{dataInfo.businessScope}}</sv>
+    <sv label="经营状态">{{dataInfo.operatingStatus}}</sv>
+    <sv label="经济类型">{{dataInfo.ecoType}}</sv>
+    <sv label="企业规模">{{dataInfo.entprScale}}</sv>
+    <sv label="从业人员数量">{{dataInfo.employeeNum}}</sv>
+    <sv label="特种作业人员数量">{{dataInfo.specialOperationNum}}</sv>
   </sv-container>
   <nz-divider></nz-divider>
   <sv-container size="large" title="企业安全信息">
-    <sv label="标准化等级">二级</sv>
-    <sv label="安全监管等级">A</sv>
-    <sv label="是否存在重大危险源">无</sv>
-    <sv label="重大危险源等级 ">一级</sv>
+    <sv label="标准化等级">{{dataInfo.standLevel}}</sv>
+    <sv label="安全监管等级">{{dataInfo.safetySupervisionLevel}}</sv>
+    <sv label="是否存在重大危险源">{{dataInfo.majorHazardFlag}}</sv>
+    <sv label="重大危险源等级 ">{{dataInfo.majorHazardLevel}}</sv>
   </sv-container>
 </nz-card>
 <nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.IdCardTab">

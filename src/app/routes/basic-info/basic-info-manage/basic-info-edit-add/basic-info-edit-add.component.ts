@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd';
 
@@ -10,8 +18,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 export class BasicInfoEditAddComponent implements OnInit {
   form: FormGroup;
   submitting = false;
-
-
+  @Input() currentPageNum: number;
+  @Output() returnBack: EventEmitter<any>;
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
@@ -26,6 +34,9 @@ export class BasicInfoEditAddComponent implements OnInit {
       public: [1, [Validators.min(1), Validators.max(3)]],
       publicUsers: [null, []],
     });
+  }
+  returnToList() {
+    this.returnBack.emit({refesh: true, pageNo: this.currentPageNum});
   }
 
   submit() {

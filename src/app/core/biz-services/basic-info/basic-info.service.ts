@@ -35,16 +35,16 @@ export namespace BasicInfoServiceNs {
     majorHazardLevel?: number;
   }
 
- /* export interface BinsSearch extends SearchCommonVO{
-    name:string;
-  }*/
+  export interface EntprSearch {
+    entprId: number;
+  }
 
   export class BasicInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
 
-    public getFactoryInfoModel(): Promise<FactoryInfoModel> {
-      return this.http.post('basic/info/query', null).toPromise();
+    public getFactoryInfoDetail(param: EntprSearch): Promise<FactoryInfoModel> {
+      return this.http.get('data/basic/enterprise/'+param.entprId).toPromise();
     }
 
     public getFactoryList(param: SearchCommonVO): Promise<PageInfo<FactoryInfoModel>> {

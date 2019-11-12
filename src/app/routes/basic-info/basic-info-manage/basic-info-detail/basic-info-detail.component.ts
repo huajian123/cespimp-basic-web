@@ -1,18 +1,8 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BasicInfoService, BasicInfoServiceNs } from '@core/biz-services/basic-info/basic-info.service';
 import { NzMessageService, NzTabChangeEvent } from 'ng-zorro-antd';
 import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
-import { UfastTableNs } from '@shared/ufast-table/ufast-table.component';
-
+import EntprSearch = BasicInfoServiceNs.EntprSearch;
 
 enum TabEnum {
   BaseInfoTab,
@@ -32,17 +22,18 @@ enum TabEnum {
 export class BasicInfoDetailComponent implements OnInit {
   @Output() returnBack: EventEmitter<any>;
   @Input() currentPageNum: number;
-  list: any[] = [];
+  /*list: any[] = [];*/
   dataInfo: FactoryInfoModel;
   showImgUrl: string;
   isShowPreviewModal: boolean;
-  dataList: any[];
-  tableConfig: UfastTableNs.TableConfig;
-  @ViewChild('operationTpl', { static: true }) operationTpl: TemplateRef<any>;
+  /*dataList: any[];*/
+  /* columns: STColumn[];*/
   tabEnum = TabEnum;
   currentTab: number;
+  @Input() entprId: number;
 
-  constructor(private dataService: BasicInfoService, private msg: NzMessageService, private cdr: ChangeDetectorRef) {
+
+  constructor(private dataService: BasicInfoService, private cdr: ChangeDetectorRef) {
     this.returnBack = new EventEmitter<any>();
     this.dataInfo = {
       id: -1,
@@ -93,138 +84,44 @@ export class BasicInfoDetailComponent implements OnInit {
   }
 
   async getFactoryInfo() {
-    this.dataInfo = await this.dataService.getFactoryInfoModel();
-    this.cdr.markForCheck();
-  }
-
-  private initTable(): void {
-    this.tableConfig = {
-      pageSize: 10,
-      pageNum: 1,
-      showCheckbox: false,
-      checkRowField: '_checked',
-      showPagination: true,
-      checkAll: false,
-      total: 31,
-      loading: false,
-      headers: [
-
-        {
-          title: '周边环境类型',
-          width: 140,
-          field: 'areaNo',
-          fixed: true,
-        },
-        {
-          title: '周边环境名称',
-          field: 'areaName',
-          width: 100,
-        },
-        {
-          title: '周边环境方位',
-          field: 'areaSize',
-          width: 100,
-        },
-        {
-          title: '与本企业最小距离（米）',
-          field: 'dangerousChemicals',
-          width: 170,
-        },
-        {
-          title: '建筑结构',
-          field: 'dangerousNum',
-          width: 100,
-        },
-        {
-          title: '相邻建筑高度（米）',
-          field: 'geographicInfo',
-          width: 140,
-        },
-        {
-          title: '人员数量（人）',
-          field: 'embankmentSize',
-          width: 120,
-        },
-        {
-          title: '联系人',
-          field: 'tankNum',
-          width: 100,
-        },
-        {
-          title: '联系人移动电话',
-          field: 'tankDistance',
-          width: 160,
-        },
-        {
-          title: '经度',
-          field: 'tankNo',
-          width: 100,
-        },
-        {
-          title: '纬度',
-          field: 'tankName',
-          width: 100,
-        },
-      ],
+    const param: EntprSearch = {
+      entprId: this.entprId,
     };
+    this.dataInfo = await this.dataService.getFactoryInfoDetail(param);
+    this.cdr.markForCheck()
   }
 
-  async getDataList(pageNumber?: number) {
-    /*    const params = {
-          pageNum: pageNumber || this.tableConfig.pageNum,
-          pageSize: this.tableConfig.pageSize,
-          filters: {},
-        };
-        await this.dataService.getFactoryList(params);
-        const { total, list, pageNum } = await this.dataService.getFactoryList(params);
-        this.tableConfig.total = total;
-        this.tableConfig.pageNum = pageNum;
-        this.dataList = list || [];*/
-    this.dataList = [
-      {
-        areaNo: '住宅区',
-        areaName: '环境名称',
-        areaSize: '东',
-        dangerousChemicals: '45',
-        dangerousNum: '混合结构',
-        geographicInfo: '14',
-        embankmentSize: '12',
-        tankNum: '张三',
-        tankDistance: '15151525754',
-        tankNo: '38.121',
-        tankName: '122.54',
-      },
-      {
-        areaNo: '住宅区',
-        areaName: '环境名称',
-        areaSize: '东',
-        dangerousChemicals: '45',
-        dangerousNum: '混合结构',
-        geographicInfo: '14',
-        embankmentSize: '12',
-        tankNum: '张三',
-        tankDistance: '15151525754',
-        tankNo: '38.121',
-        tankName: '122.54',
-      }, {
-        areaNo: '住宅区',
-        areaName: '环境名称',
-        areaSize: '东',
-        dangerousChemicals: '45',
-        dangerousNum: '混合结构',
-        geographicInfo: '14',
-        embankmentSize: '12',
-        tankNum: '张三',
-        tankDistance: '15151525754',
-        tankNo: '38.121',
-        tankName: '122.54',
-      },
-    ];
-  }
+  /*  private initTable(): void {
+      this.columns = [
+        { title: '企业的中文全称', index: 'entprName', width: 120 },
+        { title: '主要负责人', index: 'boss', width: 100 },
+        { title: '主要负责人移动电话', index: 'bossMobile', width: 120 },
+        {
+          title: '经营状态',
+          index: 'operatingStatus',
+          width: 100,
+        },
+        { title: '经济类型', index: 'ecoType', width: 100 },
+        { title: '企业规模', index: 'entprScale', width: 100 },
+      ];
+    }*/
+
+  /* async getDataList(pageNumber?: number) {
+         const params = {
+           pageNum: pageNumber || this.tableConfig.pageNum,
+           pageSize: this.tableConfig.pageSize,
+         };
+         await this.dataService.getFactoryList(params);
+         const { total, list, pageNum } = await this.dataService.getFactoryList(params);
+         this.tableConfig.total = total;
+         this.tableConfig.pageNum = pageNum;
+         this.dataList = list || [];
+
+   }*/
 
   ngOnInit(): void {
-    this.initTable();
+    /*this.initTable();*/
     this.getFactoryInfo();
-    this.getDataList(1);
+    /*this.getDataList(1);*/
   }
 }

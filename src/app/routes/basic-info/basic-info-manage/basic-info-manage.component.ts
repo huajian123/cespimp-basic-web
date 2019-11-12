@@ -19,6 +19,7 @@ export class BasicInfoManageComponent implements OnInit {
   dataList: FactoryInfoModel[];
   columns: STColumn[];
   listPageInfo: ListPageInfo;
+  itemId: number;
 
   constructor(private dataService: BasicInfoService, private cdr: ChangeDetectorRef) {
     this.expandForm = false;
@@ -30,6 +31,7 @@ export class BasicInfoManageComponent implements OnInit {
       pi: 1,// 当前页码
     };
     this.dataList = [];
+    this.itemId = -1;
   }
 
   goDetail() {
@@ -89,6 +91,7 @@ export class BasicInfoManageComponent implements OnInit {
   }
 
   goDetailPage(item, modal) {
+    this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
 
