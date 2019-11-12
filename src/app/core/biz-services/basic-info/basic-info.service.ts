@@ -31,8 +31,6 @@ export namespace BasicInfoServiceNs {
     standLevel?: number;
     safetySupervisionLevel?: number;
     localSafetyAdmin?: number;
-    majorHazardFlag?: number;
-    majorHazardLevel?: number;
   }
 
   export interface EntprSearch {

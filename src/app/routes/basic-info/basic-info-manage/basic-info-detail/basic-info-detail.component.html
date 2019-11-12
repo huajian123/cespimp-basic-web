@@ -60,8 +60,6 @@
   <sv-container size="large" title="企业安全信息">
     <sv label="标准化等级">{{dataInfo.standLevel}}</sv>
     <sv label="安全监管等级">{{dataInfo.safetySupervisionLevel}}</sv>
-    <sv label="是否存在重大危险源">{{dataInfo.majorHazardFlag}}</sv>
-    <sv label="重大危险源等级 ">{{dataInfo.majorHazardLevel}}</sv>
   </sv-container>
 </nz-card>
 <nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.IdCardTab">

@@ -1,5 +1,5 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import {DatePipe} from '@angular/common';
+import { Pipe, PipeTransform } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 export enum DateFormat {
   Date = 'yyyy-MM-dd',
@@ -14,7 +14,7 @@ export enum MapKeyType {
 }
 
 export const MapSet = {
-  fireLevelType: {
+  fireLevel: {
     1: '轻危险级',
     2: '中危险级',
     3: '严重危险级',
@@ -29,7 +29,31 @@ export const MapSet = {
     5: '半冷冻式、全冷冻式储罐',
     6: '气柜',
   },
-
+  //储罐形式
+  tankForm: {
+    1: '立式',
+    2: '卧式',
+    3: '球形',
+  },
+  //储罐材质
+  tankMate: {
+    1: '碳钢',
+    2: '不锈钢',
+    3: '有色金属',
+    4: '聚乙烯',
+    5: '聚丙烯',
+    6: '玻璃钢',
+    7: '陶瓷',
+    8: '橡胶',
+    99: '其他',
+  },
+  //储罐结构
+  tankStructure: {
+    1: '拱顶式',
+    2: '浮顶式',
+    3: '内浮顶',
+    4: '卧式',
+  },
   // 设备类型
   equipmentType: {
     1: '常压储罐',
@@ -41,7 +65,12 @@ export const MapSet = {
     7: '库区',
   },
 
-
+  //库房形式
+  roomForm: {
+    1: '封闭式',
+    2: '半封闭式',
+    3: '露天',
+  },
   // 监测预警数据所有枚举
   monitoringDataType: {
     1: '罐内介质温度',
@@ -547,7 +576,7 @@ export const MapSet = {
     2: '危险有害因素排查清单',
     3: '承诺卡',
     4: '应急卡',
-    5: '应知卡'
+    5: '应知卡',
   },
   noticeType: {
     1: '公告',
@@ -566,7 +595,7 @@ export const MapSet = {
   personType: {
     1: '员工',
     2: '临时员工',
-    3: '外协人员'
+    3: '外协人员',
   },
 
   // 性别
@@ -586,6 +615,7 @@ export const MapSet = {
     1: '人员定位警告',
     2: '电子围栏警告',
   },
+  //  经营状态
   operatingStatus: {
     1: '营业',
     2: '停业',
@@ -593,7 +623,7 @@ export const MapSet = {
     4: '关闭',
     5: '破产',
     99: '其他',
-  }
+  },
 };
 
 export interface MapItem {
@@ -602,7 +632,7 @@ export interface MapItem {
 }
 
 @Pipe({
-  name: 'map'
+  name: 'map',
 })
 export class MapPipe implements PipeTransform {
   private datePipe: DatePipe = new DatePipe('en-US');
@@ -623,7 +653,7 @@ export class MapPipe implements PipeTransform {
           value = key;
           break;
       }
-      return {value, label: data[key]};
+      return { value, label: data[key] };
     });
   }
 

@@ -61,8 +61,6 @@ export class BasicInfoDetailComponent implements OnInit {
       standLevel: -1,
       safetySupervisionLevel: -1,
       localSafetyAdmin: -1,
-      majorHazardFlag: -1,
-      majorHazardLevel: -1,
     };
     this.showImgUrl = '';
     this.isShowPreviewModal = false;
