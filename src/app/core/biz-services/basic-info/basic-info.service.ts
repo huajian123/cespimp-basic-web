@@ -32,9 +32,10 @@ export namespace BasicInfoServiceNs {
     safetySupervisionLevel?: number;
     localSafetyAdmin?: number;
   }
+
   export interface IdCardTabModel {
     id: number;
-    uscCode:string;
+    uscCode: string;
     businessLicencesBeginTime?: Date;
     businessLicencesEndTime?: Date;
     businessLicencesRange?: string;
@@ -60,20 +61,88 @@ export namespace BasicInfoServiceNs {
     environmentReportAgency?: string;
     environmentReportAccessory?: string;
   }
+
   export interface EntprSearch {
     entprId: number;
   }
+
+  export interface EntprPageSearchModel extends SearchCommonVO {
+    entprId: number;
+  }
+
+  export interface EntprProductSearchModel extends EntprPageSearchModel {
+    productType: ProductEnum;
+  }
+
+  // 企业环境信息模型
+  export interface EnterpriseEnvironModel {
+    id: number;
+    envrType: number;
+    envrName: string;
+    envrDirection: number;
+    miniDistance: number;
+    buildStruct: number;
+    adjacentBuildHeight: number;
+    personNum: number;
+    envrContacts: string;
+    contactMoble: string;
+  }
+
+  export enum ProductEnum {
+    RawMateriPro = 1, //生产原料
+    MidPro, // 中间产品
+    FinalPro // 最终产品
+  }
+
+  // 企业产品信息模型
+  export interface EnterpriseProductModel {
+    id: number;
+    entprId: number;
+    productType: ProductEnum;
+    productName: string;
+    alias: string;
+    casNo: string;
+    annualConsumption: number;
+    annualThroughput: number;
+    maximumReserves: number;
+  }
+
 
   export class BasicInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
 
     public getFactoryInfoDetail(param: EntprSearch): Promise<FactoryInfoModel> {
-      return this.http.get('data/basic/enterprise/' + param.entprId+'?_allow_anonymous=true').toPromise();
+      return this.http.get('data/basic/enterprise/' + param.entprId + '?_allow_anonymous=true').toPromise();
     }
+
     public getIdCardInfoDetail(param: EntprSearch): Promise<IdCardTabModel> {
-      return this.http.get('data/basic/document/' + param.entprId+'?_allow_anonymous=true').toPromise();
+      return this.http.get('data/basic/document/' + param.entprId + '?_allow_anonymous=true').toPromise();
     }
+
+    // 获取企业周边环境
+    public getEnterpriseEnviron(param: EntprPageSearchModel): Promise<PageInfo<EnterpriseEnvironModel>> {
+      const paramTemp: SearchCommonVO = {
+        pageSize: param.pageSize,
+        pageNum: param.pageNum,
+      };
+      return this.http.get('data/basic/enterprise/environments/' + param.entprId + '?_allow_anonymous=true', paramTemp).toPromise();
+    }
+
+    // 获取企业周边环境
+    public getEnterprisePro(param: EntprProductSearchModel): Promise<PageInfo<EnterpriseEnvironModel>> {
+      const paramTemp: SearchCommonVO = {
+        pageSize: param.pageSize,
+        pageNum: param.pageNum,
+      };
+      return this.http.get('data/basic/enterprise/environments/' + param.entprId + '?_allow_anonymous=true', paramTemp).toPromise();
+    }
+
+    // 获取企业产品列表
+    public getEnterProduct(param: EntprProductSearchModel): Promise<PageInfo<EnterpriseProductModel>> {
+      return this.http.get('data/basic/enterprise/products/' + param.entprId + '?_allow_anonymous=true', param).toPromise();
+    }
+
     public getFactoryList(param: SearchCommonVO): Promise<PageInfo<FactoryInfoModel>> {
       return this.http.get('data/basic/enterprises?_allow_anonymous=true', param).toPromise();
     }
