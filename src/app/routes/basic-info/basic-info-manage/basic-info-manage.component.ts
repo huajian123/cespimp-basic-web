@@ -98,7 +98,7 @@ export class BasicInfoManageComponent implements OnInit {
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
-      this.listPageInfo.ps = e.pageNo;
+      this.listPageInfo.pi = e.pageNo;
       await this.getDataList(e.pageNo);
     }
   }
@@ -108,7 +108,6 @@ export class BasicInfoManageComponent implements OnInit {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
     };
-
     const { total, pageNum, list } = await this.dataService.getFactoryList(params);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
