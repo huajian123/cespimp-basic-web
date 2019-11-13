@@ -3,6 +3,7 @@ import { BasicInfoService, BasicInfoServiceNs } from '@core/biz-services/basic-i
 import { NzMessageService, NzTabChangeEvent } from 'ng-zorro-antd';
 import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
 import EntprSearch = BasicInfoServiceNs.EntprSearch;
+import IdCardTabModel = BasicInfoServiceNs.IdCardTabModel;
 
 enum TabEnum {
   BaseInfoTab,
@@ -22,8 +23,8 @@ enum TabEnum {
 export class BasicInfoDetailComponent implements OnInit {
   @Output() returnBack: EventEmitter<any>;
   @Input() currentPageNum: number;
-  /*list: any[] = [];*/
   dataInfo: FactoryInfoModel;
+  idCardInfo: IdCardTabModel;
   showImgUrl: string;
   isShowPreviewModal: boolean;
   /*dataList: any[];*/
@@ -31,8 +32,6 @@ export class BasicInfoDetailComponent implements OnInit {
   tabEnum = TabEnum;
   currentTab: number;
   @Input() entprId: number;
-
-
   constructor(private dataService: BasicInfoService, private cdr: ChangeDetectorRef) {
     this.returnBack = new EventEmitter<any>();
     this.dataInfo = {
@@ -62,6 +61,34 @@ export class BasicInfoDetailComponent implements OnInit {
       safetySupervisionLevel: -1,
       localSafetyAdmin: -1,
     };
+    this.idCardInfo = {
+      id: -1,
+      uscCode: '',
+      businessLicencesEndTime: null,
+      businessLicencesBeginTime: null,
+      businessLicencesRange: '',
+      businessLicencesAuthority: '',
+      businessLicencesAccessory: '',
+      safetyCertificateBeginTime: null,
+      safetyCertificateEndTime: null,
+      safetyPermitRange: '',
+      safetyCertificateAuthority: '',
+      safetyCertificateAccessory: '',
+      dischargePermitCode: '',
+      safetyCertificateCode: '',
+      dischargePermitBeginTime: null,
+      dischargePermitEndTime: null,
+      dischargePermitType: '',
+      dischargePermitAuthority: '',
+      safetyReportName: '',
+      safetyReportRecordTime: null,
+      safetyReportAgency: '',
+      safetyReportAccessory: '',
+      environmentReportName: '',
+      environmentRecordTime: null,
+      environmentReportAgency: '',
+      environmentReportAccessory: '',
+    };
     this.showImgUrl = '';
     this.isShowPreviewModal = false;
     this.currentTab = this.tabEnum.BaseInfoTab;
@@ -86,40 +113,27 @@ export class BasicInfoDetailComponent implements OnInit {
       entprId: this.entprId,
     };
     this.dataInfo = await this.dataService.getFactoryInfoDetail(param);
+    Object.keys(this.dataInfo).forEach(key=>{
+      if(!this.dataInfo[key]){
+        this.dataInfo[key]="暂无信息"
+      }
+    })
+    console.log(this.dataInfo);
     this.cdr.markForCheck()
   }
 
-  /*  private initTable(): void {
-      this.columns = [
-        { title: '企业的中文全称', index: 'entprName', width: 120 },
-        { title: '主要负责人', index: 'boss', width: 100 },
-        { title: '主要负责人移动电话', index: 'bossMobile', width: 120 },
-        {
-          title: '经营状态',
-          index: 'operatingStatus',
-          width: 100,
-        },
-        { title: '经济类型', index: 'ecoType', width: 100 },
-        { title: '企业规模', index: 'entprScale', width: 100 },
-      ];
-    }*/
+  async getIdCardInfo() {
+    const param: EntprSearch = {
+      entprId: this.entprId,
+    };
+    this.idCardInfo = await this.dataService.getIdCardInfoDetail(param);
+    console.log(this.idCardInfo);
+    this.cdr.markForCheck()
+  }
 
-  /* async getDataList(pageNumber?: number) {
-         const params = {
-           pageNum: pageNumber || this.tableConfig.pageNum,
-           pageSize: this.tableConfig.pageSize,
-         };
-         await this.dataService.getFactoryList(params);
-         const { total, list, pageNum } = await this.dataService.getFactoryList(params);
-         this.tableConfig.total = total;
-         this.tableConfig.pageNum = pageNum;
-         this.dataList = list || [];
-
-   }*/
 
   ngOnInit(): void {
-    /*this.initTable();*/
     this.getFactoryInfo();
-    /*this.getDataList(1);*/
+    this.getIdCardInfo();
   }
 }

@@ -30,7 +30,7 @@ export class MajorHazardManagementWarehouseListComponent implements OnInit {
     this.columns = [];
     this.listPageInfo = {
       total: 0,
-      ps: 10,//每页数量
+      ps: 10,// 每页数量
       pi: 1,// 当前页码
     };
     this.dataList = [];

@@ -32,7 +32,34 @@ export namespace BasicInfoServiceNs {
     safetySupervisionLevel?: number;
     localSafetyAdmin?: number;
   }
-
+  export interface IdCardTabModel {
+    id: number;
+    uscCode:string;
+    businessLicencesBeginTime?: Date;
+    businessLicencesEndTime?: Date;
+    businessLicencesRange?: string;
+    businessLicencesAuthority?: string;
+    businessLicencesAccessory?: string;
+    safetyCertificateCode?: string;
+    safetyCertificateBeginTime?: Date;
+    safetyCertificateEndTime?: Date;
+    safetyPermitRange?: string;
+    safetyCertificateAuthority?: string;
+    safetyCertificateAccessory?: string;
+    dischargePermitCode?: string;
+    dischargePermitBeginTime?: Date;
+    dischargePermitEndTime?: Date;
+    dischargePermitType?: string;
+    dischargePermitAuthority?: string;
+    safetyReportName?: string;
+    safetyReportRecordTime?: Date;
+    safetyReportAgency?: string;
+    safetyReportAccessory?: string;
+    environmentReportName?: string;
+    environmentRecordTime?: Date;
+    environmentReportAgency?: string;
+    environmentReportAccessory?: string;
+  }
   export interface EntprSearch {
     entprId: number;
   }
@@ -44,7 +71,9 @@ export namespace BasicInfoServiceNs {
     public getFactoryInfoDetail(param: EntprSearch): Promise<FactoryInfoModel> {
       return this.http.get('data/basic/enterprise/' + param.entprId+'?_allow_anonymous=true').toPromise();
     }
-
+    public getIdCardInfoDetail(param: EntprSearch): Promise<IdCardTabModel> {
+      return this.http.get('data/basic/document/' + param.entprId+'?_allow_anonymous=true').toPromise();
+    }
     public getFactoryList(param: SearchCommonVO): Promise<PageInfo<FactoryInfoModel>> {
       return this.http.get('data/basic/enterprises?_allow_anonymous=true', param).toPromise();
     }

@@ -65,7 +65,7 @@
 <nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.IdCardTab">
   <nz-card nzType="inner" nzTitle="1、社会信用代码">
     <sv-container size="large" title="">
-      <sv label="统一社会信用代码">1000000000</sv>
+      <sv label="统一社会信用代码">{{idCardInfo.uscCode}}</sv>
       <sv label="有效期">2017-07-07 ~ 2017-08-08</sv>
       <sv label="统一社会信用代码附件">1234123421</sv>
     </sv-container>
