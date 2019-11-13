@@ -108,7 +108,8 @@ export class BasicInfoManageComponent implements OnInit {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
     };
-    const { total, list, pageNum } = await this.dataService.getFactoryList(params);
+
+    const { total, pageNum, list } = await this.dataService.getFactoryList(params);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
     this.dataList = list || [];

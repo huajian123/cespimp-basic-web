@@ -42,11 +42,11 @@ export namespace BasicInfoServiceNs {
     }
 
     public getFactoryInfoDetail(param: EntprSearch): Promise<FactoryInfoModel> {
-      return this.http.get('data/basic/enterprise/'+param.entprId).toPromise();
+      return this.http.get('data/basic/enterprise/' + param.entprId+'?_allow_anonymous=true').toPromise();
     }
 
     public getFactoryList(param: SearchCommonVO): Promise<PageInfo<FactoryInfoModel>> {
-      return this.http.get('data/basic/enterprises', param).toPromise();
+      return this.http.get('data/basic/enterprises?_allow_anonymous=true', param).toPromise();
     }
   }
 }

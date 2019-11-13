@@ -20,7 +20,7 @@ export namespace LoginServiceNs {
     }
 
     public login(param: { username: string, password: string }): Promise<LoginUserModel> {
-      return this.http.post('user/login', param).toPromise();
+      return this.http.post('user/login?_allow_anonymous=true', param).toPromise();
     }
   }
 }
