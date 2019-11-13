@@ -1,4 +1,12 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { BasicInfoService, BasicInfoServiceNs } from '@core/biz-services/basic-info/basic-info.service';
 import { NzMessageService, NzTabChangeEvent } from 'ng-zorro-antd';
 import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
@@ -19,6 +27,7 @@ enum TabEnum {
   selector: 'app-basic-info-detail',
   templateUrl: './basic-info-detail.component.html',
   styleUrls: ['./basic-info-detail.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicInfoDetailComponent implements OnInit {
   @Output() returnBack: EventEmitter<any>;
@@ -32,8 +41,17 @@ export class BasicInfoDetailComponent implements OnInit {
   tabEnum = TabEnum;
   currentTab: number;
   @Input() entprId: number;
+
   constructor(private dataService: BasicInfoService, private cdr: ChangeDetectorRef) {
     this.returnBack = new EventEmitter<any>();
+    this.initData();
+
+    this.showImgUrl = '';
+    this.isShowPreviewModal = false;
+    this.currentTab = this.tabEnum.BaseInfoTab;
+  }
+
+  initData() {
     this.dataInfo = {
       id: -1,
       entprName: '',
@@ -64,36 +82,32 @@ export class BasicInfoDetailComponent implements OnInit {
     this.idCardInfo = {
       id: -1,
       uscCode: '',
-      businessLicencesEndTime: null,
-      businessLicencesBeginTime: null,
+      businessLicencesEndTime: new Date(),
+      businessLicencesBeginTime: new Date(),
       businessLicencesRange: '',
       businessLicencesAuthority: '',
       businessLicencesAccessory: '',
-      safetyCertificateBeginTime: null,
-      safetyCertificateEndTime: null,
+      safetyCertificateBeginTime: new Date(),
+      safetyCertificateEndTime: new Date(),
       safetyPermitRange: '',
       safetyCertificateAuthority: '',
       safetyCertificateAccessory: '',
       dischargePermitCode: '',
       safetyCertificateCode: '',
-      dischargePermitBeginTime: null,
-      dischargePermitEndTime: null,
+      dischargePermitBeginTime: new Date(),
+      dischargePermitEndTime: new Date(),
       dischargePermitType: '',
       dischargePermitAuthority: '',
       safetyReportName: '',
-      safetyReportRecordTime: null,
+      safetyReportRecordTime: new Date(),
       safetyReportAgency: '',
       safetyReportAccessory: '',
       environmentReportName: '',
-      environmentRecordTime: null,
+      environmentRecordTime: new Date(),
       environmentReportAgency: '',
       environmentReportAccessory: '',
     };
-    this.showImgUrl = '';
-    this.isShowPreviewModal = false;
-    this.currentTab = this.tabEnum.BaseInfoTab;
   }
-
 
   change(args: NzTabChangeEvent) {
     this.currentTab = args.index;
@@ -113,13 +127,12 @@ export class BasicInfoDetailComponent implements OnInit {
       entprId: this.entprId,
     };
     this.dataInfo = await this.dataService.getFactoryInfoDetail(param);
-    Object.keys(this.dataInfo).forEach(key=>{
-      if(!this.dataInfo[key]){
-        this.dataInfo[key]="暂无信息"
+    Object.keys(this.dataInfo).forEach(key => {
+      if (!this.dataInfo[key]) {
+        this.dataInfo[key] = '暂无信息';
       }
-    })
-    console.log(this.dataInfo);
-    this.cdr.markForCheck()
+    });
+    this.cdr.markForCheck();
   }
 
   async getIdCardInfo() {
@@ -127,8 +140,10 @@ export class BasicInfoDetailComponent implements OnInit {
       entprId: this.entprId,
     };
     this.idCardInfo = await this.dataService.getIdCardInfoDetail(param);
-    console.log(this.idCardInfo);
-    this.cdr.markForCheck()
+    if (!this.idCardInfo) {
+      this.initData();
+    }
+    this.cdr.markForCheck();
   }
 
 
