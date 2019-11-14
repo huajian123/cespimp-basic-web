@@ -123,25 +123,12 @@ export namespace BasicInfoServiceNs {
 
     // 获取企业周边环境
     public getEnterpriseEnviron(param: EntprPageSearchModel): Promise<PageInfo<EnterpriseEnvironModel>> {
-      const paramTemp: SearchCommonVO = {
-        pageSize: param.pageSize,
-        pageNum: param.pageNum,
-      };
-      return this.http.get('data/basic/enterprise/environments/' + param.entprId, paramTemp).toPromise();
-    }
-
-    // 获取企业周边环境
-    public getEnterprisePro(param: EntprProductSearchModel): Promise<PageInfo<EnterpriseEnvironModel>> {
-      const paramTemp: SearchCommonVO = {
-        pageSize: param.pageSize,
-        pageNum: param.pageNum,
-      };
-      return this.http.get('data/basic/enterprise/environments/' + param.entprId, paramTemp).toPromise();
+      return this.http.get('data/basic/enterprise/environments/', param).toPromise();
     }
 
     // 获取企业产品列表
     public getEnterProduct(param: EntprProductSearchModel): Promise<PageInfo<EnterpriseProductModel>> {
-      return this.http.get('data/basic/enterprise/products/' + param.entprId, param).toPromise();
+      return this.http.get('data/basic/enterprise/products/', param).toPromise();
     }
 
     public getFactoryList(param: SearchCommonVO): Promise<PageInfo<FactoryInfoModel>> {

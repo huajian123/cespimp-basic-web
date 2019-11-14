@@ -1,11 +1,11 @@
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
+  Component, ElementRef,
   EventEmitter,
   Input,
   OnInit,
-  Output,
+  Output, ViewChild,
 } from '@angular/core';
 import { BasicInfoService, BasicInfoServiceNs } from '@core/biz-services/basic-info/basic-info.service';
 import { NzMessageService, NzTabChangeEvent } from 'ng-zorro-antd';
@@ -38,6 +38,8 @@ enum TabEnum {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicInfoDetailComponent implements OnInit {
+  @ViewChild('mapDivModal', { static: true }) mapElement: ElementRef;
+  map;
   @Output() returnBack: EventEmitter<any>;
   @Input() currentPageNum: number;
   dataInfo: FactoryInfoModel;
@@ -199,6 +201,7 @@ export class BasicInfoDetailComponent implements OnInit {
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
     this.dataList = list || [];
+    this.cdr.markForCheck();
   }
 
   // 生产原料信息，中间产品信息，最终产品信息
@@ -213,6 +216,7 @@ export class BasicInfoDetailComponent implements OnInit {
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
     this.dataList = list || [];
+    this.cdr.markForCheck();
   }
 
   async change(args: NzTabChangeEvent) {
@@ -246,7 +250,6 @@ export class BasicInfoDetailComponent implements OnInit {
       this.getIdCardInfo();
     }
     this.currentTab = args.index;
-    this.cdr.markForCheck();
   }
 
   public showPreviewModal(imgType) {
@@ -258,16 +261,22 @@ export class BasicInfoDetailComponent implements OnInit {
     this.returnBack.emit({ refesh: true, pageNo: this.currentPageNum });
   }
 
+  initMap(latitude, longitude) {
+
+    const zoom = 10;
+    this.map = new T.Map(this.mapElement.nativeElement);
+    // 设置显示地图的中心点和级别
+    this.map.centerAndZoom(new T.LngLat(longitude, latitude), zoom);
+  }
+
   async getFactoryInfo() {
     const param: EntprSearch = {
       entprId: this.entprId,
     };
     this.dataInfo = await this.dataService.getFactoryInfoDetail(param);
-    Object.keys(this.dataInfo).forEach(key => {
-      if (!this.dataInfo[key]) {
-        this.dataInfo[key] = '暂无信息';
-      }
-    });
+    if (this.dataInfo.latitude && this.dataInfo.longitude) {
+      this.initMap(this.dataInfo.latitude, this.dataInfo.longitude);
+    }
     this.cdr.markForCheck();
   }
 
@@ -288,6 +297,5 @@ export class BasicInfoDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFactoryInfo();
-    // this.getIdCardInfo();
   }
 }

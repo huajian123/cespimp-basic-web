@@ -117,8 +117,8 @@
   </nz-card>
 </nz-card>
 
-<nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.PositionTab">
-  <img src="../../../../../assets/testa.png" alt="">
+<nz-card [nzHoverable]="false" [nzBordered]="true" [hidden]="currentTab!==tabEnum.PositionTab">
+  <div #mapDivModal style="width: 100%;height:500px"></div>
 </nz-card>
 
 <nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.EnterpriseEnvirTab">
