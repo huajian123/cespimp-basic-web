@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { STColumn, STData } from '@delon/abc';
-import { ListPageInfo, PageTypeEnum } from '@core/vo/comm/BusinessEnum';
+import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import { TankListInfoService, TankListServiceNs } from '@core/biz-services/major-hazard-management/tank-list.service';
 import TankListInfoModel = TankListServiceNs.TankListInfoModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
+import EntprSearch = TankListServiceNs.EntprSearch;
 
 @Component({
   selector: 'app-major-hazard-management-tank-list',
@@ -12,6 +13,7 @@ import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MajorHazardManagementTankListComponent implements OnInit {
+  roleEnum = RoleEnum;
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
   expandForm: boolean;
@@ -40,6 +42,11 @@ export class MajorHazardManagementTankListComponent implements OnInit {
   }
 
   async getDataList(pageNumber?: number) {
+    /* const params: EntprSearch = {
+       pageNum: pageNumber || this.listPageInfo.pi,
+       pageSize: this.listPageInfo.ps,
+      // entprId:
+     };*/
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
@@ -54,6 +61,7 @@ export class MajorHazardManagementTankListComponent implements OnInit {
   format(toBeFormat, arg) {
     return new MapPipe().transform(toBeFormat, arg);
   }
+
 
   goEditAddPage(item, modal) {
     this.currentPage = this.pageTypeEnum.AddOrEdit;
@@ -76,9 +84,10 @@ export class MajorHazardManagementTankListComponent implements OnInit {
     this.columns = [
       { title: '储罐编号', index: 'tankNo', width: 120 },
       { title: '储罐名称', index: 'tankName', width: 100 },
-      { title: '储罐类型',
+      {
+        title: '储罐类型',
         index: 'tankType',
-        width: 120 ,
+        width: 120,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
       {
@@ -87,18 +96,25 @@ export class MajorHazardManagementTankListComponent implements OnInit {
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '储罐结构',
+      {
+        title: '储罐结构',
         index: 'tankStructure',
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '储罐材质',
+      {
+        title: '储罐材质',
         index: 'tankMate',
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
       { title: '储罐容量', index: 'tamkCapacity', width: 100 },
-      { title: '投产时间', index: 'productionDate', width: 100 },
+      {
+        title: '投产时间',
+        index: 'productionDate',
+        width: 140,
+        type: 'date',
+      },
       { title: '经度', index: 'longitude', width: 100 },
       { title: '纬度', index: 'latitude', width: 100 },
       { title: '在厂区的位置', index: 'locFactory', width: 100 },

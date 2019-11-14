@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'tank-list', component: MajorHazardManagementTankListComponent },
   { path: 'warehouse-list', component: MajorHazardManagementWarehouseListComponent },
   { path: 'production-list', component: MajorHazardManagementProductionListComponent },
-  { path: 'major-hazard-list', component: MajorHazardManagementMajorHazardListComponent }];
+ /* { path: 'major-hazard-list', component: MajorHazardManagementMajorHazardListComponent }*/];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

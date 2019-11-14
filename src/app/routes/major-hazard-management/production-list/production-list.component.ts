@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { STColumn } from '@delon/abc';
-import { ListPageInfo, PageTypeEnum } from '@core/vo/comm/BusinessEnum';
+import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import {
   ProductionListInfoService,
   ProductionListServiceNs,
@@ -15,6 +15,7 @@ import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MajorHazardManagementProductionListComponent implements OnInit {
+  roleEnum = RoleEnum;
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
   expandForm: boolean;
@@ -76,10 +77,10 @@ export class MajorHazardManagementProductionListComponent implements OnInit {
 
   private initTable(): void {
     this.columns = [
-      { title: '生产场所编号', index: 'roomNo', width: 120 },
-      { title: '生产场所名称', index: 'roomName', width: 100 },
-      { title: '生产场所面积', index: 'roomArea', width: 120 },
-      { title: '投产时间', index: 'roomForm', width: 100 },
+      { title: '生产场所编号', index: 'placeNo', width: 120 },
+      { title: '生产场所名称', index: 'placeName', width: 100 },
+      { title: '生产场所面积', index: 'placeArea', width: 120 },
+      { title: '投产时间', index: 'productionDate', width: 100, type: 'date' },
       { title: '经度', index: 'longitude', width: 100 },
       { title: '纬度', index: 'latitude', width: 100 },
       { title: '在厂区的位置', index: 'locFactory', width: 100 },

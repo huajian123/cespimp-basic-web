@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { STColumn,STData } from '@delon/abc';
-import { ListPageInfo, PageTypeEnum } from '@core/vo/comm/BusinessEnum';
+import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import {
@@ -15,6 +15,7 @@ import WarehouseListInfoModel = WarehouseListServiceNs.WarehouseListInfoModel;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MajorHazardManagementWarehouseListComponent implements OnInit {
+  roleEnum = RoleEnum;
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
   expandForm: boolean;

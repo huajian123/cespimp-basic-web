@@ -17,21 +17,22 @@ export namespace TankListServiceNs {
     productionDate?: Date;
     locFactory?: string;
   }
-
   export interface EntprSearch {
-    entprId: number;
+    entprId?: number;
   }
-
+ /* export interface EntprSearch extends SearchCommonVO {
+    entprId: number;
+ }*/
   export class TankListInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
 
-    public getTankInfoDetail(param: EntprSearch): Promise<TankListInfoModel> {
-      return this.http.get('data/basic/enterprise/'+param.entprId).toPromise();
+    public getTankInfoDetail(entprId: number): Promise<TankListInfoModel> {
+      return this.http.get('data/basic/enterprise/'+'entprId').toPromise();
     }
 
-    public getTankList(param: SearchCommonVO): Promise<PageInfo<TankListInfoModel>> {
-      return this.http.get('data/basic/enterprises', param).toPromise();
+    public getTankList(param: SearchCommonVO ): Promise<PageInfo<TankListInfoModel>> {
+      return this.http.get('data/major/hazard/tanks?_allow_anonymous=true', param).toPromise();
     }
   }
 }

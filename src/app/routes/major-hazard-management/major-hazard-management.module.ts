@@ -11,7 +11,7 @@ const COMPONENTS = [
   MajorHazardManagementTankListComponent,
   MajorHazardManagementWarehouseListComponent,
   MajorHazardManagementProductionListComponent,
-  MajorHazardManagementMajorHazardListComponent];
+  /*MajorHazardManagementMajorHazardListComponent*/];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({
