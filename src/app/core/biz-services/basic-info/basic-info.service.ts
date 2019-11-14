@@ -116,8 +116,8 @@ export namespace BasicInfoServiceNs {
       return this.http.get('data/basic/enterprise/' + param.entprId).toPromise();
     }
 
-    public getIdCardInfoDetail(param: EntprSearch): Promise<IdCardTabModel> {
-      return this.http.get('data/basic/document/' + param.entprId).toPromise();
+    public getIdCardInfoDetail(param: EntprSearch): Promise<PageInfo<IdCardTabModel>> {
+      return this.http.get('data/basic/document/', param).toPromise();
     }
 
     // 获取企业周边环境

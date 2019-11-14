@@ -66,40 +66,40 @@
   <nz-card nzType="inner" nzTitle="1、社会信用代码">
     <sv-container size="large" title="">
       <sv label="统一社会信用代码">{{idCardInfo.uscCode}}</sv>
-      <sv label="有效期">2017-07-07 ~ 2017-08-08</sv>
-      <sv label="统一社会信用代码附件">1234123421</sv>
     </sv-container>
   </nz-card>
   <nz-divider></nz-divider>
   <nz-card nzType="inner" nzTitle="2、安全许可证">
     <sv-container size="large" title="">
-      <sv label="安全许可证编号">3214321432</sv>
-      <sv label="有效期">2017-07-07 ~ 2017-08-08</sv>
-      <sv label="安全许可证附件">16689475123</sv>
+      <sv label="安全许可证编号">{{idCardInfo.safetyCertificateCode}}</sv>
+      <sv label="有效期">{{idCardInfo.safetyCertificateBeginTime}}~{{idCardInfo.safetyCertificateEndTime}}</sv>
+      <sv label="许可范围">{{idCardInfo.safetyPermitRange}}</sv>
+      <sv label="安全可证发证机关">{{idCardInfo.safetyCertificateAuthority}}</sv>
+      <sv label="安全许可证附件">{{idCardInfo.safetyCertificateAccessory}}</sv>
     </sv-container>
   </nz-card>
   <nz-divider></nz-divider>
   <nz-card nzType="inner" nzTitle="3、排污许可证">
     <sv-container size="large" title="">
-      <sv label="排污许可证编号">1234123421</sv>
-      <sv label="有效期">2017-07-07 ~ 2017-08-08</sv>
-      <sv label="排污许可证附件">3214321432</sv>
+      <sv label="排污许可证编号">{{idCardInfo.uscCode}}</sv>
+      <sv label="有效期">{{idCardInfo.uscCode}}</sv>
+      <sv label="排污许可证附件">{{idCardInfo.uscCode}}</sv>
     </sv-container>
   </nz-card>
   <nz-divider></nz-divider>
   <nz-card nzType="inner" nzTitle="4、安评报告">
     <sv-container size="large" title="">
-      <sv label="安评报告名称">付小小</sv>
-      <sv label="备案时间">2017-07-07</sv>
-      <sv label="安评报告附件">菜鸟仓储</sv>
+      <sv label="安评报告名称">{{idCardInfo.uscCode}}</sv>
+      <sv label="备案时间">{{idCardInfo.uscCode}}</sv>
+      <sv label="安评报告附件">{{idCardInfo.uscCode}}</sv>
     </sv-container>
   </nz-card>
   <nz-divider></nz-divider>
   <nz-card nzType="inner" nzTitle="5、环评报告">
     <sv-container size="large" title="">
-      <sv label="环评报告名称">营业</sv>
-      <sv label="备案时间">2017-08-08</sv>
-      <sv label="环评报告附件">1000</sv>
+      <sv label="环评报告名称">{{idCardInfo.uscCode}}</sv>
+      <sv label="备案时间">{{idCardInfo.uscCode}}</sv>
+      <sv label="环评报告附件">{{idCardInfo.uscCode}}</sv>
     </sv-container>
   </nz-card>
 </nz-card>

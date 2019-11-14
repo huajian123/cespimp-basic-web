@@ -188,18 +188,37 @@ export class BasicInfoDetailComponent implements OnInit {
     }
   }
 
+  // 获取周边情况
+  async getEnterpriseEnviron() {
+    const param: EntprPageSearchModel = {
+      entprId: this.entprId,
+      pageNum: this.listPageInfo.pi,
+      pageSize: this.listPageInfo.ps,
+    };
+    const { total, pageNum, list } = await this.dataService.getEnterpriseEnviron(param);
+    this.listPageInfo.total = total;
+    this.listPageInfo.pi = pageNum;
+    this.dataList = list || [];
+  }
+
+  // 生产原料信息，中间产品信息，最终产品信息
+  async getProduction(currentProductType = 1) {
+    const param: EntprProductSearchModel = {
+      productType: currentProductType,
+      entprId: this.entprId,
+      pageNum: this.listPageInfo.pi,
+      pageSize: this.listPageInfo.ps,
+    };
+    const { total, pageNum, list } = await this.dataService.getEnterProduct(param);
+    this.listPageInfo.total = total;
+    this.listPageInfo.pi = pageNum;
+    this.dataList = list || [];
+  }
+
   async change(args: NzTabChangeEvent) {
     // 周边环境
     if (args.index === TabEnum.EnterpriseEnvirTab) {
-      const param: EntprPageSearchModel = {
-        entprId: this.entprId,
-        pageNum: this.listPageInfo.pi,
-        pageSize: this.listPageInfo.ps,
-      };
-      const { total, pageNum, list } = await this.dataService.getEnterpriseEnviron(param);
-      this.listPageInfo.total = total;
-      this.listPageInfo.pi = pageNum;
-      this.dataList = list || [];
+      this.getEnterpriseEnviron();
       this.changeTap(TabEnum.EnterpriseEnvirTab);
     }
     // 生产原料信息，中间产品信息，最终产品信息
@@ -222,18 +241,9 @@ export class BasicInfoDetailComponent implements OnInit {
           break;
         }
       }
-
-      const param: EntprProductSearchModel = {
-        productType: currentProductType,
-        entprId: this.entprId,
-        pageNum: this.listPageInfo.pi,
-        pageSize: this.listPageInfo.ps,
-      };
-
-      const { total, pageNum, list } = await this.dataService.getEnterProduct(param);
-      this.listPageInfo.total = total;
-      this.listPageInfo.pi = pageNum;
-      this.dataList = list || [];
+      this.getProduction(currentProductType);
+    } else if (args.index === TabEnum.IdCardTab) {
+      this.getIdCardInfo();
     }
     this.currentTab = args.index;
     this.cdr.markForCheck();
@@ -262,19 +272,22 @@ export class BasicInfoDetailComponent implements OnInit {
   }
 
   async getIdCardInfo() {
-    const param: EntprSearch = {
+    const param: EntprPageSearchModel = {
       entprId: this.entprId,
+      pageNum: this.listPageInfo.pi,
+      pageSize: this.listPageInfo.ps,
     };
-    this.idCardInfo = await this.dataService.getIdCardInfoDetail(param);
+    this.idCardInfo = await this.dataService.getIdCardInfoDetail(param)[0];
     if (!this.idCardInfo) {
       this.initData();
     }
+    console.log(this.idCardInfo);
     this.cdr.markForCheck();
   }
 
 
   ngOnInit(): void {
     this.getFactoryInfo();
-    this.getIdCardInfo();
+    // this.getIdCardInfo();
   }
 }
