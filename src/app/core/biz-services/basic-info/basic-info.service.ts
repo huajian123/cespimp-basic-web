@@ -113,11 +113,11 @@ export namespace BasicInfoServiceNs {
     }
 
     public getFactoryInfoDetail(param: EntprSearch): Promise<FactoryInfoModel> {
-      return this.http.get('data/basic/enterprise/' + param.entprId + '?_allow_anonymous=true').toPromise();
+      return this.http.get('data/basic/enterprise/' + param.entprId).toPromise();
     }
 
     public getIdCardInfoDetail(param: EntprSearch): Promise<IdCardTabModel> {
-      return this.http.get('data/basic/document/' + param.entprId + '?_allow_anonymous=true').toPromise();
+      return this.http.get('data/basic/document/' + param.entprId).toPromise();
     }
 
     // 获取企业周边环境
@@ -126,7 +126,7 @@ export namespace BasicInfoServiceNs {
         pageSize: param.pageSize,
         pageNum: param.pageNum,
       };
-      return this.http.get('data/basic/enterprise/environments/' + param.entprId + '?_allow_anonymous=true', paramTemp).toPromise();
+      return this.http.get('data/basic/enterprise/environments/' + param.entprId, paramTemp).toPromise();
     }
 
     // 获取企业周边环境
@@ -135,16 +135,16 @@ export namespace BasicInfoServiceNs {
         pageSize: param.pageSize,
         pageNum: param.pageNum,
       };
-      return this.http.get('data/basic/enterprise/environments/' + param.entprId + '?_allow_anonymous=true', paramTemp).toPromise();
+      return this.http.get('data/basic/enterprise/environments/' + param.entprId, paramTemp).toPromise();
     }
 
     // 获取企业产品列表
     public getEnterProduct(param: EntprProductSearchModel): Promise<PageInfo<EnterpriseProductModel>> {
-      return this.http.get('data/basic/enterprise/products/' + param.entprId + '?_allow_anonymous=true', param).toPromise();
+      return this.http.get('data/basic/enterprise/products/' + param.entprId, param).toPromise();
     }
 
     public getFactoryList(param: SearchCommonVO): Promise<PageInfo<FactoryInfoModel>> {
-      return this.http.get('data/basic/enterprises?_allow_anonymous=true', param).toPromise();
+      return this.http.get('data/basic/enterprises', param).toPromise();
     }
   }
 }

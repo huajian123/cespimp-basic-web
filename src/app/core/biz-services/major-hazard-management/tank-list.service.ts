@@ -32,7 +32,7 @@ export namespace TankListServiceNs {
     }
 
     public getTankList(param: SearchCommonVO ): Promise<PageInfo<TankListInfoModel>> {
-      return this.http.get('data/major/hazard/tanks?_allow_anonymous=true', param).toPromise();
+      return this.http.get('data/major/hazard/tanks', param).toPromise();
     }
   }
 }

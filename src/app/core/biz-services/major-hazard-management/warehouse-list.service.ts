@@ -16,7 +16,7 @@ export namespace WarehouseListServiceNs {
   }
 
   export interface EntprSearch {
-    entprId: number;
+    entprId?: number;
   }
  /* export interface EntprSearch extends SearchCommonVO {
     entprId: number;
@@ -31,7 +31,7 @@ export namespace WarehouseListServiceNs {
     }
 
     public getWarehouseList(param: SearchCommonVO): Promise<PageInfo<WarehouseListInfoModel>> {
-      return this.http.get('data/major/hazard/rooms?_allow_anonymous=true', param).toPromise();
+      return this.http.get('data/major/hazard/rooms', param).toPromise();
     }
   }
 }

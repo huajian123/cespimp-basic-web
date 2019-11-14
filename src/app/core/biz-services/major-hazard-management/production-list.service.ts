@@ -15,12 +15,12 @@ export namespace ProductionListServiceNs {
   }
 
   export interface EntprSearch {
-    entprId: number;
+    entprId?: number;
   }
 
-  export interface EntprSearch extends SearchCommonVO {
+ /* export interface EntprSearch extends SearchCommonVO {
     entprId: number;
-  }
+  }*/
 
   export class ProductionListInfoServiceClass {
     constructor(private http: HttpUtilService) {
@@ -31,7 +31,7 @@ export namespace ProductionListServiceNs {
     }
 
     public getProductionList(param: SearchCommonVO): Promise<PageInfo<ProductionListInfoModel>> {
-      return this.http.get('data/basic/enterprise/place/' +'1'+'?_allow_anonymous=true', param).toPromise();
+      return this.http.get('data/basic/enterprise/place', param).toPromise();
     }
   }
 }
