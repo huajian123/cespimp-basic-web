@@ -60,6 +60,7 @@ export namespace BasicInfoServiceNs {
     environmentRecordTime?: Date;
     environmentReportAgency?: string;
     environmentReportAccessory?: string;
+    dischargePermitAccessory?: string;
   }
 
   export interface EntprSearch {
