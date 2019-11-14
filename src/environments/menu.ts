@@ -97,7 +97,7 @@ export const menus = [
         'children': [
           {
             'text': '储罐列表',
-            'link': '/risk-monitoring/real-time-risk',
+            'link': '/storage-tank-management/tank-list',
           },
         ],
       },
@@ -114,7 +114,7 @@ export const menus = [
         'children': [
           {
             'text': '仓库列表',
-            'link': '/risk-monitoring/real-time-risk',
+            'link': '/warehouse-management/warehouse-list',
           },
         ],
       },
@@ -131,7 +131,7 @@ export const menus = [
         'children': [
           {
             'text': '生产场所列表',
-            'link': '/risk-monitoring/real-time-risk',
+            'link': '/production-management/production-list',
           },
         ],
       },

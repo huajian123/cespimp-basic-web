@@ -1,18 +1,16 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
-import { MajorHazardManagementRoutingModule } from './major-hazard-management-routing.module';
-
-
+import { ProductionManagementRoutingModule } from './production-management-routing.module';
+import { ProductionListComponent } from './production-list/production-list.component';
 
 const COMPONENTS = [
-
-];
+  ProductionListComponent];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({
   imports: [
     SharedModule,
-    MajorHazardManagementRoutingModule
+    ProductionManagementRoutingModule
   ],
   declarations: [
     ...COMPONENTS,
@@ -20,4 +18,4 @@ const COMPONENTS_NOROUNT = [];
   ],
   entryComponents: COMPONENTS_NOROUNT
 })
-export class MajorHazardManagementModule { }
+export class ProductionManagementModule { }

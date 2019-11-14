@@ -6,15 +6,15 @@ import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import {
   WarehouseListInfoService,
   WarehouseListServiceNs,
-} from '@core/biz-services/major-hazard-management/warehouse-list.service';
+} from '@core/biz-services/warehouse-management/warehouse-list.service';
 import WarehouseListInfoModel = WarehouseListServiceNs.WarehouseListInfoModel;
 
 @Component({
-  selector: 'app-major-hazard-management-warehouse-list',
+  selector: 'app-warehouse-management-warehouse-list',
   templateUrl: './warehouse-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MajorHazardManagementWarehouseListComponent implements OnInit {
+export class WarehouseListComponent implements OnInit {
   roleEnum = RoleEnum;
   pageTypeEnum = PageTypeEnum;
   currentPage: number;

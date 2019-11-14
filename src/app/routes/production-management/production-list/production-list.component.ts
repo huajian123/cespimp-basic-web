@@ -1,20 +1,20 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { STColumn } from '@delon/abc';
 import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
+import { MapPipe } from '@shared/directives/pipe/map.pipe';
+import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import {
   ProductionListInfoService,
   ProductionListServiceNs,
-} from '@core/biz-services/major-hazard-management/production-list.service';
+} from '@core/biz-services/production-management/production-list.service';
 import ProductionListInfoModel = ProductionListServiceNs.ProductionListInfoModel;
-import { MapPipe } from '@shared/directives/pipe/map.pipe';
-import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 
 @Component({
-  selector: 'app-major-hazard-management-production-list',
+  selector: 'app-production-management-production-list',
   templateUrl: './production-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MajorHazardManagementProductionListComponent implements OnInit {
+export class ProductionListComponent implements OnInit {
   roleEnum = RoleEnum;
   pageTypeEnum = PageTypeEnum;
   currentPage: number;

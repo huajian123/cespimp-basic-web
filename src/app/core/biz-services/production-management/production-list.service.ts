@@ -6,7 +6,7 @@ export namespace ProductionListServiceNs {
   export interface ProductionListInfoModel {
     id: number;
     placeNo: string;
-    roomName: string;
+    placeName: string;
     placeArea?: number;
     productionDate?: Date;
     longitude: number; // 经度

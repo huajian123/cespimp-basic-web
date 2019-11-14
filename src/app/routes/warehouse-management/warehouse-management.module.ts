@@ -1,18 +1,16 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
-import { MajorHazardManagementRoutingModule } from './major-hazard-management-routing.module';
-
-
+import { WarehouseManagementRoutingModule } from './warehouse-management-routing.module';
+import { WarehouseListComponent } from './warehouse-list/warehouse-list.component';
 
 const COMPONENTS = [
-
-];
+  WarehouseListComponent];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({
   imports: [
     SharedModule,
-    MajorHazardManagementRoutingModule
+    WarehouseManagementRoutingModule
   ],
   declarations: [
     ...COMPONENTS,
@@ -20,4 +18,4 @@ const COMPONENTS_NOROUNT = [];
   ],
   entryComponents: COMPONENTS_NOROUNT
 })
-export class MajorHazardManagementModule { }
+export class WarehouseManagementModule { }

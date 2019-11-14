@@ -29,12 +29,25 @@ const routes: Routes = [
       // 业务子模块
       {
         path: 'key-supervision-management',
-        loadChildren: () => import('./key-supervision-management/key-supervision-management.module').then(m => m.KeySupervisionManagementModule)},
+        loadChildren: () => import('./key-supervision-management/key-supervision-management.module').then(m => m.KeySupervisionManagementModule),
+      },
       { path: 'safety-map', loadChildren: () => import('./safety-map/safety-map.module').then(m => m.SafetyMapModule) },
       { path: 'basic-info', loadChildren: () => import('./basic-info/basic-info.module').then(m => m.BasicInfoModule) },
       {
         path: 'major-hazard-management',
         loadChildren: () => import('./major-hazard-management/major-hazard-management.module').then(m => m.MajorHazardManagementModule),
+      },
+      {
+        path: 'storage-tank-management',
+        loadChildren: () => import('./storage-tank-management/storage-tank-management.module').then(m => m.StorageTankManagementModule),
+      },
+      {
+        path: 'warehouse-management',
+        loadChildren: () => import('./warehouse-management/warehouse-management.module').then(m => m.WarehouseManagementModule),
+      },
+      {
+        path: 'production-management',
+        loadChildren: () => import('./production-management/production-management.module').then(m => m.ProductionManagementModule),
       },
     ],
   },

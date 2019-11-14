@@ -1,18 +1,18 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { STColumn, STData } from '@delon/abc';
 import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
-import { TankListInfoService, TankListServiceNs } from '@core/biz-services/major-hazard-management/tank-list.service';
+import { TankListInfoService, TankListServiceNs } from '@core/biz-services/storage-tank-management/tank-list.service';
 import TankListInfoModel = TankListServiceNs.TankListInfoModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import EntprSearch = TankListServiceNs.EntprSearch;
 
 @Component({
-  selector: 'app-major-hazard-management-tank-list',
+  selector: 'app-storage-tank-management-tank-list',
   templateUrl: './tank-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MajorHazardManagementTankListComponent implements OnInit {
+export class TankListComponent implements OnInit {
   roleEnum = RoleEnum;
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
