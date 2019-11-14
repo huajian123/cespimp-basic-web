@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component, ElementRef,
@@ -37,7 +38,8 @@ enum TabEnum {
   styleUrls: ['./basic-info-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BasicInfoDetailComponent implements OnInit {
+export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
+
   @ViewChild('mapDivModal', { static: true }) mapElement: ElementRef;
   map;
   @Output() returnBack: EventEmitter<any>;
@@ -225,6 +227,10 @@ export class BasicInfoDetailComponent implements OnInit {
       this.getEnterpriseEnviron();
       this.changeTap(TabEnum.EnterpriseEnvirTab);
     }
+    // 位置信息
+    else if (args.index === TabEnum.PositionTab) {
+      this.getFactoryInfo();
+    }
     // 生产原料信息，中间产品信息，最终产品信息
     else if (args.index === TabEnum.MateriProductionTab || args.index === TabEnum.MidProductTab || args.index === TabEnum.FinalProductTab) {
       let currentProductType: ProductEnum;
@@ -262,7 +268,6 @@ export class BasicInfoDetailComponent implements OnInit {
   }
 
   initMap(latitude, longitude) {
-
     const zoom = 10;
     this.map = new T.Map(this.mapElement.nativeElement);
     // 设置显示地图的中心点和级别
@@ -274,9 +279,7 @@ export class BasicInfoDetailComponent implements OnInit {
       entprId: this.entprId,
     };
     this.dataInfo = await this.dataService.getFactoryInfoDetail(param);
-    if (this.dataInfo.latitude && this.dataInfo.longitude) {
-      this.initMap(this.dataInfo.latitude, this.dataInfo.longitude);
-    }
+    this.initMap(this.dataInfo.latitude, this.dataInfo.longitude);
     this.cdr.markForCheck();
   }
 
@@ -294,8 +297,10 @@ export class BasicInfoDetailComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
+  ngAfterViewInit(): void {
+    this.getFactoryInfo();
+  }
 
   ngOnInit(): void {
-    this.getFactoryInfo();
   }
 }
