@@ -70,7 +70,7 @@ export namespace HttpUtilNs {
     }
 
     public getFullUrl(baseUrlName: string, path: string, isUpload?: boolean): string {
-      const url = environment.baseUrl[baseUrlName || getwayKey.Bs] + path;
+      const url = environment.baseUrl[baseUrlName || getwayKey.Bs] + path+'?_allow_anonymous=true';
       return url;
     }
   }
