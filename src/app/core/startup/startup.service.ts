@@ -35,81 +35,82 @@ export class StartupService {
 
   private viaHttp(resolve: any, reject: any) {
     zip(
-      this.httpClient.get('assets/tmp/app-data.json')
+      this.httpClient.get('assets/tmp/app-data.json'),
     ).pipe(
       catchError(([appData]) => {
-          resolve(null);
-          return [appData];
-      })
+        resolve(null);
+        return [appData];
+      }),
     ).subscribe(([appData]) => {
 
-      // Application data
-      const res: any = appData;
+        // Application data
+        const res: any = appData;
+        // Application information: including site name, description, year
+        this.settingService.setApp(res.app);
+        // User information: including name, avatar, email address
+        this.settingService.setUser(res.user);
+        // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
+        this.aclService.setFull(true);
+        // Menu data, https://ng-alain.com/theme/menu
+        this.menuService.add(res.menu);
+        // Can be set page suffix title, https://ng-alain.com/theme/title
+        this.titleService.suffix = res.app.name;
+      },
+      () => {
+      },
+      () => {
+        resolve(null);
+      });
+  }
+
+  /*  private viaMock(resolve: any, reject: any) {
+      // const tokenData = this.tokenService.get();
+      // if (!tokenData.token) {
+      //   this.injector.get(Router).navigateByUrl('/passport/login');
+      //   resolve({});
+      //   return;
+      // }
+      // mock
+      const app: any = {
+        name: `ng-alain`,
+        description: `Ng-zorro admin panel front-end framework`
+      };
+      const user: any = {
+        name: 'Admin',
+        avatar: './assets/tmp/img/avatar.jpg',
+        email: 'cipchk@qq.com',
+        token: '123456789'
+      };
       // Application information: including site name, description, year
-      this.settingService.setApp(res.app);
+      this.settingService.setApp(app);
       // User information: including name, avatar, email address
-      this.settingService.setUser(res.user);
+      this.settingService.setUser(user);
       // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
       this.aclService.setFull(true);
       // Menu data, https://ng-alain.com/theme/menu
-      this.menuService.add(res.menu);
+      this.menuService.add([
+        {
+          text: '主菜单',
+          group: true,
+          children: [
+            {
+              text: '智慧厂区',
+              link: '/dashboard',
+              icon: { type: 'icon', value: 'appstore' }
+            },
+            {
+              text: '详情页面',
+              icon: { type: 'icon', value: 'rocket' },
+              shortcutRoot: true
+            }
+          ]
+        }
+      ]);
       // Can be set page suffix title, https://ng-alain.com/theme/title
-      this.titleService.suffix = res.app.name;
-    },
-    () => { },
-    () => {
-      resolve(null);
-    });
-  }
-  
-/*  private viaMock(resolve: any, reject: any) {
-    // const tokenData = this.tokenService.get();
-    // if (!tokenData.token) {
-    //   this.injector.get(Router).navigateByUrl('/passport/login');
-    //   resolve({});
-    //   return;
-    // }
-    // mock
-    const app: any = {
-      name: `ng-alain`,
-      description: `Ng-zorro admin panel front-end framework`
-    };
-    const user: any = {
-      name: 'Admin',
-      avatar: './assets/tmp/img/avatar.jpg',
-      email: 'cipchk@qq.com',
-      token: '123456789'
-    };
-    // Application information: including site name, description, year
-    this.settingService.setApp(app);
-    // User information: including name, avatar, email address
-    this.settingService.setUser(user);
-    // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
-    this.aclService.setFull(true);
-    // Menu data, https://ng-alain.com/theme/menu
-    this.menuService.add([
-      {
-        text: '主菜单',
-        group: true,
-        children: [
-          {
-            text: '智慧厂区',
-            link: '/dashboard',
-            icon: { type: 'icon', value: 'appstore' }
-          },
-          {
-            text: '详情页面',
-            icon: { type: 'icon', value: 'rocket' },
-            shortcutRoot: true
-          }
-        ]
-      }
-    ]);
-    // Can be set page suffix title, https://ng-alain.com/theme/title
-    this.titleService.suffix = app.name;
+      this.titleService.suffix = app.name;
 
-    resolve({});
-  }*/
+      resolve({});
+    }*/
 
   load(): Promise<any> {
     // only works with promises
@@ -118,14 +119,18 @@ export class StartupService {
       // http
       // this.viaHttp(resolve, reject);
       // mock：请勿在生产环境中这么使用，viaMock 单纯只是为了模拟一些数据使脚手架一开始能正常运行
-     // this.viaMock(resolve, reject);
-    //  const res: any = appData;
+      // this.viaMock(resolve, reject);
+      //  const res: any = appData;
       // 应用信息：包括站点名、描述、年份
       this.settingService.setApp(appInfo);
       // 用户信息：包括姓名、头像、邮箱地址
       this.settingService.setUser(loginUserInfo);
       // ACL：设置权限为全量
       // this.aclService.setFull(true);
+      const currentRole = window.sessionStorage.getItem('role');
+      if (currentRole) {
+        this.aclService.set({ role: [currentRole] });
+      }
       // 初始化菜单
       this.menuService.add(menus);
       // 设置页面标题的后缀

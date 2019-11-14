@@ -117,9 +117,11 @@ export class UserLoginComponent implements OnDestroy {
     }
 
     const data = await this.loginService.login({ username: this.userName.value, password: this.password.value });
+    window.sessionStorage.clear();
     // 清空路由复用信息
     this.reuseTabService.clear();
     this.aclService.set({ role: [RoleEnum[data.role]] });
+    window.sessionStorage.setItem('role', [RoleEnum[data.role]].toString());
     this.menuSrv.resume();
     this.tokenService.set({ token: data.realName });
     this.router.navigateByUrl('/basic-info/basic-info');
