@@ -2,34 +2,60 @@ import { RoleEnum } from '@core/vo/comm/BusinessEnum';
 
 export const menus = [
   {
-    text: '基础信息',
+    text: '安全一张图',
+    group: false,
+    hideInBreadcrumb: false,
+    children: [
+      {
+        'text': '安全一张图',
+        'icon': 'anticon-appstore',
+        'link': '/safety-map/safety-map-list',
+        'children': [],
+      },
+    ],
+  },
+  {
+    text: '企业基本信息管理',
     group: false,
     hideInBreadcrumb: true,
     children: [
       {
-        'text': '基础信息',
+        'text': '企业基本信息管理',
         'icon': 'anticon-appstore',
         'children': [
           {
-            'text': '基础信息',
+            'text': '基本信息列表',
             'link': '/basic-info/basic-info',
             'acl': RoleEnum[RoleEnum.ParkManage],
           },
           {
-            'text': '重大危险源',
-            'link': '/basic-info/major-hazard',
+            'text': '基本信息审核列表',
+            'link': '/basic-info/basic-info-audit-list',
           },
           {
-            'text': '阈值初始化',
-            'link': '/basic-info/threshold-init',
+            'text': '基本信息统计',
+            'link': '/basic-info/basic-info-statistics',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    text: '重点监管对象管理',
+    group: false,
+    hideInBreadcrumb: false,
+    children: [
+      {
+        'text': '重点监管对象管理',
+        'icon': 'anticon-appstore',
+        'children': [
+          {
+            'text': '重点监管危险化学品列表',
+            'link': '/key-supervision-management/key-hazardous-chemicals-list',
           },
           {
-            'text': '高危工艺初始化',
-            'link': '/basic-info/high-risk-init',
-          },
-          {
-            'text': '监测数据',
-            'link': '/basic-info/monitoring-data',
+            'text': '重点监管危险化工工艺列表',
+            'link': '/key-supervision-management/hazardous-chemical-processes-list',
           },
         ],
       },
@@ -44,18 +70,6 @@ export const menus = [
         'text': '重大危险源管理',
         'icon': 'anticon-appstore',
         'children': [
-          {
-            'text': '储罐列表',
-            'link': '/major-hazard-management/tank-list',
-          },
-          {
-            'text': '库房列表 ',
-            'link': '/major-hazard-management/warehouse-list',
-          },
-          {
-            'text': '生产场所列表 ',
-            'link': '/major-hazard-management/production-list',
-          },
           {
             'text': '重大危险源列表',
             'link': '/major-hazard-management/major-hazard-list',
@@ -73,75 +87,131 @@ export const menus = [
     ],
   },
   {
-    text: '人员车辆监控',
+    text: '储罐管理',
     group: false,
     hideInBreadcrumb: false,
     children: [
       {
-        'text': '人员车辆监控',
+        'text': '储罐管理',
         'icon': 'anticon-appstore',
         'children': [
           {
-            'text': '基础信息管理',
-            'link': '/people-car-monitor/base-info-manage',
-          },
-          {
-            'text': '实名制进出管理',
-            'link': '/people-car-monitor/real-name-in-out',
-          },
-          {
-            'text': '报警区域管理',
-            'link': '/people-car-monitor/alarm-area-manage',
-          },
-          {
-            'text': '应急管理',
-            'link': '/people-car-monitor/emergency-manage',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    text: '区域风险监控',
-    group: false,
-    hideInBreadcrumb: false,
-    children: [
-      {
-        'text': '区域风险监控',
-        'icon': 'anticon-appstore',
-        'children': [
-          {
-            'text': '实时风险',
+            'text': '储罐列表',
             'link': '/risk-monitoring/real-time-risk',
           },
+        ],
+      },
+    ],
+  },
+  {
+    text: '仓库管理',
+    group: false,
+    hideInBreadcrumb: false,
+    children: [
+      {
+        'text': '仓库管理',
+        'icon': 'anticon-appstore',
+        'children': [
           {
-            'text': '风险区域管理',
-            'link': '/risk-monitoring/risk-monitoring-manage',
-          },
-          {
-            'text': '两单三卡信息管理',
-            'link': '/risk-monitoring/cards-info-manage',
+            'text': '仓库列表',
+            'link': '/risk-monitoring/real-time-risk',
           },
         ],
       },
     ],
   },
   {
-    text: '全流程监控',
+    text: '生产场所管理',
     group: false,
     hideInBreadcrumb: false,
     children: [
       {
-        'text': '全流程监控',
+        'text': '生产场所管理',
         'icon': 'anticon-appstore',
         'children': [
           {
-            'text': '基础数据管理',
+            'text': '生产场所列表',
+            'link': '/risk-monitoring/real-time-risk',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    text: '传感器管理',
+    group: false,
+    hideInBreadcrumb: false,
+    children: [
+      {
+        'text': '传感器管理',
+        'icon': 'anticon-appstore',
+        'children': [
+          {
+            'text': '传感器列表',
             'link': '/whole-process-monitor/basic-info-manage',
           },
           {
-            'text': '告警信息管理',
+            'text': '传感器实时数据',
             'link': '/whole-process-monitor/alarm-info-manage',
+          },
+          {
+            'text': '传感器历史数据',
+            'link': '/whole-process-monitor/alarm-info-manage',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    text: '摄像头管理',
+    group: false,
+    hideInBreadcrumb: false,
+    children: [
+      {
+        'text': '摄像头管理',
+        'icon': 'anticon-appstore',
+        'children': [
+          {
+            'text': '摄像头列表',
+            'link': '/risk-monitoring/real-time-risk',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    text: '报警管理',
+    group: false,
+    hideInBreadcrumb: false,
+    children: [
+      {
+        'text': '报警管理',
+        'icon': 'anticon-appstore',
+        'children': [
+          {
+            'text': '实时报警',
+            'link': '/whole-process-monitor/basic-info-manage',
+          },
+          {
+            'text': '历史报警',
+            'link': '/whole-process-monitor/alarm-info-manage',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    text: '特种作业管理',
+    group: false,
+    hideInBreadcrumb: false,
+    children: [
+      {
+        'text': '特种作业管理',
+        'icon': 'anticon-appstore',
+        'children': [
+          {
+            'text': '特种作业列表',
+            'link': '/risk-monitoring/real-time-risk',
           },
         ],
       },

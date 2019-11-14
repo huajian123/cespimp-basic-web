@@ -17,20 +17,26 @@ import { CallbackComponent } from './callback/callback.component';
 import { UserLockComponent } from './passport/lock/lock.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: `passport/login`, pathMatch: 'full'},
+  { path: '', redirectTo: `passport/login`, pathMatch: 'full' },
   {
     path: '',
     component: LayoutDefaultComponent,
     // canActivate: [SimpleGuard],
     children: [
-      { path: '', redirectTo: 'basic-info', pathMatch: 'full' },
+      { path: '', redirectTo: 'safety-map', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘', titleI18n: 'dashboard' } },
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
       // 业务子模块
-      // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
+      {
+        path: 'key-supervision-management',
+        loadChildren: () => import('./key-supervision-management/key-supervision-management.module').then(m => m.KeySupervisionManagementModule)},
+      { path: 'safety-map', loadChildren: () => import('./safety-map/safety-map.module').then(m => m.SafetyMapModule) },
       { path: 'basic-info', loadChildren: () => import('./basic-info/basic-info.module').then(m => m.BasicInfoModule) },
-      { path: 'major-hazard-management', loadChildren: () => import('./major-hazard-management/major-hazard-management.module').then(m => m.MajorHazardManagementModule) },
-    ]
+      {
+        path: 'major-hazard-management',
+        loadChildren: () => import('./major-hazard-management/major-hazard-management.module').then(m => m.MajorHazardManagementModule),
+      },
+    ],
   },
   // 全屏布局
   // {
@@ -46,9 +52,13 @@ const routes: Routes = [
     children: [
       { path: 'login', component: UserLoginComponent, data: { title: '登录', titleI18n: 'pro-login' } },
       { path: 'register', component: UserRegisterComponent, data: { title: '注册', titleI18n: 'pro-register' } },
-      { path: 'register-result', component: UserRegisterResultComponent, data: { title: '注册结果', titleI18n: 'pro-register-result' } },
+      {
+        path: 'register-result',
+        component: UserRegisterResultComponent,
+        data: { title: '注册结果', titleI18n: 'pro-register-result' },
+      },
       { path: 'lock', component: UserLockComponent, data: { title: '锁屏', titleI18n: 'lock' } },
-    ]
+    ],
   },
   // 单页不包裹Layout
   { path: 'callback/:type', component: CallbackComponent },
@@ -63,8 +73,9 @@ const routes: Routes = [
         // NOTICE: If you use `reuse-tab` component and turn on keepingScroll you can set to `disabled`
         // Pls refer to https://ng-alain.com/components/reuse-tab
         scrollPositionRestoration: 'top',
-      }
+      },
     )],
   exports: [RouterModule],
 })
-export class RouteRoutingModule { }
+export class RouteRoutingModule {
+}
