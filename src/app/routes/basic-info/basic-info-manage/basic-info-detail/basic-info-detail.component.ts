@@ -46,8 +46,8 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
   @Input() currentPageNum: number;
   dataInfo: FactoryInfoModel;
   idCardInfo: IdCardTabModel;
-  showImgUrl: string;
-  isShowPreviewModal: boolean;
+
+
   dataList: EnterpriseEnvironModel[] | EnterpriseProductModel[];
   columns: STColumn[];
   tabEnum = TabEnum;
@@ -59,8 +59,6 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
     this.returnBack = new EventEmitter<any>();
     this.initData();
 
-    this.showImgUrl = '';
-    this.isShowPreviewModal = false;
     this.currentTab = this.tabEnum.BaseInfoTab;
     this.dataList = [];
 
@@ -222,6 +220,7 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
   }
 
   async change(args: NzTabChangeEvent) {
+    this.currentTab = args.index;
     // 周边环境
     if (args.index === TabEnum.EnterpriseEnvirTab) {
       this.getEnterpriseEnviron();
@@ -229,7 +228,11 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
     }
     // 位置信息
     else if (args.index === TabEnum.PositionTab) {
-      this.getFactoryInfo();
+      const param: EntprSearch = {
+        entprId: this.entprId,
+      };
+      this.dataInfo = await this.dataService.getFactoryInfoDetail(param);
+      this.map.checkResize();
     }
     // 生产原料信息，中间产品信息，最终产品信息
     else if (args.index === TabEnum.MateriProductionTab || args.index === TabEnum.MidProductTab || args.index === TabEnum.FinalProductTab) {
@@ -255,12 +258,6 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
     } else if (args.index === TabEnum.IdCardTab) {
       this.getIdCardInfo();
     }
-    this.currentTab = args.index;
-  }
-
-  public showPreviewModal(imgType) {
-    this.showImgUrl = this.dataInfo[imgType];
-    this.isShowPreviewModal = true;
   }
 
   returnBackToList() {
@@ -268,10 +265,12 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
   }
 
   initMap(latitude, longitude) {
-    const zoom = 10;
-    this.map = new T.Map(this.mapElement.nativeElement);
-    // 设置显示地图的中心点和级别
-    this.map.centerAndZoom(new T.LngLat(longitude, latitude), zoom);
+    setTimeout(() => {
+      const zoom = 10;
+      this.map = new T.Map(this.mapElement.nativeElement);
+      // 设置显示地图的中心点和级别
+      this.map.centerAndZoom(new T.LngLat(longitude, latitude), zoom);
+    });
   }
 
   async getFactoryInfo() {
