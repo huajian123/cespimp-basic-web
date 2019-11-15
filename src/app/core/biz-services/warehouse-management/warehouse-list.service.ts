@@ -31,7 +31,7 @@ export namespace WarehouseListServiceNs {
     }
 
     public getWarehouseList(param: SearchCommonVO): Promise<PageInfo<WarehouseListInfoModel>> {
-      return this.http.get('data/major/hazard/rooms', param).toPromise();
+      return this.http.get('data/basic/enterprise/rooms', param).toPromise();
     }
   }
 }
