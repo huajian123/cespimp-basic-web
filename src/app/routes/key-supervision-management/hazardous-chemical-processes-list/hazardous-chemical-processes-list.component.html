@@ -1,9 +1,91 @@
-<page-header [action]="phActionTpl">
-  <ng-template #phActionTpl>
-    <button (click)="add()" nz-button nzType="primary">新建</button>
-  </ng-template>
-</page-header>
-<nz-card>
-  <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
-  <st #st [data]="url" [columns]="columns"></st>
-</nz-card>
+<ng-container *ngIf="currentPage===pageTypeEnum.List">
+  <page-header [title]="'重点监管危险化工工艺列表'"></page-header>
+  <nz-card [nzBordered]="false">
+    <form nz-form [nzLayout]="'inline'" class="search__form">
+      <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+        <div nz-col nzMd="8" nzSm="24">
+          <nz-form-item>
+            <nz-form-label nzFor="no">规则编号</nz-form-label>
+            <nz-form-control>
+              <input nz-input name="no" placeholder="请输入"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzMd="8" nzSm="24">
+          <nz-form-item>
+            <nz-form-label nzFor="status">使用状态</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                name="status"
+                id="status"
+                [nzPlaceHolder]="'请选择'"
+                [nzShowSearch]="true"
+              >
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzMd="8" nzSm="24" *ngIf="expandForm">
+          <nz-form-item>
+            <nz-form-label nzFor="callNo">调用次数</nz-form-label>
+            <nz-form-control>
+              <input nz-input id="callNo"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzMd="8" nzSm="24" *ngIf="expandForm">
+          <nz-form-item>
+            <nz-form-label nzFor="updatedAt">更新日期</nz-form-label>
+            <nz-form-control></nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzMd="8" nzSm="24" *ngIf="expandForm">
+          <nz-form-item>
+            <nz-form-label nzFor="status2">使用状态</nz-form-label>
+            <nz-form-control>
+              <nz-select [nzPlaceHolder]="'请选择'" nzId="status2" [nzShowSearch]="true">
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzMd="8" nzSm="24" *ngIf="expandForm">
+          <nz-form-item>
+            <nz-form-label nzFor="status3">使用状态</nz-form-label>
+            <nz-form-control>
+              <nz-select [nzPlaceHolder]="'请选择'" nzId="status3" [nzShowSearch]="true">
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="expandForm ? 24 : 8" [class.text-right]="expandForm">
+          <button nz-button type="submit" [nzType]="'primary'">查询</button>
+          <button nz-button type="reset" class="mx-sm">重置</button>
+          <a (click)="expandForm = !expandForm">
+            {{ expandForm ? '收起' : '展开' }}
+            <i nz-icon [nzType]="expandForm ? 'up' : 'down'"></i>
+          </a>
+        </div>
+      </div>
+    </form>
+    <button nz-button [nzType]="'primary'" class="m-b-sm" [acl]="roleEnum[roleEnum.ParkManage]">
+      <i nz-icon nzType="plus"></i>
+      <span>新建</span>
+    </button>
+
+    <st #st [page]="{showSize:true, front: false}"
+        [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true"
+        [scroll]="{x: '400px'}"
+        [widthMode]="{ type: 'strict' }" [data]="dataList"  (change)="changePage($event)" [columns]="columns" class="mt-sm"></st>
+  </nz-card>
+
+
+</ng-container>
+
+<!--<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
+  <app-basic-info-detail [entprId]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-basic-info-detail>
+</ng-container>-->
+
+<!--<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
+  <basic-info-edit-add></basic-info-edit-add>
+</ng-container>-->
+
