@@ -7,12 +7,14 @@ export namespace MajorHazardListServiceNs {
     id: number;
     majorHazardNo: string;
     majorHazardName: string;
+    manager?:string;
     unitType: number;
     useDate?: Date;
     majorHazardLevel: number;
     majorHazardNature?: number;
     rValue?: number;
-    majorHazardDescription?:string;
+    managerMobile?:string;
+    description?:string;
   }
 
   export interface EntprSearch {
@@ -28,7 +30,7 @@ export namespace MajorHazardListServiceNs {
     }
 
     public getMajorHazardList(param: SearchCommonVO): Promise<PageInfo<MajorHazardListInfoModel>> {
-      return this.http.get('data/basic/enterprises', param).toPromise();
+      return this.http.get('data/major/hazard/info', param).toPromise();
     }
   }
 }

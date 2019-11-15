@@ -1,29 +1,33 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STData } from '@delon/abc';
+
 import { ListPageInfo, PageTypeEnum } from '@core/vo/comm/BusinessEnum';
 import {
-  MajorHazardListInfoService,
-  MajorHazardListServiceNs,
-} from '@core/biz-services/major-hazard-management/major-hazard-list.service';
-import MajorHazardListInfoModel = MajorHazardListServiceNs.MajorHazardListInfoModel;
+  MajorHazardRecordListInfoService,
+  MajorHazardRecordListServiceNs,
+} from '@core/biz-services/major-hazard-management/major-hazard-record.service';
+import MajorHazardRecordListInfoModel = MajorHazardRecordListServiceNs.MajorHazardRecordListInfoModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
+import { type } from 'os';
+
 
 @Component({
-  selector: 'app-major-hazard-management-major-hazard-list',
-  templateUrl: './major-hazard-list.component.html',
+  selector: 'app-major-hazard-management-major-hazard-record-list',
+  templateUrl: './major-hazard-record-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MajorHazardManagementMajorHazardListComponent implements OnInit {
+export class MajorHazardManagementMajorHazardRecordListComponent implements OnInit {
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
   expandForm: boolean;
-  dataList: MajorHazardListInfoModel[];
+  dataList: MajorHazardRecordListInfoModel[];
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
 
-  constructor(private dataService: MajorHazardListInfoService, private cdr: ChangeDetectorRef) {
+  constructor(private dataService: MajorHazardRecordListInfoService, private cdr: ChangeDetectorRef) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -46,7 +50,7 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
     };
-    const { total, list, pageNum } = await this.dataService.getMajorHazardList(params);
+    const { total, list, pageNum } = await this.dataService.getMajorHazardRecordList(params);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
     this.dataList = list || [];
@@ -76,28 +80,17 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
 
   private initTable(): void {
     this.columns = [
-      { title: '重大危险源编号', index: 'majorHazardNo', width: 120 },
-      { title: '重大危险源名称', index: 'majorHazardName', width: 100 },
-      { title: '单元类型',
-        index: 'unitType',
-        width: 120,
-        format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey)
-      },
-      { title: '投用时间', index: 'useDate', width: 100,type:'date' },
-      { title: 'R值', index: 'rValue', width: 100 },
-      { title: '重大危险源等级',
-        index: 'majorHazardLevel',
+      { title: '重大危险源ID', index: 'majorHazardId', width: 100 },
+      { title: '申请人', index: 'applicationName', width: 100 },
+      { title: '申请时间', index: 'applicationTime', width: 100,type:'date' },
+      { title: '审核人', index: 'reviewName', width: 100 },
+      { title: '审核时间', index: 'reviewTime', width: 100,type:'date' },
+      { title: '审核意见', index: 'reviewExplain', width: 100, },
+      { title: '审核状态',
+        index: 'reviewStatus',
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '重大危险源性质',
-        index: 'majorHazardNature',
-        width: 100,
-        format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
-      },
-      { title: '重大危险源管理员', index: 'manager', width: 100 },
-      { title: '管理员联系电话', index: 'managerMobile', width: 100 },
-      { title: '重大危险源描述', index: 'majorHazardDescription', width: 100 },
       {
         title: '操作',
         fixed: 'right',
@@ -127,5 +120,4 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
     this.initTable();
     this.getDataList();
   }
-
 }
