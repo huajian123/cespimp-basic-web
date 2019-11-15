@@ -74,7 +74,7 @@
       <sv label="有效时间">{{idCardInfo.businessLicencesBeginTime|map:'date:yyyy-MM-dd'}}~{{idCardInfo.businessLicencesEndTime|map:'date:yyyy-MM-dd'}}</sv>
       <sv label="经营范围">{{idCardInfo.businessLicencesRange}}</sv>
       <sv label="发证机关">{{idCardInfo.businessLicencesAuthority}}</sv>
-      <sv label="附件">{{idCardInfo.businessLicencesAccessory}}</sv>
+      <sv label="附件"><a [href]="idCardInfo.businessLicencesAccessory"  target="_blank" download="营业执照.jpg">查看</a></sv>
     </sv-container>
   </nz-card>
   <nz-divider></nz-divider>
@@ -84,7 +84,8 @@
       <sv label="有效期">{{idCardInfo.safetyCertificateBeginTime|map:'date:yyyy-MM-dd'}}~{{idCardInfo.safetyCertificateEndTime|map:'date:yyyy-MM-dd'}}</sv>
       <sv label="许可范围">{{idCardInfo.safetyPermitRange}}</sv>
       <sv label="发证机关">{{idCardInfo.safetyCertificateAuthority}}</sv>
-      <sv label="附件">{{idCardInfo.safetyCertificateAccessory}}</sv>
+      <sv label="附件"><a [href]="idCardInfo.safetyCertificateAccessory" target="_blank">查看</a></sv>
+
     </sv-container>
   </nz-card>
   <nz-divider></nz-divider>
@@ -94,7 +95,7 @@
       <sv label="有效期">{{idCardInfo.dischargePermitBeginTime|map:'date:yyyy-MM-dd'}}~{{idCardInfo.dischargePermitEndTime|map:'date:yyyy-MM-dd'}}</sv>
       <sv label="排污种类">{{idCardInfo.dischargePermitType}}</sv>
       <sv label="发证机关">{{idCardInfo.dischargePermitAuthority}}</sv>
-      <sv label="附件">{{idCardInfo.dischargePermitAccessory}}</sv>
+      <sv label="附件"><a [href]="idCardInfo.dischargePermitAccessory"  target="_blank"  download="w3logo.jpg">查看</a></sv>
     </sv-container>
   </nz-card>
   <nz-divider></nz-divider>
@@ -103,7 +104,7 @@
       <sv label="报告名称">{{idCardInfo.safetyReportName}}</sv>
       <sv label="备案时间">{{idCardInfo.safetyReportRecordTime|map:'date:yyyy-MM-dd'}}</sv>
       <sv label="安评机构名称">{{idCardInfo.safetyReportAgency}}</sv>
-      <sv label="安评报告附件">{{idCardInfo.safetyReportAccessory}}</sv>
+      <sv label="安评报告附件"><a [href]="idCardInfo.safetyReportAccessory"  target="_blank"  download="w3logo.jpg">查看</a></sv>
     </sv-container>
   </nz-card>
   <nz-divider></nz-divider>
@@ -112,7 +113,7 @@
       <sv label="环评报告名称">{{idCardInfo.environmentReportName}}</sv>
       <sv label="备案时间">{{idCardInfo.environmentRecordTime|map:'date:yyyy-MM-dd'}}</sv>
       <sv label="环评机构名称">{{idCardInfo.environmentReportAgency}}</sv>
-      <sv label="环评报告附件">{{idCardInfo.uscCode}}</sv>
+      <sv label="环评报告附件"><a [href]="idCardInfo.environmentReportAccessory"  target="_blank">查看</a></sv>
     </sv-container>
   </nz-card>
 </nz-card>

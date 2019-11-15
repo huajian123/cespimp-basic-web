@@ -289,11 +289,11 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
       pageNum: this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
     };
-    this.idCardInfo = await this.dataService.getIdCardInfoDetail(param)[0];
+    const { list } = await this.dataService.getIdCardInfoDetail(param);
+    this.idCardInfo = list[0];
     if (!this.idCardInfo) {
       this.initData();
     }
-    console.log(this.idCardInfo);
     this.cdr.markForCheck();
   }
 
