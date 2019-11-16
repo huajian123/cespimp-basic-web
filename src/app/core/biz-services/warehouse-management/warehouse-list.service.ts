@@ -26,12 +26,15 @@ export namespace WarehouseListServiceNs {
     constructor(private http: HttpUtilService) {
     }
 
-    public getWarehouseInfoDetail(param: EntprSearch): Promise<WarehouseListInfoModel> {
-      return this.http.get('data/basic/enterprise/'+param.entprId).toPromise();
+    public getWarehouseInfoDetail(id: number): Promise<WarehouseListInfoModel> {
+      return this.http.get('data/basic/enterprise/rooms/'+ id).toPromise();
     }
 
     public getWarehouseList(param: SearchCommonVO): Promise<PageInfo<WarehouseListInfoModel>> {
       return this.http.get('data/basic/enterprise/rooms', param).toPromise();
+    }
+    public delWarehouseInfo(id: number): Promise<WarehouseListInfoModel> {
+      return this.http.del('data/basic/enterprise/rooms', {id: id}).toPromise();
     }
   }
 }

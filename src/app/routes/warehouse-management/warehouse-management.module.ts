@@ -2,10 +2,15 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
 import { WarehouseManagementRoutingModule } from './warehouse-management-routing.module';
 import { WarehouseListComponent } from './warehouse-list/warehouse-list.component';
+import { WarehouseManagementWarehouseListEditAddComponent } from './warehouse-list-edit-add/warehouse-list-edit-add.component';
+import { WarehouseManagementWarehouseListDetailComponent } from './warehouse-list-detail/warehouse-list-detail.component';
 
 const COMPONENTS = [
-  WarehouseListComponent];
-const COMPONENTS_NOROUNT = [];
+  WarehouseListComponent,];
+const COMPONENTS_NOROUNT = [
+  WarehouseManagementWarehouseListEditAddComponent,
+  WarehouseManagementWarehouseListDetailComponent,
+  ];
 
 @NgModule({
   imports: [

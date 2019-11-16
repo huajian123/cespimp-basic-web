@@ -29,7 +29,7 @@
           <nz-form-item>
             <nz-form-label nzFor="callNo">调用次数</nz-form-label>
             <nz-form-control>
-              <input nz-input id="callNo"/>
+              <input nz-input id="callNo" />
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -77,15 +77,13 @@
         [scroll]="{x: '2400px'}"
         [widthMode]="{ type: 'strict' }" [data]="dataList"  (change)="changePage($event)" [columns]="columns" class="mt-sm"></st>
   </nz-card>
-
-
 </ng-container>
 
-<!--<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
-  <app-basic-info-detail [entprId]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-basic-info-detail>
-</ng-container>-->
+<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
+  <app-warehouse-management-warehouse-list-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-warehouse-management-warehouse-list-detail>
+</ng-container>
 
 <!--<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
-  <basic-info-edit-add></basic-info-edit-add>
+  <app-warehouse-management-warehouse-list-edit-add></app-warehouse-management-warehouse-list-edit-add>
 </ng-container>-->
 

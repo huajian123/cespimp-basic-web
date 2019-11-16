@@ -68,6 +68,13 @@ export class WarehouseListComponent implements OnInit {
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
 
+  goDeletePage(item, modal) {
+    console.log('点击删除');
+   /* this.itemId = item.id;
+    this.dataService.delWarehouseInfo(this.itemId).then(() => this.getDataList(this.columns));*/
+  }
+
+
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
@@ -108,7 +115,7 @@ export class WarehouseListComponent implements OnInit {
           {
             text: '删除',
             icon: 'delete',
-            click: (_record, modal) => 123,
+            click: this.goDeletePage.bind(this),
           },
           {
             text: '查看',

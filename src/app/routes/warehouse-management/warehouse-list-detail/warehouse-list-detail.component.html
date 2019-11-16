@@ -1,0 +1,52 @@
+<page-header [title]="'企业库房详情'"></page-header>
+<nz-card [nzBordered]="false">
+  <form nz-form   se-container="1" labelWidth="200">
+    <se label="库房编号">
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.roomNo}}
+      </nz-col>
+    </se>
+    <se label="库房名称" >
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.roomName}}
+      </nz-col>
+    </se>
+    <se label="库房面积（平方米）" >
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.roomArea}}
+      </nz-col>
+    </se>
+    <se label="库房形式">
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.roomForm|map:'roomForm'}}
+      </nz-col>
+    </se>
+    <se label="火灾危险性等级">
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.fireLevel|map:'fireLevel'}}
+      </nz-col>
+    </se>
+    <se label="经度">
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.longitude}}
+      </nz-col>
+    </se>
+    <se label="纬度">
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.latitude}}
+      </nz-col>
+    </se>
+       <se label="在厂区的位置">
+     <nz-col nzLg="8" nzMd="12" nzSm="24">
+       {{dataInfo.locFactory}}
+     </nz-col>
+   </se>
+    <se>
+      <div class="detail-modal-footer">
+        <button nz-button type="button" (click)="returnBackToList()" nzType="primary">返回</button>
+      </div>
+    </se>
+  </form>
+</nz-card>
+
+
