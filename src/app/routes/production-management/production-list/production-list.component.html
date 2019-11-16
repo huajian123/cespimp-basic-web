@@ -81,9 +81,9 @@
 
 </ng-container>
 
-<!--<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
-  <app-basic-info-detail [entprId]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-basic-info-detail>
-</ng-container>-->
+<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
+  <app-production-management-production-list-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-production-management-production-list-detail>
+</ng-container>
 
 <!--<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
   <basic-info-edit-add></basic-info-edit-add>

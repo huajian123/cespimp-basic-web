@@ -69,9 +69,8 @@ export class WarehouseListComponent implements OnInit {
   }
 
   goDeletePage(item, modal) {
-    console.log('点击删除');
-   /* this.itemId = item.id;
-    this.dataService.delWarehouseInfo(this.itemId).then(() => this.getDataList(this.columns));*/
+    this.itemId = item.id;
+    this.dataService.delWarehouseInfo(this.itemId).then(() => this.getDataList(1));
   }
 
 

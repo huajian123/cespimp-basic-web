@@ -42,11 +42,6 @@ export class TankListComponent implements OnInit {
   }
 
   async getDataList(pageNumber?: number) {
-    /* const params: EntprSearch = {
-       pageNum: pageNumber || this.listPageInfo.pi,
-       pageSize: this.listPageInfo.ps,
-      // entprId:
-     };*/
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
@@ -71,7 +66,10 @@ export class TankListComponent implements OnInit {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
-
+  goDeletePage(item, modal) {
+    this.itemId = item.id;
+    this.dataService.delTankInfo(this.itemId).then(() => this.getDataList(1));
+  }
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
@@ -131,7 +129,7 @@ export class TankListComponent implements OnInit {
           {
             text: '删除',
             icon: 'delete',
-            click: (_record, modal) => 123,
+            click: this.goDeletePage.bind(this),
           },
           {
             text: '查看',

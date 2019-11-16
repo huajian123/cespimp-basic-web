@@ -1,19 +1,39 @@
-<page-header [title]="'企业生产场所详情'"></page-header>
+<page-header [title]="'企业储罐详情'"></page-header>
 <nz-card [nzBordered]="false">
   <form nz-form   se-container="1" labelWidth="200">
-    <se label="生产场所编号">
+    <se label="储罐编号">
       <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.placeNo}}
+        {{dataInfo.tankNo}}
       </nz-col>
     </se>
-    <se label="生产场所名称" >
+    <se label="储罐名称" >
       <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.placeName}}
+        {{dataInfo.tankName}}
       </nz-col>
     </se>
-    <se label="生产场所面积（平方米）" >
+    <se label="储罐类型" >
       <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.placeArea}}
+        {{dataInfo.tankType|map:'tankType'}}
+      </nz-col>
+    </se>
+    <se label="储罐形式">
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.tankForm|map:'tankForm'}}
+      </nz-col>
+    </se>
+    <se label="储罐结构">
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.tankStructure|map:'tankStructure'}}
+      </nz-col>
+    </se>
+    <se label="储罐材质">
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.tankMate|map:'tankMate'}}
+      </nz-col>
+    </se>
+    <se label="储罐容量（立方米）">
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.tamkCapacity}}
       </nz-col>
     </se>
     <se label="投产时间">

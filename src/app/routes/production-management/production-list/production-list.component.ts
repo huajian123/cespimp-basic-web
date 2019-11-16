@@ -66,6 +66,10 @@ export class ProductionListComponent implements OnInit {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
+  goDeletePage(item, modal) {
+    this.itemId = item.id;
+    this.dataService.delProductionInfo(this.itemId).then(() => this.getDataList(1));
+  }
 
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
@@ -97,7 +101,7 @@ export class ProductionListComponent implements OnInit {
           {
             text: '删除',
             icon: 'delete',
-            click: (_record, modal) => 123,
+            click: this.goDeletePage.bind(this),
           },
           {
             text: '查看',

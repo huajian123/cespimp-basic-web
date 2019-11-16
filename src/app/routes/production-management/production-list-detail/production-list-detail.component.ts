@@ -1,26 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import { NzModalRef, NzMessageService } from 'ng-zorro-antd';
-import { _HttpClient } from '@delon/theme';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  ProductionListInfoService,
+  ProductionListServiceNs,
+} from '@core/biz-services/production-management/production-list.service';
+import ProductionListInfoModel = ProductionListServiceNs.ProductionListInfoModel;
+
 
 @Component({
   selector: 'app-production-management-production-list-detail',
   templateUrl: './production-list-detail.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductionManagementProductionListDetailComponent implements OnInit {
-  record: any = {};
-  i: any;
-
-  constructor(
-    private modal: NzModalRef,
-    public msgSrv: NzMessageService,
-    public http: _HttpClient
-  ) { }
-
-  ngOnInit(): void {
-    this.http.get(`/user/${this.record.id}`).subscribe(res => this.i = res);
+  @Output() returnBack: EventEmitter<any>;
+  @Input() id: number;
+  @Input() currentPageNum: number;
+  dataInfo: ProductionListInfoModel;
+  constructor(private dataService: ProductionListInfoService, private cdr: ChangeDetectorRef) {
+    this.dataInfo = {
+      id: null,
+      placeNo: '',
+      placeName: '',
+      placeArea: null,
+      productionDate: new Date(),
+      longitude: null,
+      latitude: null,
+      locFactory: '',
+    };
+    this.returnBack = new EventEmitter<any>();
   }
 
-  close() {
-    this.modal.destroy();
+  async getDetailInfo(){
+    this.dataInfo = await this.dataService.getProductionInfoDetail(this.id);
+    this.cdr.markForCheck();
   }
+
+
+  returnBackToList() {
+    this.returnBack.emit({refesh: false, pageNo: this.currentPageNum});
+  }
+
+  ngOnInit() {
+    this.getDetailInfo()
+  }
+
 }
