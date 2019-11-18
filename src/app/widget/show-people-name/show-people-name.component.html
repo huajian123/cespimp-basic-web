@@ -1,0 +1,7 @@
+<nz-table nzTemplateMode [nzBordered]="true" [nzData]="dataList">
+  <tbody>
+  <tr *ngFor="let item of temp">
+    <td *ngFor="let tdItem of item">{{tdItem}}</td>
+  </tr>
+  </tbody>
+</nz-table>

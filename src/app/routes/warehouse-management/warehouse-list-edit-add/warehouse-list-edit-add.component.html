@@ -1,60 +1,73 @@
 <page-header [title]="'企业库区新增编辑页'"></page-header>
 <nz-card [nzBordered]="false">
-  <form nz-form [formGroup]="form" (ngSubmit)="submit()" se-container="1" labelWidth="200">
-    <se label="库房编号" error="请输入库房编号" required>
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input  formControlName="roomNo" placeholder="库房编号" />
-      </nz-col>
+  <form nz-form  [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
+
+    <se label="库房编号" >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input  formControlName="roomNo" placeholder="库房编号"/>
+        <nz-form-explain *ngIf="validateForm.get('roomNo').dirty && validateForm.get('roomNo').errors">请输入库房编号
+        </nz-form-explain>
+      </nz-form-control>
     </se>
-    <se label="库房名称" error="请输入库房名称" required>
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input  formControlName="roomName" placeholder="库房名称" />
-      </nz-col>
+
+    <se label="库房名称" >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input  formControlName="roomName" placeholder="库房名称"/>
+        <nz-form-explain *ngIf="validateForm.get('roomNo').dirty && validateForm.get('roomNo').errors">请输入库房名称
+        </nz-form-explain>
+      </nz-form-control>
     </se>
-    <se label="库房面积（平方米）" error="请输入库房面积（平方米）" required>
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input  formControlName="roomArea" placeholder="库房编号" />
-      </nz-col>
+    <se label="库房面积（平方米）"  >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input  formControlName="roomArea" placeholder="库房面积" />
+      </nz-form-control>
     </se>
-    <se label="库房形式"  error="请输入库房形式">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input formControlName="roomForm" placeholder="库房形式" />
-      </nz-col>
+    <se label="库房形式" >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <nz-select formControlName="roomForm" [nzShowSearch]="true" [nzPlaceHolder]="'请选择库房形式'">
+          <nz-option *ngFor="let item of roomFormOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+        </nz-select>
+      </nz-form-control>
     </se>
     <se label="火灾危险性等级">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
         <nz-form-item>
           <nz-form-control nzErrorTip="请选择火灾危险性等级">
             <nz-select formControlName="fireLevel" [nzShowSearch]="true" [nzPlaceHolder]="'请选择火灾危险性等级'">
-              <nz-option [nzLabel]="'私密'" [nzValue]="'private'"></nz-option>
-              <nz-option [nzLabel]="'公开'" [nzValue]="'public'"></nz-option>
+              <nz-option *ngFor="let item of fireLevelOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
-      </nz-col>
+      </nz-form-control>
     </se>
     <se label="经度">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-      <input nz-input  formControlName="longitude" placeholder="经度" />
-      </nz-col>
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+       <!-- <input nz-input  formControlName="longitude" placeholder="经度"/>-->
+        <input nz-input maxlength="80" class="cursor-pointer" readonly (click)="showMap()" maxlength="255" formControlName="longitude" placeholder="">
+        <nz-form-explain *ngIf="validateForm.get('longitude').dirty && validateForm.get('longitude').errors">请输入经度
+        </nz-form-explain>
+      </nz-form-control>
     </se>
     <se label="纬度" >
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input formControlName="latitude" placeholder="纬度" />
-      </nz-col>
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+       <!-- <input nz-input  formControlName="latitude" placeholder="纬度"/>-->
+        <input nz-input maxlength="80" class="cursor-pointer" readonly (click)="showMap()" maxlength="255" formControlName="latitude" placeholder="">
+        <nz-form-explain *ngIf="validateForm.get('latitude').dirty && validateForm.get('latitude').errors">请输入纬度
+        </nz-form-explain>
+      </nz-form-control>
     </se>
     <se label="在厂区的位置" >
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
        <textarea
          nz-input
          formControlName="locFactory"
          [nzAutosize]="{ minRows: 4 }"
          placeholder="在厂区的位置"
        ></textarea>
-      </nz-col>
+      </nz-form-control>
     </se>
     <se>
-      <button nz-button nzType="primary" [disabled]="form.invalid" type="submit" [nzLoading]="submitting">提交</button>
+      <button nz-button nzType="primary" type="submit" >提交</button>
       <button nz-button class="ml-sm" (click)="returnToList()">返回</button>
     </se>
   </form>

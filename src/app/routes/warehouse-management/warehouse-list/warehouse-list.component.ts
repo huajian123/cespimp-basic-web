@@ -8,6 +8,7 @@ import {
   WarehouseListServiceNs,
 } from '@core/biz-services/warehouse-management/warehouse-list.service';
 import WarehouseListInfoModel = WarehouseListServiceNs.WarehouseListInfoModel;
+import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 
 @Component({
   selector: 'app-warehouse-management-warehouse-list',
@@ -25,7 +26,7 @@ export class WarehouseListComponent implements OnInit {
   itemId: number;
 
 
-  constructor(private dataService: WarehouseListInfoService, private cdr: ChangeDetectorRef) {
+  constructor(private dataService: WarehouseListInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -55,11 +56,17 @@ export class WarehouseListComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
+  add() {
+    this.itemId = null;
+    this.currentPage = this.pageTypeEnum.AddOrEdit;
+  }
+
   format(toBeFormat, arg) {
     return new MapPipe().transform(toBeFormat, arg);
   }
 
   goEditAddPage(item, modal) {
+    this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
   }
 
@@ -69,15 +76,20 @@ export class WarehouseListComponent implements OnInit {
   }
 
   goDeletePage(item, modal) {
+    const modalCtrl = this.messageService.showAlertMessage('', '您确定要删除吗？', MessageType.Confirm);
+    modalCtrl.afterClose.subscribe((type: string) => {
+      if (type !== 'onOk') {
+        return;
+      }
     this.itemId = item.id;
     this.dataService.delWarehouseInfo(this.itemId).then(() => this.getDataList(1));
-  }
-
+  });
+    }
 
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
-      this.listPageInfo.ps = e.pageNo;
+      this.listPageInfo.pi = e.pageNo;
       await this.getDataList(e.pageNo);
     }
   }

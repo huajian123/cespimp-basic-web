@@ -67,7 +67,7 @@
         </div>
       </div>
     </form>
-    <button nz-button [nzType]="'primary'" class="m-b-sm" [acl]="roleEnum[roleEnum.ParkManage]">
+    <button nz-button [nzType]="'primary'" class="m-b-sm" [acl]="roleEnum[roleEnum.ParkManage]" (click)="add()">
       <i nz-icon nzType="plus"></i>
       <span>新建</span>
     </button>
@@ -83,7 +83,7 @@
   <app-warehouse-management-warehouse-list-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-warehouse-management-warehouse-list-detail>
 </ng-container>
 
-<!--<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
-  <app-warehouse-management-warehouse-list-edit-add></app-warehouse-management-warehouse-list-edit-add>
-</ng-container>-->
+<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
+  <app-warehouse-management-warehouse-list-edit-add [id]="this.itemId" [currentPageNum]="listPageInfo.pi" (returnBack)="returnToList($event)"></app-warehouse-management-warehouse-list-edit-add>
+</ng-container>
 

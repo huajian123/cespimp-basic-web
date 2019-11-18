@@ -20,3 +20,18 @@ export class SearchCommonVO {
   pageNum: number;
   pageSize: number;
 }
+
+export interface LoginInfoModel {
+  entprId: number;
+  id: number;
+  createBy: string;
+  createTime: Date;
+  delFlag: boolean;
+  mobileTel: string;
+  password: string;
+  realName: string;
+  role: number;
+  updateBy: string;
+  updateTime: Date;
+  userName: string;
+}

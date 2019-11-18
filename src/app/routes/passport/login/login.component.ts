@@ -10,6 +10,7 @@ import { StartupService } from '@core';
 import { LoginService } from '@core/biz-services/login-services/login.service';
 import { ACLService } from '@delon/acl';
 import { RoleEnum } from '@core/vo/comm/BusinessEnum';
+import { EVENT_KEY } from '@env/staticVariable';
 
 @Component({
   selector: 'passport-login',
@@ -117,13 +118,16 @@ export class UserLoginComponent implements OnDestroy {
     }
 
     const data = await this.loginService.login({ username: this.userName.value, password: this.password.value });
+    //console.log(data);
     window.sessionStorage.clear();
     // 清空路由复用信息
     this.reuseTabService.clear();
-    this.aclService.set({ role: [RoleEnum[data.role]] });
-    window.sessionStorage.setItem('role', [RoleEnum[data.role]].toString());
+    this.aclService.set({ role: [RoleEnum[data.user.role]] });
+    window.sessionStorage.setItem(EVENT_KEY.role, [RoleEnum[data.user.role]].toString());
+    window.sessionStorage.setItem(EVENT_KEY.loginInfo, JSON.stringify(data.user));
+    window.sessionStorage.setItem(EVENT_KEY.entprBasicInfo, JSON.stringify(data.entprBasicInfo));
     this.menuSrv.resume();
-    this.tokenService.set({ token: data.realName });
+    this.tokenService.set({ token: data.user.realName });
     this.router.navigateByUrl('/basic-info/basic-info');
     // 默认配置中对所有HTTP请求都会强制 [校验](https://ng-alain.com/auth/getting-started) 用户 Token
     // 然一般来说登录请求不需要校验，因此可以在请求URL加上：`/login?_allow_anonymous=true` 表示不触发用户 Token 校验
