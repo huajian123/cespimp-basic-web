@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STComponent } from '@delon/abc';
+import { STColumn} from '@delon/abc';
 import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import {
   HazardousChemicalInfoService,
@@ -7,6 +7,7 @@ import {
 } from '@core/biz-services/key-supervision-management/key-hazardous-chemicals.service';
 import HazardousChemicalInfoModel = HazardousChemicalListServiceNs.HazardousChemicalInfoModel;
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
+import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 
 @Component({
   selector: 'app-key-supervision-management-key-hazardous-chemicals-list',
@@ -22,7 +23,7 @@ export class KeySupervisionManagementKeyHazardousChemicalsListComponent implemen
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
-  constructor(private dataService: HazardousChemicalInfoService, private cdr: ChangeDetectorRef) {
+  constructor(private dataService: HazardousChemicalInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -52,13 +53,13 @@ export class KeySupervisionManagementKeyHazardousChemicalsListComponent implemen
     this.cdr.markForCheck();
   }
 
-  /*
-    format(toBeFormat, arg) {
-      return new MapPipe().transform(toBeFormat, arg);
-    }
-  */
+  add() {
+    this.itemId = null;
+    this.currentPage = this.pageTypeEnum.AddOrEdit;
+  }
 
   goEditAddPage(item, modal) {
+    this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
   }
 
@@ -67,10 +68,20 @@ export class KeySupervisionManagementKeyHazardousChemicalsListComponent implemen
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
 
+  goDeletePage(item, modal) {
+    const modalCtrl = this.messageService.showAlertMessage('', '您确定要删除吗？', MessageType.Confirm);
+    modalCtrl.afterClose.subscribe((type: string) => {
+      if (type !== 'onOk') {
+        return;
+      }
+      this.itemId = item.id;
+      this.dataService.delHazardousChemical(this.itemId).then(() => this.getDataList(1));
+    });
+  }
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
-      this.listPageInfo.ps = e.pageNo;
+      this.listPageInfo.pi = e.pageNo;
       await this.getDataList(e.pageNo);
     }
   }
@@ -92,7 +103,7 @@ export class KeySupervisionManagementKeyHazardousChemicalsListComponent implemen
           {
             text: '删除',
             icon: 'delete',
-            click: (_record, modal) => 123,
+            click: this.goDeletePage.bind(this),
           },
           {
             text: '查看',

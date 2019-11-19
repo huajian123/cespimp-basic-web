@@ -5,6 +5,7 @@ import { STColumn, STData } from '@delon/abc';
 import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
+import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 
 @Component({
   selector: 'app-basic-info-manage',
@@ -21,7 +22,7 @@ export class BasicInfoManageComponent implements OnInit {
   listPageInfo: ListPageInfo;
   itemId: number;
 
-  constructor(private dataService: BasicInfoService, private cdr: ChangeDetectorRef) {
+  constructor(private dataService: BasicInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -34,9 +35,9 @@ export class BasicInfoManageComponent implements OnInit {
     this.itemId = -1;
   }
 
-  goDetail() {
+/*  goDetail() {
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
-  }
+  }*/
 
   changePage(e) {
     this.listPageInfo = e;
@@ -55,8 +56,16 @@ export class BasicInfoManageComponent implements OnInit {
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '经济类型', index: 'ecoType', width: 100 },
-      { title: '企业规模', index: 'entprScale', width: 100 },
+      { title: '经济类型',
+        index: 'ecoType',
+        width: 100,
+        format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
+      },
+      { title: '企业规模',
+        index: 'entprScale',
+        width: 100,
+        format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
+      },
       {
         title: '操作',
         fixed: 'right',
@@ -70,7 +79,7 @@ export class BasicInfoManageComponent implements OnInit {
           {
             text: '删除',
             icon: 'delete',
-            click: (_record, modal) => 123,
+            click: this.goDeletePage.bind(this),
           },
           {
             text: '查看',
@@ -81,7 +90,10 @@ export class BasicInfoManageComponent implements OnInit {
       },
     ];
   }
-
+  add() {
+    this.itemId = null;
+    this.currentPage = this.pageTypeEnum.AddOrEdit;
+  }
   format(toBeFormat, arg) {
     return new MapPipe().transform(toBeFormat, arg);
   }
@@ -95,6 +107,16 @@ export class BasicInfoManageComponent implements OnInit {
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
 
+  goDeletePage(item, modal) {
+    const modalCtrl = this.messageService.showAlertMessage('', '您确定要删除吗？', MessageType.Confirm);
+    modalCtrl.afterClose.subscribe((type: string) => {
+      if (type !== 'onOk') {
+        return;
+      }
+      this.itemId = item.id;
+      //this.dataService.delProductionInfo(this.itemId).then(() => this.getDataList(1));
+    });
+  }
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {

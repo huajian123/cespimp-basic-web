@@ -67,7 +67,7 @@
         </div>
       </div>
     </form>
-    <button nz-button [nzType]="'primary'" class="m-b-sm" [acl]="roleEnum[roleEnum.ParkManage]">
+    <button nz-button [nzType]="'primary'" class="m-b-sm" [acl]="roleEnum[roleEnum.ParkManage]" (click)="add()">
       <i nz-icon nzType="plus"></i>
       <span>新建</span>
     </button>
@@ -75,17 +75,20 @@
     <st #st [page]="{showSize:true, front: false}"
         [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true"
         [scroll]="{x: '1000px'}"
-        [widthMode]="{ type: 'strict' }" [data]="dataList"  (change)="changePage($event)" [columns]="columns" class="mt-sm"></st>
+        [widthMode]="{ type: 'strict' }" [data]="dataList" (change)="changePage($event)" [columns]="columns"
+        class="mt-sm"></st>
   </nz-card>
 
 
 </ng-container>
 
-<!--<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
-  <app-basic-info-detail [entprId]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-basic-info-detail>
-</ng-container>-->
+<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
+  <app-key-supervision-management-key-hazardous-chemicals-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps"
+                                                                  (returnBack)="returnToList($event)"></app-key-supervision-management-key-hazardous-chemicals-detail>
+</ng-container>
 
-<!--<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
-  <basic-info-edit-add></basic-info-edit-add>
-</ng-container>-->
+<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
+  <app-key-supervision-management-key-hazardous-chemicals-edit-add [id]="this.itemId" [currentPageNum]="listPageInfo.pi"
+                                                                   (returnBack)="returnToList($event)"></app-key-supervision-management-key-hazardous-chemicals-edit-add>
+</ng-container>
 

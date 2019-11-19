@@ -70,15 +70,13 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
-      this.listPageInfo.ps = e.pageNo;
+      this.listPageInfo.pi = e.pageNo;
       await this.getDataList(e.pageNo);
     }
   }
   private initTable(): void {
     this.columns = [
       { title: '危险工艺名称', index: 'processName', width: 80 },
-     /* { title: '别名', index: 'alias', width: 80 },
-      { title: 'CAS号', index: 'casNo', width: 80 },*/
       {
         title: '操作',
         fixed: 'right',

@@ -1,52 +1,61 @@
-<page-header [title]="'基础编辑模板'"></page-header>
+<page-header [title]="'基础信息新增编辑页'"></page-header>
 <nz-card [nzBordered]="false">
-  <form nz-form [formGroup]="form" (ngSubmit)="submit()" se-container="1" labelWidth="200">
-    <se label="标题" error="请输入标题" required>
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input  formControlName="title" placeholder="给目标起个名字" />
-      </nz-col>
+  <form nz-form  [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
+
+    <se label="企业的中文全称" >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input  formControlName="entprName" placeholder="企业的中文全称"/>
+        <!--<nz-form-explain *ngIf="validateForm.get('entprName').dirty && validateForm.get('entprName').errors">请输入企业的中文全称
+        </nz-form-explain>-->
+      </nz-form-control>
     </se>
-    <se label="起止日期" error="请输入标题" required>
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        <nz-range-picker formControlName="date"></nz-range-picker>
-      </nz-col>
+
+    <se label="主要负责人" >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input  formControlName="boss" placeholder="主要负责人"/>
+       <!-- <nz-form-explain *ngIf="validateForm.get('boss').dirty && validateForm.get('boss').errors">请输入主要负责人
+        </nz-form-explain>-->
+      </nz-form-control>
     </se>
-    <se label="目标描述" error="请输入目标描述" required>
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-      <textarea
-        nz-input
-        formControlName="goal"
-        [nzAutosize]="{ minRows: 4 }"
-        placeholder="请输入你的阶段性工作目标"
-      ></textarea>
-      </nz-col>
+    <se label="主要负责人移动电话"  >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input  formControlName="bossMobile" placeholder="主要负责人移动电话" />
+      </nz-form-control>
     </se>
-    <se label="客户" optionalHelp="目标的服务对象" error="请输入衡量标准">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input formControlName="client" placeholder="请描述你服务的客户，内部客户直接 @姓名／工号" />
-      </nz-col>
+    <se label="经营状态" >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <nz-select formControlName="operatingStatus" [nzShowSearch]="true" [nzPlaceHolder]="'请选择经营状态'">
+         <!-- <nz-option *ngFor="let item of operatingStatusOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>-->
+        </nz-select>
+      </nz-form-control>
     </se>
-    <se label="邀评人">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input formControlName="invites" placeholder="请直接 @姓名／工号，最多可邀请 5 人" />
-      </nz-col>
+    <se label="经济类型">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="请选择经济类型">
+            <nz-select formControlName="ecoType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择经济类型'">
+              <!--<nz-option *ngFor="let item of ecoTypeOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>-->
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-form-control>
     </se>
-    <se label="权重">
-      <nz-input-number formControlName="weight" placeholder="请输入"></nz-input-number>
-      <em>%</em>
-    </se>
-    <se label="目标公开" extra="客户、邀评人默认被分享">
-      <nz-radio-group formControlName="public">
-        <label nz-radio [nzValue]="1">公开</label>
-        <label nz-radio [nzValue]="2">部分公开</label>
-        <label nz-radio [nzValue]="3">不公开</label>
-      </nz-radio-group>
-      <input *ngIf="form.value.public === 2" nz-input formControlName="publicUsers" placeholder="公开给" />
+    <se label="企业规模">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="请选择企业规模">
+            <nz-select formControlName="entprScale" [nzShowSearch]="true" [nzPlaceHolder]="'请选择企业规模'">
+             <!-- <nz-option *ngFor="let item of entprScaleOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>-->
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-form-control>
     </se>
     <se>
-      <button nz-button nzType="primary" [disabled]="form.invalid" type="submit" [nzLoading]="submitting">提交</button>
+      <button nz-button nzType="primary" type="submit" >提交</button>
       <button nz-button class="ml-sm" (click)="returnToList()">返回</button>
     </se>
   </form>
 </nz-card>
+
 
