@@ -96,6 +96,7 @@ export class WarehouseListComponent implements OnInit {
 
   private initTable(): void {
     this.columns = [
+      { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.Enterprise] },
       { title: '库房编号', index: 'roomNo', width: 120 },
       { title: '库房名称', index: 'roomName', width: 100 },
       { title: '库房面积', index: 'roomArea', width: 120 },

@@ -116,7 +116,7 @@ export const menus = [
           },
           {
             'text': '生产场所列表',
-            'link': '/major-hazard-management/major-hazard-list',
+            'link': '/production-management/production-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
 
@@ -188,7 +188,7 @@ export const menus = [
         'children': [
           {
             'text': '生产场所列表',
-            'link': '/major-hazard-management/major-hazard-list',
+            'link': '/production-management/production-list',
             'acl': RoleEnum[RoleEnum.ParkManage],
           },
         ],

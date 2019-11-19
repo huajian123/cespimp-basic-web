@@ -94,6 +94,7 @@ export class ProductionListComponent implements OnInit {
 
   private initTable(): void {
     this.columns = [
+      { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.Enterprise] },
       { title: '生产场所编号', index: 'placeNo', width: 120 },
       { title: '生产场所名称', index: 'placeName', width: 100 },
       { title: '生产场所面积', index: 'placeArea', width: 120 },
