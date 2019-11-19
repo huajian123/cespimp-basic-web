@@ -1,5 +1,4 @@
 export const EVENT_KEY = {
- /* factoryInfo: 'factoryInfo',*/
   role: 'role',
   loginInfo: 'loginInfo',
   entprBasicInfo: 'entprBasicInfo',

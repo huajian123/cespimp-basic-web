@@ -23,7 +23,7 @@ export class TankListComponent implements OnInit {
   itemId: number;
 
 
-  constructor(private dataService: TankListInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
+  constructor(private dataService: TankListInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -71,6 +71,7 @@ export class TankListComponent implements OnInit {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
+
   goDeletePage(item, modal) {
     const modalCtrl = this.messageService.showAlertMessage('', '您确定要删除吗？', MessageType.Confirm);
     modalCtrl.afterClose.subscribe((type: string) => {
@@ -81,6 +82,7 @@ export class TankListComponent implements OnInit {
       this.dataService.delTankInfo(this.itemId).then(() => this.getDataList(1));
     });
   }
+
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
@@ -91,6 +93,7 @@ export class TankListComponent implements OnInit {
 
   private initTable(): void {
     this.columns = [
+      { title: '企业名称', index: 'tankNo', width: 120, acl: this.roleEnum[this.roleEnum.Enterprise] },
       { title: '储罐编号', index: 'tankNo', width: 120 },
       { title: '储罐名称', index: 'tankName', width: 100 },
       {
@@ -130,17 +133,19 @@ export class TankListComponent implements OnInit {
       {
         title: '操作',
         fixed: 'right',
-        width: '120px',
+        width: '80px',
         buttons: [
           {
             text: '编辑',
             icon: 'edit',
             click: this.goEditAddPage.bind(this),
+            acl: this.roleEnum[this.roleEnum.Enterprise],
           },
           {
             text: '删除',
             icon: 'delete',
             click: this.goDeletePage.bind(this),
+            acl: this.roleEnum[this.roleEnum.Enterprise],
           },
           {
             text: '查看',

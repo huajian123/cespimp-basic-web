@@ -106,16 +106,16 @@ export const menus = [
         'children': [
           {
             'text': '储罐列表',
-            'link': '/major-hazard-management/major-hazard-list',
+            'link': '/storage-tank-management/tank-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
           {
             'text': '库房列表',
-            'link': '/major-hazard-management/major-hazard-list',
+            'link': '/warehouse-management/warehouse-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
           {
-            'text': '生产产所列表',
+            'text': '生产场所列表',
             'link': '/major-hazard-management/major-hazard-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
@@ -158,17 +158,17 @@ export const menus = [
     ],
   },
   {
-    text: '仓库管理',
+    text: '库房管理',
     group: false,
     hideInBreadcrumb: false,
     'acl': RoleEnum[RoleEnum.ParkManage],
     children: [
       {
-        'text': '仓库管理',
+        'text': '库房管理',
         'icon': 'anticon-appstore',
         'children': [
           {
-            'text': '仓库列表',
+            'text': '库房列表',
             'link': '/warehouse-management/warehouse-list',
             'acl': RoleEnum[RoleEnum.ParkManage],
           },
@@ -188,7 +188,7 @@ export const menus = [
         'children': [
           {
             'text': '生产场所列表',
-            'link': '/production-management/production-list',
+            'link': '/major-hazard-management/major-hazard-list',
             'acl': RoleEnum[RoleEnum.ParkManage],
           },
         ],

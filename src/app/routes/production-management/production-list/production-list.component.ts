@@ -104,17 +104,19 @@ export class ProductionListComponent implements OnInit {
       {
         title: '操作',
         fixed: 'right',
-        width: '100px',
+        width: '80px',
         buttons: [
           {
             text: '编辑',
             icon: 'edit',
             click: this.goEditAddPage.bind(this),
+            acl: this.roleEnum[this.roleEnum.Enterprise],
           },
           {
             text: '删除',
             icon: 'delete',
             click: this.goDeletePage.bind(this),
+            acl: this.roleEnum[this.roleEnum.Enterprise],
           },
           {
             text: '查看',
