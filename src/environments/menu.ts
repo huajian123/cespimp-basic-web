@@ -23,6 +23,7 @@ export const menus = [
         'text': '企业基本信息管理',
         'icon': 'anticon-appstore',
         'children': [
+          /*园区*/
           {
             'text': '基本信息列表',
             'link': '/basic-info/basic-info',
@@ -31,10 +32,43 @@ export const menus = [
           {
             'text': '基本信息审核列表',
             'link': '/basic-info/basic-info-audit-list',
+            'acl': RoleEnum[RoleEnum.ParkManage],
           },
           {
             'text': '基本信息统计',
             'link': '/basic-info/basic-info-statistics',
+            'acl': RoleEnum[RoleEnum.ParkManage],
+          },
+          /*企业管理员*/
+          {
+            'text': '企业基本信息',
+            'link': '/basic-info/basic-info-audit-list',
+            'acl': RoleEnum[RoleEnum.Enterprise],
+          },
+          {
+            'text': '证照信息',
+            'link': '/basic-info/basic-info-audit-list',
+            'acl': RoleEnum[RoleEnum.Enterprise],
+          },
+          {
+            'text': '企业周边环境信息',
+            'link': '/basic-info/basic-info-audit-list',
+            'acl': RoleEnum[RoleEnum.Enterprise],
+          },
+          {
+            'text': '生产原料信息',
+            'link': '/basic-info/basic-info-audit-list',
+            'acl': RoleEnum[RoleEnum.Enterprise],
+          },
+          {
+            'text': '中间产品信息',
+            'link': '/basic-info/basic-info-audit-list',
+            'acl': RoleEnum[RoleEnum.Enterprise],
+          },
+          {
+            'text': '最终产品信息',
+            'link': '/basic-info/basic-info-audit-list',
+            'acl': RoleEnum[RoleEnum.Enterprise],
           },
         ],
       },
@@ -71,16 +105,34 @@ export const menus = [
         'icon': 'anticon-appstore',
         'children': [
           {
+            'text': '储罐列表',
+            'link': '/major-hazard-management/major-hazard-list',
+            'acl': RoleEnum[RoleEnum.Enterprise],
+          },
+          {
+            'text': '库房列表',
+            'link': '/major-hazard-management/major-hazard-list',
+            'acl': RoleEnum[RoleEnum.Enterprise],
+          },
+          {
+            'text': '生产产所列表',
+            'link': '/major-hazard-management/major-hazard-list',
+            'acl': RoleEnum[RoleEnum.Enterprise],
+          },
+
+          {
             'text': '重大危险源列表',
             'link': '/major-hazard-management/major-hazard-list',
           },
           {
             'text': '重大危险源备案列表 ',
             'link': '/major-hazard-management/major-hazard-record-list',
+            'acl': RoleEnum[RoleEnum.ParkManage],
           },
           {
             'text': '重大危险源统计',
             'link': '/major-hazard-management/major-hazard-statistics-list',
+            'acl': RoleEnum[RoleEnum.ParkManage],
           },
         ],
       },
@@ -90,6 +142,7 @@ export const menus = [
     text: '储罐管理',
     group: false,
     hideInBreadcrumb: false,
+    'acl': RoleEnum[RoleEnum.ParkManage],
     children: [
       {
         'text': '储罐管理',
@@ -98,6 +151,7 @@ export const menus = [
           {
             'text': '储罐列表',
             'link': '/storage-tank-management/tank-list',
+            'acl': RoleEnum[RoleEnum.ParkManage],
           },
         ],
       },
@@ -107,6 +161,7 @@ export const menus = [
     text: '仓库管理',
     group: false,
     hideInBreadcrumb: false,
+    'acl': RoleEnum[RoleEnum.ParkManage],
     children: [
       {
         'text': '仓库管理',
@@ -115,6 +170,7 @@ export const menus = [
           {
             'text': '仓库列表',
             'link': '/warehouse-management/warehouse-list',
+            'acl': RoleEnum[RoleEnum.ParkManage],
           },
         ],
       },
@@ -124,6 +180,7 @@ export const menus = [
     text: '生产场所管理',
     group: false,
     hideInBreadcrumb: false,
+    'acl': RoleEnum[RoleEnum.ParkManage],
     children: [
       {
         'text': '生产场所管理',
@@ -132,6 +189,7 @@ export const menus = [
           {
             'text': '生产场所列表',
             'link': '/production-management/production-list',
+            'acl': RoleEnum[RoleEnum.ParkManage],
           },
         ],
       },
@@ -210,7 +268,39 @@ export const menus = [
         'icon': 'anticon-appstore',
         'children': [
           {
-            'text': '特种作业列表',
+            'text': '动火作业',
+            'link': '/risk-monitoring/real-time-risk',
+          },
+          {
+            'text': '受限空间作业',
+            'link': '/risk-monitoring/real-time-risk',
+          },
+          {
+            'text': '高处作业',
+            'link': '/risk-monitoring/real-time-risk',
+          },
+          {
+            'text': '吊装作业',
+            'link': '/risk-monitoring/real-time-risk',
+          },
+          {
+            'text': '临时用电',
+            'link': '/risk-monitoring/real-time-risk',
+          },
+          {
+            'text': '设备检修',
+            'link': '/risk-monitoring/real-time-risk',
+          },
+          {
+            'text': '盲板抽堵',
+            'link': '/risk-monitoring/real-time-risk',
+          },
+          {
+            'text': '断路作业',
+            'link': '/risk-monitoring/real-time-risk',
+          },
+          {
+            'text': '动土作业',
             'link': '/risk-monitoring/real-time-risk',
           },
         ],
