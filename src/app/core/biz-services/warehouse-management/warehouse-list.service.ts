@@ -15,26 +15,28 @@ export namespace WarehouseListServiceNs {
     locFactory?: string;
   }
 
-  export interface EntprSearch {
-    entprId?: number;
-  }
- /* export interface EntprSearch extends SearchCommonVO {
-    entprId: number;
-  }
-*/
   export class WarehouseListInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
-
+    /*新增接口*/
+    public addWarehouse(param:WarehouseListInfoModel): Promise<void> {
+      return this.http.post('data/basic/enterprise/rooms',param,{needSuccessInfo: true}).toPromise();
+    }
+    /*修改接口*/
+    public editWarehouse(param: WarehouseListInfoModel): Promise<void> {
+      return this.http.put('data/basic/enterprise/rooms',param,{needSuccessInfo: true}).toPromise();
+    }
+    /*库房详情*/
     public getWarehouseInfoDetail(id: number): Promise<WarehouseListInfoModel> {
       return this.http.get('data/basic/enterprise/rooms/'+ id).toPromise();
     }
-
+    /*库房列表*/
     public getWarehouseList(param: SearchCommonVO): Promise<PageInfo<WarehouseListInfoModel>> {
       return this.http.get('data/basic/enterprise/rooms', param).toPromise();
     }
+    /*删除接口*/
     public delWarehouseInfo(id: number): Promise<WarehouseListInfoModel> {
-      return this.http.del('data/basic/enterprise/rooms', {id: id}).toPromise();
+      return this.http.del('data/basic/enterprise/rooms/'+ id).toPromise();
     }
   }
 }
@@ -43,7 +45,6 @@ export namespace WarehouseListServiceNs {
   providedIn: 'root',
 })
 export class WarehouseListInfoService extends WarehouseListServiceNs.WarehouseListInfoServiceClass {
-
   constructor(http: HttpUtilService) {
     super(http);
   }

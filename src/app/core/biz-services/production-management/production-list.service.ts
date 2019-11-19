@@ -14,24 +14,27 @@ export namespace ProductionListServiceNs {
     locFactory?: string;
   }
 
-  export interface EntprSearch {
-    entprId?: number;
-  }
-
- /* export interface EntprSearch extends SearchCommonVO {
-    entprId: number;
-  }*/
 
   export class ProductionListInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
-
-    public getProductionInfoDetail(param: EntprSearch): Promise<ProductionListInfoModel> {
-      return this.http.get('data/basic/enterprise/'+param.entprId).toPromise();
+    /*新增接口*/
+    public addProduction(param:ProductionListInfoModel): Promise<void> {
+      return this.http.post('data/basic/enterprise/place',param,{needSuccessInfo: true}).toPromise();
+    }
+    /*修改接口*/
+    public editProduction(param: ProductionListInfoModel): Promise<void> {
+      return this.http.put('data/basic/enterprise/place',param,{needSuccessInfo: true}).toPromise();
+    }
+    public getProductionInfoDetail(id:number): Promise<ProductionListInfoModel> {
+      return this.http.get('data/basic/enterprise/place/'+id).toPromise();
     }
 
     public getProductionList(param: SearchCommonVO): Promise<PageInfo<ProductionListInfoModel>> {
       return this.http.get('data/basic/enterprise/place', param).toPromise();
+    }
+    public delProductionInfo(id: number): Promise<ProductionListInfoModel> {
+      return this.http.del('data/basic/enterprise/place/'+ id).toPromise();
     }
   }
 }

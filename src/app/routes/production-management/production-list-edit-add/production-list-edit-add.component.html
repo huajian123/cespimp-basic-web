@@ -1,10 +1,71 @@
-<div class="modal-header">
-  <div class="modal-title">编辑 {{ record.id }} 信息</div>
-</div>
-<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
-<sf *ngIf="i" #sf mode="edit" [schema]="schema" [ui]="ui" [formData]="i" button="none">
-  <div class="modal-footer">
-    <button nz-button type="button" (click)="close()">关闭</button>
-    <button nz-button type="submit" nzType="primary" (click)="save(sf.value)" [disabled]="!sf.valid" [nzLoading]="http.loading">保存</button>
-  </div>
-</sf>
+<page-header [title]="'企业生产场所新增编辑页'"></page-header>
+<nz-card [nzBordered]="false">
+  <form nz-form  [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
+    <se label="生产场所编号" >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input  formControlName="placeNo" placeholder="生产场所编号"/>
+        <nz-form-explain *ngIf="validateForm.get('placeNo').dirty && validateForm.get('placeNo').errors">请输入生产场所编号
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+
+    <se label="生产场所名称" >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input  formControlName="placeName" placeholder="生产场所名称"/>
+        <nz-form-explain *ngIf="validateForm.get('placeName').dirty && validateForm.get('placeName').errors">请输入生产场所名称
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="生产场所面积（平方米）"  >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input  formControlName="placeArea" placeholder="生产场所面积（平方米）"/>
+        <nz-form-explain *ngIf="validateForm.get('placeArea').dirty && validateForm.get('placeArea').errors">请输入生产场所面积（平方米）
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+
+    <se label="投产时间" >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <nz-date-picker
+          nzShowTime
+          nzFormat="yyyy-MM-dd HH:mm:ss"
+          nzPlaceHolder="请选择投产时间"
+          formControlName="productionDate"
+        ></nz-date-picker>
+       <!-- <nz-form-explain *ngIf="validateForm.get('productionDate').dirty && validateForm.get('productionDate').errors">请选择投产时间
+        </nz-form-explain>-->
+      </nz-form-control>
+    </se>
+    <se label="经度">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input maxlength="80" class="cursor-pointer" readonly (click)="showMap()" maxlength="255" formControlName="longitude" placeholder="">
+        <nz-form-explain *ngIf="validateForm.get('longitude').dirty && validateForm.get('longitude').errors">请输入经度
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="纬度" >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input maxlength="80" class="cursor-pointer" readonly (click)="showMap()" maxlength="255" formControlName="latitude" placeholder="">
+        <nz-form-explain *ngIf="validateForm.get('latitude').dirty && validateForm.get('latitude').errors">请输入纬度
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="在厂区的位置" >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+       <textarea
+         nz-input
+         formControlName="locFactory"
+         [nzAutosize]="{ minRows: 4 }"
+         placeholder="在厂区的位置"
+       ></textarea>
+      </nz-form-control>
+    </se>
+    <se>
+      <button nz-button nzType="primary" type="submit" >提交</button>
+      <button nz-button class="ml-sm" (click)="returnToList()">返回</button>
+    </se>
+  </form>
+</nz-card>
+
+
+

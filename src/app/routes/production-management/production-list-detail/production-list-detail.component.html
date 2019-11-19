@@ -18,7 +18,7 @@
     </se>
     <se label="投产时间">
       <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.productionDate}}
+        {{dataInfo.productionDate|map:'date:yyyy-MM-dd HH:mm:ss'}}
       </nz-col>
     </se>
     <se label="经度">

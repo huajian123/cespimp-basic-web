@@ -17,22 +17,28 @@ export namespace TankListServiceNs {
     productionDate?: Date;
     locFactory?: string;
   }
-  export interface EntprSearch {
-    entprId?: number;
-  }
- /* export interface EntprSearch extends SearchCommonVO {
-    entprId: number;
- }*/
+
   export class TankListInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
+    /*新增接口*/
+    public addTank(param:TankListInfoModel): Promise<void> {
+      return this.http.post('data/basic/enterprise/tanks',param,{needSuccessInfo: true}).toPromise();
+    }
+    /*修改接口*/
+    public editTank(param: TankListInfoModel): Promise<void> {
+      return this.http.put('data/basic/enterprise/tanks',param,{needSuccessInfo: true}).toPromise();
+    }
 
-    public getTankInfoDetail(entprId: number): Promise<TankListInfoModel> {
-      return this.http.get('data/basic/enterprise/'+'entprId').toPromise();
+    public getTankInfoDetail(id: number): Promise<TankListInfoModel> {
+      return this.http.get('data/basic/enterprise/tanks/'+id).toPromise();
     }
 
     public getTankList(param: SearchCommonVO ): Promise<PageInfo<TankListInfoModel>> {
       return this.http.get('data/basic/enterprise/tanks', param).toPromise();
+    }
+    public delTankInfo(id: number): Promise<TankListInfoModel> {
+      return this.http.del('data/basic/enterprise/tanks/'+ id).toPromise();
     }
   }
 }
