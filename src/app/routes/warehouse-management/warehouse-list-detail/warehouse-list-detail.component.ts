@@ -39,7 +39,6 @@ export class WarehouseManagementWarehouseListDetailComponent implements OnInit {
   }
 async getDetailInfo(){
   this.dataInfo = await this.dataService.getWarehouseInfoDetail(this.id);
-  //console.log(this.dataInfo);
   this.cdr.markForCheck();
 }
 

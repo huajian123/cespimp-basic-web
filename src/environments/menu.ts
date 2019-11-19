@@ -76,11 +76,11 @@ export const menus = [
           },
           {
             'text': '重大危险源备案列表 ',
-            'link': '/major-hazard-management/major-hazardrecord-list',
+            'link': '/major-hazard-management/major-hazard-record-list',
           },
           {
             'text': '重大危险源统计',
-            'link': '/major-hazard-management/major-hazardstatistics-list',
+            'link': '/major-hazard-management/major-hazard-statistics-list',
           },
         ],
       },

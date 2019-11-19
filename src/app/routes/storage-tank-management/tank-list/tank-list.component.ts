@@ -5,7 +5,7 @@ import { TankListInfoService, TankListServiceNs } from '@core/biz-services/stora
 import TankListInfoModel = TankListServiceNs.TankListInfoModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
-import EntprSearch = TankListServiceNs.EntprSearch;
+import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 
 @Component({
   selector: 'app-storage-tank-management-tank-list',
@@ -23,7 +23,7 @@ export class TankListComponent implements OnInit {
   itemId: number;
 
 
-  constructor(private dataService: TankListInfoService, private cdr: ChangeDetectorRef) {
+  constructor(private dataService: TankListInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -57,8 +57,13 @@ export class TankListComponent implements OnInit {
     return new MapPipe().transform(toBeFormat, arg);
   }
 
+  add() {
+    this.itemId = null;
+    this.currentPage = this.pageTypeEnum.AddOrEdit;
+  }
 
   goEditAddPage(item, modal) {
+    this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
   }
 
@@ -67,13 +72,19 @@ export class TankListComponent implements OnInit {
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
   goDeletePage(item, modal) {
-    this.itemId = item.id;
-    this.dataService.delTankInfo(this.itemId).then(() => this.getDataList(1));
+    const modalCtrl = this.messageService.showAlertMessage('', '您确定要删除吗？', MessageType.Confirm);
+    modalCtrl.afterClose.subscribe((type: string) => {
+      if (type !== 'onOk') {
+        return;
+      }
+      this.itemId = item.id;
+      this.dataService.delTankInfo(this.itemId).then(() => this.getDataList(1));
+    });
   }
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
-      this.listPageInfo.ps = e.pageNo;
+      this.listPageInfo.pi = e.pageNo;
       await this.getDataList(e.pageNo);
     }
   }

@@ -35,9 +35,8 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
   roomFormOptions: OptionsInterface[];
   loginInfo: LoginInfoModel;
 
-
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
-              private dataService: WarehouseListInfoService,private positionPickerService: PositionPickerService) {
+              private dataService: WarehouseListInfoService, private positionPickerService: PositionPickerService) {
     this.returnBack = new EventEmitter<any>();
     this.fireLevelOptions = [];
     this.roomFormOptions = [];
@@ -71,9 +70,9 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
   }
 
   async getDetail() {
-      const dataInfo = await this.dataService.getWarehouseInfoDetail(this.id);
-      this.validateForm.patchValue(dataInfo);
-      this.cdr.markForCheck();
+    const dataInfo = await this.dataService.getWarehouseInfoDetail(this.id);
+    this.validateForm.patchValue(dataInfo);
+    this.cdr.markForCheck();
   }
 
   returnToList() {
@@ -82,42 +81,44 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
 
   async submit() {
     Object.keys(this.validateForm.controls).forEach(key => {
-          this.validateForm.controls[key].markAsDirty();
-          this.validateForm.controls[key].updateValueAndValidity();
-        });
-        if (this.validateForm.invalid) {
-          return;
-        }
+      this.validateForm.controls[key].markAsDirty();
+      this.validateForm.controls[key].updateValueAndValidity();
+    });
+    if (this.validateForm.invalid) {
+      return;
+    }
     const params = this.validateForm.getRawValue();
     params.entprId = this.loginInfo.entprId;
     params.createBy = this.loginInfo.createBy;
 
     let submitHandel = null;
 
-      if (!this.id) {
-    submitHandel = this.dataService.addWarehouse(params);
-     } else {
-       params.id = this.id;
-       submitHandel = this.dataService.editWarehouse(params);
-     }
+    if (!this.id) {
+      submitHandel = this.dataService.addWarehouse(params);
+    } else {
+      params.id = this.id;
+      submitHandel = this.dataService.editWarehouse(params);
+    }
 
-     await submitHandel;
+    await submitHandel;
     this.returnBack.emit({ refesh: true, pageNo: this.currentPageNum });
   }
+
   showMap() {
-    this.positionPickerService.show({isRemoteImage: true}).then(res => {
+    this.positionPickerService.show({ isRemoteImage: true }).then(res => {
       this.validateForm.get('longitude').setValue(res.longitude);
       this.validateForm.get('latitude').setValue(res.latitude);
     }).catch(e => null);
   }
+
   ngOnInit() {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.fireLevelOptions = [...MapPipe.transformMapToArray(MapSet.fireLevel)];
     this.roomFormOptions = [...MapPipe.transformMapToArray(MapSet.roomForm)];
     this.initForm();
-     if (this.id) {
-       this.getDetail();
-     }
+    if (this.id) {
+      this.getDetail();
+    }
 
   }
 }

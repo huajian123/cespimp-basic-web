@@ -67,7 +67,7 @@
         </div>
       </div>
     </form>
-    <button nz-button [nzType]="'primary'" class="m-b-sm" [acl]="roleEnum[roleEnum.ParkManage]">
+    <button nz-button [nzType]="'primary'" class="m-b-sm" [acl]="roleEnum[roleEnum.ParkManage]" (click)="add()">
       <i nz-icon nzType="plus"></i>
       <span>新建</span>
     </button>
@@ -78,14 +78,13 @@
         [widthMode]="{ type: 'strict' }" [data]="dataList"  (change)="changePage($event)" [columns]="columns" class="mt-sm"></st>
   </nz-card>
 
-
 </ng-container>
 
 <ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
   <app-storage-tank-management-tank-list-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-storage-tank-management-tank-list-detail>
 </ng-container>
 
-<!--<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
-  <basic-info-edit-add></basic-info-edit-add>
-</ng-container>-->
+<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
+  <app-storage-tank-management-tank-list-edit-add [id]="this.itemId" [currentPageNum]="listPageInfo.pi" (returnBack)="returnToList($event)"></app-storage-tank-management-tank-list-edit-add>
+</ng-container>
 
