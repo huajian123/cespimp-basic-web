@@ -16,7 +16,7 @@ export const appInfo = {
 };
 
 export const loginUserInfo = {
-  'name': 'Admin',
+  'name': JSON.parse(window.sessionStorage.getItem('loginInfo')) ? JSON.parse(window.sessionStorage.getItem('loginInfo')).userName : 'admin',
   'avatar': './assets/tmp/img/avatar.jpg',
   'email': 'cipchk@qq.com',
 };

@@ -1,6 +1,8 @@
 import { RoleEnum } from '@core/vo/comm/BusinessEnum';
+import { Menu } from '@delon/theme';
+import { EVENT_KEY } from '@env/staticVariable';
 
-export const menus = [
+export const menus: Menu = [
   {
     text: '安全一张图',
     group: false,
@@ -106,8 +108,14 @@ export const menus = [
         'children': [
           {
             'text': '储罐列表',
-            'link': '/storage-tank-management/tank-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
+            get link() {
+              if (window.sessionStorage.getItem(EVENT_KEY.role) === RoleEnum[RoleEnum.Enterprise]) {
+                return '/storage-tank-management/tank-list';
+              } else {
+                return '/storage-tank-management/tank-list1';
+              }
+            },
           },
           {
             'text': '库房列表',
@@ -116,7 +124,7 @@ export const menus = [
           },
           {
             'text': '生产场所列表',
-            'link': '/production-management/production-list',
+            'link': '/major-hazard-management/major-hazard-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
 
@@ -150,7 +158,13 @@ export const menus = [
         'children': [
           {
             'text': '储罐列表',
-            'link': '/storage-tank-management/tank-list',
+            get link() {
+              if (window.sessionStorage.getItem(EVENT_KEY.role) === RoleEnum[RoleEnum.ParkManage]) {
+                return '/storage-tank-management/tank-list';
+              } else {
+                return '/storage-tank-management/tank-list1';
+              }
+            },
             'acl': RoleEnum[RoleEnum.ParkManage],
           },
         ],
@@ -188,7 +202,7 @@ export const menus = [
         'children': [
           {
             'text': '生产场所列表',
-            'link': '/production-management/production-list',
+            'link': '/major-hazard-management/major-hazard-list',
             'acl': RoleEnum[RoleEnum.ParkManage],
           },
         ],
