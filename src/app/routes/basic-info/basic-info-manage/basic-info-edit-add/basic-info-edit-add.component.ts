@@ -16,35 +16,34 @@ import { NzMessageService } from 'ng-zorro-antd';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicInfoEditAddComponent implements OnInit {
+  validateForm: FormGroup;
   form: FormGroup;
-  submitting = false;
+  @Input() id: number;
   @Input() currentPageNum: number;
   @Output() returnBack: EventEmitter<any>;
-  constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef) {}
+  constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef) {
+    this.returnBack = new EventEmitter<any>();
+  }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      title: [null, [Validators.required]],
+    this.validateForm = this.fb.group({
+    /*  title: [null, [Validators.required]],
       date: [null, [Validators.required]],
       goal: [null, [Validators.required]],
       standard: [null, [Validators.required]],
       client: [null, []],
       invites: [null, []],
       weight: [null, []],
-      public: [1, [Validators.min(1), Validators.max(3)]],
-      publicUsers: [null, []],
+      public: [null, []],
+      publicUsers: [null, []],*/
     });
   }
   returnToList() {
-    this.returnBack.emit({refesh: true, pageNo: this.currentPageNum});
+    this.returnBack.emit();
   }
 
-  submit() {
-    this.submitting = true;
-    setTimeout(() => {
-      this.submitting = false;
-      this.msg.success(`提交成功`);
-      this.cdr.detectChanges();
-    }, 1000);
+  async submit() {
+  console.log('点击提交按钮');
+    this.returnBack.emit({ refesh: true, pageNo: this.currentPageNum });
   }
 }
