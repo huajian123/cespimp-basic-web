@@ -117,7 +117,7 @@ export class WarehouseListComponent implements OnInit {
       {
         title: '操作',
         fixed: 'right',
-        width: '80px',
+        width: '100px',
         buttons: [
           {
             text: '编辑',
