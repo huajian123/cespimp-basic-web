@@ -8,7 +8,7 @@ import {
   Output,
 } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PositionPickerService } from '../../../widget/position-picker/position-picker.service';
 import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import { EVENT_KEY } from '@env/staticVariable';
@@ -27,153 +27,144 @@ interface OptionsInterface {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StorageTankManagementTankListEditAddComponent implements OnInit {
+  tankFormOptions: OptionsInterface[];
+  tankStructureOptions: OptionsInterface[];
+  tankMateOptions: OptionsInterface[];
+  tankTypeOptions: OptionsInterface[];
+  validateForm: FormGroup;
+  loginInfo: LoginInfoModel;
+
+
   @Input() id: number;
   @Input() currentPageNum: number;
   @Output() returnBack: EventEmitter<any>;
   editIndex = -1;
   editObj = {};
 
-  form: FormGroup;
-  users: any[] = [{ value: 'xiao', label: '付晓晓' }, { value: 'mao', label: '周毛毛' }];
-
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private positionPickerService: PositionPickerService, private dataService: TankListInfoService) {
     this.returnBack = new EventEmitter<any>();
   }
 
-  ngOnInit() {
-    this.form = this.fb.group({
-      name: [null, [Validators.required]],
-      url: [null, [Validators.required]],
-      owner: [undefined, [Validators.required]],
-      approver: [null, [Validators.required]],
-      date_range: [null, [Validators.required]],
-      type: [null, [Validators.required]],
-      name2: [null, [Validators.required]],
-      summary: [null, [Validators.required]],
-      owner2: [null, [Validators.required]],
-      approver2: [null, [Validators.required]],
-      time: [null, [Validators.required]],
-      type2: [null, [Validators.required]],
-      items: this.fb.array([]),
-    });
-    const userList = [
-      {
-        key: '1',
-        workId: '00001',
-        name: 'John Brown',
-        department: 'New York No. 1 Lake Park',
-      },
-      {
-        key: '2',
-        workId: '00002',
-        name: 'Jim Green',
-        department: 'London No. 1 Lake Park',
-      },
-      {
-        key: '3',
-        workId: '00003',
-        name: 'Joe Black',
-        department: 'Sidney No. 1 Lake Park',
-      },
-    ];
-    userList.forEach(i => {
-      const field = this.createUser();
-      field.patchValue(i);
-      this.items.push(field);
+  initForm() {
+    this.validateForm = this.fb.group({
+      tankNo: [null, [Validators.required]],
+      tankName: [null, [Validators.required]],
+      tankType: [null, [Validators.required]],
+      tankForm: [null, [Validators.required]],
+      tankStructure: [null, [Validators.required]],
+      tankMate: [null, [Validators.required]],
+      tankCapacity: [null, [Validators.required]],
+      productionDate: [null, [Validators.required]],
+      longitude: [null, [Validators.required]],
+      latitude: [null, [Validators.required]],
+      locFactory: [null, [Validators.required]],
+      majorHazardMaterialSelectDTOS: <FormArray>this.fb.array([]),
     });
   }
 
-  createUser(): FormGroup {
+
+  showMap() {
+    this.positionPickerService.show({ isRemoteImage: true }).then(res => {
+      this.validateForm.get('longitude').setValue(res.longitude);
+      this.validateForm.get('latitude').setValue(res.latitude);
+    }).catch(e => null);
+  }
+
+  initTypeOptions() {
+    this.tankTypeOptions = [...MapPipe.transformMapToArray(MapSet.tankType)];
+    this.tankFormOptions = [...MapPipe.transformMapToArray(MapSet.tankForm)];
+    this.tankStructureOptions = [...MapPipe.transformMapToArray(MapSet.tankStructure)];
+    this.tankMateOptions = [...MapPipe.transformMapToArray(MapSet.tankMate)];
+  }
+
+
+  // 创建介质
+  createMedium(): FormGroup {
     return this.fb.group({
-      key: [null],
-      workId: [null, [Validators.required]],
-      name: [null, [Validators.required]],
-      department: [null, [Validators.required]],
+      productName: [null, [Validators.required]],
+      casNo: [null, [Validators.required]],
+      criticalMass: [null, [Validators.required]],
+      maximumReserves: [null, [Validators.required]],
     });
   }
 
   //#region get form fields
-  get name() {
-    return this.form.controls.name;
-  }
-  get url() {
-    return this.form.controls.url;
-  }
-  get owner() {
-    return this.form.controls.owner;
-  }
-  get approver() {
-    return this.form.controls.approver;
-  }
-  get time_start() {
-    return this.form.controls.time_start;
-  }
-  get time_end() {
-    return this.form.controls.time_end;
-  }
-  get type() {
-    return this.form.controls.type;
-  }
-  get name2() {
-    return this.form.controls.name2;
-  }
-  get summary() {
-    return this.form.controls.summary;
-  }
-  get owner2() {
-    return this.form.controls.owner2;
-  }
-  get approver2() {
-    return this.form.controls.approver2;
-  }
-  get time() {
-    return this.form.controls.time;
-  }
-  get type2() {
-    return this.form.controls.type2;
-  }
-  get items() {
-    return this.form.controls.items as FormArray;
+  get mediumArray() {
+    return this.validateForm.controls.majorHazardMaterialSelectDTOS as FormArray;
   }
   //#endregion
 
+  // 新增介质
   add() {
-    this.items.push(this.createUser());
-    this.edit(this.items.length - 1);
+    this.mediumArray.push(this.createMedium());
+    this.edit(this.mediumArray.length - 1);
   }
 
+  // 删除介质
   del(index: number) {
-    this.items.removeAt(index);
+    this.mediumArray.removeAt(index);
   }
 
+  // 编辑介质
   edit(index: number) {
     if (this.editIndex !== -1 && this.editObj) {
-      this.items.at(this.editIndex).patchValue(this.editObj);
+      this.mediumArray.at(this.editIndex).patchValue(this.editObj);
     }
-    this.editObj = { ...this.items.at(index).value };
+    this.editObj = { ...this.mediumArray.at(index).value };
     this.editIndex = index;
   }
 
+  // 保存单个介质
   save(index: number) {
-    this.items.at(index).markAsDirty();
-    if (this.items.at(index).invalid) return;
+    this.mediumArray.at(index).markAsDirty();
+    if (this.mediumArray.at(index).invalid) return;
     this.editIndex = -1;
   }
 
+  // 取消
   cancel(index: number) {
-    if (!this.items.at(index).value.key) {
+    if (!this.mediumArray.at(index).value.key) {
       this.del(index);
     } else {
-      this.items.at(index).patchValue(this.editObj);
+      this.mediumArray.at(index).patchValue(this.editObj);
     }
     this.editIndex = -1;
   }
 
-  _submitForm() {
-    Object.keys(this.form.controls).forEach(key => {
-      this.form.controls[key].markAsDirty();
-      this.form.controls[key].updateValueAndValidity();
+  // 提交表单
+  async _submitForm() {
+    Object.keys(this.validateForm.controls).forEach(key => {
+      this.validateForm.controls[key].markAsDirty();
+      this.validateForm.controls[key].updateValueAndValidity();
     });
-    if (this.form.invalid) return;
+
+    if (this.validateForm.invalid) return;
+    if ((this.validateForm.controls['majorHazardMaterialSelectDTOS'] as FormGroup).invalid) {
+      return;
+    }
+
+
+    const params = this.validateForm.getRawValue();
+    params.entprId = this.loginInfo.entprId;
+    params.createBy = this.loginInfo.createBy;
+    params.updateBy = this.loginInfo.updateBy;
+    let submitHandel = null;
+
+    if (!this.id) {
+      submitHandel = this.dataService.addTank(params);
+    } else {
+      params.id = this.id;
+      submitHandel = this.dataService.editTank(params);
+    }
+
+    await submitHandel;
+    this.returnBack.emit({ refesh: true, pageNo: this.currentPageNum });
   }
+
+  ngOnInit() {
+    this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+    this.initForm();
+    this.initTypeOptions();
+  }
+
 }
