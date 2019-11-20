@@ -86,6 +86,7 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
       casNo: [null, [Validators.required]],
       criticalMass: [null, [Validators.required]],
       maximumReserves: [null, [Validators.required]],
+      entprId: [this.loginInfo.entprId],
     });
   }
 
@@ -93,6 +94,7 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
   get mediumArray() {
     return this.validateForm.controls.majorHazardMaterialInsertDTOS as FormArray;
   }
+
   //#endregion
 
   // 新增介质
@@ -170,7 +172,6 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
 
   async getDetail() {
     const dataInfo = await this.dataService.getTankInfoDetail(this.id);
-    console.log(dataInfo);
     this.validateForm.patchValue(dataInfo);
     this.cdr.markForCheck();
   }
