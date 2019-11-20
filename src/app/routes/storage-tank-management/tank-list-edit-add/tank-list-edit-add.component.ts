@@ -41,7 +41,8 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
   editIndex = -1;
   editObj = {};
 
-  constructor(private fb: FormBuilder, private positionPickerService: PositionPickerService, private dataService: TankListInfoService) {
+  constructor(private fb: FormBuilder, private positionPickerService: PositionPickerService, private dataService: TankListInfoService,
+              private cdr: ChangeDetectorRef) {
     this.returnBack = new EventEmitter<any>();
   }
 
@@ -166,10 +167,21 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
     this.returnBack.emit({ refesh: false, pageNo: this.currentPageNum });
   }
 
+
+  async getDetail() {
+    const dataInfo = await this.dataService.getTankInfoDetail(this.id);
+    this.validateForm.patchValue(dataInfo);
+    this.cdr.markForCheck();
+  }
+
   ngOnInit() {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.initForm();
     this.initTypeOptions();
+
+    if (this.id) {
+      this.getDetail();
+    }
   }
 
 }
