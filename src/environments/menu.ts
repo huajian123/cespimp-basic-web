@@ -33,7 +33,6 @@ export const menus = [
           {
             'text': '基本信息审核列表',
             'link': '/basic-info/basic-info-audit-list',
-            'acl': RoleEnum[RoleEnum.ParkManage],
           },
           {
             'text': '基本信息统计',
@@ -153,7 +152,6 @@ export const menus = [
           {
             'text': '重大危险源备案列表 ',
             'link': '/major-hazard-management/major-hazard-record-list',
-            'acl': RoleEnum[RoleEnum.ParkManage],
           },
           {
             'text': '重大危险源统计',
