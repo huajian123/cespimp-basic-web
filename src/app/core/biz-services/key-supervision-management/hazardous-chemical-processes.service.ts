@@ -9,23 +9,32 @@ export namespace HazardousChemicalProcessesListServiceNs {
     processName: string;
   }
 
-  export interface EntprSearch {
-    entprId?: number;
-  }
-  /* export interface EntprSearch extends SearchCommonVO {
-     entprId: number;
-   }
- */
+
   export class HazardousChemicalProcessesInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
 
-    public getHazardousChemicalProcessesInfoDetail(param: EntprSearch): Promise<HazardousChemicalProcessesInfoModel> {
-      return this.http.get('data/basic/enterprise/'+param.entprId).toPromise();
-    }
 
+
+    /*新增接口*/
+    public addHazardousChemicalProcesses(param:HazardousChemicalProcessesInfoModel): Promise<void> {
+      return this.http.post('data/major/hazard/process',param,{needSuccessInfo: true}).toPromise();
+    }
+    /*修改接口*/
+    public editHazardousChemicalProcesses(param: HazardousChemicalProcessesInfoModel): Promise<void> {
+      return this.http.put('data/major/hazard/process',param,{needSuccessInfo: true}).toPromise();
+    }
+    /*详情接口*/
+    public getHazardousChemicalProcessesInfoDetail(id: number): Promise<HazardousChemicalProcessesInfoModel> {
+      return this.http.get('data/major/hazard/process/'+id).toPromise();
+    }
+   /*列表接口*/
     public getHazardousChemicalProcessesList(param: SearchCommonVO): Promise<PageInfo<HazardousChemicalProcessesInfoModel>> {
-      return this.http.get('data/basic/enterprise/processes', param).toPromise();
+      return this.http.get('data/major/hazard/processes', param).toPromise();
+    }
+    /*删除接口*/
+    public delHazardousChemicalProcesses(id: number): Promise<HazardousChemicalProcessesInfoModel> {
+      return this.http.del('data/major/hazard/process/'+ id).toPromise();
     }
   }
 }

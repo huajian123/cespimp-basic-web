@@ -1,61 +1,98 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NzModalRef, NzMessageService } from 'ng-zorro-antd';
-import { _HttpClient } from '@delon/theme';
-import { SFSchema, SFUISchema } from '@delon/form';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
+import { PositionPickerService } from '../../../../widget/position-picker/position-picker.service';
+import { EVENT_KEY } from '@env/staticVariable';
+import { HazardousChemicalProcessesInfoService } from '@core/biz-services/key-supervision-management/hazardous-chemical-processes.service';
+
 
 @Component({
   selector: 'app-key-supervision-management-hazardous-chemical-processes-edit-add',
   templateUrl: './hazardous-chemical-processes-edit-add.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KeySupervisionManagementHazardousChemicalProcessesEditAddComponent implements OnInit {
-  record: any = {};
-  i: any;
-  schema: SFSchema = {
-    properties: {
-      no: { type: 'string', title: '编号' },
-      owner: { type: 'string', title: '姓名', maxLength: 15 },
-      callNo: { type: 'number', title: '调用次数' },
-      href: { type: 'string', title: '链接', format: 'uri' },
-      description: { type: 'string', title: '描述', maxLength: 140 },
-    },
-    required: ['owner', 'callNo', 'href', 'description'],
-  };
-  ui: SFUISchema = {
-    '*': {
-      spanLabelFixed: 100,
-      grid: { span: 12 },
-    },
-    $no: {
-      widget: 'text'
-    },
-    $href: {
-      widget: 'string',
-    },
-    $description: {
-      widget: 'textarea',
-      grid: { span: 24 },
-    },
-  };
+  validateForm: FormGroup;
+  form: FormGroup;
+  @Input() id: number;
+  @Input() currentPageNum: number;
+  @Output() returnBack: EventEmitter<any>;
+  loginInfo: LoginInfoModel;
 
-  constructor(
-    private modal: NzModalRef,
-    private msgSrv: NzMessageService,
-    public http: _HttpClient,
-  ) {}
-
-  ngOnInit(): void {
-    if (this.record.id > 0)
-    this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
+  constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
+              private dataService: HazardousChemicalProcessesInfoService, private positionPickerService: PositionPickerService) {
+    this.returnBack = new EventEmitter<any>();
+    this.loginInfo = {
+      createBy: '',
+      createTime: new Date(),
+      delFlag: null,
+      entprId: null,
+      id: null,
+      mobileTel: '',
+      password: '',
+      realName: '',
+      role: null,
+      updateBy: '',
+      updateTime: new Date(),
+      userName: '',
+    };
   }
 
-  save(value: any) {
-    this.http.post(`/user/${this.record.id}`, value).subscribe(res => {
-      this.msgSrv.success('保存成功');
-      this.modal.close(true);
+
+  initForm() {
+    this.validateForm = this.fb.group({
+      processName: [null, [Validators.required]],
     });
   }
 
-  close() {
-    this.modal.destroy();
+  async getDetail() {
+    const dataInfo = await this.dataService.getHazardousChemicalProcessesInfoDetail(this.id);
+    this.validateForm.patchValue(dataInfo);
+    this.cdr.markForCheck();
   }
+
+  returnToList() {
+    this.returnBack.emit();
+  }
+
+  async submit() {
+    Object.keys(this.validateForm.controls).forEach(key => {
+      this.validateForm.controls[key].markAsDirty();
+      this.validateForm.controls[key].updateValueAndValidity();
+    });
+    if (this.validateForm.invalid) {
+      return;
+    }
+    const params = this.validateForm.getRawValue();
+    params.entprId = this.loginInfo.entprId;
+    params.updateBy = this.loginInfo.realName;
+    params.createBy = this.loginInfo.realName;
+    let submitHandel = null;
+    if (!this.id) {
+      submitHandel = this.dataService.addHazardousChemicalProcesses(params);
+    } else {
+      params.id = this.id;
+      submitHandel = this.dataService.editHazardousChemicalProcesses(params);
+    }
+    await submitHandel;
+    this.returnBack.emit({ refesh: true, pageNo: this.currentPageNum });
+  }
+
+  ngOnInit() {
+    this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+    this.initForm();
+    if (this.id) {
+      this.getDetail();
+    }
+  }
+
 }

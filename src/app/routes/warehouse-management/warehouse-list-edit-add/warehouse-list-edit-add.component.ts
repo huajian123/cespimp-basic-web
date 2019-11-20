@@ -89,8 +89,8 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
     }
     const params = this.validateForm.getRawValue();
     params.entprId = this.loginInfo.entprId;
-    params.createBy = this.loginInfo.createBy;
-
+    params.createBy = this.loginInfo.userName;
+    params.updateBy = this.loginInfo.userName;
     let submitHandel = null;
 
     if (!this.id) {

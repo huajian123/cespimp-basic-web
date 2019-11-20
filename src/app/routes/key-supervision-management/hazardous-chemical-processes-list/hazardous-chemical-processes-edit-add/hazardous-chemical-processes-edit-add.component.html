@@ -1,10 +1,18 @@
-<div class="modal-header">
-  <div class="modal-title">编辑 {{ record.id }} 信息</div>
-</div>
-<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
-<sf *ngIf="i" #sf mode="edit" [schema]="schema" [ui]="ui" [formData]="i" button="none">
-  <div class="modal-footer">
-    <button nz-button type="button" (click)="close()">关闭</button>
-    <button nz-button type="submit" nzType="primary" (click)="save(sf.value)" [disabled]="!sf.valid" [nzLoading]="http.loading">保存</button>
-  </div>
-</sf>
+<page-header [title]="'重点危险化工工艺新增编辑页'"></page-header>
+<nz-card [nzBordered]="false">
+  <form nz-form  [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
+    <se label="危险工艺名称" >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input  formControlName="processName" placeholder="危险工艺名称"/>
+        <nz-form-explain *ngIf="validateForm.get('processName').dirty && validateForm.get('processName').errors">请输入危险工艺名称
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se>
+      <button nz-button nzType="primary" type="submit" >提交</button>
+      <button nz-button class="ml-sm" (click)="returnToList()">返回</button>
+    </se>
+  </form>
+</nz-card>
+
+

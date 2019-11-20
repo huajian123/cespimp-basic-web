@@ -81,8 +81,8 @@ export class ProductionManagementProductionListEditAddComponent implements OnIni
     }
     const params = this.validateForm.getRawValue();
     params.entprId = this.loginInfo.entprId;
-    params.updateBy = this.loginInfo.updateBy;
-    params.createBy = this.loginInfo.createBy;
+    params.updateBy = this.loginInfo.userName;
+    params.createBy = this.loginInfo.userName;
     let submitHandel = null;
 
     if (!this.id) {

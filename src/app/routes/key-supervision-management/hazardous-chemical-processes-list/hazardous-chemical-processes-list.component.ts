@@ -7,6 +7,7 @@ import {
   HazardousChemicalProcessesListServiceNs,
 } from '@core/biz-services/key-supervision-management/hazardous-chemical-processes.service';
 import HazardousChemicalProcessesInfoModel = HazardousChemicalProcessesListServiceNs.HazardousChemicalProcessesInfoModel;
+import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 
 @Component({
   selector: 'app-key-supervision-management-hazardous-chemical-processes-list',
@@ -22,7 +23,7 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
-  constructor(private dataService: HazardousChemicalProcessesInfoService, private cdr: ChangeDetectorRef) {
+  constructor(private dataService: HazardousChemicalProcessesInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -52,13 +53,12 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
     this.cdr.markForCheck();
   }
 
-/*
-  format(toBeFormat, arg) {
-    return new MapPipe().transform(toBeFormat, arg);
+  add() {
+    this.itemId = null;
+    this.currentPage = this.pageTypeEnum.AddOrEdit;
   }
-*/
-
   goEditAddPage(item, modal) {
+    this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
   }
 
@@ -66,7 +66,16 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
-
+  goDeletePage(item, modal) {
+    const modalCtrl = this.messageService.showAlertMessage('', '您确定要删除吗？', MessageType.Confirm);
+    modalCtrl.afterClose.subscribe((type: string) => {
+      if (type !== 'onOk') {
+        return;
+      }
+      this.itemId = item.id;
+      this.dataService.delHazardousChemicalProcesses(this.itemId).then(() => this.getDataList(1));
+    });
+  }
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
@@ -76,6 +85,7 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
   }
   private initTable(): void {
     this.columns = [
+      { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.Enterprise] },
       { title: '危险工艺名称', index: 'processName', width: 80 },
       {
         title: '操作',
@@ -86,11 +96,13 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
             text: '编辑',
             icon: 'edit',
             click: this.goEditAddPage.bind(this),
+            acl: this.roleEnum[this.roleEnum.Enterprise],
           },
           {
             text: '删除',
             icon: 'delete',
-            click: (_record, modal) => 123,
+            click: this.goDeletePage.bind(this),
+            acl: this.roleEnum[this.roleEnum.Enterprise],
           },
           {
             text: '查看',

@@ -648,7 +648,11 @@ export const MapSet = {
     2:'中型',
     3:'小型',
   },
-
+  //单元类型
+  unitType:{
+    1:'生产单元',
+    2:'存储单元'
+},
   //  经营状态
   reviewStatus: {
     1: '待审核',
