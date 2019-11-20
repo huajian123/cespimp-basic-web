@@ -1,67 +1,41 @@
-<page-header [title]="'企业储罐详情'"></page-header>
-<nz-card [nzBordered]="false">
-  <form nz-form   se-container="1" labelWidth="200">
-    <se label="储罐编号">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.tankNo}}
-      </nz-col>
-    </se>
-    <se label="储罐名称" >
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.tankName}}
-      </nz-col>
-    </se>
-    <se label="储罐类型" >
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.tankType|map:'tankType'}}
-      </nz-col>
-    </se>
-    <se label="储罐形式">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.tankForm|map:'tankForm'}}
-      </nz-col>
-    </se>
-    <se label="储罐结构">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.tankStructure|map:'tankStructure'}}
-      </nz-col>
-    </se>
-    <se label="储罐材质">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.tankMate|map:'tankMate'}}
-      </nz-col>
-    </se>
-    <se label="储罐容量（立方米）">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.tamkCapacity}}
-      </nz-col>
-    </se>
-    <se label="投产时间">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.productionDate|map:'date:yyyy-MM-dd HH:mm:ss'}}
-      </nz-col>
-    </se>
-    <se label="经度">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.longitude}}
-      </nz-col>
-    </se>
-    <se label="纬度">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.latitude}}
-      </nz-col>
-    </se>
-    <se label="在厂区的位置">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.locFactory}}
-      </nz-col>
-    </se>
-    <se>
-      <div class="detail-modal-footer">
-        <button nz-button type="button" (click)="returnBackToList()" nzType="primary">返回</button>
-      </div>
-    </se>
-  </form>
+<page-header [title]="'储罐详情页'"></page-header>
+<nz-card [nzHoverable]="true" [nzBordered]="false">
+  <sv-container size="large" title="退款申请">
+    <sv label="储罐编号">{{dataInfo.tankNo}}</sv>
+    <sv label="储罐名称">{{dataInfo.tankName}}</sv>
+    <sv label="储罐类型">{{dataInfo.tankType|map:'tankType'}}</sv>
+    <sv label="储罐形式">{{dataInfo.tankForm|map:'tankForm'}}</sv>
+    <sv label="储罐结构">{{dataInfo.tankStructure|map:'tankStructure'}}</sv>
+    <sv label="储罐材质">{{dataInfo.tankMate|map:'tankMate'}}</sv>
+    <sv label="储罐容量">{{dataInfo.tamkCapacity}}</sv>
+    <sv label="投产时间">{{dataInfo.productionDate|map:'date:yyyy-MM-dd HH:mm'}}</sv>
+  </sv-container>
+  <nz-divider></nz-divider>
+  <sv-container size="large" title="位置管理">
+    <sv label="经纬度"><span (click)="showMap()" class="operate-text">查看</span></sv>
+    <sv label="厂区中位置">{{dataInfo.locFactory}}</sv>
+  </sv-container>
+  <nz-divider></nz-divider>
+ <!-- <div class="text-lg mb-md">退货商品</div>
+  <st #st [data]="goods" [columns]="goodsColumns" [body]="goodsBody" [page]="{ show: false }">
+    <ng-template #goodsBody>
+      <tr>
+        <td>合计</td>
+        <td></td>
+        <td></td>
+        <td class="text-right"></td>
+        <td class="text-right">
+          <strong>{{ basicNum }}</strong>
+        </td>
+        <td class="text-right">
+          <strong>{{ amountNum | _currency }}</strong>
+        </td>
+      </tr>
+    </ng-template>
+  </st>
+  <div class="text-lg my-md">退货进度</div>
+  <st [data]="progress" [columns]="progressColumns" [page]="{ show: false }"></st>-->
 </nz-card>
-
-
+<footer-toolbar errorCollect>
+  <button nz-button type="primary" (click)="returnToList()" nzType="default">返回</button>
+</footer-toolbar>

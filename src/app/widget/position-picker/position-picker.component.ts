@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import {BaseConfirmModal} from '../base-confirm-modal';
 import {NzModalRef} from 'ng-zorro-antd';
 import {EVENT_KEY} from '../../../environments/staticVariable';
@@ -23,7 +23,7 @@ export class PositionPickerComponent extends BaseConfirmModal.BasicConfirmModalC
   zoom: number;
   center: PositionModel;
   @ViewChild('mapDivModal', {static: true}) mapElement: ElementRef;
-  currentPosition: PositionModel;
+  @Input() currentPosition: PositionModel;
   entprBasicInfo:LoginEntprModel;
   params;
   loginInfo:LoginInfoModel;
@@ -34,17 +34,19 @@ export class PositionPickerComponent extends BaseConfirmModal.BasicConfirmModalC
     this.entprBasicInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
     console.log(this.entprBasicInfo);
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+    console.log(this.center);
+    console.log(this.currentPosition);
+  }
+
+  ngOnInit() {
     this.currentPosition = {
-      longitude:  this.entprBasicInfo.longitude,
-      latitude:  this.entprBasicInfo.latitude
+      longitude:  this.params.longitude||this.entprBasicInfo.longitude,
+      latitude:  this.params.latitude|| this.entprBasicInfo.latitude
     };
     this.center = {
       longitude:  this.entprBasicInfo.longitude,
       latitude:  this.entprBasicInfo.latitude
     };
-  }
-
-  ngOnInit() {
   }
 
   protected getCurrentValue(): any {

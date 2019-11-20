@@ -59,7 +59,7 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
       longitude: [null, [Validators.required]],
       latitude: [null, [Validators.required]],
       locFactory: [null, [Validators.required]],
-      majorHazardMaterialSelectDTOS: <FormArray>this.fb.array([]),
+      majorHazardMaterialInsertDTOS: <FormArray>this.fb.array([]),
     });
   }
 
@@ -91,7 +91,7 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
 
   //#region get form fields
   get mediumArray() {
-    return this.validateForm.controls.majorHazardMaterialSelectDTOS as FormArray;
+    return this.validateForm.controls.majorHazardMaterialInsertDTOS as FormArray;
   }
   //#endregion
 
@@ -140,7 +140,7 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
     });
 
     if (this.validateForm.invalid) return;
-    if ((this.validateForm.controls['majorHazardMaterialSelectDTOS'] as FormGroup).invalid) {
+    if ((this.validateForm.controls['majorHazardMaterialInsertDTOS'] as FormGroup).invalid) {
       return;
     }
 
@@ -170,6 +170,7 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
 
   async getDetail() {
     const dataInfo = await this.dataService.getTankInfoDetail(this.id);
+    console.log(dataInfo);
     this.validateForm.patchValue(dataInfo);
     this.cdr.markForCheck();
   }
