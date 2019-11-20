@@ -50,7 +50,7 @@ export const menus = [
             'text': '证照信息',
             'link': '/basic-info/certificate-info-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
-          },
+          },/*以上的2个菜单展现形式未确定还未创建模板文件*/
           {
             'text': '企业周边环境信息',
             'link': '/basic-info/enterprise-surrounding-info-list',
@@ -58,7 +58,7 @@ export const menus = [
           },
           {
             'text': '生产原料信息',
-            'link': '/basic-info/production--materials-info-list',
+            'link': '/basic-info/production-materials-info-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
           {
@@ -87,12 +87,10 @@ export const menus = [
           {
             'text': '重点监管危险化学品列表',
             'link': '/key-supervision-management/key-hazardous-chemicals-list',
-            'acl': RoleEnum[RoleEnum.ParkManage],
           },
           {
             'text': '重点监管危险化工工艺列表',
             'link': '/key-supervision-management/hazardous-chemical-processes-list',
-            'acl': RoleEnum[RoleEnum.ParkManage],
           },
         ],
       },

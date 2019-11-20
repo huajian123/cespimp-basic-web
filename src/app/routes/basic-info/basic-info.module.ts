@@ -6,6 +6,10 @@ import { BasicInfoDetailComponent } from './basic-info-manage/basic-info-detail/
 import { BasicInfoEditAddComponent } from './basic-info-manage/basic-info-edit-add/basic-info-edit-add.component';
 import { BasicInfoBasicInfoAuditListComponent } from './basic-info-audit-list/basic-info-audit-list.component';
 import { BasicInfoBasicInfoStatisticsComponent } from './basic-info-statistics/basic-info-statistics.component';
+import { BasicInfoEnterpriseSurroundingInfoListComponent } from './enterprise-surrounding-info-list/enterprise-surrounding-info-list.component';
+import { BasicInfoProductionMaterialsInfoListComponent } from './production-materials-info-list/production-materials-info-list.component';
+import { BasicInfoIntermediateProductInfoListComponent } from './intermediate-product-info-list/intermediate-product-info-list.component';
+import { BasicInfoFinalProductInfoListComponent } from './final-product-info-list/final-product-info-list.component';
 
 
 const COMPONENTS = [
@@ -13,7 +17,11 @@ const COMPONENTS = [
   BasicInfoDetailComponent,
   BasicInfoEditAddComponent,
   BasicInfoBasicInfoAuditListComponent,
-  BasicInfoBasicInfoStatisticsComponent];
+  BasicInfoBasicInfoStatisticsComponent,
+  BasicInfoEnterpriseSurroundingInfoListComponent,
+  BasicInfoProductionMaterialsInfoListComponent,
+  BasicInfoIntermediateProductInfoListComponent,
+  BasicInfoFinalProductInfoListComponent];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({

@@ -30,7 +30,7 @@ export namespace MajorHazardListServiceNs {
     }
 
     public getMajorHazardList(param: SearchCommonVO): Promise<PageInfo<MajorHazardListInfoModel>> {
-      return this.http.get('data/major/hazard/info', param).toPromise();
+      return this.http.get('data/major/hazard/infos', param).toPromise();
     }
   }
 }
