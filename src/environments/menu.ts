@@ -1,8 +1,7 @@
 import { RoleEnum } from '@core/vo/comm/BusinessEnum';
-import { Menu } from '@delon/theme';
 import { EVENT_KEY } from '@env/staticVariable';
 
-export const menus: Menu = [
+export const menus = [
   {
     text: '安全一张图',
     group: false,
