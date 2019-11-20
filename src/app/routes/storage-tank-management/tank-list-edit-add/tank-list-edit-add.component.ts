@@ -161,6 +161,11 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
     this.returnBack.emit({ refesh: true, pageNo: this.currentPageNum });
   }
 
+
+  returnToList() {
+    this.returnBack.emit({ refesh: false, pageNo: this.currentPageNum });
+  }
+
   ngOnInit() {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.initForm();
