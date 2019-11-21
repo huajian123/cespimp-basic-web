@@ -60,6 +60,10 @@ export namespace LoginServiceNs {
     public getLoginUrls(): Promise<UrlsModelInterface> {
       return this.http.post('basic/subsystem/login').toPromise();
     }
+
+    public loginOut(): Promise<any> {
+      return this.http.post('basic/subsystem/loginOut').toPromise();
+    }
   }
 }
 
