@@ -185,7 +185,6 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.initForm();
     this.initTypeOptions();
-
     if (this.id) {
       this.getDetail();
     }
