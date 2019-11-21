@@ -736,14 +736,6 @@ export const MapSet = {
     2: '中间产品',
     3: '最终产品',
   },
-
-
-  // 重大危险源组成类型
-  partType: {
-    1: '储罐',
-    2: '仓库',
-    3: '生产场所',
-  },
 };
 
 export interface MapItem {
