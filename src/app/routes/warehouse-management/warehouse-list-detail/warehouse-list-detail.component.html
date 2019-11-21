@@ -1,52 +1,24 @@
-<page-header [title]="'企业库房详情'"></page-header>
-<nz-card [nzBordered]="false">
-  <form nz-form   se-container="1" labelWidth="200">
-    <se label="库房编号">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.roomNo}}
-      </nz-col>
-    </se>
-    <se label="库房名称" >
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.roomName}}
-      </nz-col>
-    </se>
-    <se label="库房面积（平方米）" >
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.roomArea}}
-      </nz-col>
-    </se>
-    <se label="库房形式">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.roomForm|map:'roomForm'}}
-      </nz-col>
-    </se>
-    <se label="火灾危险性等级">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.fireLevel|map:'fireLevel'}}
-      </nz-col>
-    </se>
-    <se label="经度">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.longitude}}
-      </nz-col>
-    </se>
-    <se label="纬度">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.latitude}}
-      </nz-col>
-    </se>
-       <se label="在厂区的位置">
-     <nz-col nzLg="8" nzMd="12" nzSm="24">
-       {{dataInfo.locFactory}}
-     </nz-col>
-   </se>
-    <se>
-      <div class="detail-modal-footer">
-        <button nz-button type="button" (click)="returnBackToList()" nzType="primary">返回</button>
-      </div>
-    </se>
-  </form>
+<page-header [title]="'储罐详情页'"></page-header>
+<nz-card [nzHoverable]="true" [nzBordered]="false">
+  <sv-container size="large" title="基本信息">
+    <sv label="库房编号">{{dataInfo.roomNo}}</sv>
+    <sv label="库房名称">{{dataInfo.roomName}}</sv>
+    <sv label="库房面积（平方米）">{{dataInfo.roomArea}}</sv>
+    <sv label="库房形式">{{dataInfo.roomForm|map:'roomForm'}}</sv>
+    <sv label="火灾危险性等级">{{dataInfo.fireLevel|map:'fireLevel'}}</sv>
+  </sv-container>
+  <nz-divider></nz-divider>
+  <sv-container size="large" title="位置管理">
+    <sv label="经纬度"><span (click)="showMap()" class="operate-text">查看</span></sv>
+    <sv label="厂区中位置">{{dataInfo.locFactory}}</sv>
+  </sv-container>
+  <nz-divider></nz-divider>
+  <div class="text-lg mb-md">介质列表</div>
+  <st #st [page]="{showSize:true, front: false}"
+      [bordered]="true"
+      [scroll]="{x: '1200px'}"
+      [widthMode]="{ type: 'strict' }" [data]="dataInfo.majorHazardMaterials" [columns]="columns" class="mt-sm"></st>
 </nz-card>
-
-
+<footer-toolbar errorCollect>
+  <button nz-button type="primary" (click)="returnToList()" nzType="default">返回</button>
+</footer-toolbar>
