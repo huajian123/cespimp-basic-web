@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STData } from '@delon/abc';
-
 import { ListPageInfo, PageTypeEnum } from '@core/vo/comm/BusinessEnum';
 import {
   MajorHazardRecordListInfoService,
@@ -10,7 +8,7 @@ import {
 import MajorHazardRecordListInfoModel = MajorHazardRecordListServiceNs.MajorHazardRecordListInfoModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
-import { type } from 'os';
+
 
 
 @Component({
@@ -73,7 +71,7 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
-      this.listPageInfo.ps = e.pageNo;
+      this.listPageInfo.pi = e.pageNo;
       await this.getDataList(e.pageNo);
     }
   }
@@ -97,14 +95,9 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
         width: '100px',
         buttons: [
           {
-            text: '编辑',
+            text: '审核',
             icon: 'edit',
             click: this.goEditAddPage.bind(this),
-          },
-          {
-            text: '删除',
-            icon: 'delete',
-            click: (_record, modal) => 123,
           },
           {
             text: '查看',

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { STColumn, STData } from '@delon/abc';
-import { ListPageInfo, PageTypeEnum } from '@core/vo/comm/BusinessEnum';
+import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import {
   MajorHazardListInfoService,
   MajorHazardListServiceNs,
@@ -8,6 +8,7 @@ import {
 import MajorHazardListInfoModel = MajorHazardListServiceNs.MajorHazardListInfoModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
+import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 
 @Component({
   selector: 'app-major-hazard-management-major-hazard-list',
@@ -15,6 +16,7 @@ import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MajorHazardManagementMajorHazardListComponent implements OnInit {
+  roleEnum = RoleEnum;
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
   expandForm: boolean;
@@ -23,7 +25,7 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
   listPageInfo: ListPageInfo;
   itemId: number;
 
-  constructor(private dataService: MajorHazardListInfoService, private cdr: ChangeDetectorRef) {
+  constructor(private dataService: MajorHazardListInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -52,12 +54,16 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
     this.dataList = list || [];
     this.cdr.markForCheck();
   }
-
+  add() {
+    this.itemId = null;
+    this.currentPage = this.pageTypeEnum.AddOrEdit;
+  }
   format(toBeFormat, arg) {
     return new MapPipe().transform(toBeFormat, arg);
   }
 
   goEditAddPage(item, modal) {
+    this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
   }
 
@@ -65,17 +71,27 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
-
+  goDeletePage(item, modal) {
+    const modalCtrl = this.messageService.showAlertMessage('', '您确定要删除吗？', MessageType.Confirm);
+    modalCtrl.afterClose.subscribe((type: string) => {
+      if (type !== 'onOk') {
+        return;
+      }
+      this.itemId = item.id;
+      this.dataService.delMajorHazard(this.itemId).then(() => this.getDataList(1));
+    });
+  }
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
-      this.listPageInfo.ps = e.pageNo;
+      this.listPageInfo.pi = e.pageNo;
       await this.getDataList(e.pageNo);
     }
   }
 
   private initTable(): void {
     this.columns = [
+      { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.Enterprise] },
       { title: '重大危险源编号', index: 'majorHazardNo', width: 120 },
       { title: '重大危险源名称', index: 'majorHazardName', width: 100 },
       { title: '单元类型',
@@ -84,7 +100,7 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey)
       },
       { title: '投用时间', index: 'useDate', width: 100,type:'date' },
-      { title: 'R值', index: 'rValue', width: 100 },
+      { title: 'R值', index: 'rvalue', width: 100 },
       { title: '重大危险源等级',
         index: 'majorHazardLevel',
         width: 100,
@@ -97,11 +113,11 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
       },
       { title: '重大危险源管理员', index: 'manager', width: 100 },
       { title: '管理员联系电话', index: 'managerMobile', width: 100 },
-      { title: '重大危险源描述', index: 'majorHazardDescription', width: 100 },
+      { title: '重大危险源描述', index: 'description', width: 100 },
       {
         title: '操作',
         fixed: 'right',
-        width: '100px',
+        width: '120px',
         buttons: [
           {
             text: '编辑',
@@ -111,7 +127,7 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
           {
             text: '删除',
             icon: 'delete',
-            click: (_record, modal) => 123,
+            click: this.goDeletePage.bind(this),
           },
           {
             text: '查看',

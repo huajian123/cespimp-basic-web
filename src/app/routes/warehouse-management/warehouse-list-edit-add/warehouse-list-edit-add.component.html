@@ -42,7 +42,6 @@
     </se>
     <se label="经度">
       <nz-form-control nzLg="8" nzMd="12" nzSm="24">
-       <!-- <input nz-input  formControlName="longitude" placeholder="经度"/>-->
         <input nz-input maxlength="80" class="cursor-pointer" readonly (click)="showMap()" maxlength="255" formControlName="longitude" placeholder="">
         <nz-form-explain *ngIf="validateForm.get('longitude').dirty && validateForm.get('longitude').errors">请输入经度
         </nz-form-explain>
@@ -50,7 +49,6 @@
     </se>
     <se label="纬度" >
       <nz-form-control nzLg="8" nzMd="12" nzSm="24">
-       <!-- <input nz-input  formControlName="latitude" placeholder="纬度"/>-->
         <input nz-input maxlength="80" class="cursor-pointer" readonly (click)="showMap()" maxlength="255" formControlName="latitude" placeholder="">
         <nz-form-explain *ngIf="validateForm.get('latitude').dirty && validateForm.get('latitude').errors">请输入纬度
         </nz-form-explain>

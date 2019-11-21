@@ -4,6 +4,10 @@ import { MajorHazardManagementRoutingModule } from './major-hazard-management-ro
 import { MajorHazardManagementMajorHazardListComponent } from './major-hazard-list/major-hazard-list.component';
 import { MajorHazardManagementMajorHazardRecordListComponent } from './major-hazard-record-list/major-hazard-record-list.component';
 import { MajorHazardManagementMajorHazardStatisticsListComponent } from './major-hazard-statistics-list/major-hazard-statistics-list.component';
+import { MajorHazardManagementMajorHazardEditAddComponent } from './major-hazard-list/major-hazard-edit-add/major-hazard-edit-add.component';
+import { MajorHazardManagementMajorHazardDetailComponent } from './major-hazard-list/major-hazard-detail/major-hazard-detail.component';
+import { MajorHazardManagementMajorHazardRecordEditAddComponent } from './major-hazard-record-list/major-hazard-record-edit-add/major-hazard-record-edit-add.component';
+import { MajorHazardManagementMajorHazardRecordDetailComponent } from './major-hazard-record-list/major-hazard-record-detail/major-hazard-record-detail.component';
 
 
 
@@ -12,7 +16,11 @@ const COMPONENTS = [
 ,
   MajorHazardManagementMajorHazardRecordListComponent,
   MajorHazardManagementMajorHazardStatisticsListComponent];
-const COMPONENTS_NOROUNT = [];
+const COMPONENTS_NOROUNT = [
+  MajorHazardManagementMajorHazardEditAddComponent,
+  MajorHazardManagementMajorHazardDetailComponent,
+  MajorHazardManagementMajorHazardRecordEditAddComponent,
+  MajorHazardManagementMajorHazardRecordDetailComponent];
 
 @NgModule({
   imports: [
