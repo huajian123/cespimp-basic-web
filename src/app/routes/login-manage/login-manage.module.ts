@@ -3,6 +3,7 @@ import { SharedModule } from '@shared';
 import { LoginManageRoutingModule } from './login-manage-routing.module';
 import { LoginPlatformComponent } from './login-platform/login-platform.component';
 import { ParkIntroductComponent } from './park-introduct/park-introduct.component';
+import { PublicityNoticeListComponent } from './park-introduct/publicity-notice-list/publicity-notice-list.component';
 
 const COMPONENTS = [ParkIntroductComponent];
 const COMPONENTS_NOROUNT = [LoginPlatformComponent];
@@ -15,6 +16,7 @@ const COMPONENTS_NOROUNT = [LoginPlatformComponent];
   declarations: [
     ...COMPONENTS,
     ...COMPONENTS_NOROUNT,
+    PublicityNoticeListComponent,
   ],
   entryComponents: COMPONENTS_NOROUNT
 })
