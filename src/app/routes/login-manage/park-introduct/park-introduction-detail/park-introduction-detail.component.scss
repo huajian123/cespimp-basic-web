@@ -79,8 +79,7 @@
           height: calc(100% - 40px);
 
           .settled-industry-item {
-            // border: 1px solid #05A2DA;
-            box-shadow: inset 0 0 5px 0 rgba(0, 236, 255, 0.44);
+            box-shadow: inset 0 0 5px 0 rgba(0, 236, 255, 1);
             border: 1px solid #142E7E;
             height: 32px;
             width: 198px;
@@ -109,6 +108,32 @@
 
           div:first-child {
             font-size: 18px;
+            color: #00FFFB;
+          }
+        }
+      }
+
+      .rectangles{
+        width: 100%;
+        height: 50%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        .rectangle-item{
+          width: 170px;
+          height: 140px;
+          // border: 1px solid #142E7E;
+          border: 1px solid #00D9FF;
+          box-shadow: inset 0 0 28px 0 rgba(0,198,255,0.82);
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          align-items: center;
+          div:nth-child(3){
+            margin-top: 15px;
+          }
+          .font-color{
             color: #00FFFB;
           }
         }
