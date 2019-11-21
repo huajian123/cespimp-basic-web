@@ -12,6 +12,8 @@ import { BasicInfoIntermediateProductInfoListComponent } from './intermediate-pr
 import { BasicInfoFinalProductInfoListComponent } from './final-product-info-list/final-product-info-list.component';
 import { BasicInfoEnterpriseBasicInfoComponent } from './enterprise-basic-info/enterprise-basic-info.component';
 import { BasicInfoCertificateInfoComponent } from './certificate-info/certificate-info.component';
+import { BasicInfoBasicInfoAuditDetailComponent } from './basic-info-audit-list/basic-info-audit-detail/basic-info-audit-detail.component';
+import { BasicInfoBasicInfoAuditEditAddComponent } from './basic-info-audit-list/basic-info-audit-edit-add/basic-info-audit-edit-add.component';
 
 
 const COMPONENTS = [
@@ -25,8 +27,10 @@ const COMPONENTS = [
   BasicInfoIntermediateProductInfoListComponent,
   BasicInfoFinalProductInfoListComponent,
   BasicInfoEnterpriseBasicInfoComponent,
-  BasicInfoCertificateInfoComponent];
-const COMPONENTS_NOROUNT = [];
+  BasicInfoCertificateInfoComponent,
+  BasicInfoBasicInfoAuditEditAddComponent];
+const COMPONENTS_NOROUNT = [
+  BasicInfoBasicInfoAuditDetailComponent];
 
 @NgModule({
   imports: [

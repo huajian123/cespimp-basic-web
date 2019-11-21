@@ -1,9 +1,285 @@
-<page-header [action]="phActionTpl">
-  <ng-template #phActionTpl>
-    <button (click)="add()" nz-button nzType="primary">新建</button>
-  </ng-template>
-</page-header>
-<nz-card>
-  <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
-  <st #st [data]="url" [columns]="columns"></st>
-</nz-card>
+<page-header [title]="'证照信息'"></page-header>
+<form nz-form [formGroup]="validateForm" [nzLayout]="'vertical'">
+  <nz-card [nzHoverable]="false" [nzBordered]="true">
+    <nz-card nzType="inner" nzTitle="1、营业执照">
+      <nz-row nzGutter="20">
+        <nz-col nzLg="4" nzMd="10" nzSm="24">
+          <nz-form-item>
+            <nz-form-label nzFor="name">统一社会信用代码</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="uscCode" placeholder="请输入统一社会信用代码"/>
+              <nz-form-explain *ngIf="validateForm.get('uscCode').dirty && validateForm.get('uscCode').errors">
+                请输入统一社会信用代码
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label nzFor="name">有效时间</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="businessLicencesBeginTime" placeholder=""/>
+              <nz-form-explain
+                *ngIf="validateForm.get('businessLicencesBeginTime').dirty && validateForm.get('businessLicencesBeginTime').errors">
+                有效期
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>经营范围</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="businessLicencesRange" placeholder="请输入经营范围"/>
+              <nz-form-explain
+                *ngIf="validateForm.get('businessLicencesRange').dirty && validateForm.get('businessLicencesRange').errors">
+                请输入经营范围
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>发证机关</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="businessLicencesAuthority" placeholder="请输入发证机关"/>
+              <nz-form-explain
+                *ngIf="validateForm.get('businessLicencesAuthority').dirty && validateForm.get('businessLicencesAuthority').errors">
+                请输入发证机关
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </nz-card>
+    <nz-card nzType="inner" nzTitle="2、安全许可证">
+      <nz-row nzGutter="20">
+        <nz-col nzLg="4" nzMd="10" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>编号</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="safetyCertificateCode" placeholder="请输入编号"/>
+              <nz-form-explain
+                *ngIf="validateForm.get('safetyCertificateCode').dirty && validateForm.get('safetyCertificateCode').errors">
+                请输入编号
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>有效期</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="safetyCertificateBeginTime" placeholder=""/>
+              <nz-form-explain
+                *ngIf="validateForm.get('safetyCertificateBeginTime').dirty && validateForm.get('safetyCertificateBeginTime').errors">
+                有效期
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>许可范围</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="safetyPermitRange" placeholder="请输入许可范围"/>
+              <nz-form-explain
+                *ngIf="validateForm.get('safetyPermitRange').dirty && validateForm.get('safetyPermitRange').errors">
+                许可范围
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>发证机关</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="safetyCertificateAuthority" placeholder="请输入发证机关"/>
+              <nz-form-explain
+                *ngIf="validateForm.get('safetyCertificateAuthority').dirty && validateForm.get('safetyCertificateAuthority').errors">
+                发证机关
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col nzLg="4" nzMd="10" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>附件</nz-form-label>
+            <nz-form-control>
+              <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/">
+                <button nz-button><i nz-icon nzType="upload"></i><span>上传附件</span></button>
+              </nz-upload>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </nz-card>
+    <nz-card nzType="inner" nzTitle="3、排污许可证">
+      <nz-row nzGutter="20">
+        <nz-col nzLg="4" nzMd="10" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>许可证编号</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="dischargePermitCode" placeholder="请输入企业简称"/>
+              <nz-form-explain
+                *ngIf="validateForm.get('dischargePermitCode').dirty && validateForm.get('dischargePermitCode').errors">
+                请输入详细地址
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>有效期</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="dischargePermitBeginTime" placeholder="请输入企业简称"/>
+              <nz-form-explain
+                *ngIf="validateForm.get('dischargePermitBeginTime').dirty && validateForm.get('dischargePermitBeginTime').errors">
+                请输入法定代表人
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>排污种类</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="dischargePermitType" placeholder="请输入企业简称"/>
+              <nz-form-explain
+                *ngIf="validateForm.get('dischargePermitType').dirty && validateForm.get('dischargePermitType').errors">
+                请输入法人代表移动电话
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>发证机关</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="dischargePermitAuthority" placeholder="请输入企业简称"/>
+              <nz-form-explain
+                *ngIf="validateForm.get('dischargePermitAuthority').dirty && validateForm.get('dischargePermitAuthority').errors">
+                请输入法人代表移动电话
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col nzLg="4" nzMd="10" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>附件</nz-form-label>
+            <nz-form-control>
+              <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/">
+                <button nz-button><i nz-icon nzType="upload"></i><span>上传附件</span></button>
+              </nz-upload>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </nz-card>
+    <nz-card nzType="inner" nzTitle="4、安评报告">
+      <nz-row nzGutter="20">
+        <nz-col nzLg="4" nzMd="10" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>报告名称</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="safetyReportName" placeholder="请输入报告名称"/>
+              <nz-form-explain
+                *ngIf="validateForm.get('safetyReportName').dirty && validateForm.get('safetyReportName').errors">
+                请输入报告名称
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>备案时间</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="environmentRecordTime" placeholder="请输入备案时间"/>
+              <nz-form-explain
+                *ngIf="validateForm.get('environmentRecordTime').dirty && validateForm.get('environmentRecordTime').errors">
+                请输入法定代表人
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>环评机构名称</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="safetyReportAgency" placeholder="请输入环评机构名称"/>
+              <nz-form-explain
+                *ngIf="validateForm.get('safetyReportAgency').dirty && validateForm.get('safetyReportAgency').errors">
+                请输入环评机构名称
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>安评报告附件</nz-form-label>
+            <nz-form-control>
+              <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/">
+                <button nz-button><i nz-icon nzType="upload"></i><span>上传附件</span></button>
+              </nz-upload>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </nz-card>
+    <nz-card nzType="inner" nzTitle="5、环评报告">
+      <nz-row nzGutter="20">
+        <nz-col nzLg="4" nzMd="10" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>环评报告名称</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="environmentReportName" placeholder="请输入企业简称"/>
+              <nz-form-explain
+                *ngIf="validateForm.get('environmentReportName').dirty && validateForm.get('environmentReportName').errors">
+                请输入详细地址
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>备案时间</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="environmentRecordTime" placeholder="请输入企业简称"/>
+              <nz-form-explain
+                *ngIf="validateForm.get('environmentRecordTime').dirty && validateForm.get('environmentRecordTime').errors">
+                请输入法定代表人
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>环评机构名称</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="environmentReportAgency" placeholder="请输入企业简称"/>
+              <nz-form-explain
+                *ngIf="validateForm.get('environmentReportAgency').dirty && validateForm.get('environmentReportAgency').errors">
+                请输入法人代表移动电话
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>环评报告附件</nz-form-label>
+            <nz-form-control>
+              <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/">
+                <button nz-button><i nz-icon nzType="upload"></i><span>上传附件</span></button>
+              </nz-upload>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </nz-card>
+  </nz-card>
+  <footer-toolbar>
+    <button nz-button type="submit" nzType="primary">更新基本信息</button>
+  </footer-toolbar>
+</form>
+
+

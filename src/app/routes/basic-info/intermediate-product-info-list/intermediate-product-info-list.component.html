@@ -1,9 +1,24 @@
-<page-header [action]="phActionTpl">
-  <ng-template #phActionTpl>
-    <button (click)="add()" nz-button nzType="primary">新建</button>
-  </ng-template>
-</page-header>
-<nz-card>
-  <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
-  <st #st [data]="url" [columns]="columns"></st>
-</nz-card>
+<ng-container *ngIf="currentPage===pageTypeEnum.List">
+  <page-header [title]="'中间产品信息列表'"></page-header>
+  <nz-card [nzBordered]="false">
+
+    <button nz-button [nzType]="'primary'" class="m-b-sm"  (click)="add()">
+      <i nz-icon nzType="plus"></i>
+      <span>新建</span>
+    </button>
+
+    <st #st [page]="{showSize:true, front: false}"
+        [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true"
+        [scroll]="{x: '1000px'}"
+        [widthMode]="{ type: 'strict' }" [data]="dataList"  (change)="changePage($event)" [columns]="columns" class="mt-sm"></st>
+  </nz-card>
+</ng-container>
+
+<!--<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
+  <app-warehouse-management-warehouse-list-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-warehouse-management-warehouse-list-detail>
+</ng-container>
+
+<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
+  <app-warehouse-management-warehouse-list-edit-add [id]="this.itemId" [currentPageNum]="listPageInfo.pi" (returnBack)="returnToList($event)"></app-warehouse-management-warehouse-list-edit-add>
+</ng-container>-->
+

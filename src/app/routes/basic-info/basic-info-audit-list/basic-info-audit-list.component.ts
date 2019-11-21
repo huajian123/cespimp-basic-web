@@ -58,11 +58,11 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
         fixed: 'right',
         width: '80px',
         buttons: [
-          {
+         /* {
             text: '审核',
             icon: 'edit',
             click: this.goEditAddPage.bind(this),
-          },
+          },*/
          /* {
             text: '删除',
             icon: 'delete',

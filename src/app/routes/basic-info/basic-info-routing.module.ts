@@ -9,6 +9,7 @@ import { BasicInfoIntermediateProductInfoListComponent } from './intermediate-pr
 import { BasicInfoFinalProductInfoListComponent } from './final-product-info-list/final-product-info-list.component';
 import { BasicInfoEnterpriseBasicInfoComponent } from './enterprise-basic-info/enterprise-basic-info.component';
 import { BasicInfoCertificateInfoComponent } from './certificate-info/certificate-info.component';
+import { BasicInfoBasicInfoAuditEditAddComponent } from './basic-info-audit-list/basic-info-audit-edit-add/basic-info-audit-edit-add.component';
 
 
 const routes: Routes = [
@@ -21,7 +22,8 @@ const routes: Routes = [
   { path: 'intermediate-product-info-list', component: BasicInfoIntermediateProductInfoListComponent },
   { path: 'final-product-info-list', component: BasicInfoFinalProductInfoListComponent },
   { path: 'enterprise-basic-info', component: BasicInfoEnterpriseBasicInfoComponent },
-  { path: 'certificate-info', component: BasicInfoCertificateInfoComponent }];
+  { path: 'certificate-info', component: BasicInfoCertificateInfoComponent },
+  { path: 'basic-info-audit-edit-add', component: BasicInfoBasicInfoAuditEditAddComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

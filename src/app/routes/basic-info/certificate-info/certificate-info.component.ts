@@ -1,45 +1,85 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent } from '@delon/abc';
-import { SFSchema } from '@delon/form';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
+import {
+  CertificateInfoService,
+  CertificateInfoServiceNs,
+} from '@core/biz-services/basic-info/certificate-info.service';
+
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
+import IdCardTabModel = CertificateInfoServiceNs.IdCardTabModel;
+
+
 
 @Component({
   selector: 'app-basic-info-certificate-info',
   templateUrl: './certificate-info.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicInfoCertificateInfoComponent implements OnInit {
-  url = `/user`;
-  searchSchema: SFSchema = {
-    properties: {
-      no: {
-        type: 'string',
-        title: '编号'
-      }
-    }
-  };
-  @ViewChild('st', { static: false }) st: STComponent;
-  columns: STColumn[] = [
-    { title: '编号', index: 'no' },
-    { title: '调用次数', type: 'number', index: 'callNo' },
-    { title: '头像', type: 'img', width: '50px', index: 'avatar' },
-    { title: '时间', type: 'date', index: 'updatedAt' },
-    {
-      title: '',
-      buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
-      ]
-    }
-  ];
-
-  constructor(private http: _HttpClient, private modal: ModalHelper) { }
-
-  ngOnInit() { }
-
-  add() {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+  validateForm: FormGroup;
+  form: FormGroup;
+  loginInfo: LoginInfoModel;
+  dataInfo: IdCardTabModel;
+  @Input() id: number;
+  constructor(private fb: FormBuilder,private dataService: CertificateInfoService, private cdr: ChangeDetectorRef) {
+    this.loginInfo = {
+      createBy: '',
+      createTime: new Date(),
+      delFlag: null,
+      entprId: null,
+      id: null,
+      mobileTel: '',
+      password: '',
+      realName: '',
+      role: null,
+      updateBy: '',
+      updateTime: new Date(),
+      userName: '',
+    };
   }
-
+  initForm() {
+    this.validateForm = this.fb.group({
+      uscCode: [null, [Validators.required]],
+      businessLicencesBeginTime: [null, [Validators.required]],
+    /*  businessLicencesEndTime: [null, []],*/
+      businessLicencesRange: [null, [Validators.required]],
+      businessLicencesAuthority: [null, [Validators.required]],
+     /* businessLicencesAccessory: [null, []],*/
+      safetyCertificateCode: [null, [Validators.required]],
+      safetyCertificateBeginTime: [null, [Validators.required]],
+     /* safetyCertificateEndTime: [null, []],*/
+      safetyPermitRange: [null, [Validators.required]],
+      safetyCertificateAuthority: [null, [Validators.required]],
+     /* safetyCertificateAccessory: [null, []],*/
+      dischargePermitCode: [null, [Validators.required]],
+      dischargePermitBeginTime: [null, [Validators.required]],
+     /* dischargePermitEndTime: [null, []],*/
+      dischargePermitType: [null, [Validators.required]],
+      dischargePermitAuthority: [null, [Validators.required]],
+      safetyReportName: [null, [Validators.required]],
+      safetyReportRecordTime: [null, [Validators.required]],
+      safetyReportAgency: [null, [Validators.required]],
+     /* safetyReportAccessory: [null, []],*/
+      environmentReportName: [null, [Validators.required]],
+      environmentRecordTime: [null, [Validators.required]],
+      environmentReportAgency: [null, [Validators.required]],
+     /* environmentReportAccessory: [null, []],*/
+     /* dischargePermitAccessory: [null, []],*/
+    });
+  }
+  async getIdCardInfo() {
+    const dataInfo = await this.dataService.getIdCardInfoDetail(this.id);
+   /* this.validateForm.patchValue(dataInfo);*/
+    this.cdr.markForCheck();
+  }
+  ngOnInit() {
+    this.initForm();
+    this.getIdCardInfo();
+  }
 }

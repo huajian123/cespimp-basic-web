@@ -123,7 +123,6 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
       submitHandel = this.dataService.editEnterpriseInfoDetail(params);
       await submitHandel;
       this.msg.success(`提交成功`);
-      /*this.returnBack.emit({ refesh: true, pageNo: this.currentPageNum });*/
     }
 
   }
@@ -133,7 +132,6 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
       entprId: this.loginInfo.entprId,
     };
     const dataInfo = await this.dataService.getEnterpriseInfoDetail(param);
-    //console.log(dataInfo);
     this.validateForm.patchValue(dataInfo);
     this.cdr.markForCheck();
   }
