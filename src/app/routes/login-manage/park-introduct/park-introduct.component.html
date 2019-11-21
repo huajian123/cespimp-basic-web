@@ -1,7 +1,7 @@
 <login-manage-head headName="园区介绍"></login-manage-head>
 
 <main>
-  <div class="introduction-block">
+  <div class="introduction-block" (click)="goPage(pageTypeEnum.PlatformIntroduction)">
     <div class="title">园区平台介绍</div>
     <div class="content-wrap">
       <div class="park-info">
@@ -10,7 +10,7 @@
       </div>
     </div>
   </div>
-  <div class="introduction-block">
+  <div class="introduction-block" (click)="goPage(pageTypeEnum.PublicityNotice)">
     <div class="title">公示公告</div>
     <div class="content-wrap">
       <div class="notice-list">
@@ -58,7 +58,7 @@
       </div>
     </div>
   </div>
-  <div class="introduction-block">
+  <div class="introduction-block" (click)="goPage(pageTypeEnum.IndustryDynamics)">
     <div class="title">行业动态</div>
     <div class="content-wrap">
       <div class="industry-dynamics-list">
@@ -89,7 +89,7 @@
       </div>
     </div>
   </div>
-  <div class="introduction-block">
+  <div class="introduction-block" (click)="goPage(pageTypeEnum.DocumentNotice)">
     <div class="title">文件通知</div>
     <div class="content-wrap">
       <div class="notice-list">
