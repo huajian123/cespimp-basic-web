@@ -16,6 +16,7 @@ import { UserRegisterResultComponent } from './passport/register-result/register
 import { CallbackComponent } from './callback/callback.component';
 import { UserLockComponent } from './passport/lock/lock.component';
 
+
 const routes: Routes = [
   { path: '', redirectTo: `passport/login`, pathMatch: 'full' },
   {
@@ -78,12 +79,15 @@ const routes: Routes = [
     ],
   },
   // 全屏布局
-  // {
-  //     path: 'fullscreen',
-  //     component: LayoutFullScreenComponent,
-  //     children: [
-  //     ]
-  // },
+  {
+      path: '',
+      component: LayoutFullScreenComponent,
+      children: [
+        { path: '', redirectTo: 'login-manage', pathMatch: 'full' },
+        /*登录之后管理模块*/
+        { path: 'login-manage', loadChildren: () => import('./login-manage/login-manage.module').then(m => m.LoginManageModule) },
+      ]
+  },
   // passport
   {
     path: 'passport',

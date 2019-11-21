@@ -11,17 +11,19 @@ import { DelonFormModule } from '@delon/form';
 // #region third libs
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
-import { UfastTableComponent } from '@shared/ufast-table/ufast-table.component';
 import { DirectivesModule } from '@shared/directives/directives.module';
 import { WidgetModule } from '../widget/widget.module';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { LoginManageHeadComponent } from './businessComp/login-manage-head/login-manage-head.component';
 const THIRDMODULES = [
   NgZorroAntdModule,
-  CountdownModule
+  CountdownModule,
+  NgxEchartsModule
 ];
 // #endregion
 
 // #region your componets & directives
-const COMPONENTS = [UfastTableComponent];
+const COMPONENTS = [LoginManageHeadComponent];
 const DIRECTIVES = [];
 // #endregion
 
@@ -43,7 +45,7 @@ const DIRECTIVES = [];
   declarations: [
     // your components
     ...COMPONENTS,
-    ...DIRECTIVES
+    ...DIRECTIVES,
   ],
   exports: [
     CommonModule,

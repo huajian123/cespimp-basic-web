@@ -1,0 +1,15 @@
+main {
+  width: 100%;
+  height: calc(100% - 96px);
+  background: #000949;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+
+  div{
+    width: 45%;
+    height: 45%;
+    background: yellow;
+  }
+}

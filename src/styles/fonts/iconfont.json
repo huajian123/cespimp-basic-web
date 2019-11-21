@@ -1,0 +1,72 @@
+{
+  "id": "1521716",
+  "name": "苏州",
+  "font_family": "iconfont",
+  "css_prefix_text": "",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "11903150",
+      "name": "user",
+      "font_class": "user",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "11903216",
+      "name": "intergrateControl",
+      "font_class": "intergrateControl",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "11903239",
+      "name": "leaf",
+      "font_class": "leaf",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "11903267",
+      "name": "safe",
+      "font_class": "safe",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "11903300",
+      "name": "flag",
+      "font_class": "flag",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "11903315",
+      "name": "house",
+      "font_class": "house",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "11903353",
+      "name": "shield",
+      "font_class": "shield",
+      "unicode": "e643",
+      "unicode_decimal": 58947
+    },
+    {
+      "icon_id": "11903371",
+      "name": "tag",
+      "font_class": "tag",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "11903379",
+      "name": "lock",
+      "font_class": "lock",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    }
+  ]
+}

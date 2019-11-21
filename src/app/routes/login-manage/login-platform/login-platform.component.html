@@ -1,0 +1,194 @@
+
+<ng-container *ngIf="currentPageNum===pageTypeEnum.MainPage">
+  <main>
+    <header>
+      <div class="logo">
+        <img src="../../../../assets/imgs/login-manage/suzhou-new-logo.png" alt="">
+        <span class="logo-text">苏州吴中化工园区智慧监管平台</span>
+      </div>
+      <div class="user-btn">
+        <span>您好，张三</span>
+        <button class="exit-btn" nz-button nzType="primary" (click)="goLoginPage()">安全退出</button>
+      </div>
+    </header>
+
+    <section class="system">
+      <div class="system-entrance">
+        <ul>
+          <li class="system-entrance-item" (click)="changeSideIndex(sideEnum.IntegratedMnageControl)"><span class="icon iconfont intergrateControl"></span>综合管控</li>
+          <li class="system-entrance-item" (click)="changeSideIndex(sideEnum.WisdomEnvirPro)"><span class="icon iconfont leaf"></span>智慧环保</li>
+          <li class="system-entrance-item" (click)="changeSideIndex(sideEnum.WisdomSafePro)"><span class="icon iconfont safe"></span>智慧安全</li>
+          <li class="system-entrance-item" (click)="changeSideIndex(sideEnum.WisdomEmergencyPro)"><span class="icon iconfont flag"></span>智慧应急</li>
+          <li class="system-entrance-item" (click)="changeSideIndex(sideEnum.ClosedPark)"><span class="icon iconfont house"></span>封闭园区</li>
+         <!-- <li class="point-block-line">
+            <div class="point-block"><span></span></div>
+          </li>-->
+          <li class="system-entrance-item" (click)="changeSideIndex(sideEnum.RiskControl)"><span class="icon iconfont shield"></span>风险管控</li>
+          <li class="system-entrance-item" (click)="changeSideIndex(sideEnum.ParkIntroduction)"><span class="icon iconfont tag"></span>园区介绍</li>
+        </ul>
+      </div>
+      <!--综合管控-->
+      <div class="system-cards" *ngIf="currentSideIndex===sideEnum.IntegratedMnageControl">
+        <div class="system-cards-item">
+          <div class="system-cards-title">
+            一园一档
+          </div>
+        </div>
+        <div class="system-cards-item">
+          <div class="system-cards-title">
+            分级报警
+          </div>
+        </div>
+        <div class="system-cards-item">
+          <div class="system-cards-title">
+            LDAR
+          </div>
+        </div>
+
+        <div class="system-cards-item">
+          <div class="system-cards-title">
+            工况监控
+          </div>
+        </div>
+      </div>
+
+      <!--智慧环保-->
+      <div class="system-cards" *ngIf="currentSideIndex===sideEnum.WisdomEnvirPro">
+        <div class="system-cards-item evn">
+          <div class="system-cards-title">
+            环保一张图
+          </div>
+        </div>
+        <div class="system-cards-item evn">
+          <div class="system-cards-title">
+            智能监测
+          </div>
+        </div>
+        <div class="system-cards-item evn">
+          <div class="system-cards-title">
+            数据研判
+          </div>
+        </div>
+
+        <div class="system-cards-item evn">
+          <div class="system-cards-title">
+            污染朔源
+          </div>
+        </div>
+      </div>
+
+      <!--智慧安全-->
+      <div class="system-cards" *ngIf="currentSideIndex===sideEnum.WisdomSafePro">
+        <div class="system-cards-item saf">
+          <div class="system-cards-title">
+            安全一张图
+          </div>
+        </div>
+        <div class="system-cards-item saf">
+          <div class="system-cards-title">
+            设备监控
+          </div>
+        </div>
+        <div class="system-cards-item saf">
+          <div class="system-cards-title">
+            视频监控
+          </div>
+        </div>
+
+        <div class="system-cards-item saf">
+          <div class="system-cards-title">
+            特种作业
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="park-info-wrap">
+      <div class="park-info-cards">
+        <div class="card">
+          <h5>园区空气质量</h5>
+          <div class="card-item">
+            <div class="cards-item-left">
+              <time>2019.04.12 13:00</time>
+              <div class="line-two">
+                <div class="number">256</div>
+                <div class="unit">
+                  <span>AQI</span>
+                  <span>/500</span>
+                </div>
+              </div>
+              <div class="line-three">
+                <div class="result">良</div>
+              </div>
+              <div class="line-four">
+                <span>首要污染物</span>
+                <span>PM2.5</span>
+              </div>
+            </div>
+            <div class="cards-item-right-air">
+              <div class="pie-line">
+                <div class="pie">
+                  <nz-progress [nzWidth]="48" [nzStrokeColor]="'#00FF53'" [nzStrokeWidth]="16" [nzSuccessPercent]="78"
+                               nzStrokeLinecap="square" nzType="circle" nzPercent="78" [nzShowInfo]="false"></nz-progress>
+                </div>
+                <div class="content">
+                  <div class="content-text"><span class="label">优良天数</span><span class="value">234 天</span></div>
+                  <div class="content-text"><span class="label">优良率</span><span class="value">78 %</span></div>
+                </div>
+              </div>
+              <p class="contaminants-title">全年首要污染物占比</p>
+              <p class="contaminants-name contaminants-flex"><span>PM2.5</span><span>O₃</span><span>PM10</span></p>
+              <p class="contaminants contaminants-flex"><span>61.2%</span><span>12.0%</span><span>26.9%</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h5>园区水质等级</h5>
+          <div class="card-item water">
+            <div class="cards-item-left">
+              <time>2019.04.12 13:00</time>
+              <div class="line-two-water">
+                <div class="water-title">
+                  园区入水口
+                </div>
+                <div class="water-btn">
+                  <span class="btn">Ⅴ类</span>
+                  <span class="content">达标</span>
+                </div>
+              </div>
+              <div class="line-two-water">
+                <div class="water-title exits">
+                  园区出水口
+                </div>
+                <div class="water-btn">
+                  <span class="btn exits">Ⅳ类</span>
+                  <span class="content exits">未达标</span>
+                </div>
+              </div>
+            </div>
+            <div class="cards-item-right-water">
+              <div class="radar-chart">
+                <div class="title">全年周水质等级分布</div>
+                <div class="radar" style="width: 150px;height:150px" echarts [options]="radarWaterOption"></div>
+              </div>
+              <div class="radar-chart">
+                <div class="title">全年主要污染物分布</div>
+                <div class="radar" style="width: 150px;height:150px" echarts [options]="radarContaminatedOption"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h5>重大危险源等级统计</h5>
+          <div class="card-item notice">
+            <div echarts  style="width: 300px;height:178px" [options]="pipeOption"></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+</ng-container>

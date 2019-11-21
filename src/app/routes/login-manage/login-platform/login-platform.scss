@@ -1,0 +1,607 @@
+@mixin flex-center-direction($direction:center,$vertical-direction:center) {
+  display: flex;
+  justify-content: $direction;
+  align-items: $vertical-direction;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.depting{
+  opacity: .5;
+}
+
+.one-line{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.point-block {
+  width: 10px;
+  height: 10px;
+  background: rgba(0, 14, 63, 0.30);
+  box-shadow: inset 0 0 5px 0 rgba(0, 236, 255, 0.70);
+  transform: rotate(45deg);
+  position: relative;
+
+  span {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    display: inline-block;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: #00B8FF;
+  }
+}
+
+%input-decorate {
+  position: absolute;
+  content: "";
+  top: 0;
+  display: block;
+  width: 4px;
+  height: 36px;
+}
+
+
+* {
+  user-select: none;
+}
+
+ul, li {
+  list-style: none;
+}
+
+main {
+  height: 100%;
+  min-width: 1400px;
+  min-height: 800px;
+  background: url(../../../../assets/imgs/login-manage/suzhou-bg-new.png) no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  header {
+    @include flex-center-direction(space-between);
+    color: #ffffff;
+
+    .logo {
+      @include flex-center-direction(start);
+      width: 530px;
+      height: 105px;
+      margin-left: 20px;
+
+      img {
+        height: 100%;
+      }
+
+      .logo-text {
+        font-size: 30px;
+      }
+    }
+
+    .user-btn {
+      @include flex-center-direction;
+      font-size: 16px;
+
+      .exit-btn {
+        width: 75px;
+        margin: 0 50px 0 20px;
+        background: rgba(255, 255, 255, .3);
+        border: none;
+      }
+    }
+  }
+
+  .system {
+    color: #ffffff;
+    @include flex-center-direction(space-between);
+    @media screen and (max-width: 1500px) {
+      padding: 0 8%;
+    }
+    @media screen and (min-width: 1501px)  and (max-width: 1600px){
+      padding: 0 10%;
+    }
+    @media screen and (min-width: 1601px)  and (max-width: 1800px){
+      padding: 0 12%;
+    }
+    @media screen and (min-width: 1801px){
+      padding: 0 16%;
+    }
+
+    .system-entrance {
+      margin-right: 150px;
+
+      .system-entrance-item {
+        position: relative;
+        width: 200px;
+        height: 40px;
+        line-height: 40px;
+        border-color: #003E7F;
+        box-shadow: inset 0 0 8px 0 rgba(0, 236, 255, 0.70);
+        border-radius: 1px;
+        margin: 12px 0;
+
+        font-size: 22px;
+        padding: 0 30px;
+        @include flex-center-direction(flex-start);
+        cursor: pointer;
+        color: #00BDD4;
+
+        span {
+          font-size: 22px;
+          &:first-child{
+            margin-right: 15px;
+          }
+        }
+
+        &:hover {
+          background: url(../../../../assets/imgs/login-manage/checked-input-bg.png) center no-repeat;
+          background-size: 224px 62px;
+          color: #ffffff;
+
+          &:after {
+            @extend %input-decorate;
+            top: 3px;
+            left: -7px;
+            background: url(../../../../assets/imgs/login-manage/input-decorate-left.png) center no-repeat;
+          }
+
+          &:before {
+            @extend %input-decorate;
+            top: 3px;
+            right: -7px;
+            background: url(../../../../assets/imgs/login-manage/input-decorate-right.png) center no-repeat;
+          }
+        }
+      }
+
+      .point-block-line {
+        @include flex-center-direction;
+        width: 200px;
+        height: 20px;
+      }
+    }
+
+    .system-cards {
+      flex: 1;
+      @include flex-center-direction(space-between);
+
+      .system-cards-item {
+        cursor: pointer;
+        box-shadow: inset 0 0 20px 0 rgba(0, 236, 255, 0.44);
+        width: 168px;
+        height: 281px;
+        @include flex-center-direction(center, flex-end);
+
+        &:nth-child(1) {
+          background: url(../../../../assets/imgs/login-manage/sys-cards-bg.png) center no-repeat,
+          url(../../../../assets/imgs/login-manage/sys-card1.png) top center no-repeat;
+        }
+
+        &:nth-child(2) {
+          background: url(../../../../assets/imgs/login-manage/sys-cards-bg.png) center no-repeat,
+          url(../../../../assets/imgs/login-manage/sys-card2.png) top center no-repeat
+        }
+
+        &:nth-child(3) {
+          background: url(../../../../assets/imgs/login-manage/sys-cards-bg.png) center no-repeat,
+          url(../../../../assets/imgs/login-manage/sys-card3.png) top center no-repeat
+        }
+
+        &:nth-child(4) {
+          background: url(../../../../assets/imgs/login-manage/sys-cards-bg.png) center no-repeat,
+          url(../../../../assets/imgs/login-manage/sys-card4.png) top center no-repeat
+        }
+
+        .system-cards-title {
+          width: 100%;
+          height: 78px;
+          position: relative;
+          line-height: 90px;
+          text-align: center;
+          font-size: 18px;
+          box-shadow: inset 0 0 5px 0 rgba(0, 236, 255, 0.70);
+          background: rgba(0, 36, 52, .7);
+
+          &:before {
+            position: absolute;
+            top: 7px;
+            left: 0;
+            content: "";
+            width: 100%;
+            height: 24px;
+            background: url(../../../../assets/imgs/login-manage/system-cards-border.png) top center no-repeat
+          }
+        }
+      }
+
+      .system-cards-item.evn{
+        &:nth-child(1) {
+          background: url(../../../../assets/imgs/login-manage/sys-cards-bg.png) center no-repeat,
+          url(../../../../assets/imgs/login-manage/sys-card5.png) top center no-repeat;
+        }
+
+        &:nth-child(2) {
+          background: url(../../../../assets/imgs/login-manage/sys-cards-bg.png) center no-repeat,
+          url(../../../../assets/imgs/login-manage/sys-card6.png) top center no-repeat
+        }
+
+        &:nth-child(3) {
+          background: url(../../../../assets/imgs/login-manage/sys-cards-bg.png) center no-repeat,
+          url(../../../../assets/imgs/login-manage/sys-card7.png) top center no-repeat
+        }
+
+        &:nth-child(4) {
+          background: url(../../../../assets/imgs/login-manage/sys-cards-bg.png) center no-repeat,
+          url(../../../../assets/imgs/login-manage/sys-card8.png) top center no-repeat
+        }
+      }
+
+      .system-cards-item.saf{
+        &:nth-child(1) {
+          background: url(../../../../assets/imgs/login-manage/sys-cards-bg.png) center no-repeat,
+          url(../../../../assets/imgs/login-manage/sys-card9.png) top center no-repeat;
+        }
+
+        &:nth-child(2) {
+          background: url(../../../../assets/imgs/login-manage/sys-cards-bg.png) center no-repeat,
+          url(../../../../assets/imgs/login-manage/sys-card10.png) top center no-repeat
+        }
+
+        &:nth-child(3) {
+          background: url(../../../../assets/imgs/login-manage/sys-cards-bg.png) center no-repeat,
+          url(../../../../assets/imgs/login-manage/sys-card11.png) top center no-repeat
+        }
+
+        &:nth-child(4) {
+          background: url(../../../../assets/imgs/login-manage/sys-cards-bg.png) center no-repeat,
+          url(../../../../assets/imgs/login-manage/sys-card12.png) top center no-repeat
+        }
+      }
+    }
+  }
+
+
+  .park-info-wrap {
+    @include flex-center-direction(space-between);
+    width: 100%;
+
+    @media screen and (max-width: 1500px) {
+      padding: 0 8%;
+    }
+    @media screen and (min-width: 1501px)  and (max-width: 1600px){
+      padding: 0 10%;
+    }
+    @media screen and (min-width: 1601px)  and (max-width: 1800px){
+      padding: 0 12%;
+    }
+    @media screen and (min-width: 1801px){
+      padding: 0 16%;
+    }
+
+    margin-bottom: 4%;
+
+    .park-info-cards {
+      width: 100%;
+      @include flex-center-direction(space-between);
+
+      .card {
+        h5 {
+          margin-bottom: 15px;
+          opacity: 0.8;
+          font-family: Helvetica;
+          font-size: 20px;
+          color: #FFFFFF;
+          letter-spacing: 0;
+          line-height: 18px;
+        }
+
+        .card-item {
+          max-width: 400px;
+          min-width: 380px;
+          height: 180px;
+          background: rgba(0, 16, 42, 0.30);
+          border: 1px solid rgba(0, 224, 255, 0.50);
+          box-shadow: inset 0 0 12px 0 rgba(5, 168, 207, 0.66);
+          border-radius: 1px;
+          display: flex;
+
+          &.water {
+            max-width: 480px;
+          }
+
+          &.notice {
+            min-width: 300px;
+            // cursor: pointer;
+          }
+
+          .cards-item-left {
+            width: 172px;
+            height: 172px;
+            background: rgba(0, 224, 255, 0.1);
+            padding: 30px 10px 5px 10px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+
+            time {
+              opacity: 0.5;
+              font-family: PingFangSC-Regular;
+              font-size: 12px;
+              color: #FFFFFF;
+              letter-spacing: 0;
+              line-height: 12px;
+              position: absolute;
+              top: 9px;
+            }
+
+            .line-two {
+              display: flex;
+              justify-content: center;
+
+              .number {
+                font-family: Roboto-Thin;
+                font-size: 42px;
+                color: #FFE800;
+                letter-spacing: 0;
+                text-align: right;
+                line-height: 40px;
+              }
+
+              .unit {
+                margin-left: 10px;
+                opacity: 0.3;
+                font-family: Roboto-Regular;
+                font-size: 12px;
+                color: #FFFFFF;
+                letter-spacing: 0;
+                line-height: 12px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 35px;
+              }
+            }
+
+            .line-three {
+              width: 100%;
+              @include flex-center-direction;
+
+              .result {
+                background: #C7B716;
+                border-radius: 2px;
+                width: 64px;
+                height: 22px;
+                text-align: center;
+                color: #ffffff;
+              }
+            }
+
+            .line-four {
+              width: 100%;
+              text-align: center;
+              color: #ffffff;
+
+              & > span:first-child {
+                margin-right: 10px;
+                opacity: 0.5;
+                font-family: PingFangSC-Regular;
+                font-size: 12px;
+                color: #FFFFFF;
+                letter-spacing: 0;
+                line-height: 12px;
+              }
+            }
+
+
+            .line-two-water {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              height: 45px;
+
+              .water-title {
+                font-size: 12px;
+                color: #FFFFFF;
+                letter-spacing: 0;
+                line-height: 12px;
+                position: relative;
+                margin-left: 20px;
+
+                &:before {
+                  content: url(../../../../assets/imgs/login-manage/water_red.png);
+                  position: absolute;
+                  top: 0;
+                  left: -20px;
+                }
+
+                &.exits:before {
+                  content: url(../../../../assets/imgs/login-manage/water_blue.png);
+                }
+              }
+
+              .water-btn {
+                .btn {
+                  margin-left: 20px;
+                  display: inline-block;
+                  text-align: center;
+                  width: 48px;
+                  height: 20px;
+                  background: #EE8E00;
+                  border-radius: 2px;
+                  font-family: PingFangSC-Regular;
+                  font-size: 14px;
+                  color: #FFFFFF;
+                  letter-spacing: 0;
+                  line-height: 20px;
+
+                  &.exits {
+                    background: #C7B716;
+                  }
+                }
+
+                .content {
+                  color: #76FF03;
+                  position: relative;
+                  margin-left: 25px;
+
+                  &.exits {
+                    color: #FF1744;
+                  }
+
+                  &:before {
+                    background: #76FF03;;
+                    position: absolute;
+                    content: "";
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    top: 5px;
+                    left: -15px;
+                    display: inline-block;
+                  }
+
+                  &.exits:before {
+                    background: #FF1744;;
+                  }
+                }
+              }
+            }
+          }
+
+          .cards-item-right-air {
+            flex: 1;
+            padding: 5px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+
+            .pie-line {
+              @include flex-center-direction(space-between);
+
+              .pie {
+              }
+
+              .content {
+
+                .content-text {
+                  @include flex-center-direction(space-between);
+
+                  .label {
+                    opacity: 0.5;
+                    font-family: PingFangSC-Regular;
+                    font-size: 12px;
+                    color: #FFFFFF;
+                    letter-spacing: 0;
+                    line-height: 12px;
+                  }
+
+                  .value {
+                    font-family: Roboto-Regular;
+                    font-size: 16px;
+                    color: #00FF53;
+                    letter-spacing: 0;
+                    line-height: 16px;
+                    margin-left: 10px;
+                  }
+                }
+
+              }
+            }
+
+            .contaminants-name {
+              color: #ffffff;
+            }
+
+            .contaminants {
+              color: #00FFDA;
+            }
+
+            .contaminants-title {
+              opacity: 0.5;
+              font-family: PingFangSC-Regular;
+              font-size: 12px;
+              color: #FFFFFF;
+              letter-spacing: 0;
+              line-height: 12px;
+            }
+
+            .contaminants-flex {
+              @include flex-center-direction(space-between);
+            }
+          }
+
+          .cards-item-right-water {
+            display: flex;
+            justify-content: space-around;
+            flex: 1;
+            align-items: center;
+
+            .radar-chart {
+              padding-top: 10px;
+              .title {
+                text-align: center;
+                opacity: 0.8;
+                font-family: PingFangSC-Regular;
+                font-size: 12px;
+                color: #FFFFFF;
+                letter-spacing: 0;
+                line-height: 12px;
+              }
+            }
+          }
+
+          .notice-container {
+            flex: 1;
+            .title {
+              height: 28px;
+              background: rgba(0, 224, 255, 0.1);
+
+              span {
+                display: inline-block;
+                height: 100%;
+                width: 50%;
+                text-align: center;
+                line-height: 28px;
+                color: #A4EDFF;
+              }
+            }
+
+          /*  .notice-list {
+              height: calc(100% - 28px);
+              padding-top: 3%;
+              .notice-item {
+                font-size: 12px;
+                line-height: 35px;
+                height: 22%;
+                flex: 1;
+                color: #FFFFFF;
+                @include flex-center-direction(space-between);
+                margin-left: 20px;
+                span {
+                  width: 50%;
+                  max-width: 130px;
+                  height: 100%;
+                  display: inline-block;
+                  text-align: left;
+                }
+              }
+            }*/
+          }
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .ant-progress-circle-trail {
+  stroke: #34484B !important;
+}

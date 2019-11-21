@@ -24,7 +24,7 @@ export const loginUserInfo = {
 export const environment = {
   SERVER_URL: `${webServerUrl}`,
   production: false,
-  useHash: true,
+  useHash: false,
   hmr: false,
   baseUrl: {
     bs: `${webServerUrl}/`,
