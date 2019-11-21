@@ -6,6 +6,7 @@ import { ParkIntroductComponent } from './park-introduct/park-introduct.componen
 import { PublicityNoticeListComponent } from './park-introduct/publicity-notice-list/publicity-notice-list.component';
 import { PublicityNoticeDetailComponent } from './park-introduct/publicity-notice-list/publicity-notice-detail/publicity-notice-detail.component';
 import { IndustryDynamicsListComponent } from './park-introduct/industry-dynamics-list/industry-dynamics-list.component';
+import { IndustryDynamicsDetailComponent } from './park-introduct/industry-dynamics-list/industry-dynamics-detail/industry-dynamics-detail.component';
 
 const COMPONENTS = [
   ParkIntroductComponent,
@@ -23,6 +24,7 @@ const COMPONENTS_NOROUNT = [LoginPlatformComponent];
     ...COMPONENTS,
     ...COMPONENTS_NOROUNT,
     IndustryDynamicsListComponent,
+    IndustryDynamicsDetailComponent,
   ],
   entryComponents: COMPONENTS_NOROUNT,
 })

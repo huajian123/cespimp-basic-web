@@ -1,0 +1,45 @@
+@mixin flex-center-direction($direction:center,$vertical-direction:center) {
+  display: flex;
+  justify-content: $direction;
+  align-items: $vertical-direction;
+}
+
+.to-left{
+  font-size: 32px;
+  color: #ffffff;
+  position: fixed;
+  top: 65px;
+  left: 50px;
+  /* margin-left: 50px;*/
+  cursor: pointer;
+}
+
+.publicity-notice-wrap{
+  @include flex-center-direction;
+  width: 100%;
+  height: calc(100% - 96px);
+  background: #000949;
+
+
+  .content-block{
+    width: 80%;
+    height: 90%;
+    min-height: 350px;
+    border: 1px solid #00B8FF;
+    box-shadow: inset 0 0 20px 0 rgba(0, 236, 255, 0.44);
+    padding-top: 40px;
+    cursor: pointer;
+
+    .content-wrap {
+      width: 100%;
+      height: 100%;
+      padding: 30px 45px;
+    }
+  }
+
+  .pagination{
+    text-align: right;
+    margin-right: 20px;
+    margin-bottom: -40px;
+  }
+}

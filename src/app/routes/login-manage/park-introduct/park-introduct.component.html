@@ -183,5 +183,5 @@
 
 <!--行业动态-->
 <ng-container *ngIf="currentPageType===pageTypeEnum.IndustryDynamics">
-  <industry-dynamics-list></industry-dynamics-list>
+  <industry-dynamics-list (returnBackToMainPage)="goBack()"></industry-dynamics-list>
 </ng-container>
