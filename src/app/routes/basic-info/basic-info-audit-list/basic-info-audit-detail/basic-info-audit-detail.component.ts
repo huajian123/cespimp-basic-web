@@ -30,6 +30,7 @@ export class BasicInfoBasicInfoAuditDetailComponent implements OnInit {
       reviewTime: new Date(),
       reviewExplain: '',
       reviewStatus: null,
+      review:null,
     };
     this.returnBack = new EventEmitter<any>();
   }
