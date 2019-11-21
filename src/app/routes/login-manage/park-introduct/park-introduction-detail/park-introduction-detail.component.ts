@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'park-introduction-detail',
@@ -7,8 +7,14 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ParkIntroductionDetailComponent implements OnInit {
+  @Output() returnToMainPage: EventEmitter<any>;
+  constructor() {
+    this.returnToMainPage = new EventEmitter<any>();
+  }
 
-  constructor() { }
+  goNoticeList() {
+    this.returnToMainPage.emit();
+  }
 
   ngOnInit() {
   }
