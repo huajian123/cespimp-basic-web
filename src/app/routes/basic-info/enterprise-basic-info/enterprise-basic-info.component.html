@@ -1,30 +1,36 @@
 <page-header [title]="'企业基本信息'"></page-header>
-<form nz-form [formGroup]="validateForm" (ngSubmit)="_submitForm()" [nzLayout]="'vertical'">
+<form nz-form [formGroup]="validateForm" [nzLayout]="'vertical'">
   <nz-card [nzBordered]="true" nzTitle="企业基础信息">
     <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="name">企业中文全称</nz-form-label>
-          <nz-form-control nzErrorTip="请输入企业的中文全称">
+          <nz-form-control>
             <input nz-input formControlName="entprName"  placeholder="请输入企业中文全称" />
+            <nz-form-explain *ngIf="validateForm.get('entprName').dirty && validateForm.get('entprName').errors">请输入企业中文全称
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="name">企业简称</nz-form-label>
-          <nz-form-control nzErrorTip="请输入企业简称">
+          <nz-form-control>
             <input nz-input formControlName="entprSimpleName"  placeholder="请输入企业简称" />
+            <nz-form-explain *ngIf="validateForm.get('entprSimpleName').dirty && validateForm.get('entprSimpleName').errors">请输入企业简称
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
           <nz-form-label>行政区划（江苏省-苏州市）</nz-form-label>
-          <nz-form-control nzErrorTip="请选择行政区划">
+          <nz-form-control>
            <nz-select formControlName="region" [nzPlaceHolder]="'请选择行政区划'" [nzShowSearch]="true">
               <nz-option *ngFor="let i of regionOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
             </nz-select>
+            <nz-form-explain *ngIf="validateForm.get('region').dirty && validateForm.get('region').errors">请选择行政区划
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -33,24 +39,30 @@
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
           <nz-form-label>详细地址</nz-form-label>
-          <nz-form-control nzErrorTip="请输入详细地址">
+          <nz-form-control>
             <input nz-input formControlName="detailAddr"  placeholder="请输入企业简称" />
+            <nz-form-explain *ngIf="validateForm.get('detailAddr').dirty && validateForm.get('detailAddr').errors">请输入详细地址
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
           <nz-form-label>法定代表人</nz-form-label>
-          <nz-form-control nzErrorTip="请输入法定代表人">
+          <nz-form-control>
             <input nz-input formControlName="detailAddr"  placeholder="请输入企业简称" />
+            <nz-form-explain *ngIf="validateForm.get('detailAddr').dirty && validateForm.get('detailAddr').errors">请输入法定代表人
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
           <nz-form-label>法人代表移动电话</nz-form-label>
-          <nz-form-control nzErrorTip="请输入法人代表移动电话">
+          <nz-form-control>
             <input nz-input formControlName="legalMobile"  placeholder="请输入企业简称" />
+            <nz-form-explain *ngIf="validateForm.get('legalMobile').dirty && validateForm.get('legalMobile').errors">请输入法人代表移动电话
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -59,24 +71,30 @@
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="name">主要负责人</nz-form-label>
-          <nz-form-control nzErrorTip="请输入主要负责人">
+          <nz-form-control>
             <input nz-input formControlName="boss"  placeholder="请输入主要负责人" />
+            <nz-form-explain *ngIf="validateForm.get('boss').dirty && validateForm.get('boss').errors">请输入主要负责人
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
           <nz-form-item>
             <nz-form-label nzFor="name">主要负责人移动电话</nz-form-label>
-            <nz-form-control nzErrorTip="请输入主要负责人移动电话">
-              <input nz-input formControlName="bossMobile"  placeholder="请输入主要负责人移动电话" />
+            <nz-form-control>
+              <input nz-input formControlName="bossMobile"  placeholder="主要负责人移动电话" />
+              <nz-form-explain *ngIf="validateForm.get('bossMobile').dirty && validateForm.get('bossMobile').errors">请输入主要负责人
+              </nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </nz-col>
          <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
             <nz-form-item>
               <nz-form-label nzFor="name">安环负责人</nz-form-label>
-              <nz-form-control nzErrorTip="请输入安环负责人">
+              <nz-form-control>
                 <input nz-input formControlName="safetyManager"  placeholder="请输入安环负责人" />
+                <nz-form-explain *ngIf="validateForm.get('safetyManager').dirty && validateForm.get('safetyManager').errors">请输入安环负责人
+                </nz-form-explain>
               </nz-form-control>
             </nz-form-item>
           </nz-col>
@@ -85,8 +103,10 @@
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="name">安环负责人移动电话</nz-form-label>
-          <nz-form-control nzErrorTip="请输入安环负责人移动电话">
+          <nz-form-control>
             <input nz-input formControlName="safetyMobile"  placeholder="请输入安环负责人移动电话" />
+            <nz-form-explain *ngIf="validateForm.get('safetyMobile').dirty && validateForm.get('safetyMobile').errors">请输入安环负责人移动电话
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -97,28 +117,34 @@
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="name">经营范围</nz-form-label>
-          <nz-form-control nzErrorTip="请输入经营范围">
+          <nz-form-control>
             <input nz-input formControlName="businessScope"  placeholder="请输入经营范围" />
+            <nz-form-explain *ngIf="validateForm.get('businessScope').dirty && validateForm.get('businessScope').errors">请输入经营范围
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="name">经营状态</nz-form-label>
-          <nz-form-control nzErrorTip="请输入经营状态">
+          <nz-form-control>
             <nz-select formControlName="operatingStatus" [nzPlaceHolder]="'请输入经营状态'" [nzShowSearch]="true">
               <nz-option *ngFor="let i of operatingOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
             </nz-select>
+            <nz-form-explain *ngIf="validateForm.get('operatingStatus').dirty && validateForm.get('operatingStatus').errors">请输入经营状态
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
           <nz-form-label>经济类型</nz-form-label>
-          <nz-form-control nzErrorTip="请选择经济类型">
+          <nz-form-control>
             <nz-select formControlName="ecoType" [nzPlaceHolder]="'请选择经济类型'" [nzShowSearch]="true">
               <nz-option *ngFor="let i of ecoTypeOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
             </nz-select>
+            <nz-form-explain *ngIf="validateForm.get('ecoType').dirty && validateForm.get('ecoType').errors">请选择经济类型
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -127,26 +153,32 @@
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
           <nz-form-label>企业规模</nz-form-label>
-          <nz-form-control nzErrorTip="请选择企业规模">
+          <nz-form-control>
             <nz-select formControlName="entprScale" [nzPlaceHolder]="'请选择企业规模'" [nzShowSearch]="true">
               <nz-option *ngFor="let i of entprScaleOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
             </nz-select>
+            <nz-form-explain *ngIf="validateForm.get('entprScale').dirty && validateForm.get('entprScale').errors">请选择企业规模
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
           <nz-form-label>从业人员数量（人）</nz-form-label>
-          <nz-form-control nzErrorTip="请输入从业人员数量">
+          <nz-form-control>
             <input nz-input formControlName="employeeNum"  placeholder="请输入从业人员数量" />
+            <nz-form-explain *ngIf="validateForm.get('employeeNum').dirty && validateForm.get('employeeNum').errors">请输入从业人员数量
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
           <nz-form-label>特种作业人员数量（人）</nz-form-label>
-          <nz-form-control nzErrorTip="请输入特种作业人员数量">
+          <nz-form-control>
             <input nz-input formControlName="specialOperationNum"  placeholder="请输入特种作业人员数量" />
+            <nz-form-explain *ngIf="validateForm.get('specialOperationNum').dirty && validateForm.get('specialOperationNum').errors">请输入特种作业人员数量
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -155,16 +187,20 @@
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
           <nz-form-label>占地面积（平方米）</nz-form-label>
-          <nz-form-control nzErrorTip="占地面积">
+          <nz-form-control>
             <input nz-input formControlName="floorArea"  placeholder="请输入占地面积" />
+            <nz-form-explain *ngIf="validateForm.get('floorArea').dirty && validateForm.get('floorArea').errors">请输入占地面积
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
           <nz-form-label>注册资金（万元）</nz-form-label>
-          <nz-form-control nzErrorTip="注册资金">
+          <nz-form-control>
             <input nz-input formControlName="regCapi"  placeholder="请输入注册资金" />
+            <nz-form-explain *ngIf="validateForm.get('regCapi').dirty && validateForm.get('regCapi').errors">请输入注册资金
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -175,28 +211,34 @@
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="name">标准化等级</nz-form-label>
-          <nz-form-control nzErrorTip="请选择标准化等级">
+          <nz-form-control>
              <nz-select formControlName="standLevel" [nzPlaceHolder]="'请选择标准化等级'" [nzShowSearch]="true">
              <nz-option *ngFor="let i of standLevelOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
            </nz-select>
+            <nz-form-explain *ngIf="validateForm.get('standLevel').dirty && validateForm.get('standLevel').errors">请选择标准化等级
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="name">安全监管等级</nz-form-label>
-          <nz-form-control nzErrorTip="请选择安全监管等级">
+          <nz-form-control>
              <nz-select formControlName="safetySupervisionLevel" [nzPlaceHolder]="'请选择安全监管等级'" [nzShowSearch]="true">
              <nz-option *ngFor="let i of SupervisionLevelOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
            </nz-select>
+            <nz-form-explain *ngIf="validateForm.get('safetySupervisionLevel').dirty && validateForm.get('safetySupervisionLevel').errors">请选择安全监管等级
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="name">属地安监机构</nz-form-label>
-          <nz-form-control nzErrorTip="请输入属地安监机构">
+          <nz-form-control>
             <input nz-input formControlName="localSafetyAdmin"  placeholder="请输入属地安监机构" />
+            <nz-form-explain *ngIf="validateForm.get('localSafetyAdmin').dirty && validateForm.get('localSafetyAdmin').errors">请输入属地安监机构
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -207,23 +249,27 @@
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
           <nz-form-label>经度</nz-form-label>
-          <nz-form-control nzErrorTip="请输入经度">
+          <nz-form-control>
             <input nz-input  class="cursor-pointer" readonly (click)="showMap()" formControlName="longitude" placeholder="请输入经度" />
+            <nz-form-explain *ngIf="validateForm.get('longitude').dirty && validateForm.get('longitude').errors">请输入经度
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
           <nz-form-label>纬度</nz-form-label>
-          <nz-form-control nzErrorTip="请输入纬度">
+          <nz-form-control>
             <input nz-input  class="cursor-pointer" readonly (click)="showMap()" formControlName="latitude" placeholder="请输入纬度" />
+            <nz-form-explain *ngIf="validateForm.get('latitude').dirty && validateForm.get('latitude').errors">请输入纬度
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
     </nz-row>
   </nz-card>
   <footer-toolbar>
-    <button nz-button type="primary" nzType="primary">更新基本信息</button>
-    <button nz-button type="primary" nzType="primary">提交审核</button>
+    <button nz-button type="submit" nzType="primary" (click)="submitForm()">更新基本信息</button>
+    <button nz-button type="primary" nzType="primary" (click)="goSubmit()">提交审核</button>
   </footer-toolbar>
 </form>

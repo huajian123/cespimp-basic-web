@@ -32,17 +32,12 @@ export namespace EnterpriseBasicInfoServiceNs {
     safetySupervisionLevel?: number;
     localSafetyAdmin?: number;
   }
-
   export interface EntprSearch {
     entprId: number;
   }
-
-  /* export interface EntprPageSearchModel extends SearchCommonVO {
-     entprId: number;
-   }
- */
-
-
+  export interface EnterpriseName extends EntprSearch{
+  applicationName:string;
+}
   export class EnterpriseBasicInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
@@ -51,15 +46,15 @@ export namespace EnterpriseBasicInfoServiceNs {
       return this.http.get('data/basic/enterprise/' + param.entprId).toPromise();
     }
 
-    /*  public getIdCardInfoDetail(param: EntprSearch): Promise<PageInfo<IdCardTabModel>> {
-        return this.http.get('data/basic/document/', param).toPromise();
+    /*修改接口*/
+    public editEnterpriseInfoDetail(param: EntprSearch): Promise<EnterpriseInfoModel> {
+      return this.http.put('data/basic/enterprise/' + param.entprId, param).toPromise();
+    }
+
+     /*企业提交审核*/
+    public getExamine(param: EnterpriseName): Promise<PageInfo<EnterpriseInfoModel>> {
+        return this.http.post('data/basic/enterprise/examination', param).toPromise();
       }
-  */
-
-
-    /*  public getFactoryList(param: SearchCommonVO): Promise<PageInfo<EnterpriseInfoModel>> {
-        return this.http.get('data/basic/enterprises', param).toPromise();
-      }*/
   }
 }
 
