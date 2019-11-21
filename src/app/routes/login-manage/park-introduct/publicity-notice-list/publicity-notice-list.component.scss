@@ -60,14 +60,15 @@
   @include flex-center-direction;
   width: 100%;
   height: calc(100% - 96px);
+  min-height: 800px;
   background: #000949;
   .content-block{
     width: 80%;
     height: 90%;
-    min-height: 350px;
+    min-height: 730px;
     border: 1px solid #00B8FF;
     box-shadow: inset 0 0 20px 0 rgba(0, 236, 255, 0.44);
-    padding-top: 40px;
+    padding-top: 25px;
     cursor: pointer;
     .title {
       margin-top: -40px;

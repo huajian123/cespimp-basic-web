@@ -158,6 +158,12 @@
   </main>
 </ng-container>
 
+<!--公示公告-->
 <ng-container *ngIf="currentPageType===pageTypeEnum.PublicityNotice">
   <publicity-notice-list (returnBackToMainPage)="goBack()"></publicity-notice-list>
+</ng-container>
+
+<!--行业动态-->
+<ng-container *ngIf="currentPageType===pageTypeEnum.IndustryDynamics">
+  <industry-dynamics-list></industry-dynamics-list>
 </ng-container>
