@@ -40,6 +40,7 @@ export class LoginPlatformComponent implements OnInit {
   currentPageNum: number;
   pageTypeEnum = PageTypeEnum;
   loginUrls: UrlsModelInterface;
+  localUrl: string;
 
   constructor(private router: Router, private loginService: LoginService) {
     this.currentSideIndex = this.sideEnum.IntegratedMnageControl;
@@ -65,6 +66,7 @@ export class LoginPlatformComponent implements OnInit {
         garden: '',
       },
     };
+    this.localUrl = localUrl;
   }
 
   changeSideIndex(currentSideIndex) {
@@ -73,7 +75,7 @@ export class LoginPlatformComponent implements OnInit {
     }
     if (currentSideIndex === SideEnum.WisdomEmergencyPro || currentSideIndex === SideEnum.ClosedPark || currentSideIndex === SideEnum.RiskControl || currentSideIndex === SideEnum.ParkIntroduction) {
       this.currentSideIndex = SideEnum.IntegratedMnageControl;
-      if(currentSideIndex===SideEnum.ClosedPark){
+      if (currentSideIndex === SideEnum.ClosedPark) {
         this.goUrl(this.loginUrls.gardenDTO.garden);
       }
       return;
@@ -357,7 +359,7 @@ export class LoginPlatformComponent implements OnInit {
     this.loginUrls = await this.loginService.getLoginUrls();
   }
 
-  goUrl(url){
+  goUrl(url) {
     window.open(url, '_blank');
   }
 
