@@ -1,6 +1,6 @@
 <page-header [title]="'储罐详情页'"></page-header>
 <nz-card [nzHoverable]="true" [nzBordered]="false">
-  <sv-container size="large" title="退款申请">
+  <sv-container size="large" title="基本信息">
     <sv label="储罐编号">{{dataInfo.tankNo}}</sv>
     <sv label="储罐名称">{{dataInfo.tankName}}</sv>
     <sv label="储罐类型">{{dataInfo.tankType|map:'tankType'}}</sv>
@@ -16,25 +16,11 @@
     <sv label="厂区中位置">{{dataInfo.locFactory}}</sv>
   </sv-container>
   <nz-divider></nz-divider>
- <!-- <div class="text-lg mb-md">退货商品</div>
-  <st #st [data]="goods" [columns]="goodsColumns" [body]="goodsBody" [page]="{ show: false }">
-    <ng-template #goodsBody>
-      <tr>
-        <td>合计</td>
-        <td></td>
-        <td></td>
-        <td class="text-right"></td>
-        <td class="text-right">
-          <strong>{{ basicNum }}</strong>
-        </td>
-        <td class="text-right">
-          <strong>{{ amountNum | _currency }}</strong>
-        </td>
-      </tr>
-    </ng-template>
-  </st>
-  <div class="text-lg my-md">退货进度</div>
-  <st [data]="progress" [columns]="progressColumns" [page]="{ show: false }"></st>-->
+  <div class="text-lg mb-md">介质列表</div>
+  <st #st [page]="{showSize:true, front: false}"
+      [bordered]="true"
+      [scroll]="{x: '1200px'}"
+      [widthMode]="{ type: 'strict' }" [data]="dataInfo.majorHazardMaterials" [columns]="columns" class="mt-sm"></st>
 </nz-card>
 <footer-toolbar errorCollect>
   <button nz-button type="primary" (click)="returnToList()" nzType="default">返回</button>

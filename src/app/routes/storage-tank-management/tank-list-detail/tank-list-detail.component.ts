@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { tap } from 'rxjs/operators';
-import { STColumn } from '@delon/abc';
+import { STColumn, STData } from '@delon/abc';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd';
 import { TankListInfoService, TankListServiceNs } from '@core/biz-services/storage-tank-management/tank-list.service';
@@ -25,47 +25,7 @@ export class StorageTankManagementTankListDetailComponent implements OnInit {
   @Input() id: number;
   @Input() currentPageNum: number;
   dataInfo: TankListInfoModel;
-
-
-  basicNum = 0;
-  amountNum = 0;
-  goods = this.http.get('/profile/goods').pipe(
-    tap((list: any[]) => {
-      list.forEach(item => {
-        this.basicNum += Number(item.num);
-        this.amountNum += Number(item.amount);
-      });
-    }),
-  );
-  goodsColumns: STColumn[] = [
-    {
-      title: '商品编号',
-      index: 'id',
-      type: 'link',
-      click: (item: any) => this.msg.success(`show ${item.id}`),
-    },
-    { title: '商品名称', index: 'name' },
-    { title: '商品条码', index: 'barcode' },
-    { title: '单价', index: 'price', type: 'currency' },
-    { title: '数量（件）', index: 'num', className: 'text-right' },
-    { title: '金额', index: 'amount', type: 'currency' },
-  ];
-  progress = this.http.get('/profile/progress');
-  progressColumns: STColumn[] = [
-    { title: '时间', index: 'time' },
-    { title: '当前进度', index: 'rate' },
-    {
-      title: '状态',
-      index: 'status',
-      type: 'badge',
-      badge: {
-        success: { text: '成功', color: 'success' },
-        processing: { text: '进行中', color: 'processing' },
-      },
-    },
-    { title: '操作员ID', index: 'operator' },
-    { title: '耗时', index: 'cost' },
-  ];
+  columns: STColumn[];
 
   constructor(private http: _HttpClient, private msg: NzMessageService,
               private dataService: TankListInfoService, private cdr: ChangeDetectorRef,
@@ -87,6 +47,17 @@ export class StorageTankManagementTankListDetailComponent implements OnInit {
       majorHazardMaterialInsertDTOS: [],
       majorHazardMaterials: [],
     };
+
+    this.columns = [
+      { title: '品名', index: 'productName', width: 60, },
+      { title: 'CAS号', index: 'casNo', width: 60 },
+      { title: '临界量（吨）', index: 'criticalMass', width: 60 },
+      {
+        title: '设计贮存最大量（吨）',
+        index: 'maximumReserves',
+        width: 60,
+      },
+    ];
   }
 
   returnToList() {
