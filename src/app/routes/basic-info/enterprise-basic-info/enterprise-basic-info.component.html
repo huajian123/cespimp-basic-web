@@ -4,23 +4,23 @@
     <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="name">储罐编号</nz-form-label>
-          <nz-form-control nzErrorTip="请输入储罐编号">
-            <input nz-input formControlName="tankNo" id="tankNo" placeholder="请输入储罐编号" />
+          <nz-form-label nzFor="name">企业中文全称</nz-form-label>
+          <nz-form-control nzErrorTip="请输入企业的中文全称">
+            <input nz-input formControlName="entprName"  placeholder="请输入企业中文全称" />
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="name">储罐名称</nz-form-label>
-          <nz-form-control nzErrorTip="请输入储罐名称">
-            <input nz-input formControlName="tankName" id="tankName" placeholder="请输入储罐名称" />
+          <nz-form-label nzFor="name">企业简称</nz-form-label>
+          <nz-form-control nzErrorTip="请输入企业简称">
+            <input nz-input formControlName="tankName"  placeholder="请输入企业简称" />
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 8, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
         <nz-form-item>
-          <nz-form-label>储罐类型</nz-form-label>
+          <nz-form-label>行政区划</nz-form-label>
           <nz-form-control nzErrorTip="请选择储罐类型">
             <nz-select formControlName="tankType" [nzPlaceHolder]="'请选择储罐类型'" [nzShowSearch]="true">
               <nz-option *ngFor="let i of tankTypeOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
@@ -32,7 +32,7 @@
     <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
-          <nz-form-label>储罐形式</nz-form-label>
+          <nz-form-label>详细地址</nz-form-label>
           <nz-form-control nzErrorTip="请选择储罐形式">
             <nz-select formControlName="tankForm" [nzPlaceHolder]="'请选择储罐形式'" [nzShowSearch]="true">
               <nz-option *ngFor="let i of tankFormOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
@@ -62,13 +62,12 @@
         </nz-form-item>
       </nz-col>
     </nz-row>
-
     <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="name">储罐容量</nz-form-label>
           <nz-form-control nzErrorTip="请输入储罐容量">
-            <input nz-input formControlName="tankCapacity" id="name2" placeholder="请输入储罐容量" />
+            <input nz-input formControlName="tankCapacity"  placeholder="请输入储罐容量" />
           </nz-form-control>
         </nz-form-item>
       </nz-col>
