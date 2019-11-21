@@ -176,6 +176,11 @@
   </main>
 </ng-container>
 
+<!--园区平台介绍-->
+<ng-container *ngIf="currentPageType===pageTypeEnum.PlatformIntroduction">
+  <park-introduction-detail></park-introduction-detail>
+</ng-container>
+
 <!--公示公告-->
 <ng-container *ngIf="currentPageType===pageTypeEnum.PublicityNotice">
   <publicity-notice-list (returnBackToMainPage)="goBack()"></publicity-notice-list>
@@ -190,3 +195,5 @@
 <ng-container *ngIf="currentPageType===pageTypeEnum.DocumentNotice">
   <document-notification-list (returnBackToMainPage)="goBack()"></document-notification-list>
 </ng-container>
+
+
