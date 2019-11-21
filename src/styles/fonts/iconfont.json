@@ -67,6 +67,20 @@
       "font_class": "lock",
       "unicode": "e645",
       "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "11909805",
+      "name": "text",
+      "font_class": "text",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "11909807",
+      "name": "download",
+      "font_class": "download",
+      "unicode": "e647",
+      "unicode_decimal": 58951
     }
   ]
 }

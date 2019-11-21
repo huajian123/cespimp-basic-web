@@ -44,6 +44,9 @@ export class LoginPlatformComponent implements OnInit {
   }
 
   changeSideIndex(currentSideIndex) {
+    if(currentSideIndex=== SideEnum.ParkIntroduction){
+     this.goPackIntroduction();
+    }
     if (currentSideIndex === SideEnum.WisdomEmergencyPro || currentSideIndex === SideEnum.ClosedPark || currentSideIndex === SideEnum.RiskControl || currentSideIndex === SideEnum.ParkIntroduction) {
       this.currentSideIndex = SideEnum.IntegratedMnageControl;
       return;
