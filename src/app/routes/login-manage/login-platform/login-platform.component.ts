@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EVENT_KEY } from '@env/staticVariable';
 import { localUrl } from '@env/environment';
+import { LoginService } from '@core/biz-services/login-services/login.service';
 
 enum SideEnum {
   IntegratedMnageControl, // 综合管控
@@ -38,14 +39,14 @@ export class LoginPlatformComponent implements OnInit {
   currentPageNum: number;
   pageTypeEnum = PageTypeEnum;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private loginService: LoginService) {
     this.currentSideIndex = this.sideEnum.IntegratedMnageControl;
     this.currentPageNum = this.pageTypeEnum.MainPage;
   }
 
   changeSideIndex(currentSideIndex) {
-    if(currentSideIndex=== SideEnum.ParkIntroduction){
-     this.goPackIntroduction();
+    if (currentSideIndex === SideEnum.ParkIntroduction) {
+      this.goPackIntroduction();
     }
     if (currentSideIndex === SideEnum.WisdomEmergencyPro || currentSideIndex === SideEnum.ClosedPark || currentSideIndex === SideEnum.RiskControl || currentSideIndex === SideEnum.ParkIntroduction) {
       this.currentSideIndex = SideEnum.IntegratedMnageControl;
@@ -325,9 +326,15 @@ export class LoginPlatformComponent implements OnInit {
     this.currentPageNum = this.pageTypeEnum.Announcement;
   }
 
+  async getPageUrls() {
+    const urls = await this.loginService.getLoginUrls();
+    console.log(urls);
+  }
+
   ngOnInit() {
     // this.loginUserInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.intiRadarOption();
     this.initPipeOption();
+    this.getPageUrls();
   }
 }

@@ -32,6 +32,10 @@ export namespace LoginServiceNs {
     public login(param: { username: string, password: string }): Promise<LoginModel> {
       return this.http.post('user/login', param).toPromise();
     }
+
+    public getLoginUrls(): Promise<any> {
+      return this.http.post('basic/subsystem/login').toPromise();
+    }
   }
 }
 
