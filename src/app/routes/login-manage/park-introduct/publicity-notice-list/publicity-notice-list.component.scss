@@ -4,14 +4,54 @@
   align-items: $vertical-direction;
 }
 
+
+%line {
+  border: 1px solid #007AFF;
+  height: 100%;
+  width: 1px;
+  position: relative;
+  margin: 0 20px;
+
+  &:after {
+    position: absolute;
+    content: '';
+    display: block;
+    background: #ffffff;
+    border-radius: 50%;
+    border: 1px solid #007AFF;
+    width: 10px;
+    height: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.one-line {
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  color: #ffffff;
+}
+
+.time {
+  min-width: 150px;
+  color: #ffffff;
+}
+
+::ng-deep .ant-pagination{
+  color: #ffffff!important;
+}
+::ng-deep .ant-pagination-item-link{
+  color: #ffffff!important;
+}
+
 .notice-list-wrap{
   @include flex-center-direction;
   width: 100%;
   height: calc(100% - 96px);
   background: #000949;
-/*  background: url(../../../../../assets/imgs/login-manage/block-bg.png) center no-repeat;
-  background-size: 100% 100%;*/
-
   .content-block{
     width: 80%;
     height: 90%;
@@ -30,6 +70,35 @@
       color: #00FFFB;
       font-size: 18px;
     }
+
+    .content-wrap {
+      width: 100%;
+      height: 100%;
+
+      .notice-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 22px 20px 28px 20px;
+        cursor: pointer;
+
+        .notice-item {
+          display: flex;
+          height: 55px;
+          line-height: 55px;
+          overflow: hidden!important;
+          .line {
+            @extend %line
+          }
+        }
+      }
+    }
   }
 
+  .pagination{
+    text-align: right;
+    margin-right: 20px;
+    margin-bottom: -40px;
+  }
 }

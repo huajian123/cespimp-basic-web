@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
+enum PageEnum {
+  List,
+  Detail
+}
+
+
 @Component({
   selector: 'publicity-notice-list',
   templateUrl: './publicity-notice-list.component.html',
@@ -7,8 +13,16 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PublicityNoticeListComponent implements OnInit {
+  pageEnum = PageEnum;
+  currentPageNum: number;
 
-  constructor() { }
+  constructor() {
+    this.currentPageNum = this.pageEnum.List;
+  }
+
+  goDetail() {
+    this.currentPageNum = this.pageEnum.Detail;
+  }
 
   ngOnInit() {
   }
