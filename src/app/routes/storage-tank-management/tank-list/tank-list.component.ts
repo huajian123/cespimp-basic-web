@@ -120,7 +120,7 @@ export class TankListComponent implements OnInit {
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '储罐容量', index: 'tamkCapacity', width: 100 },
+      { title: '储罐容量', index: 'tankCapacity', width: 100 },
       {
         title: '投产时间',
         index: 'productionDate',

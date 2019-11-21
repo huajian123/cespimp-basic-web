@@ -149,14 +149,15 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
 
     const params = this.validateForm.getRawValue();
     params.entprId = this.loginInfo.entprId;
-    params.createBy = this.loginInfo.createBy;
     params.updateBy = this.loginInfo.updateBy;
     let submitHandel = null;
 
     if (!this.id) {
+      params.createBy = this.loginInfo.realName;
       submitHandel = this.dataService.addTank(params);
     } else {
       params.id = this.id;
+      params.updateBy = this.loginInfo.realName;
       submitHandel = this.dataService.editTank(params);
     }
 
@@ -173,6 +174,11 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
   async getDetail() {
     const dataInfo = await this.dataService.getTankInfoDetail(this.id);
     this.validateForm.patchValue(dataInfo);
+    dataInfo.majorHazardMaterials.forEach(item => {
+      const field = this.createMedium();
+      field.patchValue(item);
+      this.mediumArray.push(field);
+    });
     this.cdr.markForCheck();
   }
 

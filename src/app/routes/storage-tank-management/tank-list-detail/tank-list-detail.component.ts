@@ -81,9 +81,11 @@ export class StorageTankManagementTankListDetailComponent implements OnInit {
       longitude: -1,
       latitude: -1,
       tankMate: -1,
-      tamkCapacity: -1,
+      tankCapacity: -1,
       productionDate: new Date(),
       locFactory: '',
+      majorHazardMaterialInsertDTOS: [],
+      majorHazardMaterials: [],
     };
   }
 
