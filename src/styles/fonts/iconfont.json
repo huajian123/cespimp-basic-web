@@ -81,6 +81,13 @@
       "font_class": "download",
       "unicode": "e647",
       "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "11910954",
+      "name": "to-left",
+      "font_class": "to-left",
+      "unicode": "e648",
+      "unicode_decimal": 58952
     }
   ]
 }

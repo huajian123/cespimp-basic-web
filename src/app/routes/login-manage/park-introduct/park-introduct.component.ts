@@ -22,6 +22,10 @@ export class ParkIntroductComponent implements OnInit {
     this.currentPageType = this.pageTypeEnum.MainPage;
   }
 
+  goBack(){
+    this.currentPageType=this.pageTypeEnum.MainPage
+  }
+
   goPage(pageEnum: PageTypeEnum) {
     this.currentPageType = pageEnum;
     console.log(this.currentPageType);

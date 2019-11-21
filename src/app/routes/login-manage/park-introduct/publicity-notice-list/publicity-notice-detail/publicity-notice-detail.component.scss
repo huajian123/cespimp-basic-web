@@ -4,6 +4,15 @@
   align-items: $vertical-direction;
 }
 
+.to-left{
+  font-size: 32px;
+  color: #ffffff;
+  position: fixed;
+  top: 65px;
+  left: 50px;
+  /* margin-left: 50px;*/
+  cursor: pointer;
+}
 
 .publicity-notice-wrap{
   @include flex-center-direction;

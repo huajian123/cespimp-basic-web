@@ -2,6 +2,7 @@
 <ng-container *ngIf="currentPageNum===pageEnum.List">
   <div class="notice-list-wrap">
     <div class="content-block">
+      <p><span class="icon iconfont to-left" (click)="goMainList()"></span></p>
       <div class="title">公示公告</div>
       <div class="content-wrap">
         <div class="notice-list">
@@ -73,5 +74,5 @@
 </ng-container>
 
 <ng-container *ngIf="currentPageNum===pageEnum.Detail">
-  <publicity-notice-detail></publicity-notice-detail>
+  <publicity-notice-detail (returnToNoticeList)="goList()"></publicity-notice-detail>
 </ng-container>

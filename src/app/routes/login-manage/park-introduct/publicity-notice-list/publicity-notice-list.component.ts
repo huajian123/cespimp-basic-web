@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 enum PageEnum {
   List,
@@ -15,9 +15,20 @@ enum PageEnum {
 export class PublicityNoticeListComponent implements OnInit {
   pageEnum = PageEnum;
   currentPageNum: number;
+  @Output() returnBackToMainPage: EventEmitter<any>;
 
   constructor() {
+    this.returnBackToMainPage = new EventEmitter<any>();
     this.currentPageNum = this.pageEnum.List;
+  }
+
+  goList() {
+
+    this.currentPageNum = this.pageEnum.List;
+  }
+
+  goMainList(){
+   this.returnBackToMainPage.emit();
   }
 
   goDetail() {

@@ -159,5 +159,5 @@
 </ng-container>
 
 <ng-container *ngIf="currentPageType===pageTypeEnum.PublicityNotice">
-  <publicity-notice-list></publicity-notice-list>
+  <publicity-notice-list (returnBackToMainPage)="goBack()"></publicity-notice-list>
 </ng-container>
