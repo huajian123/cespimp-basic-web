@@ -7,6 +7,8 @@ import { BasicInfoEnterpriseSurroundingInfoListComponent } from './enterprise-su
 import { BasicInfoProductionMaterialsInfoListComponent } from './production-materials-info-list/production-materials-info-list.component';
 import { BasicInfoIntermediateProductInfoListComponent } from './intermediate-product-info-list/intermediate-product-info-list.component';
 import { BasicInfoFinalProductInfoListComponent } from './final-product-info-list/final-product-info-list.component';
+import { BasicInfoEnterpriseBasicInfoComponent } from './enterprise-basic-info/enterprise-basic-info.component';
+import { BasicInfoCertificateInfoComponent } from './certificate-info/certificate-info.component';
 
 
 const routes: Routes = [
@@ -17,7 +19,9 @@ const routes: Routes = [
   { path: 'enterprise-surrounding-info-list', component: BasicInfoEnterpriseSurroundingInfoListComponent },
   { path: 'production-materials-info-list', component: BasicInfoProductionMaterialsInfoListComponent },
   { path: 'intermediate-product-info-list', component: BasicInfoIntermediateProductInfoListComponent },
-  { path: 'final-product-info-list', component: BasicInfoFinalProductInfoListComponent }];
+  { path: 'final-product-info-list', component: BasicInfoFinalProductInfoListComponent },
+  { path: 'enterprise-basic-info', component: BasicInfoEnterpriseBasicInfoComponent },
+  { path: 'certificate-info', component: BasicInfoCertificateInfoComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

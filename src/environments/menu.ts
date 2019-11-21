@@ -30,24 +30,15 @@ export const menus = [
             'link': '/basic-info/basic-info',
             'acl': RoleEnum[RoleEnum.ParkManage],
           },
-          {
-            'text': '基本信息审核列表',
-            'link': '/basic-info/basic-info-audit-list',
-          },
-          {
-            'text': '基本信息统计',
-            'link': '/basic-info/basic-info-statistics',
-            'acl': RoleEnum[RoleEnum.ParkManage],
-          },
           /*企业管理员操作菜单*/
           {
             'text': '企业基本信息',
-            'link': '/basic-info/basic-info-list',
+            'link': '/basic-info/enterprise-basic-info',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
           {
             'text': '证照信息',
-            'link': '/basic-info/certificate-info-list',
+            'link': '/basic-info/certificate-info',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },/*以上的2个菜单展现形式未确定还未创建模板文件*/
           {
@@ -69,6 +60,15 @@ export const menus = [
             'text': '最终产品信息',
             'link': '/basic-info/final-product-info-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
+          },
+          {
+            'text': '基本信息审核列表',
+            'link': '/basic-info/basic-info-audit-list',
+          },
+          {
+            'text': '基本信息统计',
+            'link': '/basic-info/basic-info-statistics',
+            'acl': RoleEnum[RoleEnum.ParkManage],
           },
         ],
       },

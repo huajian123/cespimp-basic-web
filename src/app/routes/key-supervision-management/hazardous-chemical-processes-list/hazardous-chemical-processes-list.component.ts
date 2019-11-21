@@ -85,7 +85,7 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
   }
   private initTable(): void {
     this.columns = [
-      { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.Enterprise] },
+      { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
       { title: '危险工艺名称', index: 'processName', width: 80 },
       {
         title: '操作',

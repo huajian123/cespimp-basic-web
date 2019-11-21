@@ -50,16 +50,17 @@
   <nz-divider></nz-divider>
   <sv-container size="large" title="企业经营信息">
     <sv label="经营范围">{{dataInfo.businessScope}}</sv>
-    <sv label="经营状态">{{dataInfo.operatingStatus}}</sv>
-    <sv label="经济类型">{{dataInfo.ecoType}}</sv>
-    <sv label="企业规模">{{dataInfo.entprScale}}</sv>
+    <sv label="经营状态">{{dataInfo.operatingStatus|map:'operatingStatus'}}</sv>
+    <sv label="经济类型">{{dataInfo.ecoType|map:'ecoType'}}</sv>
+    <sv label="企业规模">{{dataInfo.entprScale|map:'entprScale'}}</sv>
     <sv label="从业人员数量">{{dataInfo.employeeNum}}</sv>
     <sv label="特种作业人员数量">{{dataInfo.specialOperationNum}}</sv>
   </sv-container>
   <nz-divider></nz-divider>
   <sv-container size="large" title="企业安全信息">
-    <sv label="标准化等级">{{dataInfo.standLevel}}</sv>
+    <sv label="标准化等级">{{dataInfo.standLevel|map:'standLevel'}}</sv>
     <sv label="安全监管等级">{{dataInfo.safetySupervisionLevel}}</sv>
+    <sv label="属地安监机构">{{dataInfo.localSafetyAdmin}}</sv>
   </sv-container>
 </nz-card>
 <nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.IdCardTab">
