@@ -16,6 +16,10 @@ export class DocumentNotificationListComponent implements OnInit {
   pageEnum = PageEnum;
   currentPageNum: number;
   @Output() returnBackToMainPage: EventEmitter<any>;
+  data = {
+    otherdata: 1,
+    time: new Date(),
+  };
   constructor() {
     this.returnBackToMainPage = new EventEmitter<any>();
     this.currentPageNum = this.pageEnum.List;
