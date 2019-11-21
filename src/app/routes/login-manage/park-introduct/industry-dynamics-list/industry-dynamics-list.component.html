@@ -2,15 +2,15 @@
   <div class="notice-list-wrap">
     <div class="content-block">
       <p><span class="icon iconfont to-left" (click)="goMainList()"></span></p>
-      <div class="title">行业公告</div>
+      <div class="title">行业动态</div>
       <div class="content-wrap">
         <div class="notice-list">
-          <div class="notice-item" (click)="goDetail()">
+          <div class="notice-item" (click)="goDetail(1)">
             <div class="time">2019-11-21 14:02:13</div>
             <div class="line"></div>
             <span class="one-line">省应急管理厅厅关于拟纳入联合惩戒对象的公示省应急管理厅关于拟纳入联合惩戒对象的公示省应急管理厅关于拟纳入联合惩戒对象的公示纳入联合惩戒对象的公示</span>
           </div>
-          <div class="notice-item">
+          <div class="notice-item" (click)="goDetail(2)">
             <div class="time">2019-11-21 14:02:13</div>
             <div class="line"></div>
             <span class="one-line">省应急管理厅关于拟省应急管理厅关于拟纳入联合惩戒对象的公示省应急管理厅关于拟纳入联合惩戒对象的公示省应急管理厅关于拟纳入联合惩戒对象的公示省应急管理厅关于拟纳入联合惩戒对象的公示省应急管理厅关于拟纳入联合惩戒对象的公示省应急管理厅关于拟纳入联合惩戒对象的公示省应急管理厅关于拟纳入联合惩戒对象的公示纳入联合惩戒对象的公示</span>
@@ -73,6 +73,6 @@
 </ng-container>
 
 <ng-container *ngIf="currentPageNum===pageEnum.Detail">
-  <industry-dynamics-detail (returnToNoticeList)="goList()"></industry-dynamics-detail>
+  <industry-dynamics-detail [dataInfo]="dataInfo"  (returnToNoticeList)="goList()"></industry-dynamics-detail>
 </ng-container>
 
