@@ -1,62 +1,24 @@
 <page-header [title]="'重大危险源详情'"></page-header>
-<nz-card [nzBordered]="false">
-  <form nz-form   se-container="1" labelWidth="200">
-    <se label="重大危险源编号" >
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.majorHazardNo}}
-      </nz-col>
-    </se>
-    <se label="重大危险源名称" >
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.majorHazardName}}
-      </nz-col>
-    </se>
-    <se label="单元类型">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.unitType|map:'unitType'}}
-      </nz-col>
-    </se>
-    <se label="投用时间">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.useDate|map:'date:yyyy-MM-dd HH:mm:ss'}}
-      </nz-col>
-    </se>
-    <se label="R值">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.rvalue}}
-      </nz-col>
-    </se>
-    <se label="重大危险源等级">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.majorHazardLevel|map:'majorHazardLevel'}}
-      </nz-col>
-    </se>
-    <se label="重大危险源性质">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.majorHazardNature|map:'majorHazardNature'}}
-      </nz-col>
-    </se>
-    <se label="重大危险源管理员">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.manager}}
-      </nz-col>
-    </se>
-    <se label="管理员联系电话">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.managerMobile}}
-      </nz-col>
-    </se>
-    <se label="重大危险源描述">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.description}}
-      </nz-col>
-    </se>
-    <se>
-      <div class="detail-modal-footer">
-        <button nz-button type="button" (click)="returnBackToList()" nzType="primary">返回</button>
-      </div>
-    </se>
-  </form>
+<nz-card [nzHoverable]="true" [nzBordered]="false">
+  <sv-container size="large" title="基本信息">
+    <sv label="重大危险源编号">{{dataInfo.majorHazardNo}}</sv>
+    <sv label="重大危险源名称">{{dataInfo.majorHazardName}}</sv>
+    <sv label="R值">{{dataInfo.rvalue}}</sv>
+    <sv label="单元类型">{{dataInfo.unitType|map:'unitType'}}</sv>
+    <sv label="投用时间">{{dataInfo.useDate|map:'date:yyyy-MM-dd HH:mm:ss'}}</sv>
+    <sv label="重大危险源等级">{{dataInfo.majorHazardLevel|map:'majorHazardLevel'}}</sv>
+    <sv label="重大危险源性质">{{dataInfo.majorHazardNature|map:'majorHazardNature'}}</sv>
+    <sv label="重大危险源管理员">{{dataInfo.manager}}</sv>
+    <sv label="管理员联系电话">{{dataInfo.managerMobile}}</sv>
+    <sv label="重大危险源描述">{{dataInfo.description}}</sv>
+  </sv-container>
+  <nz-divider></nz-divider>
+  <div class="text-lg mb-md">重大危险源组成单元列表</div>
+  <st #st [page]="{showSize:true, front: false}"
+      [bordered]="true"
+      [scroll]="{x: '1200px'}"
+      [widthMode]="{ type: 'strict' }" [data]="dataInfo.majorHazardUnits" [columns]="columns" class="mt-sm"></st>
 </nz-card>
-
-
+<footer-toolbar errorCollect>
+  <button nz-button type="primary" (click)="returnToList()" nzType="default">返回</button>
+</footer-toolbar>
