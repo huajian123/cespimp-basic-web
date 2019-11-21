@@ -1,0 +1,127 @@
+@mixin flex-center-direction($direction:center,$vertical-direction:center) {
+  display: flex;
+  justify-content: $direction;
+  align-items: $vertical-direction;
+}
+
+.to-left{
+  font-size: 32px!important;
+  color: #ffffff!important;
+  position: fixed;
+  top: 65px;
+  left: 50px;
+  /* margin-left: 50px;*/
+  cursor: pointer;
+}
+
+
+%line {
+  border: 1px solid #007AFF;
+  height: 100%;
+  width: 1px;
+  position: relative;
+  margin: 0 20px;
+
+  &:after {
+    position: absolute;
+    content: '';
+    display: block;
+    background: #ffffff;
+    border-radius: 50%;
+    border: 1px solid #007AFF;
+    width: 10px;
+    height: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.one-line {
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  color: #ffffff;
+}
+
+.icon.iconfont{
+  color:#5092C1;
+  font-size: 20px;
+  &.text{
+    margin-right: 10px;
+  }
+  &.download{
+    margin-left: auto;
+    font-size: 24px;
+  }
+}
+
+.time {
+  min-width: 150px;
+  color: #ffffff;
+}
+
+::ng-deep .ant-pagination{
+  color: #ffffff!important;
+}
+::ng-deep .ant-pagination-item-link{
+  color: #ffffff!important;
+}
+
+.notice-list-wrap{
+  @include flex-center-direction;
+  width: 100%;
+  height: calc(100% - 96px);
+  min-height: 800px;
+  background: #000949;
+  .content-block{
+    width: 80%;
+    height: 90%;
+    min-height: 730px;
+    border: 1px solid #00B8FF;
+    box-shadow: inset 0 0 20px 0 rgba(0, 236, 255, 0.44);
+    padding-top: 25px;
+    cursor: pointer;
+    .title {
+      margin-top: -40px;
+      background: url(../../../../../assets/imgs/login-manage/block-title.png) center no-repeat;
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      color: #00FFFB;
+      font-size: 18px;
+    }
+
+    .content-wrap {
+      width: 100%;
+      height: 100%;
+
+      .notice-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 22px 20px 28px 20px;
+        cursor: pointer;
+
+        .notice-item {
+          display: flex;
+          height: 55px;
+          line-height: 55px;
+          overflow: hidden!important;
+          .line {
+            @extend %line
+          }
+        }
+      }
+    }
+  }
+
+  .pagination{
+    text-align: right;
+    margin-right: 20px;
+    margin-bottom: -40px;
+  }
+}

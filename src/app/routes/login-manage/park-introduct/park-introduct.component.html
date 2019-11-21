@@ -185,3 +185,8 @@
 <ng-container *ngIf="currentPageType===pageTypeEnum.IndustryDynamics">
   <industry-dynamics-list (returnBackToMainPage)="goBack()"></industry-dynamics-list>
 </ng-container>
+
+<!--文件通知-->
+<ng-container *ngIf="currentPageType===pageTypeEnum.DocumentNotice">
+  <document-notification-list (returnBackToMainPage)="goBack()"></document-notification-list>
+</ng-container>
