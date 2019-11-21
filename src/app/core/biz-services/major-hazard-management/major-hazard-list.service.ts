@@ -12,25 +12,35 @@ export namespace MajorHazardListServiceNs {
     useDate?: Date;
     majorHazardLevel: number;
     majorHazardNature?: number;
-    rValue?: number;
+    rvalue?: number;
     managerMobile?:string;
     description?:string;
   }
 
-  export interface EntprSearch {
-    entprId: number;
-  }
+
 
   export class MajorHazardListInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
-
-    public getMajorHazardInfoDetail(param: EntprSearch): Promise<MajorHazardListInfoModel> {
-      return this.http.get('data/basic/enterprise/'+param.entprId).toPromise();
+    /*新增接口*/
+    public addMajorHazard(param:MajorHazardListInfoModel): Promise<void> {
+      return this.http.post('data/major/hazard/info',param,{needSuccessInfo: true}).toPromise();
     }
-
+    /*修改接口*/
+    public editMajorHazard(param: MajorHazardListInfoModel): Promise<void> {
+      return this.http.put('data/major/hazard/info',param,{needSuccessInfo: true}).toPromise();
+    }
+   /*详情接口*/
+    public getMajorHazardInfoDetail(id: number): Promise<MajorHazardListInfoModel> {
+      return this.http.get('data/major/hazard/info/'+id).toPromise();
+    }
+  /*列表接口*/
     public getMajorHazardList(param: SearchCommonVO): Promise<PageInfo<MajorHazardListInfoModel>> {
       return this.http.get('data/major/hazard/infos', param).toPromise();
+    }
+    /*删除接口*/
+    public delMajorHazard(id: number): Promise<MajorHazardListInfoModel> {
+      return this.http.del('data/major/hazard/info/'+ id).toPromise();
     }
   }
 }
