@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EVENT_KEY } from '@env/staticVariable';
 import { localUrl } from '@env/environment';
+import { LoginService, LoginServiceNs } from '@core/biz-services/login-services/login.service';
+import UrlsModelInterface = LoginServiceNs.UrlsModelInterface;
 
 enum SideEnum {
   IntegratedMnageControl, // 综合管控
@@ -37,18 +39,45 @@ export class LoginPlatformComponent implements OnInit {
   pipeOption: any;
   currentPageNum: number;
   pageTypeEnum = PageTypeEnum;
+  loginUrls: UrlsModelInterface;
+  localUrl: string;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private loginService: LoginService) {
     this.currentSideIndex = this.sideEnum.IntegratedMnageControl;
     this.currentPageNum = this.pageTypeEnum.MainPage;
+    this.loginUrls = {
+      synthesisMonitoring: {
+        oneGrandOneFile: '',
+        levelAlarm: '',
+        ldar: '',
+        workingMonitoring: '',
+      },
+      emergencyDTO: {
+        emergency: '',
+      },
+      environmentalDTO: {
+        environmentalLogin: '',
+        environmentalMap: '',
+        capacityMonitoring: '',
+        dataResearch: '',
+        polluteSource: '',
+      },
+      gardenDTO: {
+        garden: '',
+      },
+    };
+    this.localUrl = localUrl;
   }
 
   changeSideIndex(currentSideIndex) {
-    if(currentSideIndex=== SideEnum.ParkIntroduction){
-     this.goPackIntroduction();
+    if (currentSideIndex === SideEnum.ParkIntroduction) {
+      this.goPackIntroduction();
     }
     if (currentSideIndex === SideEnum.WisdomEmergencyPro || currentSideIndex === SideEnum.ClosedPark || currentSideIndex === SideEnum.RiskControl || currentSideIndex === SideEnum.ParkIntroduction) {
       this.currentSideIndex = SideEnum.IntegratedMnageControl;
+      if (currentSideIndex === SideEnum.ClosedPark) {
+        this.goUrl(this.loginUrls.gardenDTO.garden);
+      }
       return;
     }
     this.currentSideIndex = currentSideIndex;
@@ -314,6 +343,7 @@ export class LoginPlatformComponent implements OnInit {
 
   async goLoginPage() {
     window.sessionStorage.clear();
+    await this.loginService.loginOut();
     this.router.navigateByUrl('/passport/login');
   }
 
@@ -325,9 +355,18 @@ export class LoginPlatformComponent implements OnInit {
     this.currentPageNum = this.pageTypeEnum.Announcement;
   }
 
+  async getPageUrls() {
+    this.loginUrls = await this.loginService.getLoginUrls();
+  }
+
+  goUrl(url) {
+    window.open(url, '_blank');
+  }
+
   ngOnInit() {
     // this.loginUserInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.intiRadarOption();
     this.initPipeOption();
+    this.getPageUrls();
   }
 }

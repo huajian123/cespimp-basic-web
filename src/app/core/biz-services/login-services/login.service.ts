@@ -3,6 +3,29 @@ import { HttpUtilService } from '@core/net/http-util.service';
 
 
 export namespace LoginServiceNs {
+  export interface UrlsModelInterface {
+    synthesisMonitoring: {
+      oneGrandOneFile: string;
+      levelAlarm: string;
+      ldar: string;
+      workingMonitoring: string;
+    },
+    emergencyDTO: {
+      emergency: string;
+    },
+    environmentalDTO: {
+      environmentalLogin: string;
+      environmentalMap: string;
+      capacityMonitoring: string;
+      dataResearch: string;
+      polluteSource: string;
+    },
+    gardenDTO: {
+      garden: string;
+    }
+  }
+
+
   export interface LoginModel {
     user: LoginUserModel;
     entprBasicInfo: LoginEntprModel;
@@ -17,12 +40,13 @@ export namespace LoginServiceNs {
     mobileTel: string;
     role: number;
   }
+
   export interface LoginEntprModel {
     id: number;
     entprId: number;
     latitude: number;
     longitude: number;
-    zoom:number;
+    zoom: number;
   }
 
   export class LoginServiceClass {
@@ -31,6 +55,14 @@ export namespace LoginServiceNs {
 
     public login(param: { username: string, password: string }): Promise<LoginModel> {
       return this.http.post('user/login', param).toPromise();
+    }
+
+    public getLoginUrls(): Promise<UrlsModelInterface> {
+      return this.http.post('basic/subsystem/login').toPromise();
+    }
+
+    public loginOut(): Promise<any> {
+      return this.http.post('basic/subsystem/loginOut').toPromise();
     }
   }
 }

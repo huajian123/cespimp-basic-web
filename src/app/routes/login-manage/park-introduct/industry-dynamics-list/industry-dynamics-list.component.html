@@ -1,1 +1,58 @@
-<p>industry-dynamics-list works!</p>
+<ng-container *ngIf="currentPageNum===pageEnum.List">
+  <div class="notice-list-wrap">
+    <div class="content-block">
+      <p><span class="icon iconfont to-left" (click)="goMainList()"></span></p>
+      <div class="title">行业动态</div>
+      <div class="content-wrap">
+        <div class="notice-list">
+          <div class="notice-item" (click)="goDetail(1)">
+            <div class="time">2019-11-01 11:08:28</div>
+            <div class="line"></div>
+            <span class="one-line">我省研究审议第二批安全生产巡查报告并作工作部署</span>
+          </div>
+          <div class="notice-item" (click)="goDetail(2)">
+            <div class="time">2019-10-28 09:34:20</div>
+            <div class="line"></div>
+            <span class="one-line">2019中国安全及应急技术装备博览会在我省徐州市举行</span>
+          </div>
+          <div class="notice-item" (click)="goDetail(3)">
+            <div class="time">2019-10-08 10:10:52</div>
+            <div class="line"></div>
+            <span class="one-line">省安委会办公室强调防懈怠防松劲防反弹坚决遏制各类生产安全事故</span>
+          </div>
+          <div class="notice-item" (click)="goDetail(4)">
+            <div class="time">2019-07-26 10:11:41</div>
+            <div class="line"></div>
+            <span class="one-line">陈忠伟厅长明查暗访化工企业调研危化品安全生产信息化建设</span>
+          </div>
+          <div class="notice-item" (click)="goDetail(5)">
+            <div class="time">2019-07-03 09:24:43</div>
+            <div class="line"></div>
+            <span class="one-line">2019年全省“安全生产月”活动圆满收官</span>
+          </div>
+          <div class="notice-item" (click)="goDetail(6)">
+            <div class="time">2019-05-29 14:01:12</div>
+            <div class="line"></div>
+            <span class="one-line">全省救援协调和预案管理工作会议在南京召开</span>
+          </div>
+        </div>
+
+        <div class="pagination">
+
+          <nz-pagination
+            [nzPageIndex]="1"
+            [nzTotal]="10"
+            [nzSize]="'small'"
+            nzShowQuickJumper
+          ></nz-pagination>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ng-container>
+
+<ng-container *ngIf="currentPageNum===pageEnum.Detail">
+  <industry-dynamics-detail [dataInfo]="dataInfo"  (returnToNoticeList)="goList()"></industry-dynamics-detail>
+</ng-container>
+

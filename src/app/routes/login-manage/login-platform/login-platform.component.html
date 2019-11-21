@@ -29,23 +29,23 @@
       </div>
       <!--综合管控-->
       <div class="system-cards" *ngIf="currentSideIndex===sideEnum.IntegratedMnageControl">
-        <div class="system-cards-item">
+        <div class="system-cards-item" (click)="goUrl(loginUrls.synthesisMonitoring.oneGrandOneFile)">
           <div class="system-cards-title">
             一园一档
           </div>
         </div>
-        <div class="system-cards-item">
+        <div class="system-cards-item" (click)="goUrl(loginUrls.synthesisMonitoring.levelAlarm)">
           <div class="system-cards-title">
             分级报警
           </div>
         </div>
-        <div class="system-cards-item">
+        <div class="system-cards-item" (click)="goUrl(loginUrls.synthesisMonitoring.ldar)">
           <div class="system-cards-title">
             LDAR
           </div>
         </div>
 
-        <div class="system-cards-item">
+        <div class="system-cards-item" (click)="goUrl(loginUrls.synthesisMonitoring.workingMonitoring)">
           <div class="system-cards-title">
             工况监控
           </div>
@@ -54,23 +54,23 @@
 
       <!--智慧环保-->
       <div class="system-cards" *ngIf="currentSideIndex===sideEnum.WisdomEnvirPro">
-        <div class="system-cards-item evn">
+        <div class="system-cards-item evn" (click)="goUrl(loginUrls.environmentalDTO.environmentalMap)">
           <div class="system-cards-title">
             环保一张图
           </div>
         </div>
-        <div class="system-cards-item evn">
+        <div class="system-cards-item evn" (click)="goUrl(loginUrls.environmentalDTO.capacityMonitoring)">
           <div class="system-cards-title">
             智能监测
           </div>
         </div>
-        <div class="system-cards-item evn">
+        <div class="system-cards-item evn" (click)="goUrl(loginUrls.environmentalDTO.dataResearch)">
           <div class="system-cards-title">
             数据研判
           </div>
         </div>
 
-        <div class="system-cards-item evn">
+        <div class="system-cards-item evn" (click)="goUrl(loginUrls.environmentalDTO.polluteSource)">
           <div class="system-cards-title">
             污染朔源
           </div>
@@ -79,23 +79,23 @@
 
       <!--智慧安全-->
       <div class="system-cards" *ngIf="currentSideIndex===sideEnum.WisdomSafePro">
-        <div class="system-cards-item saf">
+        <div class="system-cards-item saf" (click)="goUrl('')">
           <div class="system-cards-title">
             安全一张图
           </div>
         </div>
-        <div class="system-cards-item saf">
+        <div class="system-cards-item saf" (click)="goUrl(localUrl + '/basic-info/basic-info')">
           <div class="system-cards-title">
-            设备监控
+            一企一档
           </div>
         </div>
-        <div class="system-cards-item saf">
+        <div class="system-cards-item saf" (click)="goUrl('')">
           <div class="system-cards-title">
             视频监控
           </div>
         </div>
 
-        <div class="system-cards-item saf">
+        <div class="system-cards-item saf" (click)="goUrl('')">
           <div class="system-cards-title">
             特种作业
           </div>
