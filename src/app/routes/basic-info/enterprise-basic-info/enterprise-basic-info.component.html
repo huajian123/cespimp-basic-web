@@ -14,16 +14,16 @@
         <nz-form-item>
           <nz-form-label nzFor="name">企业简称</nz-form-label>
           <nz-form-control nzErrorTip="请输入企业简称">
-            <input nz-input formControlName="tankName"  placeholder="请输入企业简称" />
+            <input nz-input formControlName="entprSimpleName"  placeholder="请输入企业简称" />
           </nz-form-control>
         </nz-form-item>
       </nz-col>
-      <nz-col [nzXl]="{ span: 8, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
-          <nz-form-label>行政区划</nz-form-label>
-          <nz-form-control nzErrorTip="请选择储罐类型">
-            <nz-select formControlName="tankType" [nzPlaceHolder]="'请选择储罐类型'" [nzShowSearch]="true">
-              <nz-option *ngFor="let i of tankTypeOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
+          <nz-form-label>行政区划（江苏省-苏州市）</nz-form-label>
+          <nz-form-control nzErrorTip="请选择行政区划">
+           <nz-select formControlName="region" [nzPlaceHolder]="'请选择行政区划'" [nzShowSearch]="true">
+              <nz-option *ngFor="let i of regionOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -33,30 +33,91 @@
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
           <nz-form-label>详细地址</nz-form-label>
-          <nz-form-control nzErrorTip="请选择储罐形式">
-            <nz-select formControlName="tankForm" [nzPlaceHolder]="'请选择储罐形式'" [nzShowSearch]="true">
-              <nz-option *ngFor="let i of tankFormOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
+          <nz-form-control nzErrorTip="请输入详细地址">
+            <input nz-input formControlName="detailAddr"  placeholder="请输入企业简称" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>法定代表人</nz-form-label>
+          <nz-form-control nzErrorTip="请输入法定代表人">
+            <input nz-input formControlName="detailAddr"  placeholder="请输入企业简称" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>法人代表移动电话</nz-form-label>
+          <nz-form-control nzErrorTip="请输入法人代表移动电话">
+            <input nz-input formControlName="legalMobile"  placeholder="请输入企业简称" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">主要负责人</nz-form-label>
+          <nz-form-control nzErrorTip="请输入主要负责人">
+            <input nz-input formControlName="boss"  placeholder="请输入主要负责人" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label nzFor="name">主要负责人移动电话</nz-form-label>
+            <nz-form-control nzErrorTip="请输入主要负责人移动电话">
+              <input nz-input formControlName="bossMobile"  placeholder="请输入主要负责人移动电话" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+         <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+            <nz-form-item>
+              <nz-form-label nzFor="name">安环负责人</nz-form-label>
+              <nz-form-control nzErrorTip="请输入安环负责人">
+                <input nz-input formControlName="safetyManager"  placeholder="请输入安环负责人" />
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">安环负责人移动电话</nz-form-label>
+          <nz-form-control nzErrorTip="请输入安环负责人移动电话">
+            <input nz-input formControlName="safetyMobile"  placeholder="请输入安环负责人移动电话" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+  <nz-card [nzBordered]="true" nzTitle="企业经营信息">
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">经营范围</nz-form-label>
+          <nz-form-control nzErrorTip="请输入经营范围">
+            <input nz-input formControlName="businessScope"  placeholder="请输入经营范围" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">经营状态</nz-form-label>
+          <nz-form-control nzErrorTip="请输入经营状态">
+            <nz-select formControlName="operatingStatus" [nzPlaceHolder]="'请输入经营状态'" [nzShowSearch]="true">
+              <nz-option *ngFor="let i of operatingOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
-          <nz-form-label>储罐结构</nz-form-label>
-          <nz-form-control nzErrorTip="请选择储罐结构">
-            <nz-select formControlName="tankStructure" [nzPlaceHolder]="'请选择储罐结构'" [nzShowSearch]="true">
-              <nz-option *ngFor="let i of tankStructureOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-
-      <nz-col [nzXl]="{ span: 8, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
-        <nz-form-item>
-          <nz-form-label>储罐材质</nz-form-label>
-          <nz-form-control nzErrorTip="请选择储罐材质">
-            <nz-select formControlName="tankMate" [nzPlaceHolder]="'请选择储罐材质'" [nzShowSearch]="true">
-              <nz-option *ngFor="let i of tankMateOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
+          <nz-form-label>经济类型</nz-form-label>
+          <nz-form-control nzErrorTip="请选择经济类型">
+            <nz-select formControlName="ecoType" [nzPlaceHolder]="'请选择经济类型'" [nzShowSearch]="true">
+              <nz-option *ngFor="let i of ecoTypeOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -65,23 +126,77 @@
     <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="name">储罐容量</nz-form-label>
-          <nz-form-control nzErrorTip="请输入储罐容量">
-            <input nz-input formControlName="tankCapacity"  placeholder="请输入储罐容量" />
+          <nz-form-label>企业规模</nz-form-label>
+          <nz-form-control nzErrorTip="请选择企业规模">
+            <nz-select formControlName="entprScale" [nzPlaceHolder]="'请选择企业规模'" [nzShowSearch]="true">
+              <nz-option *ngFor="let i of entprScaleOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="name">投产时间</nz-form-label>
-          <nz-form-control nzErrorTip="请输入投产时间">
-            <nz-date-picker
-              nzShowTime
-              [nzStyle]="{ width: '100%' }"
-              nzFormat="yyyy-MM-dd HH:mm:ss"
-              nzPlaceHolder="请选择投产时间"
-              formControlName="productionDate"
-            ></nz-date-picker>
+          <nz-form-label>从业人员数量（人）</nz-form-label>
+          <nz-form-control nzErrorTip="请输入从业人员数量">
+            <input nz-input formControlName="employeeNum"  placeholder="请输入从业人员数量" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>特种作业人员数量（人）</nz-form-label>
+          <nz-form-control nzErrorTip="请输入特种作业人员数量">
+            <input nz-input formControlName="specialOperationNum"  placeholder="请输入特种作业人员数量" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>占地面积（平方米）</nz-form-label>
+          <nz-form-control nzErrorTip="占地面积">
+            <input nz-input formControlName="floorArea"  placeholder="请输入占地面积" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>注册资金（万元）</nz-form-label>
+          <nz-form-control nzErrorTip="注册资金">
+            <input nz-input formControlName="regCapi"  placeholder="请输入注册资金" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+  <nz-card [nzBordered]="true" nzTitle="企业安全信息">
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">标准化等级</nz-form-label>
+          <nz-form-control nzErrorTip="请选择标准化等级">
+             <nz-select formControlName="standLevel" [nzPlaceHolder]="'请选择标准化等级'" [nzShowSearch]="true">
+             <nz-option *ngFor="let i of standLevelOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
+           </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">安全监管等级</nz-form-label>
+          <nz-form-control nzErrorTip="请选择安全监管等级">
+             <nz-select formControlName="safetySupervisionLevel" [nzPlaceHolder]="'请选择安全监管等级'" [nzShowSearch]="true">
+             <nz-option *ngFor="let i of SupervisionLevelOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
+           </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">属地安监机构</nz-form-label>
+          <nz-form-control nzErrorTip="请输入属地安监机构">
+            <input nz-input formControlName="localSafetyAdmin"  placeholder="请输入属地安监机构" />
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -106,106 +221,9 @@
         </nz-form-item>
       </nz-col>
     </nz-row>
-    <nz-row nzGutter="16">
-      <nz-col nzLg="6" nzMd="12" nzSm="24">
-        <nz-form-item>
-          <nz-form-label>厂区中位置</nz-form-label>
-          <nz-form-control nzErrorTip="请输入厂区中位置">
-            <textarea nz-input formControlName="locFactory"  [nzAutosize]="{ minRows: 4 }" placeholder="请输入厂区中位置"></textarea>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-    </nz-row>
   </nz-card>
-  <nz-card [nzBordered]="true" nzTitle="企业经营信息">
-    <nz-row nzGutter="16">
-      <nz-col nzLg="6" nzMd="12" nzSm="24">
-        <nz-form-item>
-          <nz-form-label nzFor="name">储罐编号</nz-form-label>
-          <nz-form-control nzErrorTip="请输入储罐编号">
-            <input nz-input formControlName="tankNo" id="tankNo" placeholder="请输入储罐编号" />
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
-        <nz-form-item>
-          <nz-form-label nzFor="name">储罐名称</nz-form-label>
-          <nz-form-control nzErrorTip="请输入储罐名称">
-            <input nz-input formControlName="tankName" id="tankName" placeholder="请输入储罐名称" />
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-      <nz-col [nzXl]="{ span: 8, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
-        <nz-form-item>
-          <nz-form-label>储罐类型</nz-form-label>
-          <nz-form-control nzErrorTip="请选择储罐类型">
-            <nz-select formControlName="tankType" [nzPlaceHolder]="'请选择储罐类型'" [nzShowSearch]="true">
-              <nz-option *ngFor="let i of tankTypeOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-    </nz-row>
-    <nz-row nzGutter="16">
-      <nz-col nzLg="6" nzMd="12" nzSm="24">
-        <nz-form-item>
-          <nz-form-label>储罐形式</nz-form-label>
-          <nz-form-control nzErrorTip="请选择储罐形式">
-            <nz-select formControlName="tankForm" [nzPlaceHolder]="'请选择储罐形式'" [nzShowSearch]="true">
-              <nz-option *ngFor="let i of tankFormOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
-        <nz-form-item>
-          <nz-form-label>储罐结构</nz-form-label>
-          <nz-form-control nzErrorTip="请选择储罐结构">
-            <nz-select formControlName="tankStructure" [nzPlaceHolder]="'请选择储罐结构'" [nzShowSearch]="true">
-              <nz-option *ngFor="let i of tankStructureOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-
-      <nz-col [nzXl]="{ span: 8, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
-        <nz-form-item>
-          <nz-form-label>储罐材质</nz-form-label>
-          <nz-form-control nzErrorTip="请选择储罐材质">
-            <nz-select formControlName="tankMate" [nzPlaceHolder]="'请选择储罐材质'" [nzShowSearch]="true">
-              <nz-option *ngFor="let i of tankMateOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-    </nz-row>
-
-    <nz-row nzGutter="16">
-      <nz-col nzLg="6" nzMd="12" nzSm="24">
-        <nz-form-item>
-          <nz-form-label nzFor="name">储罐容量</nz-form-label>
-          <nz-form-control nzErrorTip="请输入储罐容量">
-            <input nz-input formControlName="tankCapacity" id="name2" placeholder="请输入储罐容量" />
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
-        <nz-form-item>
-          <nz-form-label nzFor="name">投产时间</nz-form-label>
-          <nz-form-control nzErrorTip="请输入投产时间">
-            <nz-date-picker
-              nzShowTime
-              [nzStyle]="{ width: '100%' }"
-              nzFormat="yyyy-MM-dd HH:mm:ss"
-              nzPlaceHolder="请选择投产时间"
-              formControlName="productionDate"
-            ></nz-date-picker>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-    </nz-row>
-  </nz-card>
-  <footer-toolbar errorCollect>
+  <footer-toolbar>
     <button nz-button type="primary" nzType="primary">更新基本信息</button>
+    <button nz-button type="primary" nzType="primary">提交审核</button>
   </footer-toolbar>
 </form>

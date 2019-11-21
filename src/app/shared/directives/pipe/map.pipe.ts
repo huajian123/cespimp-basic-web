@@ -32,7 +32,20 @@ export const MapSet = {
     2: 'B',
     3: 'C',
     4: 'D',
-    5: '未定级'
+    5: '未定级',
+  },
+  //区划代码
+  region: {
+    1: '市辖区',
+    2: '虎丘区',
+    3: '吴中区',
+    4: '姑苏区',
+    5: '吴江区',
+    6: '苏州工业园区',
+    7: '常熟市',
+    8: '张家港市',
+    9: '昆山市',
+    10: '太仓市',
   },
   tankType: {
     1: '常压储罐',
@@ -643,8 +656,8 @@ export const MapSet = {
     99: '其他',
   },
 
- //经济类型
-  ecoType:{
+  //经济类型
+  ecoType: {
     1: '股份制',
     2: '外商投资',
     3: '港澳台投资',
@@ -656,16 +669,16 @@ export const MapSet = {
     99: '其他',
   },
   //企业规模
-  entprScale:{
-    1:'大型',
-    2:'中型',
-    3:'小型',
+  entprScale: {
+    1: '大型',
+    2: '中型',
+    3: '小型',
   },
   //单元类型
-  unitType:{
-    1:'生产单元',
-    2:'存储单元'
-},
+  unitType: {
+    1: '生产单元',
+    2: '存储单元',
+  },
   //  经营状态
   reviewStatus: {
     1: '待审核',
@@ -674,7 +687,7 @@ export const MapSet = {
     4: '审核通过',
   },
   // 周边环境类型
-  envrType:{
+  envrType: {
     1: '住宅区',
     2: '生产单位',
     3: '机关团体',
@@ -684,7 +697,7 @@ export const MapSet = {
   },
 
   // 周边环境方位
-  envrDirection:{
+  envrDirection: {
     1: '东',
     2: '西',
     3: '南',
@@ -696,7 +709,7 @@ export const MapSet = {
   },
 
   // 建筑结构
-  buildStruct:{
+  buildStruct: {
     1: '混合结构',
     2: '框架结构',
     3: '框架剪力墙结构',
@@ -708,7 +721,7 @@ export const MapSet = {
   },
 
   // 建筑结构
-  productType:{
+  productType: {
     1: '生产原料',
     2: '中间产品',
     3: '最终产品',

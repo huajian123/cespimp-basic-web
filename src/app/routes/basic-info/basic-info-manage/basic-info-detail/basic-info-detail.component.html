@@ -1,4 +1,4 @@
-<page-header [title]="'欧德油储（南京）有限公公司'" [logo]="logo" [action]="action" [extra]="extra" [tab]="tab">
+<page-header [title]="'苏州晶瑞化学股份有限公司'" [logo]="logo" [action]="action" [extra]="extra" [tab]="tab">
   <ng-template #logo>
     <img src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png" alt=""/>
   </ng-template>
@@ -38,7 +38,7 @@
   <sv-container size="large" title="企业基础信息">
     <sv label="企业全称">{{dataInfo.entprName}}</sv>
     <sv label="企业简称">{{dataInfo.entprSimpleName}}</sv>
-    <sv label="行政区划">{{dataInfo.region}}</sv>
+    <sv label="行政区划">江苏省-苏州市-{{dataInfo.region|map:'region'}}</sv>
     <sv label="详细地址">{{dataInfo.detailAddr}}</sv>
     <sv label="法人代表">{{dataInfo.legalPerson}}</sv>
     <sv label="法人代表移动电话">{{dataInfo.legalMobile}}</sv>
@@ -59,19 +59,14 @@
   <nz-divider></nz-divider>
   <sv-container size="large" title="企业安全信息">
     <sv label="标准化等级">{{dataInfo.standLevel|map:'standLevel'}}</sv>
-    <sv label="安全监管等级">{{dataInfo.safetySupervisionLevel}}</sv>
+    <sv label="安全监管等级">{{dataInfo.safetySupervisionLevel|map:'safetySupervisionLevel'}}</sv>
     <sv label="属地安监机构">{{dataInfo.localSafetyAdmin}}</sv>
   </sv-container>
 </nz-card>
 <nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.IdCardTab">
-  <nz-card nzType="inner" nzTitle="1、社会信用代码">
+  <nz-card nzType="inner" nzTitle="1、营业执照">
     <sv-container size="large" title="">
       <sv label="统一社会信用代码">{{idCardInfo.uscCode}}</sv>
-    </sv-container>
-  </nz-card>
-  <nz-divider></nz-divider>
-  <nz-card nzType="inner" nzTitle="2、营业执照">
-    <sv-container size="large" title="">
       <sv label="有效时间">{{idCardInfo.businessLicencesBeginTime|map:'date:yyyy-MM-dd'}}~{{idCardInfo.businessLicencesEndTime|map:'date:yyyy-MM-dd'}}</sv>
       <sv label="经营范围">{{idCardInfo.businessLicencesRange}}</sv>
       <sv label="发证机关">{{idCardInfo.businessLicencesAuthority}}</sv>
