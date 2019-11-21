@@ -51,6 +51,10 @@
   content: "\e645";
 }
 
+.text:before {
+  content: "\e646";
+}
+
 .download:before {
   content: "\e647";
 }
