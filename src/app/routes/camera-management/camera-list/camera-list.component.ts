@@ -5,10 +5,10 @@ import { MessageType, ShowMessageService } from '../../../widget/show-message/sh
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import {
-  CameramanagementListInfoService,
-  CameramanagementListServiceNs,
+  CameraManagementListInfoService,
+  CameraManagementListServiceNs,
 } from '@core/biz-services/camera-management/camera-list.service';
-import CameramanagementListInfoModel = CameramanagementListServiceNs.CameramanagementListInfoModel;
+import CameraManagementListInfoModel = CameraManagementListServiceNs.CameraManagementListInfoModel;
 
 @Component({
   selector: 'app-camera-management-camera-list',
@@ -20,12 +20,12 @@ export class CameraManagementCameraListComponent implements OnInit {
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
   expandForm: boolean;
-  dataList: CameramanagementListInfoModel[];
+  dataList: CameraManagementListInfoModel[];
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
 
-  constructor(private dataService: CameramanagementListInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
+  constructor(private dataService: CameraManagementListInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -48,7 +48,7 @@ export class CameraManagementCameraListComponent implements OnInit {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
     };
-    const { total, list, pageNum } = await this.dataService.getCameramanagementList(params);
+    const { total, list, pageNum } = await this.dataService.getCameraManagementList(params);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
     this.dataList = list || [];

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpUtilService } from '@core/net/http-util.service';
 import { SearchCommonVO } from '@core/vo/comm/BusinessEnum';
 import { PageInfo } from '@core/vo/comm/PageInfo';
-export namespace CameramanagementListServiceNs {
-  export interface CameramanagementListInfoModel {
+export namespace CameraManagementListServiceNs {
+  export interface CameraManagementListInfoModel {
     id: number;
     cameraNo: string;
     cameraName: string;
@@ -15,7 +15,7 @@ export namespace CameramanagementListServiceNs {
     locFactory?: string;
   }
 
-  export class CameramanagementListInfoServiceClass {
+  export class CameraManagementListInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
  /*   /!*新增接口*!/
@@ -31,7 +31,7 @@ export namespace CameramanagementListServiceNs {
       return this.http.get('data/basic/enterprise/rooms/'+ id).toPromise();
     }*/
     /*库房列表*/
-    public getCameramanagementList(param: SearchCommonVO): Promise<PageInfo<CameramanagementListInfoModel>> {
+    public getCameraManagementList(param: SearchCommonVO): Promise<PageInfo<CameraManagementListInfoModel>> {
       return this.http.get('data/major/hazard/cameras', param).toPromise();
     }
    /* /!*删除接口*!/
@@ -44,7 +44,7 @@ export namespace CameramanagementListServiceNs {
 @Injectable({
   providedIn: 'root',
 })
-export class CameramanagementListInfoService extends CameramanagementListServiceNs.CameramanagementListInfoServiceClass {
+export class CameraManagementListInfoService extends CameraManagementListServiceNs.CameraManagementListInfoServiceClass {
   constructor(http: HttpUtilService) {
     super(http);
   }
