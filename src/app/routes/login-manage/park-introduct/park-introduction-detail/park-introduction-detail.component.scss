@@ -1,2 +1,56 @@
-.left{
+.vertical-flex{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+
+.content-wrap {
+  width: 100%;
+  height: calc(100% - 96px);
+  min-height: 800px;
+  background: #000949;
+  position: relative;
+
+  .left, .right {
+    position: absolute;
+    width: 465px;
+    height: 100%;
+    background: yellow;
+    top: 0;
+  }
+
+  .left {
+    left: 0;
+  }
+  .right {
+    right: 0;
+  }
+
+  .block-item{
+    width: 432px;
+    height: 45%;
+    border: 1px solid #00D9FF;
+    padding-top: 34px;
+    .header{
+      margin-top: -34px;
+      background: url(../../../../../assets/imgs/login-manage/introduct-detail-title.png) center no-repeat;
+      width: 100%;
+      height: 34px;
+      line-height: 34px;
+      text-align: center;
+      color: #00FFFB;
+      font-size: 18px;
+    }
+    .content{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-direction: column;
+      padding: 0 10px;
+    }
+  }
 }
