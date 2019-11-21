@@ -70,6 +70,10 @@
       .settled-industry {
         width: 100%;
         height: 50%;
+        .settled-industry-list{
+          display: flex;
+          flex-wrap: wrap;
+        }
       }
 
     }
