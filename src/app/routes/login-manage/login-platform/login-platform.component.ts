@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EVENT_KEY } from '@env/staticVariable';
 import { localUrl } from '@env/environment';
-import { LoginService } from '@core/biz-services/login-services/login.service';
+import { LoginService, LoginServiceNs } from '@core/biz-services/login-services/login.service';
+import UrlsModelInterface = LoginServiceNs.UrlsModelInterface;
 
 enum SideEnum {
   IntegratedMnageControl, // 综合管控
@@ -38,10 +39,32 @@ export class LoginPlatformComponent implements OnInit {
   pipeOption: any;
   currentPageNum: number;
   pageTypeEnum = PageTypeEnum;
+  loginUrls: UrlsModelInterface;
 
   constructor(private router: Router, private loginService: LoginService) {
     this.currentSideIndex = this.sideEnum.IntegratedMnageControl;
     this.currentPageNum = this.pageTypeEnum.MainPage;
+    this.loginUrls = {
+      synthesisMonitoring: {
+        oneGrandOneFile: '',
+        levelAlarm: '',
+        ldar: '',
+        workingMonitoring: '',
+      },
+      emergencyDTO: {
+        emergency: '',
+      },
+      environmentalDTO: {
+        environmentalLogin: '',
+        environmentalMap: '',
+        capacityMonitoring: '',
+        dataResearch: '',
+        polluteSource: '',
+      },
+      gardenDTO: {
+        garden: '',
+      },
+    };
   }
 
   changeSideIndex(currentSideIndex) {
@@ -50,6 +73,9 @@ export class LoginPlatformComponent implements OnInit {
     }
     if (currentSideIndex === SideEnum.WisdomEmergencyPro || currentSideIndex === SideEnum.ClosedPark || currentSideIndex === SideEnum.RiskControl || currentSideIndex === SideEnum.ParkIntroduction) {
       this.currentSideIndex = SideEnum.IntegratedMnageControl;
+      if(currentSideIndex===SideEnum.ClosedPark){
+        this.goUrl(this.loginUrls.gardenDTO.garden);
+      }
       return;
     }
     this.currentSideIndex = currentSideIndex;
@@ -327,8 +353,11 @@ export class LoginPlatformComponent implements OnInit {
   }
 
   async getPageUrls() {
-    const urls = await this.loginService.getLoginUrls();
-    console.log(urls);
+    this.loginUrls = await this.loginService.getLoginUrls();
+  }
+
+  goUrl(url){
+    window.open(url, '_blank');
   }
 
   ngOnInit() {
