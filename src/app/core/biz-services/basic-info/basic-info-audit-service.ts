@@ -14,6 +14,7 @@ export namespace BasicInfoAuditServiceNs {
     reviewTime?: Date;
     reviewExplain: string;
     reviewStatus: number;
+    review: number;
   }
 
   export interface EntprSearch {
@@ -31,14 +32,14 @@ export namespace BasicInfoAuditServiceNs {
     constructor(private http: HttpUtilService) {
     }
 
-    public getFactoryInfoDetail(param: EntprSearch): Promise<BasicInfoAuditModel> {
-      return this.http.get('data/basic/enterprise/' + param.entprId).toPromise();
+    public getBasicInfoAuditInfoDetail(id: number): Promise<BasicInfoAuditModel> {
+      return this.http.get('data/basic/enterprise/examination/' +id).toPromise();
     }
 
-    /*  public getIdCardInfoDetail(param: EntprSearch): Promise<PageInfo<IdCardTabModel>> {
-        return this.http.get('data/basic/document/', param).toPromise();
-      }
-  */
+    /*处理审核接口*/
+    public getIdCardInfoDetail(id: number): Promise<BasicInfoAuditModel> {
+      return this.http.put('data/basic/enterprise/examination/'+id).toPromise();
+    }
 
     public getFactoryAuditList(param: SearchCommonVO): Promise<PageInfo<BasicInfoAuditModel>> {
       return this.http.get('data/basic/enterprise/examinations', param).toPromise();

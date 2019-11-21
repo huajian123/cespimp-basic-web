@@ -3,6 +3,14 @@
   <nz-card [nzBordered]="false">
     <form nz-form [nzLayout]="'inline'" class="search__form">
       <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+        <div nz-col nzMd="8" nzSm="24" [acl]="roleEnum[roleEnum.ParkManage]">
+          <nz-form-item>
+            <nz-form-label nzFor="no">企业名称</nz-form-label>
+            <nz-form-control>
+              <input nz-input name="no" placeholder="请输入企业名称"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
         <div nz-col nzMd="8" nzSm="24">
           <nz-form-item>
             <nz-form-label nzFor="status">审核状态</nz-form-label>
@@ -27,19 +35,33 @@
       <i nz-icon nzType="plus"></i>
       <span>新建</span>
     </button>
-
     <st #st [page]="{showSize:true, front: false}"
         [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true"
         [scroll]="{x: '2400px'}"
         [widthMode]="{ type: 'strict' }" [data]="dataList"  (change)="changePage($event)" [columns]="columns" class="mt-sm"></st>
   </nz-card>
-
-
 </ng-container>
-
-<!--<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
-  <app-basic-info-detail [entprId]="this.itemId" [currentPageNum]="listPageInfo.pi" (returnBack)="returnToList($event)"></app-basic-info-detail>
-</ng-container>-->
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="500" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzFor="review">审核结果</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <nz-select [(ngModel)]="seacher.review" [ngModelOptions]="{standalone: true}" nzPlaceHolder="下拉选择">
+          <nz-option *ngFor="let i of statusOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item >
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzFor="reviewExplain">审核意见</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <textarea rows="4" nz-input [(ngModel)]="seacher.reviewExplain" [ngModelOptions]="{standalone: true}"></textarea>
+      </nz-form-control>
+    </nz-form-item >
+  </form>
+</nz-modal>
+<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
+  <app-basic-info-basic-info-audit-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-basic-info-basic-info-audit-detail>
+</ng-container>
 
 <!--<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
   <basic-info-edit-add></basic-info-edit-add>
