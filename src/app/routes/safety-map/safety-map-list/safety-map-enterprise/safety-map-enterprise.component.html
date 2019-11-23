@@ -3,7 +3,7 @@
   <div id="map" style="width: 100%;height: 800px"></div>
 
   <div class="layers">
-    <button [ngClass]="{active:item.isSel,unActive:!item.isSel}" *ngFor="let item of layerBtnObjArray" nz-button [nzType]="item.type"  [autofocus]="item.isSel"  (click)="changeLayer(layerEnum.Temperature,item)" nzGhost>
+    <button [ngClass]="{active:item.isSel,unActive:!item.isSel}" *ngFor="let item of layerBtnObjArray" nz-button [nzType]="item.type"  [autofocus]="item.isSel"  (click)="changeLayer(item.layNum,item)" nzGhost>
       <i nz-icon nzType="download"></i>{{item.name}}
     </button>
   </div>

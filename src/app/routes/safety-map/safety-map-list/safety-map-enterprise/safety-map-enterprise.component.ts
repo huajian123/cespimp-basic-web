@@ -15,6 +15,7 @@ interface LayerBtnInterface {
   type: string;
   icon: string;
   isSel: boolean;
+  layNum: number;
 }
 
 @Component({
@@ -29,6 +30,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   tilePhoto: Object; // 倾斜摄影对象
   currentSelLayerBtnIndex: number;
   layerBtnObjArray: LayerBtnInterface[];
+  selLayerNumberArray: number[]; // 存储选中的图层的数组
 
   constructor(private cdr: ChangeDetectorRef) {
     const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
@@ -37,13 +39,14 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     this.tilePhoto = new T.TileLayer(imageURL, { minZoom: 1, maxZoom: 18 });
     this.currentSelLayerBtnIndex = -1;
     this.layerBtnObjArray = [
-      { name: '温度传感器', type: 'default', icon: 'download', isSel: false },
-      { name: '压力传感器', type: 'default', icon: 'download', isSel: false },
-      { name: '液位传感器', type: 'default', icon: 'download', isSel: false },
-      { name: '可燃气体', type: 'default', icon: 'download', isSel: false },
-      { name: '有毒气体', type: 'default', icon: 'download', isSel: false },
-      { name: '摄像头', type: 'default', icon: 'download', isSel: false },
+      { name: '温度传感器', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.Temperature },
+      { name: '压力传感器', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.Pressure },
+      { name: '液位传感器', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.WaterLevel },
+      { name: '可燃气体', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.FireGas },
+      { name: '有毒气体', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.PoisonousGas },
+      { name: '摄像头', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.Camera },
     ];
+    this.selLayerNumberArray = [];
   }
 
   // 切换图层
@@ -51,7 +54,15 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     item.isSel = !item.isSel;
     this.currentSelLayerBtnIndex = layerEnum;
 
+    const index = this.selLayerNumberArray.indexOf(layerEnum);
+    if (index === -1) {
+      this.selLayerNumberArray.push(layerEnum);
+    } else {
+      this.selLayerNumberArray.splice(index, 1);
+    }
   }
+
+  // 创建覆盖物
 
   initMap() {
     this.map = new T.Map('map');
