@@ -71,10 +71,17 @@ export class LoginPlatformComponent implements OnInit {
   }
 
   changeSideIndex(currentSideIndex) {
+    // 智慧应急
+    if(currentSideIndex===SideEnum.WisdomEmergencyPro){
+      this.goUrl(this.loginUrls.emergencyDTO.emergency);
+      return;
+    }
+
     if (currentSideIndex === SideEnum.ParkIntroduction) {
       this.goPackIntroduction();
+      return;
     }
-    if (currentSideIndex === SideEnum.WisdomEmergencyPro || currentSideIndex === SideEnum.ClosedPark || currentSideIndex === SideEnum.RiskControl || currentSideIndex === SideEnum.ParkIntroduction) {
+    if ( currentSideIndex === SideEnum.ClosedPark || currentSideIndex === SideEnum.RiskControl || currentSideIndex === SideEnum.ParkIntroduction) {
       this.currentSideIndex = SideEnum.IntegratedMnageControl;
       if (currentSideIndex === SideEnum.ClosedPark) {
         this.goUrl(this.loginUrls.gardenDTO.garden);
