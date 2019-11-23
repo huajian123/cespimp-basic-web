@@ -49,7 +49,7 @@ export class StorageTankManagementTankListDetailComponent implements OnInit {
     };
 
     this.columns = [
-      { title: '品名', index: 'productName', width: 60, },
+      { title: '品名', index: 'productName', width: 60 },
       { title: 'CAS号', index: 'casNo', width: 60 },
       { title: '临界量（吨）', index: 'criticalMass', width: 60 },
       {
@@ -72,8 +72,8 @@ export class StorageTankManagementTankListDetailComponent implements OnInit {
     }).then().catch(e => e);
   }
 
-  async getDetailInfo() {
-    this.dataInfo = await this.dataService.getTankInfoDetail(this.id);
+  async getDetailInfo(id?) {
+    this.dataInfo = await this.dataService.getTankInfoDetail(id ? id : this.id);
     this.cdr.markForCheck();
   }
 
