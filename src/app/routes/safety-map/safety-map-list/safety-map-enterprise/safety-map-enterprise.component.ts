@@ -1,7 +1,8 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { BasicInfoService } from '@core/biz-services/basic-info/basic-info.service';
 
 enum LayerEnum {
+  HazardSource,
   Temperature,
   Pressure,
   WaterLevel,
@@ -25,13 +26,14 @@ interface LayerBtnInterface {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
+  @Input() enterpriseId: number;
   map;
   layerEnum = LayerEnum;
   tilePhoto: Object; // 倾斜摄影对象
   currentSelLayerBtnIndex: number;
   layerBtnObjArray: LayerBtnInterface[];
   selLayerNumberArray: number[]; // 存储选中的图层的数组
-
+// /safety-map/safety-map-list
   constructor(private cdr: ChangeDetectorRef) {
     const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
       'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
@@ -39,6 +41,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     this.tilePhoto = new T.TileLayer(imageURL, { minZoom: 1, maxZoom: 18 });
     this.currentSelLayerBtnIndex = -1;
     this.layerBtnObjArray = [
+      { name: '重大危险源', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.HazardSource },
       { name: '温度传感器', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.Temperature },
       { name: '压力传感器', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.Pressure },
       { name: '液位传感器', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.WaterLevel },
@@ -71,6 +74,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    console.log(this.enterpriseId);
   }
 
   ngAfterViewInit(): void {

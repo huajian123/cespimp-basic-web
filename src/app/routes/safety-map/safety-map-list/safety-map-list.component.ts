@@ -24,7 +24,7 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
   businessSelOptions: OptionsInterface[];
   enterpriseList: FactoryInfoModel[];
   enterpriseArray: any[]; // 企业覆盖物存储数组
-  selectedEnterprise = null; // 选中的企业
+  selectedEnterpriseId = -1; // 选中的企业
   pageTypeEnum = PageTypeEnum;
   currentPageType: number;
 
@@ -51,7 +51,6 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
       this.businessSelOptions.push(obj);
     });
     this.enterpriseList = list;
-    console.log(1);
   }
 
   // 创建工厂覆盖物
@@ -90,8 +89,9 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
     this.enterpriseArray.forEach(item => {
       item.addEventListener('click', () => {
         setTimeout(() => {
+          this.selectedEnterpriseId = item.setOptions.id;
           this.currentPageType = this.pageTypeEnum.EnterpriseItem;
-          this.cdr.markForCheck()
+          this.cdr.markForCheck();
         }, 0);
       });
     });

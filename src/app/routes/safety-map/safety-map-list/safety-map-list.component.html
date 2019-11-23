@@ -3,7 +3,7 @@
     <div id="mapDiv" style="width: 100%;height: 800px"></div>
 
     <div class="sel-business">
-      <nz-select  [(ngModel)]="selectedEnterprise" (ngModelChange)="changeSelValue($event)" [nzSize]="'large'" class="sel" nzShowSearch nzAllowClear nzPlaceHolder="搜索企业">
+      <nz-select  [(ngModel)]="selectedEnterpriseId" (ngModelChange)="changeSelValue($event)" [nzSize]="'large'" class="sel" nzShowSearch nzAllowClear nzPlaceHolder="搜索企业">
         <nz-option *ngFor="let item of businessSelOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
       </nz-select>
     </div>
@@ -11,6 +11,6 @@
 </ng-container>
 
 <ng-container *ngIf="currentPageType===pageTypeEnum.EnterpriseItem">
-  <safety-map-enterprise></safety-map-enterprise>
+  <safety-map-enterprise [enterpriseId]="selectedEnterpriseId"></safety-map-enterprise>
 </ng-container>
 

@@ -250,14 +250,14 @@ export const menus = [
             'text': '传感器列表',
             'link': '/sensor-management/sensor-list',
           },
-          {
+ /*         {
             'text': '传感器实时数据',
             'link': '/sensor-management/sensor-realtime-data-list',
           },
           {
             'text': '传感器历史数据',
             'link': '/sensor-management/sensor-history-data-list',
-          },
+          },*/
         ],
       },
     ],
