@@ -35,3 +35,8 @@ export interface LoginInfoModel {
   updateTime: Date;
   userName: string;
 }
+
+export interface OptionsInterface {
+  value: string | number;
+  label: string;
+}

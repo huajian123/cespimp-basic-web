@@ -1,9 +1,16 @@
-<page-header [action]="phActionTpl">
-  <ng-template #phActionTpl>
-    <button (click)="add()" nz-button nzType="primary">新建</button>
-  </ng-template>
-</page-header>
-<nz-card>
-  <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
-  <st #st [data]="url" [columns]="columns"></st>
-</nz-card>
+<ng-container *ngIf="currentPageType===pageTypeEnum.EnterpriseList">
+  <nz-card [nzBordered]="true" class="wraper">
+    <div id="mapDiv" style="width: 100%;height: 800px"></div>
+
+    <div class="sel-business">
+      <nz-select  [(ngModel)]="selectedEnterprise" (ngModelChange)="changeSelValue($event)" [nzSize]="'large'" class="sel" nzShowSearch nzAllowClear nzPlaceHolder="搜索企业">
+        <nz-option *ngFor="let item of businessSelOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+      </nz-select>
+    </div>
+  </nz-card>
+</ng-container>
+
+<ng-container *ngIf="currentPageType===pageTypeEnum.EnterpriseItem">
+  <safety-map-enterprise></safety-map-enterprise>
+</ng-container>
+
