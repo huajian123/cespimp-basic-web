@@ -4,6 +4,7 @@ import { EVENT_KEY } from '@env/staticVariable';
 import { localUrl } from '@env/environment';
 import { LoginService, LoginServiceNs } from '@core/biz-services/login-services/login.service';
 import UrlsModelInterface = LoginServiceNs.UrlsModelInterface;
+import { RoleEnum } from '@core/vo/comm/BusinessEnum';
 
 enum SideEnum {
   IntegratedMnageControl, // 综合管控
@@ -360,6 +361,15 @@ export class LoginPlatformComponent implements OnInit {
   }
 
   goUrl(url) {
+    const role=window.sessionStorage.getItem(EVENT_KEY.role)
+    if(url==='selfSys'){
+      if(role=== RoleEnum[RoleEnum.Enterprise]){
+        window.open(localUrl + '/basic-info/enterprise-basic-info');
+      }else if(role=== RoleEnum[RoleEnum.ParkManage]){
+        window.open(localUrl + '/basic-info/basic-info');
+      }
+      return;
+    }
     window.open(url, '_blank');
   }
 
