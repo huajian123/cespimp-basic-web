@@ -8,7 +8,7 @@ import {
   Output,
 } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WarehouseListInfoService } from '@core/biz-services/warehouse-management/warehouse-list.service';
 import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
 import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
@@ -34,7 +34,8 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
   fireLevelOptions: OptionsInterface[];
   roomFormOptions: OptionsInterface[];
   loginInfo: LoginInfoModel;
-
+  editIndex = -1;
+  editObj = {};
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: WarehouseListInfoService, private positionPickerService: PositionPickerService) {
     this.returnBack = new EventEmitter<any>();
@@ -66,12 +67,18 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
       longitude: [null, [Validators.required]],
       latitude: [null, [Validators.required]],
       locFactory: [null, []],
+      majorHazardMaterialInsertDTOS: <FormArray>this.fb.array([]),
     });
   }
 
   async getDetail() {
     const dataInfo = await this.dataService.getWarehouseInfoDetail(this.id);
     this.validateForm.patchValue(dataInfo);
+    dataInfo.majorHazardMaterials.forEach(item => {
+      const field = this.createMedium();
+      field.patchValue(item);
+      this.mediumArray.push(field);
+    });
     this.cdr.markForCheck();
   }
 
@@ -85,6 +92,9 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
       this.validateForm.controls[key].updateValueAndValidity();
     });
     if (this.validateForm.invalid) {
+      return;
+    }
+    if ((this.validateForm.controls['majorHazardMaterialInsertDTOS'] as FormGroup).invalid) {
       return;
     }
     const params = this.validateForm.getRawValue();
@@ -109,6 +119,59 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
       this.validateForm.get('longitude').setValue(res.longitude);
       this.validateForm.get('latitude').setValue(res.latitude);
     }).catch(e => null);
+  }
+  // 创建介质
+  createMedium(): FormGroup {
+    return this.fb.group({
+      productName: [null, [Validators.required]],
+      casNo: [null, [Validators.required]],
+      criticalMass: [null, [Validators.required]],
+      maximumReserves: [null, [Validators.required]],
+      entprId: [this.loginInfo.entprId],
+    });
+  }
+  //#region get form fields
+  get mediumArray() {
+    return this.validateForm.controls.majorHazardMaterialInsertDTOS as FormArray;
+  }
+
+  //#endregion
+
+  // 新增介质
+  add() {
+    this.mediumArray.push(this.createMedium());
+    this.edit(this.mediumArray.length - 1);
+  }
+
+  // 删除介质
+  del(index: number) {
+    this.mediumArray.removeAt(index);
+  }
+
+  // 编辑介质
+  edit(index: number) {
+    if (this.editIndex !== -1 && this.editObj) {
+      this.mediumArray.at(this.editIndex).patchValue(this.editObj);
+    }
+    this.editObj = { ...this.mediumArray.at(index).value };
+    this.editIndex = index;
+  }
+
+  // 保存单个介质
+  save(index: number) {
+    this.mediumArray.at(index).markAsDirty();
+    if (this.mediumArray.at(index).invalid) return;
+    this.editIndex = -1;
+  }
+
+  // 取消
+  cancel(index: number) {
+    if (!this.mediumArray.at(index).value.key) {
+      this.del(index);
+    } else {
+      this.mediumArray.at(index).patchValue(this.editObj);
+    }
+    this.editIndex = -1;
   }
 
   ngOnInit() {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpUtilService } from '@core/net/http-util.service';
 import { SearchCommonVO } from '@core/vo/comm/BusinessEnum';
 import { PageInfo } from '@core/vo/comm/PageInfo';
+import { FormGroup } from '@angular/forms';
 
 export namespace ProductionListServiceNs {
   export interface ProductionListInfoModel {
@@ -13,7 +14,8 @@ export namespace ProductionListServiceNs {
     longitude: number; // 经度
     latitude: number; // 纬度
     locFactory?: string;
-    majorHazardMaterials: any[]
+    majorHazardMaterials: FormGroup[];
+    majorHazardMaterialInsertDTOS: FormGroup[];
   }
 
 

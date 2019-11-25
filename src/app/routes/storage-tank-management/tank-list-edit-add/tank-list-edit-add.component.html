@@ -6,7 +6,7 @@
         <nz-form-item>
           <nz-form-label nzFor="name">储罐编号</nz-form-label>
           <nz-form-control nzErrorTip="请输入储罐编号">
-            <input nz-input formControlName="tankNo" id="tankNo" placeholder="请输入储罐编号" />
+            <input nz-input formControlName="tankNo" id="tankNo" placeholder="请输入储罐编号"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -14,11 +14,11 @@
         <nz-form-item>
           <nz-form-label nzFor="name">储罐名称</nz-form-label>
           <nz-form-control nzErrorTip="请输入储罐名称">
-            <input nz-input formControlName="tankName" id="tankName" placeholder="请输入储罐名称" />
+            <input nz-input formControlName="tankName" id="tankName" placeholder="请输入储罐名称"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
-      <nz-col [nzXl]="{ span: 8, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
         <nz-form-item>
           <nz-form-label>储罐类型</nz-form-label>
           <nz-form-control nzErrorTip="请选择储罐类型">
@@ -35,7 +35,7 @@
           <nz-form-label>储罐形式</nz-form-label>
           <nz-form-control nzErrorTip="请选择储罐形式">
             <nz-select formControlName="tankForm" [nzPlaceHolder]="'请选择储罐形式'" [nzShowSearch]="true">
-              <nz-option *ngFor="let i of tankFormOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
+              <nz-option *ngFor="let i of tankFormOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -45,18 +45,18 @@
           <nz-form-label>储罐结构</nz-form-label>
           <nz-form-control nzErrorTip="请选择储罐结构">
             <nz-select formControlName="tankStructure" [nzPlaceHolder]="'请选择储罐结构'" [nzShowSearch]="true">
-              <nz-option *ngFor="let i of tankStructureOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
+              <nz-option *ngFor="let i of tankStructureOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
 
-      <nz-col [nzXl]="{ span: 8, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
         <nz-form-item>
           <nz-form-label>储罐材质</nz-form-label>
           <nz-form-control nzErrorTip="请选择储罐材质">
             <nz-select formControlName="tankMate" [nzPlaceHolder]="'请选择储罐材质'" [nzShowSearch]="true">
-              <nz-option *ngFor="let i of tankMateOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
+              <nz-option *ngFor="let i of tankMateOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -69,7 +69,7 @@
         <nz-form-item>
           <nz-form-label nzFor="name">储罐容量</nz-form-label>
           <nz-form-control nzErrorTip="请输入储罐容量">
-            <input nz-input formControlName="tankCapacity" id="name2" placeholder="请输入储罐容量" />
+            <input nz-input formControlName="tankCapacity" id="name2" placeholder="请输入储罐容量"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -90,14 +90,14 @@
     </nz-row>
   </nz-card>
 
-
   <nz-card [nzBordered]="true" nzTitle="位置管理">
     <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
           <nz-form-label>经度</nz-form-label>
           <nz-form-control nzErrorTip="请输入经度">
-            <input nz-input  class="cursor-pointer" readonly (click)="showMap()" formControlName="longitude" placeholder="请输入经度" />
+            <input nz-input class="cursor-pointer" readonly (click)="showMap()" formControlName="longitude"
+                   placeholder="请输入经度"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -105,17 +105,17 @@
         <nz-form-item>
           <nz-form-label>纬度</nz-form-label>
           <nz-form-control nzErrorTip="请输入纬度">
-            <input nz-input  class="cursor-pointer" readonly (click)="showMap()" formControlName="latitude" placeholder="请输入纬度" />
+            <input nz-input class="cursor-pointer" readonly (click)="showMap()" formControlName="latitude"
+                   placeholder="请输入纬度"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
-    </nz-row>
-    <nz-row nzGutter="16">
-      <nz-col nzLg="6" nzMd="12" nzSm="24">
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
           <nz-form-label>厂区中位置</nz-form-label>
           <nz-form-control nzErrorTip="请输入厂区中位置">
-            <textarea nz-input formControlName="locFactory"  [nzAutosize]="{ minRows: 4 }" placeholder="请输入厂区中位置"></textarea>
+            <textarea nz-input formControlName="locFactory" [nzAutosize]="{ minRows: 4 }"
+                      placeholder="请输入厂区中位置"></textarea>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -123,7 +123,8 @@
   </nz-card>
 
   <nz-card [nzBordered]="true" nzTitle="介质管理">
-    <nz-table [nzBordered]="true" formArrayName="majorHazardMaterialInsertDTOS" [nzData]="mediumArray.value" [nzShowPagination]="false">
+    <nz-table [nzBordered]="true" formArrayName="majorHazardMaterialInsertDTOS" [nzData]="mediumArray.value"
+              [nzShowPagination]="false">
       <thead>
       <tr>
         <th>品名</th>
@@ -138,25 +139,25 @@
         <td>
           <span *ngIf="editIndex !== i">{{ mediumArray.value[i].productName }}</span>
           <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入品名">
-              <input nz-input formControlName="productName" placeholder="请输入品名" />
+              <input nz-input formControlName="productName" placeholder="请输入品名"/>
             </span>
         </td>
         <td>
           <span *ngIf="editIndex !== i">{{ mediumArray.value[i].casNo }}</span>
           <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入CAS号">
-              <input nz-input formControlName="casNo" placeholder="请输入CAS号" />
+              <input nz-input formControlName="casNo" placeholder="请输入CAS号"/>
             </span>
         </td>
         <td>
           <span *ngIf="editIndex !== i">{{ mediumArray.value[i].criticalMass }}</span>
           <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入临界值（吨）">
-              <input nz-input formControlName="criticalMass" placeholder="请输入临界值（吨）" />
+              <input nz-input formControlName="criticalMass" placeholder="请输入临界值（吨）"/>
             </span>
         </td>
         <td>
           <span *ngIf="editIndex !== i">{{ mediumArray.value[i].maximumReserves }}</span>
           <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入设计贮存最大量（吨）">
-              <input nz-input formControlName="maximumReserves" placeholder="请输入设计贮存最大量（吨）" />
+              <input nz-input formControlName="maximumReserves" placeholder="请输入设计贮存最大量（吨）"/>
             </span>
         </td>
         <td>

@@ -1,74 +1,145 @@
-<page-header [title]="'企业库区新增编辑页'"></page-header>
-<nz-card [nzBordered]="false">
-  <form nz-form  [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
-
-    <se label="库房编号" >
-      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input  formControlName="roomNo" placeholder="库房编号"/>
-        <nz-form-explain *ngIf="validateForm.get('roomNo').dirty && validateForm.get('roomNo').errors">请输入库房编号
-        </nz-form-explain>
-      </nz-form-control>
-    </se>
-
-    <se label="库房名称" >
-      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input  formControlName="roomName" placeholder="库房名称"/>
-        <nz-form-explain *ngIf="validateForm.get('roomNo').dirty && validateForm.get('roomNo').errors">请输入库房名称
-        </nz-form-explain>
-      </nz-form-control>
-    </se>
-    <se label="库房面积（平方米）"  >
-      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input  formControlName="roomArea" placeholder="库房面积" />
-      </nz-form-control>
-    </se>
-    <se label="库房形式" >
-      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
-        <nz-select formControlName="roomForm" [nzShowSearch]="true" [nzPlaceHolder]="'请选择库房形式'">
-          <nz-option *ngFor="let item of roomFormOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </se>
-    <se label="火灾危险性等级">
-      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+<page-header [title]="'企业库房新增编辑页'"></page-header>
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submit()" [nzLayout]="'vertical'">
+  <nz-card [nzBordered]="true" nzTitle="库房管理">
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
-          <nz-form-control nzErrorTip="请选择火灾危险性等级">
-            <nz-select formControlName="fireLevel" [nzShowSearch]="true" [nzPlaceHolder]="'请选择火灾危险性等级'">
-              <nz-option *ngFor="let item of fireLevelOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+          <nz-form-label nzFor="name">库房编号</nz-form-label>
+          <nz-form-control nzErrorTip="请输入库房编号">
+            <input nz-input formControlName="roomNo"  placeholder="请输入库房编号" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">库房名称</nz-form-label>
+          <nz-form-control nzErrorTip="请输入库房名称">
+            <input nz-input formControlName="roomName"  placeholder="请输入库房名称" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>库房面积（平方米）</nz-form-label>
+          <nz-form-control nzErrorTip="库房面积（平方米）">
+              <input nz-input formControlName="roomArea" id="name2" placeholder="请输入库房面积（平方米）" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>库房形式</nz-form-label>
+          <nz-form-control nzErrorTip="请选择库房形式">
+            <nz-select formControlName="roomForm" [nzPlaceHolder]="'请选择库房形式'" [nzShowSearch]="true">
+              <nz-option *ngFor="let i of roomFormOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
-      </nz-form-control>
-    </se>
-    <se label="经度">
-      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input maxlength="80" class="cursor-pointer" readonly (click)="showMap()" maxlength="255" formControlName="longitude" placeholder="">
-        <nz-form-explain *ngIf="validateForm.get('longitude').dirty && validateForm.get('longitude').errors">请输入经度
-        </nz-form-explain>
-      </nz-form-control>
-    </se>
-    <se label="纬度" >
-      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input maxlength="80" class="cursor-pointer" readonly (click)="showMap()" maxlength="255" formControlName="latitude" placeholder="">
-        <nz-form-explain *ngIf="validateForm.get('latitude').dirty && validateForm.get('latitude').errors">请输入纬度
-        </nz-form-explain>
-      </nz-form-control>
-    </se>
-    <se label="在厂区的位置" >
-      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
-       <textarea
-         nz-input
-         formControlName="locFactory"
-         [nzAutosize]="{ minRows: 4 }"
-         placeholder="在厂区的位置"
-       ></textarea>
-      </nz-form-control>
-    </se>
-    <se>
-      <button nz-button nzType="primary" type="submit" >提交</button>
-      <button nz-button class="ml-sm" (click)="returnToList()">返回</button>
-    </se>
-  </form>
-</nz-card>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>火灾危险性等级</nz-form-label>
+          <nz-form-control nzErrorTip="请选择火灾危险性等级">
+            <nz-select formControlName="fireLevel" [nzPlaceHolder]="'请选择火灾危险性等级'" [nzShowSearch]="true">
+              <nz-option *ngFor="let i of fireLevelOptions" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+  </nz-card>
 
+  <nz-card [nzBordered]="true" nzTitle="位置管理">
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>经度</nz-form-label>
+          <nz-form-control nzErrorTip="请输入经度">
+            <input nz-input  class="cursor-pointer" readonly (click)="showMap()" formControlName="longitude" placeholder="请输入经度" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>纬度</nz-form-label>
+          <nz-form-control nzErrorTip="请输入纬度">
+            <input nz-input  class="cursor-pointer" readonly (click)="showMap()" formControlName="latitude" placeholder="请输入纬度" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>厂区中位置</nz-form-label>
+          <nz-form-control nzErrorTip="请输入厂区中位置">
+            <textarea nz-input formControlName="locFactory"  [nzAutosize]="{ minRows: 4 }" placeholder="请输入厂区中位置"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+
+  <nz-card [nzBordered]="true" nzTitle="介质管理">
+    <nz-table [nzBordered]="true" formArrayName="majorHazardMaterialInsertDTOS" [nzData]="mediumArray.value" [nzShowPagination]="false">
+      <thead>
+      <tr>
+        <th>品名</th>
+        <th>CAS号</th>
+        <th>临界量（吨）</th>
+        <th>设计贮存最大量（吨）</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of mediumArray.controls; let i = index" [formGroupName]="i">
+        <td>
+          <span *ngIf="editIndex !== i">{{ mediumArray.value[i].productName }}</span>
+          <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入品名">
+              <input nz-input formControlName="productName" placeholder="请输入品名" />
+            </span>
+        </td>
+        <td>
+          <span *ngIf="editIndex !== i">{{ mediumArray.value[i].casNo }}</span>
+          <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入CAS号">
+              <input nz-input formControlName="casNo" placeholder="请输入CAS号" />
+            </span>
+        </td>
+        <td>
+          <span *ngIf="editIndex !== i">{{ mediumArray.value[i].criticalMass }}</span>
+          <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入临界值（吨）">
+              <input nz-input formControlName="criticalMass" placeholder="请输入临界值（吨）" />
+            </span>
+        </td>
+        <td>
+          <span *ngIf="editIndex !== i">{{ mediumArray.value[i].maximumReserves }}</span>
+          <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入设计贮存最大量（吨）">
+              <input nz-input formControlName="maximumReserves" placeholder="请输入设计贮存最大量（吨）" />
+            </span>
+        </td>
+        <td>
+            <span *ngIf="editIndex !== i">
+              <a (click)="edit(i)">编辑</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a nz-popconfirm nzPopconfirmTitle="是否要删除此行？" (nzOnConfirm)="del(i)">删除</a>
+            </span>
+          <span *ngIf="editIndex === i">
+              <a (click)="save(i)">保存</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a nz-popconfirm nzPopconfirmTitle="是否要取消操作？" (nzOnConfirm)="cancel(i)">取消</a>
+            </span>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+    <button *ngIf="editIndex === -1" nz-button [nzType]="'dashed'" (click)="add()" nzBlock class="mt-md">
+      <i nz-icon nzType="plus"></i>
+      <span>新增介质</span>
+    </button>
+  </nz-card>
+  <footer-toolbar errorCollect>
+    <button nz-button type="primary" nzType="primary">提交</button>
+    <button nz-button type="primary" (click)="returnToList()" nzType="default">返回</button>
+  </footer-toolbar>
+</form>
 
