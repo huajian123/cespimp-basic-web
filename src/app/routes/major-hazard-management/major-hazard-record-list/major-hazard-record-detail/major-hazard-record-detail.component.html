@@ -1,14 +1,47 @@
-<div class="modal-header">
-  <div class="modal-title">查看 {{ record.id }} 信息</div>
-</div>
-<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
-<div sv-container *ngIf="i">
-  <sv label="姓名">{{ i.owner }}</sv>
-  <sv label="会员卡号">32943898021309809423</sv>
-  <sv label="身份证">3321944288191034921</sv>
-  <sv label="联系方式">18112345678</sv>
-  <sv label="联系地址">曲丽丽 18100000000 浙江省杭州市西湖区黄姑山路工专路交叉路口</sv>
-</div>
-<div class="modal-footer">
-  <button nz-button type="button" (click)="close()">关闭</button>
-</div>
+<page-header [title]="'重大危险源详情'"></page-header>
+<nz-card [nzBordered]="false">
+  <form nz-form   se-container="1" labelWidth="200">
+    <se label="重大危险源ID">
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.majorHazardId}}
+      </nz-col>
+    </se>
+    <se label="申请人" >
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.applicationName}}
+      </nz-col>
+    </se>
+    <se label="申请时间" >
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.applicationTime|map:'date:yyyy-MM-dd HH:mm'}}
+      </nz-col>
+    </se>
+    <se label="审核人">
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.reviewName}}
+      </nz-col>
+    </se>
+    <se label="审核时间">
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.reviewTime|map:'date:yyyy-MM-dd HH:mm'}}
+      </nz-col>
+    </se>
+    <se label="审核意见">
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.reviewExplain}}
+      </nz-col>
+    </se>
+    <se label="审核状态">
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.reviewStatus|map:'reviewStatus'}}
+      </nz-col>
+    </se>
+    <se>
+      <div class="detail-modal-footer">
+        <button nz-button type="button" (click)="returnBackToList()" nzType="primary">返回</button>
+      </div>
+    </se>
+  </form>
+</nz-card>
+
+

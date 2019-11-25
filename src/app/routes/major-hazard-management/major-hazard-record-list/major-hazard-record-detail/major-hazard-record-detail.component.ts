@@ -1,6 +1,17 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { NzModalRef, NzMessageService } from 'ng-zorro-antd';
-import { _HttpClient } from '@delon/theme';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  MajorHazardRecordListInfoService,
+  MajorHazardRecordListServiceNs,
+} from '@core/biz-services/major-hazard-management/major-hazard-record.service';
+import MajorHazardRecordListInfoModel = MajorHazardRecordListServiceNs.MajorHazardRecordListInfoModel;
 
 @Component({
   selector: 'app-major-hazard-management-major-hazard-record-detail',
@@ -8,20 +19,36 @@ import { _HttpClient } from '@delon/theme';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MajorHazardManagementMajorHazardRecordDetailComponent implements OnInit {
-  record: any = {};
-  i: any;
+  @Output() returnBack: EventEmitter<any>;
+  @Input() id: number;
+  @Input() currentPageNum: number;
+  dataInfo: MajorHazardRecordListInfoModel;
 
-  constructor(
-    private modal: NzModalRef,
-    public msgSrv: NzMessageService,
-    public http: _HttpClient
-  ) { }
-
-  ngOnInit(): void {
-    this.http.get(`/user/${this.record.id}`).subscribe(res => this.i = res);
+  constructor(private dataService: MajorHazardRecordListInfoService, private cdr: ChangeDetectorRef) {
+    this.dataInfo = {
+      id: null,
+      majorHazardId: '',
+      applicationName: '',
+      applicationTime: new Date(),
+      reviewName: '',
+      reviewTime: new Date(),
+      reviewExplain: '',
+      reviewStatus: null,
+    };
+    this.returnBack = new EventEmitter<any>();
+  }
+  async getDetailInfo(){
+    this.dataInfo = await this.dataService.getMajorHazardRecordInfoDetail(this.id);
+    console.log(this.dataInfo);
+    this.cdr.markForCheck();
   }
 
-  close() {
-    this.modal.destroy();
+
+  returnBackToList() {
+    this.returnBack.emit({refesh: false, pageNo: this.currentPageNum});
+  }
+
+  ngOnInit() {
+    this.getDetailInfo()
   }
 }

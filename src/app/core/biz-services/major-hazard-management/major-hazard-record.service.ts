@@ -4,13 +4,13 @@ import { SearchCommonVO } from '@core/vo/comm/BusinessEnum';
 import { PageInfo } from '@core/vo/comm/PageInfo';
 export namespace MajorHazardRecordListServiceNs {
   export interface MajorHazardRecordListInfoModel {
-    id: number;
-    majorHazardId: string;
-    applicationName: string;
-    applicationTime:Date;
+    id?: number;
+    majorHazardId?: string;
+    applicationName?: string;
+    applicationTime?:Date;
     reviewName?: string;
     reviewTime?: Date;
-    reviewExplain: number;
+    reviewExplain?: string;
     reviewStatus?: number;
   }
 
@@ -21,9 +21,13 @@ export namespace MajorHazardRecordListServiceNs {
   export class MajorHazardRecordListInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
-
-    public getMajorHazardRecordInfoDetail(param: EntprSearch): Promise<MajorHazardRecordListInfoModel> {
-      return this.http.get('data/basic/enterprise/'+param.entprId).toPromise();
+   /*详情接口*/
+    public getMajorHazardRecordInfoDetail(id: number): Promise<MajorHazardRecordListInfoModel> {
+      return this.http.get('data/major/hazard/examine/'+id).toPromise();
+    }
+    /*处理审核接口*/
+    public getMajorHazardRecord(param:MajorHazardRecordListInfoModel): Promise<MajorHazardRecordListInfoModel> {
+      return this.http.put('data/basic/enterprise/examination/'+param.id,param).toPromise();
     }
 
     public getMajorHazardRecordList(param: SearchCommonVO): Promise<PageInfo<MajorHazardRecordListInfoModel>> {

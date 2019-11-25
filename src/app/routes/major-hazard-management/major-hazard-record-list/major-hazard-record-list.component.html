@@ -36,13 +36,28 @@
         [scroll]="{x: '2400px'}"
         [widthMode]="{ type: 'strict' }" [data]="dataList"  (change)="changePage($event)" [columns]="columns" class="mt-sm"></st>
   </nz-card>
-
-
 </ng-container>
-
-<!--<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
-  <app-basic-info-detail [entprId]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-basic-info-detail>
-</ng-container>-->
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="500" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <form nz-form [formGroup]="validateForm">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzFor="reviewStatus">审核结果</nz-form-label>
+      <nz-form-control [nzSpan]="16" nzErrorTip="审核结果">
+        <nz-select  nzPlaceHolder="下拉选择" formControlName="reviewStatus">
+          <nz-option *ngFor="let i of statusOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item >
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzFor="reviewExplain">审核意见</nz-form-label>
+      <nz-form-control [nzSpan]="16" nzErrorTip="审核意见">
+        <textarea rows="4" nz-input   formControlName="reviewExplain"></textarea>
+      </nz-form-control>
+    </nz-form-item >
+  </form>
+</nz-modal>
+<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
+  <app-major-hazard-management-major-hazard-record-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-major-hazard-management-major-hazard-record-detail>
+</ng-container>
 
 <!--<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
   <basic-info-edit-add></basic-info-edit-add>

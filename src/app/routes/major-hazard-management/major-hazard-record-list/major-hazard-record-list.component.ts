@@ -1,15 +1,15 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { STColumn, STData } from '@delon/abc';
-import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
+import { ListPageInfo, LoginInfoModel, OptionsInterface, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import {
   MajorHazardRecordListInfoService,
   MajorHazardRecordListServiceNs,
 } from '@core/biz-services/major-hazard-management/major-hazard-record.service';
 import MajorHazardRecordListInfoModel = MajorHazardRecordListServiceNs.MajorHazardRecordListInfoModel;
-import { MapPipe } from '@shared/directives/pipe/map.pipe';
+import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
-
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EVENT_KEY } from '@env/staticVariable';
 
 @Component({
   selector: 'app-major-hazard-management-major-hazard-record-list',
@@ -17,6 +17,8 @@ import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MajorHazardManagementMajorHazardRecordListComponent implements OnInit {
+  validateForm: FormGroup;
+  isVisible = false;
   roleEnum = RoleEnum;
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
@@ -24,9 +26,12 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
   dataList: MajorHazardRecordListInfoModel[];
   columns: STColumn[];
   listPageInfo: ListPageInfo;
+  statusOptions: OptionsInterface[];
+  seacher: MajorHazardRecordListInfoModel;
+  loginInfo: LoginInfoModel;
   itemId: number;
 
-  constructor(private dataService: MajorHazardRecordListInfoService, private cdr: ChangeDetectorRef) {
+  constructor(private fb: FormBuilder,private dataService: MajorHazardRecordListInfoService, private cdr: ChangeDetectorRef) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -37,6 +42,16 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
     };
     this.dataList = [];
     this.itemId = -1;
+    this.seacher = {
+      id: null,
+      majorHazardId: '',
+      applicationName: '',
+      applicationTime: new Date(),
+      reviewName: '',
+      reviewTime: new Date(),
+      reviewExplain: null,
+      reviewStatus: null,
+    };
   }
 
   changePage(e) {
@@ -60,10 +75,11 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
     return new MapPipe().transform(toBeFormat, arg);
   }
 
-  goEditAddPage(item, modal) {
-    this.currentPage = this.pageTypeEnum.AddOrEdit;
-  }
+  goExamine(item) {
+    this.isVisible = true;
+    this.validateForm.reset();
 
+  }
   goDetailPage(item, modal) {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
@@ -76,7 +92,31 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
       await this.getDataList(e.pageNo);
     }
   }
+  /*确认审核*/
+  async handleOk(){
+    Object.keys(this.validateForm.controls).forEach(key => {
+      this.validateForm.controls[key].markAsDirty();
+      this.validateForm.controls[key].updateValueAndValidity();
+    });
 
+    if (this.validateForm.invalid) return;
+    const param = this.validateForm.getRawValue();
+    param.id = this.loginInfo.id;
+    param.reviewName = this.loginInfo.realName;
+    await this.dataService.getMajorHazardRecord(param);
+    this.isVisible = false;
+  }
+
+  /*取消审核*/
+  handleCancel(): void  {
+    this.isVisible = false;
+  }
+  initForm() {
+    this.validateForm = this.fb.group({
+      reviewStatus: [null, [Validators.required]],
+      reviewExplain: [null, [Validators.required]],
+    });
+  }
   private initTable(): void {
     this.columns = [
       { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
@@ -99,7 +139,7 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
           {
             text: '审核',
             icon: 'edit',
-            click: this.goEditAddPage.bind(this),
+            click: this.goExamine.bind(this),
             acl: this.roleEnum[this.roleEnum.ParkManage]
           },
           {
@@ -113,7 +153,11 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
   }
 
   ngOnInit() {
+    this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+    this.statusOptions = [...MapPipe.transformMapToArray(MapSet.reviewStatus)];
+    this.statusOptions.shift();
     this.initTable();
     this.getDataList();
+    this.initForm();
   }
 }
