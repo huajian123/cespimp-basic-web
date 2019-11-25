@@ -4,8 +4,10 @@ import { ListPageInfo, LoginInfoModel, PageTypeEnum, RoleEnum } from '@core/vo/c
 import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import { BasicInfoAuditService, BasicInfoAuditServiceNs } from '@core/biz-services/basic-info/basic-info-audit-service';
-import BasicInfoAuditModel = BasicInfoAuditServiceNs.BasicInfoAuditModel;
 import { EVENT_KEY } from '@env/staticVariable';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import BasicInfoAuditModel = BasicInfoAuditServiceNs.BasicInfoAuditModel;
+
 interface OptionsInterface {
   value: string;
   label: string;
@@ -17,6 +19,7 @@ interface OptionsInterface {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicInfoBasicInfoAuditListComponent implements OnInit {
+  validateForm: FormGroup;
   isVisible = false;
   roleEnum = RoleEnum;
   pageTypeEnum = PageTypeEnum;
@@ -27,9 +30,10 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
   listPageInfo: ListPageInfo;
   itemId: number;
   statusOptions: OptionsInterface[];
-  seacher:BasicInfoAuditModel;
+  seacher: BasicInfoAuditModel;
   loginInfo: LoginInfoModel;
-  constructor(private dataService: BasicInfoAuditService, private cdr: ChangeDetectorRef) {
+
+  constructor(private fb: FormBuilder,private dataService: BasicInfoAuditService, private cdr: ChangeDetectorRef) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -56,7 +60,6 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
       reviewTime: new Date(),
       reviewExplain: '',
       reviewStatus: null,
-      review: null,
     };
     this.listPageInfo = {
       total: 0,
@@ -66,24 +69,36 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
     this.dataList = [];
     this.itemId = -1;
   }
+
   /*确认审核*/
-  handleOk(): void {
+  async handleOk(){
+    Object.keys(this.validateForm.controls).forEach(key => {
+      this.validateForm.controls[key].markAsDirty();
+      this.validateForm.controls[key].updateValueAndValidity();
+    });
+
+    if (this.validateForm.invalid) return;
+    const param = this.validateForm.getRawValue();
+    param.id = this.loginInfo.id;
+    param.reviewName = this.loginInfo.realName;
+    await this.dataService.getIdCardInfoDetail(param);
     this.isVisible = false;
   }
-/*取消审核*/
-  handleCancel(): void {
+
+  /*取消审核*/
+   handleCancel(): void  {
     this.isVisible = false;
   }
+
   changePage(e) {
     this.listPageInfo = e;
     this.getDataList();
   }
-  async goExamine(item, modal) {
-    this.itemId = this.loginInfo.id;
-    console.log(this.itemId);
+
+ goExamine(item) {
     this.isVisible = true;
-    await this.dataService.getIdCardInfoDetail(this.itemId);
-    //console.log(this.dataService.getIdCardInfoDetail(this.itemId));
+    this.validateForm.reset();
+
   }
 
   private initTable(): void {
@@ -125,10 +140,12 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
     return new MapPipe().transform(toBeFormat, arg);
   }
 
-/*  goEditAddPage(item, modal) {
-    this.currentPage = this.pageTypeEnum.AddOrEdit;
-  }*/
-
+  initForm() {
+    this.validateForm = this.fb.group({
+      reviewStatus: [null, [Validators.required]],
+      reviewExplain: [null, [Validators.required]],
+    });
+  }
   goDetailPage(item, modal) {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
@@ -156,9 +173,10 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
 
   ngOnInit() {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
-    this.statusOptions = [...MapPipe.transformMapToArray(MapSet.review)];
-    //console.log(this.statusOptions);
+    this.statusOptions = [...MapPipe.transformMapToArray(MapSet.reviewStatus)];
+    this.statusOptions.shift();
     this.initTable();
     this.getDataList();
+    this.initForm();
   }
 }

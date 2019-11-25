@@ -42,19 +42,19 @@
   </nz-card>
 </ng-container>
 <nz-modal [(nzVisible)]="isVisible" [nzWidth]="500" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-  <form nz-form>
+  <form nz-form [formGroup]="validateForm">
     <nz-form-item>
-      <nz-form-label [nzSpan]="4" nzFor="review">审核结果</nz-form-label>
-      <nz-form-control [nzSpan]="16">
-        <nz-select [(ngModel)]="seacher.review" [ngModelOptions]="{standalone: true}" nzPlaceHolder="下拉选择">
+      <nz-form-label [nzSpan]="4" nzFor="reviewStatus">审核结果</nz-form-label>
+      <nz-form-control [nzSpan]="16" nzErrorTip="审核结果">
+        <nz-select  nzPlaceHolder="下拉选择" formControlName="reviewStatus">
           <nz-option *ngFor="let i of statusOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
         </nz-select>
       </nz-form-control>
     </nz-form-item >
     <nz-form-item>
       <nz-form-label [nzSpan]="4" nzFor="reviewExplain">审核意见</nz-form-label>
-      <nz-form-control [nzSpan]="16">
-        <textarea rows="4" nz-input [(ngModel)]="seacher.reviewExplain" [ngModelOptions]="{standalone: true}"></textarea>
+      <nz-form-control [nzSpan]="16" nzErrorTip="审核意见">
+        <textarea rows="4" nz-input   formControlName="reviewExplain"></textarea>
       </nz-form-control>
     </nz-form-item >
   </form>

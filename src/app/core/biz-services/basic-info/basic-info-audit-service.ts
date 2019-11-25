@@ -6,15 +6,14 @@ import { PageInfo } from '@core/vo/comm/PageInfo';
 
 export namespace BasicInfoAuditServiceNs {
   export interface BasicInfoAuditModel {
-    id: number;
-    entprName: string;
+    id?: number;
+    entprName?: string;
     applicationName?: string;
     applicationTime?: Date;
-    reviewName?: string;
+    reviewName: string;
     reviewTime?: Date;
     reviewExplain: string;
     reviewStatus: number;
-    review: number;
   }
 
   export interface EntprSearch {
@@ -37,8 +36,8 @@ export namespace BasicInfoAuditServiceNs {
     }
 
     /*处理审核接口*/
-    public getIdCardInfoDetail(id: number): Promise<BasicInfoAuditModel> {
-      return this.http.put('data/basic/enterprise/examination/'+id).toPromise();
+    public getIdCardInfoDetail(param:BasicInfoAuditModel): Promise<BasicInfoAuditModel> {
+      return this.http.put('data/basic/enterprise/examination/'+param.id,param).toPromise();
     }
 
     public getFactoryAuditList(param: SearchCommonVO): Promise<PageInfo<BasicInfoAuditModel>> {
