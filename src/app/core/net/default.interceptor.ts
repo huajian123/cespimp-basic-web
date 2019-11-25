@@ -6,7 +6,7 @@ import {
   HttpHandler,
   HttpErrorResponse,
   HttpEvent,
-  HttpResponseBase,
+  HttpResponseBase, HttpResponse,
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
@@ -38,7 +38,7 @@ const CODEMESSAGE = {
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) {
+  constructor(private injector: Injector, public msg: NzMessageService) {
   }
 
   private get notification(): NzNotificationService {
@@ -58,7 +58,12 @@ export class DefaultInterceptor implements HttpInterceptor {
     this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, errortext);
   }
 
+
   private handleData(ev: HttpResponseBase): Observable<any> {
+    if (!!(ev as any).errorMsg) {
+      this.msg.error((ev as any).errorMsg);
+      return;
+    }
     // 可能会因为 `throw` 导出无法执行 `_HttpClient` 的 `end()` 操作
     if (ev.status > 0) {
       this.injector.get(_HttpClient).end();
@@ -67,6 +72,15 @@ export class DefaultInterceptor implements HttpInterceptor {
     // 业务处理：一些通用操作
     switch (ev.status) {
       case 200:
+        if (ev instanceof HttpResponse) {
+          const body: any = ev.body;
+          if (body && body.code !== 0) {
+            return throwError({ errorMsg: body.msg });
+          } else {
+            return of(ev);
+          }
+        }
+
         // 业务层级错误处理，以下是假定restful有一套统一输出格式（指不管成功与否都有相应的数据格式）情况下进行处理
         // 例如响应内容：
         //  错误内容：{ status: 1, msg: '非法参数' }
