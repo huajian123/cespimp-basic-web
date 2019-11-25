@@ -46,6 +46,7 @@ export class WarehouseManagementWarehouseListDetailComponent implements OnInit {
       fireLevel: -1,
       locFactory: '',
       majorHazardMaterials: [],
+      majorHazardMaterialInsertDTOS: [],
     };
 
     this.columns = [

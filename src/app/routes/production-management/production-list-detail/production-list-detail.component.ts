@@ -46,6 +46,7 @@ export class ProductionManagementProductionListDetailComponent implements OnInit
       productionDate: new Date(),
       locFactory: '',
       majorHazardMaterials: [],
+      majorHazardMaterialInsertDTOS: [],
     };
 
     this.columns = [
