@@ -66,13 +66,16 @@ export class LoginPlatformComponent implements OnInit {
       gardenDTO: {
         garden: '',
       },
+      riskMonitoring: {
+        riskMonitoring: '',
+      },
     };
     this.localUrl = localUrl;
   }
 
   changeSideIndex(currentSideIndex) {
     // 智慧应急
-    if(currentSideIndex===SideEnum.WisdomEmergencyPro){
+    if (currentSideIndex === SideEnum.WisdomEmergencyPro) {
       this.goUrl(this.loginUrls.emergencyDTO.emergency);
       return;
     }
@@ -81,10 +84,14 @@ export class LoginPlatformComponent implements OnInit {
       this.goPackIntroduction();
       return;
     }
-    if ( currentSideIndex === SideEnum.ClosedPark || currentSideIndex === SideEnum.RiskControl || currentSideIndex === SideEnum.ParkIntroduction) {
+    if (currentSideIndex === SideEnum.ClosedPark || currentSideIndex === SideEnum.RiskControl || currentSideIndex === SideEnum.ParkIntroduction) {
       this.currentSideIndex = SideEnum.IntegratedMnageControl;
       if (currentSideIndex === SideEnum.ClosedPark) {
         this.goUrl(this.loginUrls.gardenDTO.garden);
+      }
+      // 风险管控
+      if (currentSideIndex === SideEnum.RiskControl) {
+        this.goUrl(this.loginUrls.riskMonitoring.riskMonitoring);
       }
       return;
     }
@@ -368,11 +375,11 @@ export class LoginPlatformComponent implements OnInit {
   }
 
   goUrl(url) {
-    const role=window.sessionStorage.getItem(EVENT_KEY.role)
-    if(url==='selfSys'){
-      if(role=== RoleEnum[RoleEnum.Enterprise]){
+    const role = window.sessionStorage.getItem(EVENT_KEY.role);
+    if (url === 'selfSys') {
+      if (role === RoleEnum[RoleEnum.Enterprise]) {
         window.open(localUrl + '/basic-info/enterprise-basic-info');
-      }else if(role=== RoleEnum[RoleEnum.ParkManage]){
+      } else if (role === RoleEnum[RoleEnum.ParkManage]) {
         window.open(localUrl + '/basic-info/basic-info');
       }
       return;

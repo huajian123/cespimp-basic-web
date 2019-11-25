@@ -36,7 +36,7 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
 
   initMap() {
     this.map = new T.Map('mapDiv');
-    this.map.centerAndZoom(new T.LngLat(118.30612, 34.29057), 10);
+    this.map.centerAndZoom(new T.LngLat(120.680416, 31.206039), 14);
   }
 
   // 获取企业列表

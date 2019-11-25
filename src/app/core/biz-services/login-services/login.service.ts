@@ -23,6 +23,9 @@ export namespace LoginServiceNs {
     gardenDTO: {
       garden: string;
     }
+    riskMonitoring: {
+      riskMonitoring: string;
+    }
   }
 
 
