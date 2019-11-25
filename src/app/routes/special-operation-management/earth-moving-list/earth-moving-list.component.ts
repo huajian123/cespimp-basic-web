@@ -1,7 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent, STData } from '@delon/abc';
-import { SFSchema } from '@delon/form';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { STColumn, STData } from '@delon/abc';
 import {
   SpecialOperationInfoService,
   SpecialOperationManagementServiceNs,
@@ -14,6 +12,7 @@ import SpecialOperationInfoModel = SpecialOperationManagementServiceNs.SpecialOp
 @Component({
   selector: 'app-special-operation-management-earth-moving-list',
   templateUrl: './earth-moving-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpecialOperationManagementEarthMovingListComponent implements OnInit {
   roleEnum = RoleEnum;
