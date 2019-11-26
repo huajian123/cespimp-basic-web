@@ -112,7 +112,7 @@ export class UserRegisterComponent implements OnDestroy {
 
     const data = this.form.value;
     this.http.post('/register', data).subscribe(() => {
-      this.router.navigateByUrl('/passport/register-result', {
+      this.router.navigateByUrl('/hazard/passport/register-result', {
         queryParams: { email: data.mail },
       });
     });

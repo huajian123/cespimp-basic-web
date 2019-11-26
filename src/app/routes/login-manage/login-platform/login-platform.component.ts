@@ -435,13 +435,13 @@ export class LoginPlatformComponent implements OnInit {
 
   // 园区介绍组件
   goPackIntroduction() {
-    window.open(localUrl + '/login-manage/park-introduction', '_blank');
+    window.open(localUrl + '/hazard/login-manage/park-introduction', '_blank');
   }
 
   async goLoginPage() {
     window.sessionStorage.clear();
     await this.loginService.loginOut();
-    this.router.navigateByUrl('/passport/login');
+    this.router.navigateByUrl('/hazard/passport/login');
   }
 
   goMainPage() {
@@ -460,9 +460,9 @@ export class LoginPlatformComponent implements OnInit {
     const role = window.sessionStorage.getItem(EVENT_KEY.role);
     if (url === 'selfSys') {
       if (role === RoleEnum[RoleEnum.Enterprise]) {
-        window.open(localUrl + '/basic-info/enterprise-basic-info');
+        window.open(localUrl + '/hazard/basic-info/enterprise-basic-info');
       } else if (role === RoleEnum[RoleEnum.ParkManage]) {
-        window.open(localUrl + '/basic-info/basic-info');
+        window.open(localUrl + '/hazard/basic-info/basic-info');
       }
       return;
     }

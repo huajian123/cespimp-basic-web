@@ -79,7 +79,7 @@
 
       <!--智慧安全-->
       <div class="system-cards" *ngIf="currentSideIndex===sideEnum.WisdomSafePro">
-        <div class="system-cards-item saf" (click)="goUrl(localUrl + '/safety-map/safety-map-list')">
+        <div class="system-cards-item saf" (click)="goUrl(localUrl + '/hazard/safety-map/safety-map-list')">
           <div class="system-cards-title">
             安全一张图
           </div>
@@ -89,13 +89,13 @@
             一企一档
           </div>
         </div>
-        <div class="system-cards-item saf" (click)="goUrl(localUrl + '/camera-management/camera-list')">
+        <div class="system-cards-item saf" (click)="goUrl(localUrl + '/hazard/camera-management/camera-list')">
           <div class="system-cards-title">
             视频监控
           </div>
         </div>
 
-        <div class="system-cards-item saf" (click)="goUrl(localUrl + '/sensor-management/sensor-list')">
+        <div class="system-cards-item saf" (click)="goUrl(localUrl + '/hazard/sensor-management/sensor-list')">
           <div class="system-cards-title">
             特种作业
           </div>

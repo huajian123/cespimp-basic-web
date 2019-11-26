@@ -20,7 +20,7 @@ import { UserLockComponent } from './passport/lock/lock.component';
 const routes: Routes = [
   { path: '', redirectTo: `passport/login`, pathMatch: 'full' },
   {
-    path: '',
+    path: 'hazard',
     component: LayoutDefaultComponent,
     // canActivate: [SimpleGuard],
     children: [
@@ -80,7 +80,7 @@ const routes: Routes = [
   },
   // 全屏布局
   {
-      path: '',
+      path: 'hazard',
       component: LayoutFullScreenComponent,
       children: [
         { path: '', redirectTo: 'login-manage', pathMatch: 'full' },
@@ -111,13 +111,16 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(
-      routes, {
-        useHash: environment.useHash,
-        // NOTICE: If you use `reuse-tab` component and turn on keepingScroll you can set to `disabled`
-        // Pls refer to https://ng-alain.com/components/reuse-tab
-        scrollPositionRestoration: 'top',
-      },
+      routes
     )],
+/*  RouterModule.forRoot(
+    routes, {
+      useHash: environment.useHash,
+      // NOTICE: If you use `reuse-tab` component and turn on keepingScroll you can set to `disabled`
+      // Pls refer to https://ng-alain.com/components/reuse-tab
+      scrollPositionRestoration: 'top',
+    },
+  )],*/
   exports: [RouterModule],
 })
 export class RouteRoutingModule {

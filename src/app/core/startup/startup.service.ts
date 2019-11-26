@@ -66,7 +66,7 @@ export class StartupService {
   /*  private viaMock(resolve: any, reject: any) {
       // const tokenData = this.tokenService.get();
       // if (!tokenData.token) {
-      //   this.injector.get(Router).navigateByUrl('/passport/login');
+      //   this.injector.get(Router).navigateByUrl('/hazard/passport/login');
       //   resolve({});
       //   return;
       // }

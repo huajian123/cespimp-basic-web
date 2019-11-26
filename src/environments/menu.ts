@@ -10,7 +10,7 @@ export const menus = [
       {
         'text': '安全一张图',
         'icon': 'anticon-appstore',
-        'link': '/safety-map/safety-map-list',
+        'link': '/hazard/safety-map/safety-map-list',
         'children': [],
       },
     ],
@@ -27,47 +27,47 @@ export const menus = [
           /*园区管理员操作菜单*/
           {
             'text': '基本信息列表',
-            'link': '/basic-info/basic-info',
+            'link': '/hazard/basic-info/basic-info',
             'acl': RoleEnum[RoleEnum.ParkManage],
           },
           /*企业管理员操作菜单*/
           {
             'text': '企业基本信息',
-            'link': '/basic-info/enterprise-basic-info',
+            'link': '/hazard/basic-info/enterprise-basic-info',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
           {
             'text': '证照信息',
-            'link': '/basic-info/certificate-info',
+            'link': '/hazard/basic-info/certificate-info',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },/*以上的2个菜单展现形式未确定还未创建模板文件*/
           {
             'text': '企业周边环境信息',
-            'link': '/basic-info/enterprise-surrounding-info-list',
+            'link': '/hazard/basic-info/enterprise-surrounding-info-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
           {
             'text': '生产原料信息',
-            'link': '/basic-info/production-materials-info-list',
+            'link': '/hazard/basic-info/production-materials-info-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
           {
             'text': '中间产品信息',
-            'link': '/basic-info/intermediate-product-info-list',
+            'link': '/hazard/basic-info/intermediate-product-info-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
           {
             'text': '最终产品信息',
-            'link': '/basic-info/final-product-info-list',
+            'link': '/hazard/basic-info/final-product-info-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
           {
             'text': '基本信息审核列表',
-            'link': '/basic-info/basic-info-audit-list',
+            'link': '/hazard/basic-info/basic-info-audit-list',
           },
           {
             'text': '基本信息统计',
-            'link': '/basic-info/basic-info-statistics',
+            'link': '/hazard/basic-info/basic-info-statistics',
             'acl': RoleEnum[RoleEnum.ParkManage],
           },
         ],
@@ -85,11 +85,11 @@ export const menus = [
         'children': [
           {
             'text': '重点监管危险化学品列表',
-            'link': '/key-supervision-management/key-hazardous-chemicals-list',
+            'link': '/hazard/key-supervision-management/key-hazardous-chemicals-list',
           },
           {
             'text': '重点监管危险化工工艺列表',
-            'link': '/key-supervision-management/hazardous-chemical-processes-list',
+            'link': '/hazard/key-supervision-management/hazardous-chemical-processes-list',
           },
         ],
       },
@@ -109,9 +109,9 @@ export const menus = [
             'acl': RoleEnum[RoleEnum.Enterprise],
             get link() {
               if (window.sessionStorage.getItem(EVENT_KEY.role) === RoleEnum[RoleEnum.Enterprise]) {
-                return '/storage-tank-management/tank-list';
+                return '/hazard/storage-tank-management/tank-list';
               } else {
-                return '/storage-tank-management/tank-list1';
+                return '/hazard/storage-tank-management/tank-list1';
               }
             },
           },
@@ -120,9 +120,9 @@ export const menus = [
             'acl': RoleEnum[RoleEnum.Enterprise],
             get link() {
               if (window.sessionStorage.getItem(EVENT_KEY.role) === RoleEnum[RoleEnum.Enterprise]) {
-                return '/warehouse-management/warehouse-list';
+                return '/hazard/warehouse-management/warehouse-list';
               } else {
-                return '/warehouse-management/warehouse-list1';
+                return '/hazard/warehouse-management/warehouse-list1';
               }
             },
           },
@@ -131,9 +131,9 @@ export const menus = [
             'acl': RoleEnum[RoleEnum.Enterprise],
             get link() {
               if (window.sessionStorage.getItem(EVENT_KEY.role) === RoleEnum[RoleEnum.Enterprise]) {
-                return '/production-management/production-list';
+                return '/hazard/production-management/production-list';
               } else {
-                return '/production-management/production-list1';
+                return '/hazard/production-management/production-list1';
               }
             },
           },
@@ -143,19 +143,19 @@ export const menus = [
             'acl': RoleEnum[RoleEnum.Enterprise],
              get link() {
               if (window.sessionStorage.getItem(EVENT_KEY.role) === RoleEnum[RoleEnum.Enterprise]) {
-                return '/major-hazard-management/major-hazard-list';
+                return '/hazard/major-hazard-management/major-hazard-list';
               } else {
-                return '/major-hazard-management/major-hazard-list1';
+                return '/hazard/major-hazard-management/major-hazard-list1';
               }
             },
           },
           {
             'text': '重大危险源备案列表 ',
-            'link': '/major-hazard-management/major-hazard-record-list',
+            'link': '/hazard/major-hazard-management/major-hazard-record-list',
           },
           {
             'text': '重大危险源统计',
-            'link': '/major-hazard-management/major-hazard-statistics-list',
+            'link': '/hazard/major-hazard-management/major-hazard-statistics-list',
             'acl': RoleEnum[RoleEnum.ParkManage],
           },
         ],
@@ -177,9 +177,9 @@ export const menus = [
             'acl': RoleEnum[RoleEnum.ParkManage],
             get link() {
               if (window.sessionStorage.getItem(EVENT_KEY.role) === RoleEnum[RoleEnum.ParkManage]) {
-                return '/storage-tank-management/tank-list';
+                return '/hazard/storage-tank-management/tank-list';
               } else {
-                return '/storage-tank-management/tank-list1';
+                return '/hazard/storage-tank-management/tank-list1';
               }
             },
           },
@@ -202,9 +202,9 @@ export const menus = [
             'acl': RoleEnum[RoleEnum.ParkManage],
             get link() {
               if (window.sessionStorage.getItem(EVENT_KEY.role) === RoleEnum[RoleEnum.ParkManage]) {
-                return '/warehouse-management/warehouse-list';
+                return '/hazard/warehouse-management/warehouse-list';
               } else {
-                return '/warehouse-management/warehouse-list1';
+                return '/hazard/warehouse-management/warehouse-list1';
               }
             },
           },
@@ -227,9 +227,9 @@ export const menus = [
             'acl': RoleEnum[RoleEnum.ParkManage],
             get link() {
               if (window.sessionStorage.getItem(EVENT_KEY.role) === RoleEnum[RoleEnum.ParkManage]) {
-                return '/production-management/production-list';
+                return '/hazard/production-management/production-list';
               } else {
-                return '/production-management/production-list1';
+                return '/hazard/production-management/production-list1';
               }
             },
           },
@@ -248,7 +248,7 @@ export const menus = [
         'children': [
           {
             'text': '传感器列表',
-            'link': '/sensor-management/sensor-list',
+            'link': '/hazard/sensor-management/sensor-list',
           },
  /*         {
             'text': '传感器实时数据',
@@ -273,7 +273,7 @@ export const menus = [
         'children': [
           {
             'text': '摄像头列表',
-            'link': '/camera-management/camera-list',
+            'link': '/hazard/camera-management/camera-list',
           },
         ],
       },
@@ -290,11 +290,11 @@ export const menus = [
         'children': [
           {
             'text': '实时报警',
-            'link': '/alarm-management/realtime-alarm-list',
+            'link': '/hazard/alarm-management/realtime-alarm-list',
           },
           {
             'text': '历史报警',
-            'link': '/alarm-management/historical-alarm-list',
+            'link': '/hazard/alarm-management/historical-alarm-list',
           },
         ],
       },
@@ -311,39 +311,39 @@ export const menus = [
         'children': [
           {
             'text': '动火作业',
-            'link': '/special-operation-management/hot-work-list',
+            'link': '/hazard/special-operation-management/hot-work-list',
           },
           {
             'text': '受限空间作业',
-            'link': '/special-operation-management/confined-space-work-list',
+            'link': '/hazard/special-operation-management/confined-space-work-list',
           },
           {
             'text': '高处作业',
-            'link': '/special-operation-management/elevated-work-list',
+            'link': '/hazard/special-operation-management/elevated-work-list',
           },
           {
             'text': '吊装作业',
-            'link': '/special-operation-management/hoisting-operation-list',
+            'link': '/hazard/special-operation-management/hoisting-operation-list',
           },
           {
             'text': '临时用电',
-            'link': '/special-operation-management/temporary-electricity-list',
+            'link': '/hazard/special-operation-management/temporary-electricity-list',
           },
           {
             'text': '设备检修',
-            'link': '/special-operation-management/equipment-overhaul-list',
+            'link': '/hazard/special-operation-management/equipment-overhaul-list',
           },
           {
             'text': '盲板抽堵',
-            'link': '/special-operation-management/blind-plate-list',
+            'link': '/hazard/special-operation-management/blind-plate-list',
           },
           {
             'text': '断路作业',
-            'link': '/special-operation-management/open-circuit-list',
+            'link': '/hazard/special-operation-management/open-circuit-list',
           },
           {
             'text': '动土作业',
-            'link': '/special-operation-management/earth-moving-list',
+            'link': '/hazard/special-operation-management/earth-moving-list',
           },
         ],
       },

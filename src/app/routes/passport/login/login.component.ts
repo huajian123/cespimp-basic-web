@@ -70,7 +70,7 @@ export class UserLoginComponent {
     window.sessionStorage.setItem(EVENT_KEY.entprBasicInfo, JSON.stringify(data.entprBasicInfo));
     this.menuSrv.resume();
     this.tokenService.set({ token: data.user.realName });
-    this.router.navigateByUrl('/login-manage/login-plant');
+    this.router.navigateByUrl('/hazard/login-manage/login-plant');
 
   }
 
