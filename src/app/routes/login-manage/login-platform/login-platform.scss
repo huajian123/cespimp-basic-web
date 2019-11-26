@@ -174,11 +174,21 @@ main {
       @include flex-center-direction(space-between);
 
       .system-cards-item {
+        transition: all .5s;
+        -webkit-transition: all .5s; /* Safari */
         cursor: pointer;
         box-shadow: inset 0 0 20px 0 rgba(0, 236, 255, 0.44);
         width: 168px;
         height: 281px;
         @include flex-center-direction(center, flex-end);
+
+        &:hover{
+          transform: scale(1.1);
+          -ms-transform:scale(1.1);     /* IE 9 */
+          -moz-transform:scale(1.1);     /* Firefox */
+          -webkit-transform:scale(1.1); /* Safari 和 Chrome */
+          -o-transform:scale(1.1);
+        }
 
         &:nth-child(1) {
           background: url(../../../../assets/imgs/login-manage/sys-cards-bg.png) center no-repeat,
