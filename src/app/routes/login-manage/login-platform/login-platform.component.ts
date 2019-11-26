@@ -38,6 +38,7 @@ export class LoginPlatformComponent implements OnInit {
   radarWaterOption: any;
   radarContaminatedOption: any;
   pipeOption: any;
+  pipeOptionTwo: any;
   currentPageNum: number;
   pageTypeEnum = PageTypeEnum;
   loginUrls: UrlsModelInterface;
@@ -277,6 +278,14 @@ export class LoginPlatformComponent implements OnInit {
 
   initPipeOption() {
     this.pipeOption = {
+      title: {
+        text: '重大危险源等级',
+        x: 'center',
+        textStyle: {
+          color: '#ffffff',
+        },
+        top: '5px',
+      },
       tooltip: {
         trigger: 'item',
         formatter: '{a} <br/>{b}: {c} ({d}%)',
@@ -286,7 +295,7 @@ export class LoginPlatformComponent implements OnInit {
         data: ['一级', '二级', '三级', '四级'],
         x: 'right',
         y: 'center',
-        left: '180px',
+        left: '145px',
         height: '120px',
         textStyle: {
           color: '#ffffff',
@@ -308,7 +317,7 @@ export class LoginPlatformComponent implements OnInit {
         {
           name: '重大危险源个数',
           type: 'pie',
-          center: ['35%', '50%'],
+          center: ['32%', '55%'],
           radius: ['50%', '70%'],
           avoidLabelOverlap: false,
           label: {
@@ -338,6 +347,79 @@ export class LoginPlatformComponent implements OnInit {
         },
       ],
     };
+
+    this.pipeOptionTwo = {
+      title: {
+        text: '高危工艺',
+        x: 'center',
+        textStyle: {
+          color: '#ffffff',
+        },
+        top: '5px',
+      },
+
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)',
+      },
+      legend: {
+        orient: 'vertical',
+        data: ['氯化工艺', '新型煤化工艺', '合成氨工艺'],
+        x: 'left',
+        y: 'center',
+        left: '135px',
+        height: '120px',
+        textStyle: {
+          color: '#ffffff',
+        },
+        formatter: function(name) {
+          let index = 0;
+          let clientlabels = ['氯化工艺', '新型煤化工艺', '合成氨工艺'];
+          let clientcounts = [335, 310, 234, 135];
+          clientlabels.forEach(function(value, i) {
+            if (value == name) {
+              index = i;
+            }
+          });
+          // return name + '  ' + clientcounts[index] + '个';
+          return name;
+        },
+      },
+      calculable: true,
+      series: [
+        {
+          name: '半径模式',
+          type: 'pie',
+          radius: [15, 70],
+          center: ['32%', '55%'],
+          roseType: 'radius',
+          label: {
+            normal: {
+              show: false,
+            },
+            emphasis: {
+              show: false,
+            },
+          },
+          lableLine: {
+            normal: {
+              show: false,
+            },
+            emphasis: {
+              show: true,
+            },
+          },
+          data: [
+            { value: 10, name: '氯化工艺' },
+            { value: 5, name: '新型煤化工艺' },
+            { value: 15, name: '合成氨工艺' },
+          ],
+        },
+
+      ],
+    };
+
+
   }
 
 

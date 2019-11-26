@@ -1,5 +1,5 @@
-export const localUrl = 'http://172.16.0.136:4201';
-export const webServerUrl = `${localUrl}/site`;
+export const localUrl = 'http://172.16.0.157:8081';
+export const webServerUrl = `${localUrl}`;
 
 export const getwayKey = {
   Bs: 'bs',
