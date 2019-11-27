@@ -118,7 +118,7 @@ export class SensorManagementSensorListComponent implements OnInit {
       {
         title: '操作',
         fixed: 'right',
-        width: '120px',
+        width: '130px',
         buttons: [
           {
             text: '编辑',

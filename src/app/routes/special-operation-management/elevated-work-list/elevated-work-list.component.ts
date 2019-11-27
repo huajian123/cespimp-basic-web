@@ -94,15 +94,9 @@ export class SpecialOperationManagementElevatedWorkListComponent implements OnIn
         width: '100px',
         buttons: [
           {
-            text: '编辑',
+            text: '审核',
             icon: 'edit',
             click: this.goEditAddPage.bind(this),
-            acl: this.roleEnum[this.roleEnum.Enterprise],
-          },
-          {
-            text: '删除',
-            icon: 'delete',
-            click: this.goDeletePage.bind(this),
             acl: this.roleEnum[this.roleEnum.Enterprise],
           },
           {

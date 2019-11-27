@@ -94,7 +94,7 @@ export class KeySupervisionManagementKeyHazardousChemicalsListComponent implemen
       {
         title: '操作',
         fixed: 'right',
-        width: '100px',
+        width: '130px',
         buttons: [
           {
             text: '编辑',

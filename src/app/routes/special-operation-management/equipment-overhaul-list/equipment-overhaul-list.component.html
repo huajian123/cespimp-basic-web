@@ -1,21 +1,13 @@
 <ng-container *ngIf="currentPage===pageTypeEnum.List">
   <page-header [title]="'设备检修列表'"></page-header>
   <nz-card [nzBordered]="false">
-    <form nz-form [nzLayout]="'inline'" class="search__form">
+    <form nz-form [nzLayout]="'inline'" class="search__form" [acl]="roleEnum[roleEnum.ParkManage]">
       <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
-        <div nz-col nzMd="8" nzSm="24" [acl]="roleEnum[roleEnum.ParkManage]">
+        <div nz-col nzMd="8" nzSm="24" >
           <nz-form-item>
             <nz-form-label nzFor="no">企业名称</nz-form-label>
             <nz-form-control>
               <input nz-input name="no" placeholder="请输入企业名称"/>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col nzMd="8" nzSm="24">
-          <nz-form-item>
-            <nz-form-label nzFor="status">库房编号</nz-form-label>
-            <nz-form-control>
-              <input nz-input name="no" placeholder="请输入库房编号"/>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -32,7 +24,7 @@
 
     <st #st [page]="{showSize:true, front: false}"
         [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true"
-        [scroll]="{x: '2400px'}"
+        [scroll]="{x: '3000px'}"
         [widthMode]="{ type: 'strict' }" [data]="dataList"  (change)="changePage($event)" [columns]="columns" class="mt-sm"></st>
   </nz-card>
 </ng-container>

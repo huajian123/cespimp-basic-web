@@ -105,7 +105,7 @@ export class ProductionListComponent implements OnInit {
       {
         title: '操作',
         fixed: 'right',
-        width: '80px',
+        width: '130px',
         buttons: [
           {
             text: '编辑',

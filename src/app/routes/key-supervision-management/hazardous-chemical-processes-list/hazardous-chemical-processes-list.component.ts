@@ -86,11 +86,11 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
   private initTable(): void {
     this.columns = [
       { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
-      { title: '危险工艺名称', index: 'processName', width: 80 },
+      { title: '危险工艺名称', index: 'processName', width: 150 },
       {
         title: '操作',
         fixed: 'right',
-        width: '50px',
+        width: '100px',
         buttons: [
           {
             text: '编辑',

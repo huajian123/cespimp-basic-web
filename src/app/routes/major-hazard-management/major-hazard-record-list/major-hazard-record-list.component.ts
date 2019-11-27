@@ -134,7 +134,7 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
       {
         title: '操作',
         fixed: 'right',
-        width: '100px',
+        width: '130px',
         buttons: [
           {
             text: '审核',
