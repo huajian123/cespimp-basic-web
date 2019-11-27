@@ -30,11 +30,14 @@ export namespace CertificateInfoServiceNs {
     environmentReportAgency?: string;
     environmentReportAccessory?: string;
     dischargePermitAccessory?: string;
+    effectiveRange: [Date, Date];
+    effectiveRange1: [Date, Date];
+    effectiveRange2: [Date, Date];
   }
 
-  /* export interface EntprSearch {
+   export interface EntprSearch {
      entprId: number;
-   }*/
+   }
 
 
   export class CertificateInfoServiceClass {

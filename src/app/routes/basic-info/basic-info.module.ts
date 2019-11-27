@@ -14,6 +14,9 @@ import { BasicInfoEnterpriseBasicInfoComponent } from './enterprise-basic-info/e
 import { BasicInfoCertificateInfoComponent } from './certificate-info/certificate-info.component';
 import { BasicInfoBasicInfoAuditDetailComponent } from './basic-info-audit-list/basic-info-audit-detail/basic-info-audit-detail.component';
 import { BasicInfoBasicInfoAuditEditAddComponent } from './basic-info-audit-list/basic-info-audit-edit-add/basic-info-audit-edit-add.component';
+import { BasicInfoProductionDeviceInfoListComponent } from './production-device-info-list/production-device-info-list.component';
+import { BasicInfoProductionDeviceInfoEditAddComponent } from './production-device-info-list/production-device-info-edit-add/production-device-info-edit-add.component';
+import { BasicInfoProductionDeviceInfoDetailComponent } from './production-device-info-list/production-device-info-detail/production-device-info-detail.component';
 
 
 const COMPONENTS = [
@@ -28,9 +31,13 @@ const COMPONENTS = [
   BasicInfoFinalProductInfoListComponent,
   BasicInfoEnterpriseBasicInfoComponent,
   BasicInfoCertificateInfoComponent,
-  BasicInfoBasicInfoAuditEditAddComponent];
+  BasicInfoBasicInfoAuditEditAddComponent,
+  BasicInfoProductionDeviceInfoListComponent];
 const COMPONENTS_NOROUNT = [
-  BasicInfoBasicInfoAuditDetailComponent];
+  BasicInfoBasicInfoAuditDetailComponent,
+  BasicInfoProductionDeviceInfoEditAddComponent,
+  BasicInfoProductionDeviceInfoEditAddComponent,
+  BasicInfoProductionDeviceInfoDetailComponent];
 
 @NgModule({
   imports: [

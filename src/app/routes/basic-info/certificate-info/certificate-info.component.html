@@ -18,9 +18,9 @@
           <nz-form-item>
             <nz-form-label nzFor="name">有效时间</nz-form-label>
             <nz-form-control>
-              <input nz-input formControlName="businessLicencesBeginTime" placeholder=""/>
+              <nz-range-picker formControlName="effectiveRange"></nz-range-picker>
               <nz-form-explain
-                *ngIf="validateForm.get('businessLicencesBeginTime').dirty && validateForm.get('businessLicencesBeginTime').errors">
+                *ngIf="validateForm.get('effectiveRange').dirty && validateForm.get('effectiveRange').errors">
                 有效期
               </nz-form-explain>
             </nz-form-control>
@@ -70,9 +70,9 @@
           <nz-form-item>
             <nz-form-label>有效期</nz-form-label>
             <nz-form-control>
-              <input nz-input formControlName="safetyCertificateBeginTime" placeholder=""/>
+              <nz-range-picker formControlName="effectiveRange1"></nz-range-picker>
               <nz-form-explain
-                *ngIf="validateForm.get('safetyCertificateBeginTime').dirty && validateForm.get('safetyCertificateBeginTime').errors">
+                *ngIf="validateForm.get('effectiveRange1').dirty && validateForm.get('effectiveRange1').errors">
                 有效期
               </nz-form-explain>
             </nz-form-control>
@@ -132,9 +132,9 @@
           <nz-form-item>
             <nz-form-label>有效期</nz-form-label>
             <nz-form-control>
-              <input nz-input formControlName="dischargePermitBeginTime" placeholder="请输入企业简称"/>
+              <nz-range-picker formControlName="effectiveRange2"></nz-range-picker>
               <nz-form-explain
-                *ngIf="validateForm.get('dischargePermitBeginTime').dirty && validateForm.get('dischargePermitBeginTime').errors">
+                *ngIf="validateForm.get('effectiveRange2').dirty && validateForm.get('effectiveRange2').errors">
                 请输入法定代表人
               </nz-form-explain>
             </nz-form-control>
@@ -194,9 +194,9 @@
           <nz-form-item>
             <nz-form-label>备案时间</nz-form-label>
             <nz-form-control>
-              <input nz-input formControlName="environmentRecordTime" placeholder="请输入备案时间"/>
+              <input nz-input formControlName="safetyReportRecordTime" placeholder="请输入备案时间"/>
               <nz-form-explain
-                *ngIf="validateForm.get('environmentRecordTime').dirty && validateForm.get('environmentRecordTime').errors">
+                *ngIf="validateForm.get('safetyReportRecordTime').dirty && validateForm.get('safetyReportRecordTime').errors">
                 请输入法定代表人
               </nz-form-explain>
             </nz-form-control>
@@ -204,7 +204,7 @@
         </nz-col>
         <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
           <nz-form-item>
-            <nz-form-label>环评机构名称</nz-form-label>
+            <nz-form-label>安评机构名称</nz-form-label>
             <nz-form-control>
               <input nz-input formControlName="safetyReportAgency" placeholder="请输入环评机构名称"/>
               <nz-form-explain
@@ -244,7 +244,7 @@
           <nz-form-item>
             <nz-form-label>备案时间</nz-form-label>
             <nz-form-control>
-              <input nz-input formControlName="environmentRecordTime" placeholder="请输入企业简称"/>
+              <input nz-input formControlName="environmentRecordTime" placeholder="请输入备案时间"/>
               <nz-form-explain
                 *ngIf="validateForm.get('environmentRecordTime').dirty && validateForm.get('environmentRecordTime').errors">
                 请输入法定代表人
@@ -278,7 +278,7 @@
     </nz-card>
   </nz-card>
   <footer-toolbar>
-    <button nz-button type="submit" nzType="primary">更新基本信息</button>
+    <button nz-button type="submit" nzType="primary" (click)="submitForm()">更新基本信息</button>
   </footer-toolbar>
 </form>
 

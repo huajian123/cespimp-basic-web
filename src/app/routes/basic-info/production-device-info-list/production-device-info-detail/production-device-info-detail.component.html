@@ -1,0 +1,32 @@
+<page-header [title]="'生产装置详情'"></page-header>
+<nz-card [nzBordered]="false">
+  <form nz-form   se-container="1" labelWidth="200">
+    <se label="装置编号">
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.deviceNo}}
+      </nz-col>
+    </se>
+    <se label="生产装置名称" >
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.deviceName}}
+      </nz-col>
+    </se>
+    <se label="生产装置型号" >
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.deviceModel}}
+      </nz-col>
+    </se>
+    <se label="生产装置功能" >
+      <nz-col nzLg="8" nzMd="12" nzSm="24">
+        {{dataInfo.deviceFunction}}
+      </nz-col>
+    </se>
+    <se>
+      <div class="detail-modal-footer">
+        <button nz-button type="button" (click)="returnBackToList()" nzType="primary">返回</button>
+      </div>
+    </se>
+  </form>
+</nz-card>
+
+

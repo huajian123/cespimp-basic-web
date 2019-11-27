@@ -16,23 +16,23 @@ export const menus = [
     ],
   },
   {
-    text: '企业基本信息管理',
+    text: '一企一档',
     group: false,
     hideInBreadcrumb: true,
     children: [
       {
-        'text': '企业基本信息管理',
+        'text': '一企一档',
         'icon': 'anticon-appstore',
         'children': [
           /*园区管理员操作菜单*/
           {
-            'text': '基本信息列表',
+            'text': '企业信息列表',
             'link': '/hazard/basic-info/basic-info',
             'acl': RoleEnum[RoleEnum.ParkManage],
           },
           /*企业管理员操作菜单*/
           {
-            'text': '企业基本信息',
+            'text': '基本信息',
             'link': '/hazard/basic-info/enterprise-basic-info',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
@@ -42,31 +42,36 @@ export const menus = [
             'acl': RoleEnum[RoleEnum.Enterprise],
           },/*以上的2个菜单展现形式未确定还未创建模板文件*/
           {
-            'text': '企业周边环境信息',
+            'text': '周边环境',
             'link': '/hazard/basic-info/enterprise-surrounding-info-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
           {
-            'text': '生产原料信息',
+            'text': '生产原料',
             'link': '/hazard/basic-info/production-materials-info-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
           {
-            'text': '中间产品信息',
+            'text': '中间产品',
             'link': '/hazard/basic-info/intermediate-product-info-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
           {
-            'text': '最终产品信息',
+            'text': '最终产品',
             'link': '/hazard/basic-info/final-product-info-list',
             'acl': RoleEnum[RoleEnum.Enterprise],
           },
           {
-            'text': '基本信息审核列表',
+            'text': '生产装置',
+            'link': '/hazard/basic-info/production-device-info-list',
+            'acl': RoleEnum[RoleEnum.Enterprise],
+          },
+          {
+            'text': '审核列表',
             'link': '/hazard/basic-info/basic-info-audit-list',
           },
           {
-            'text': '基本信息统计',
+            'text': '企业信息统计',
             'link': '/hazard/basic-info/basic-info-statistics',
             'acl': RoleEnum[RoleEnum.ParkManage],
           },

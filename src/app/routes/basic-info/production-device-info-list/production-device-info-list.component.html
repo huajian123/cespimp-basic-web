@@ -1,5 +1,5 @@
 <ng-container *ngIf="currentPage===pageTypeEnum.List">
-  <page-header [title]="'传感器列表'"></page-header>
+  <page-header [title]="'生产装置列表'"></page-header>
   <nz-card [nzBordered]="false">
     <form nz-form [nzLayout]="'inline'" class="search__form">
       <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
@@ -13,9 +13,9 @@
         </div>
         <div nz-col nzMd="8" nzSm="24">
           <nz-form-item>
-            <nz-form-label nzFor="status">库房编号</nz-form-label>
+            <nz-form-label nzFor="status">装置编号</nz-form-label>
             <nz-form-control>
-              <input nz-input name="no" placeholder="请输入库房编号"/>
+              <input nz-input name="no" placeholder="请输入装置编号"/>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -32,16 +32,19 @@
 
     <st #st [page]="{showSize:true, front: false}"
         [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true"
-        [scroll]="{x: '2400px'}"
-        [widthMode]="{ type: 'strict' }" [data]="dataList"  (change)="changePage($event)" [columns]="columns" class="mt-sm"></st>
+        [scroll]="{x: '1400px'}"
+        [widthMode]="{ type: 'strict' }" [data]="dataList" (change)="changePage($event)" [columns]="columns"
+        class="mt-sm"></st>
   </nz-card>
 </ng-container>
 
-<!--<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
-  <app-warehouse-management-warehouse-list-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-warehouse-management-warehouse-list-detail>
-</ng-container>-->
+<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
+  <app-basic-info-production-device-info-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps"
+                                                (returnBack)="returnToList($event)"></app-basic-info-production-device-info-detail>
+</ng-container>
 
-<!--<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
-  <app-warehouse-management-warehouse-list-edit-add [id]="this.itemId" [currentPageNum]="listPageInfo.pi" (returnBack)="returnToList($event)"></app-warehouse-management-warehouse-list-edit-add>
-</ng-container>-->
+<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
+  <app-basic-info-production-device-info-edit-add [id]="this.itemId" [currentPageNum]="listPageInfo.pi"
+                                                  (returnBack)="returnToList($event)"></app-basic-info-production-device-info-edit-add>
+</ng-container>
 

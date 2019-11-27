@@ -1,30 +1,29 @@
-import { ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import { STColumn, STComponent, STData } from '@delon/abc';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { STColumn, STData } from '@delon/abc';
 import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
-import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import {
-  SensorManagementListInfoService,
-  SensorManagementListServiceNs,
-} from '@core/biz-services/sensor-management/sensor-management.service';
-import SensorManagementListInfoModel = SensorManagementListServiceNs.SensorManagementListInfoModel;
+  ProductionDeviceInfoListServiceNs,
+  ProductionDeviceListInfoService,
+} from '@core/biz-services/basic-info/production-device-info.service';
+import ProductionDeviceListInfoModel = ProductionDeviceInfoListServiceNs.ProductionDeviceListInfoModel;
 
 @Component({
-  selector: 'app-sensor-management-sensor-list',
-  templateUrl: './sensor-list.component.html',
+  selector: 'app-basic-info-production-device-info-list',
+  templateUrl: './production-device-info-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SensorManagementSensorListComponent implements OnInit {
+export class BasicInfoProductionDeviceInfoListComponent implements OnInit {
   roleEnum = RoleEnum;
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
   expandForm: boolean;
-  dataList: SensorManagementListInfoModel[];
+  dataList: ProductionDeviceListInfoModel[];
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
-
-  constructor(private dataService: SensorManagementListInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
+  constructor(private dataService: ProductionDeviceListInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -47,7 +46,7 @@ export class SensorManagementSensorListComponent implements OnInit {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
     };
-    const { total, list, pageNum } = await this.dataService.getSensorManagementList(params);
+    const { total, list, pageNum } = await this.dataService.getProductionDeviceList(params);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
     this.dataList = list || [];
@@ -57,10 +56,6 @@ export class SensorManagementSensorListComponent implements OnInit {
   add() {
     this.itemId = null;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
-  }
-
-  format(toBeFormat, arg) {
-    return new MapPipe().transform(toBeFormat, arg);
   }
 
   goEditAddPage(item, modal) {
@@ -80,7 +75,7 @@ export class SensorManagementSensorListComponent implements OnInit {
         return;
       }
       this.itemId = item.id;
-      //this.dataService.delWarehouseInfo(this.itemId).then(() => this.getDataList(1));
+      this.dataService.delProductionDeviceInfo(this.itemId).then(() => this.getDataList(1));
     });
   }
 
@@ -94,31 +89,14 @@ export class SensorManagementSensorListComponent implements OnInit {
 
   private initTable(): void {
     this.columns = [
-      { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
-      { title: '传感器编号', index: 'sensorNo', width: 100 },
-      { title: '经度', index: 'longitude', width: 100 },
-      { title: '经度', index: 'latitude', width: 100 },
-      { title: '所属重大危险源ID', index: 'majorHazardId', width: 120 },
-      {
-        title: '重大危险源组成类型',
-        index: 'partType',
-        width: 100,
-        format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
-      },
-      { title: '组成部分ID',
-        index: 'partId',
-        width: 100
-      },
-      { title: '在厂区的位置', index: 'locFactory', width: 100 },
-      { title: '低低位限', index: 'firstAlarmThreshold', width: 120 },
-      { title: '低位限', index: 'secondAlarmThreshold', width: 120 },
-      { title: '高位限', index: 'thirdAlarmThreshold', width: 120 },
-      { title: '高高位限', index: 'fourthAlarmThreshold', width: 120 },
-
+      { title: '装置编号', index: 'deviceNo', width: 80 },
+      { title: '生产装置名称', index: 'deviceName', width: 100 },
+      { title: '生产装置型号', index: 'deviceModel', width: 80 },
+      { title: '生产装置功能', index: 'deviceFunction', width: 80, },
       {
         title: '操作',
         fixed: 'right',
-        width: '120px',
+        width: '90px',
         buttons: [
           {
             text: '编辑',

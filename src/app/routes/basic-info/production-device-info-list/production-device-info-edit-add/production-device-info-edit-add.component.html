@@ -1,0 +1,35 @@
+<page-header [title]="'生产场所新增编辑页'"></page-header>
+<nz-card [nzBordered]="false">
+  <form nz-form  [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
+    <se label="装置编号" >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input  formControlName="deviceNo" placeholder="装置编号"/>
+        <nz-form-explain *ngIf="validateForm.get('deviceNo').dirty && validateForm.get('deviceNo').errors">请输入装置编号
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="生产装置名称" >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input  formControlName="deviceName" placeholder="生产装置名称"/>
+        <nz-form-explain *ngIf="validateForm.get('deviceName').dirty && validateForm.get('deviceName').errors">请输入生产装置名称
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="生产装置型号"  >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input  formControlName="deviceModel" placeholder="生产装置型号" />
+      </nz-form-control>
+    </se>
+    <se label="生产装置功能" >
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input  formControlName="deviceFunction" placeholder="生产装置功能"/>
+      </nz-form-control>
+    </se>
+    <se>
+      <button nz-button nzType="primary" type="submit" >提交</button>
+      <button nz-button class="ml-sm" (click)="returnToList()">返回</button>
+    </se>
+  </form>
+</nz-card>
+
+
