@@ -10,6 +10,8 @@ import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EVENT_KEY } from '@env/staticVariable';
+import FiltersInfoModel = MajorHazardRecordListServiceNs.FiltersInfoModel;
+import EntprSearch = MajorHazardRecordListServiceNs.EntprSearch;
 
 @Component({
   selector: 'app-major-hazard-management-major-hazard-record-list',
@@ -30,8 +32,10 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
   seacher: MajorHazardRecordListInfoModel;
   loginInfo: LoginInfoModel;
   itemId: number;
+  filters: FiltersInfoModel;
 
-  constructor(private fb: FormBuilder,private dataService: MajorHazardRecordListInfoService, private cdr: ChangeDetectorRef) {
+  constructor(private fb: FormBuilder, private dataService: MajorHazardRecordListInfoService, private cdr: ChangeDetectorRef) {
+    this.filters = { entprId: null, reviewStatus: null };
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -60,10 +64,13 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
   }
 
   async getDataList(pageNumber?: number) {
-    const params = {
+    const params: EntprSearch = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
     };
+    this.filters.reviewStatus ? params.reviewStatus = this.filters.reviewStatus : '';
+    this.filters.entprId ? params.entprId = this.filters.entprId : '';
+
     const { total, list, pageNum } = await this.dataService.getMajorHazardRecordList(params);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
@@ -80,6 +87,7 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
     this.validateForm.reset();
 
   }
+
   goDetailPage(item, modal) {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
@@ -92,8 +100,9 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
       await this.getDataList(e.pageNo);
     }
   }
+
   /*确认审核*/
-  async handleOk(){
+  async handleOk() {
     Object.keys(this.validateForm.controls).forEach(key => {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
@@ -107,26 +116,39 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
     this.isVisible = false;
   }
 
+  /*重置*/
+  resetSearchParam() {
+    this.filters = {};
+  }
+
+  /*查询*/
+  searchListByParams() {
+    this.getDataList(1);
+  }
+
   /*取消审核*/
-  handleCancel(): void  {
+  handleCancel(): void {
     this.isVisible = false;
   }
+
   initForm() {
     this.validateForm = this.fb.group({
       reviewStatus: [null, [Validators.required]],
       reviewExplain: [null, [Validators.required]],
     });
   }
+
   private initTable(): void {
     this.columns = [
       { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
       { title: '重大危险源ID', index: 'majorHazardId', width: 100 },
       { title: '申请人', index: 'applicationName', width: 100 },
-      { title: '申请时间', index: 'applicationTime', width: 100,type:'date' },
+      { title: '申请时间', index: 'applicationTime', width: 100, type: 'date' },
       { title: '审核人', index: 'reviewName', width: 100 },
-      { title: '审核时间', index: 'reviewTime', width: 100,type:'date' },
-      { title: '审核意见', index: 'reviewExplain', width: 100, },
-      { title: '审核状态',
+      { title: '审核时间', index: 'reviewTime', width: 100, type: 'date' },
+      { title: '审核意见', index: 'reviewExplain', width: 100 },
+      {
+        title: '审核状态',
         index: 'reviewStatus',
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
@@ -140,7 +162,7 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
             text: '审核',
             icon: 'edit',
             click: this.goExamine.bind(this),
-            acl: this.roleEnum[this.roleEnum.ParkManage]
+            acl: this.roleEnum[this.roleEnum.ParkManage],
           },
           {
             text: '查看',
@@ -153,11 +175,12 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
   }
 
   ngOnInit() {
+    this.initForm();
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.statusOptions = [...MapPipe.transformMapToArray(MapSet.reviewStatus)];
     this.statusOptions.shift();
     this.initTable();
     this.getDataList();
-    this.initForm();
+
   }
 }

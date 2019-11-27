@@ -62,18 +62,15 @@ export namespace BasicInfoServiceNs {
     environmentReportAccessory?: string;
     dischargePermitAccessory?: string;
   }
-
-  export interface EntprSearch {
-    entprId: number;
+  /*生产设备模型*/
+  export interface ProductionDeviceListInfoModel {
+    id: number;
+    deviceNo: string;
+    deviceName: string;
+    deviceModel?: string;
+    deviceFunction?: string;
   }
 
-  export interface EntprPageSearchModel extends SearchCommonVO {
-    entprId: number;
-  }
-
-  export interface EntprProductSearchModel extends EntprPageSearchModel {
-    productType: ProductEnum;
-  }
 
   // 企业环境信息模型
   export interface EnterpriseEnvironModel {
@@ -108,7 +105,17 @@ export namespace BasicInfoServiceNs {
     maximumReserves: number;
   }
 
+  export interface EntprSearch {
+    entprId: number;
+  }
 
+  export interface EntprPageSearchModel extends SearchCommonVO {
+    entprId: number;
+  }
+
+  export interface EntprProductSearchModel extends EntprPageSearchModel {
+    productType: ProductEnum;
+  }
   export class BasicInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
@@ -126,8 +133,12 @@ export namespace BasicInfoServiceNs {
       return this.http.get('data/basic/enterprise/environments/', param).toPromise();
     }
 
+    // 获取生产设备
+    public getProductionDeviceList(param: EntprPageSearchModel): Promise<PageInfo<EnterpriseEnvironModel>> {
+      return this.http.get('data/basic/enterprise/devices/', param).toPromise();
+    }
     // 获取企业产品列表
-    public getEnterProduct(param: EntprProductSearchModel): Promise<PageInfo<EnterpriseProductModel>> {
+    public getEnterProduct(param: EntprProductSearchModel): Promise<PageInfo<ProductionDeviceListInfoModel>> {
       return this.http.get('data/basic/enterprise/products/', param).toPromise();
     }
 

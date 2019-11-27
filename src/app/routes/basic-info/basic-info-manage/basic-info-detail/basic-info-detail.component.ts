@@ -21,6 +21,7 @@ import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import ProductEnum = BasicInfoServiceNs.ProductEnum;
 import EntprProductSearchModel = BasicInfoServiceNs.EntprProductSearchModel;
 import EnterpriseProductModel = BasicInfoServiceNs.EnterpriseProductModel;
+import ProductionDeviceListInfoModel = BasicInfoServiceNs.ProductionDeviceListInfoModel;
 
 enum TabEnum {
   BaseInfoTab,
@@ -29,7 +30,8 @@ enum TabEnum {
   EnterpriseEnvirTab,
   MateriProductionTab,
   MidProductTab,
-  FinalProductTab
+  FinalProductTab,
+  ProductionDeviceTab
 }
 
 @Component({
@@ -48,7 +50,7 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
   idCardInfo: IdCardTabModel;
 
 
-  dataList: EnterpriseEnvironModel[] | EnterpriseProductModel[];
+  dataList: EnterpriseEnvironModel[] | EnterpriseProductModel[] | ProductionDeviceListInfoModel[];
   columns: STColumn[];
   tabEnum = TabEnum;
   currentTab: number;
@@ -58,7 +60,6 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
   constructor(private dataService: BasicInfoService, private cdr: ChangeDetectorRef) {
     this.returnBack = new EventEmitter<any>();
     this.initData();
-
     this.currentTab = this.tabEnum.BaseInfoTab;
     this.dataList = [];
 
@@ -187,6 +188,15 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
         ];
         break;
       }
+      case TabEnum.ProductionDeviceTab: {
+        this.columns = [
+          { title: '装置编号', index: 'deviceNo', width: 80 },
+          { title: '生产装置名称', index: 'deviceName', width: 80 },
+          { title: '生产装置型号', index: 'deviceModel', width: 80 },
+          { title: '生产装置功能', index: 'deviceFunction', width: 100 },
+        ];
+        break;
+      }
     }
   }
 
@@ -198,6 +208,20 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
       pageSize: this.listPageInfo.ps,
     };
     const { total, pageNum, list } = await this.dataService.getEnterpriseEnviron(param);
+    this.listPageInfo.total = total;
+    this.listPageInfo.pi = pageNum;
+    this.dataList = list || [];
+    this.cdr.markForCheck();
+  }
+
+  // 获取生产设备
+  async getProductionDevice() {
+    const param: EntprPageSearchModel = {
+      entprId: this.entprId,
+      pageNum: this.listPageInfo.pi,
+      pageSize: this.listPageInfo.ps,
+    };
+    const { total, pageNum, list } = await this.dataService.getProductionDeviceList(param);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
     this.dataList = list || [];
@@ -225,6 +249,10 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
     if (args.index === TabEnum.EnterpriseEnvirTab) {
       this.getEnterpriseEnviron();
       this.changeTap(TabEnum.EnterpriseEnvirTab);
+    }
+    if(args.index === TabEnum.ProductionDeviceTab){
+      this.getProductionDevice();
+      this.changeTap(TabEnum.ProductionDeviceTab);
     }
     // 位置信息
     else if (args.index === TabEnum.PositionTab) {

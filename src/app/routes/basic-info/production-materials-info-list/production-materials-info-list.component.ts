@@ -112,7 +112,7 @@ export class BasicInfoProductionMaterialsInfoListComponent implements OnInit {
         index: 'annualConsumption',
         width: 100,
       },
-      { title: '设计贮存最大量（吨）', index: 'maximumReserves', width: 100 },
+      { title: '设计贮存最大量（吨）', index: 'maximumReserves', width: 120 },
       {
         title: '操作',
         fixed: 'right',

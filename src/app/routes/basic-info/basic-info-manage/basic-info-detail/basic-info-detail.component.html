@@ -32,6 +32,7 @@
     <nz-tab nzTitle="生产原料信息"></nz-tab>
     <nz-tab nzTitle="中间产品信息"></nz-tab>
     <nz-tab nzTitle="最终产品信息"></nz-tab>
+    <nz-tab nzTitle="生产设备信息"></nz-tab>
   </nz-tabset>
 </ng-template>
 <nz-card [nzHoverable]="true" [nzBordered]="false" *ngIf="currentTab===tabEnum.BaseInfoTab">
@@ -134,6 +135,10 @@
 </nz-card>
 
 <nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.FinalProductTab">
+  <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '2400px'}"
+      [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>
+</nz-card>
+<nz-card [nzHoverable]="false" [nzBordered]="true" *ngIf="currentTab===tabEnum.ProductionDeviceTab">
   <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '2400px'}"
       [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>
 </nz-card>
