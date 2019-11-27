@@ -17,6 +17,7 @@ import {PositionPickerRectComponent} from './position-picker-rect/position-picke
 import {ShowPeopleNameComponent} from './show-people-name/show-people-name.component';
 import {PositionPickerHistoryTrackComponent} from './position-picker-history-track/position-picker-history-track.component';
 import { DirectivesModule } from '@shared/directives/directives.module';
+import { PositionPickerPolygonComponent } from './position-picker-polygon/position-picker-polygon.component';
 
 
 @NgModule({
@@ -31,7 +32,9 @@ import { DirectivesModule } from '@shared/directives/directives.module';
     PositionPickerComponent,
     PositionPickerRectComponent,
     ShowPeopleNameComponent,
-    PositionPickerHistoryTrackComponent],
+    PositionPickerHistoryTrackComponent,
+    PositionPickerPolygonComponent
+  ],
   providers: [
     ShowMessageService,
     {provide: NZ_MESSAGE_CONFIG, useValue: {nzDuration: 2000}},
@@ -40,7 +43,9 @@ import { DirectivesModule } from '@shared/directives/directives.module';
     PositionPickerComponent,
     PositionPickerRectComponent,
     ShowPeopleNameComponent,
-    PositionPickerHistoryTrackComponent]
+    PositionPickerHistoryTrackComponent,
+    PositionPickerPolygonComponent
+  ]
 })
 export class WidgetModule {
 }

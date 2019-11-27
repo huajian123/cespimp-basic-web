@@ -34,8 +34,6 @@ export class PositionPickerComponent extends BaseConfirmModal.BasicConfirmModalC
     this.entprBasicInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
     console.log(this.entprBasicInfo);
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
-    console.log(this.center);
-    console.log(this.currentPosition);
   }
 
   ngOnInit() {
@@ -44,8 +42,8 @@ export class PositionPickerComponent extends BaseConfirmModal.BasicConfirmModalC
       latitude:  this.params.latitude|| this.entprBasicInfo.latitude
     };
     this.center = {
-      longitude:  this.entprBasicInfo.longitude,
-      latitude:  this.entprBasicInfo.latitude
+      longitude:   this.params.longitude||this.entprBasicInfo.longitude,
+      latitude:  this.params.latitude||  this.entprBasicInfo.latitude
     };
   }
 

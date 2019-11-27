@@ -266,6 +266,17 @@
           </nz-form-control>
         </nz-form-item>
       </nz-col>
+
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>厂区范围</nz-form-label>
+          <nz-form-control>
+            <input nz-input  class="cursor-pointer" readonly (click)="showPolygonMap()" formControlName="entprScope" placeholder="请输入纬度" />
+            <nz-form-explain *ngIf="validateForm.get('latitude').dirty && validateForm.get('latitude').errors">请输入纬度
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
     </nz-row>
   </nz-card>
   <footer-toolbar>

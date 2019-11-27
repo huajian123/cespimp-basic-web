@@ -21,6 +21,7 @@ import EntprSearch = EnterpriseBasicInfoServiceNs.EntprSearch;
 import { NzMessageService } from 'ng-zorro-antd';
 import EnterpriseName = EnterpriseBasicInfoServiceNs.EnterpriseName;
 import { enterpriseInfo } from '@env/environment';
+import { PositionPickerPolygonService } from '../../../widget/position-picker-polygon/position-picker-polygon.service';
 
 interface OptionsInterface {
   value: string;
@@ -48,7 +49,8 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
   @Output() returnBack: EventEmitter<any>;
 
   constructor(private fb: FormBuilder, private positionPickerService: PositionPickerService, private dataService: EnterpriseBasicInfoService,
-              private cdr: ChangeDetectorRef, private messageService: ShowMessageService, private msg: NzMessageService) {
+              private cdr: ChangeDetectorRef, private messageService: ShowMessageService, private msg: NzMessageService,
+              private positionPickerPolygonService: PositionPickerPolygonService) {
     this.operatingOptions = [];
     this.ecoTypeOptions = [];
     this.entprScaleOptions = [];
@@ -97,9 +99,20 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
       standLevel: [null, [Validators.required]],
       safetySupervisionLevel: [null, [Validators.required]],
       localSafetyAdmin: [null, [Validators.required]],
+      entprScope: [null, [Validators.required]],
     });
   }
 
+  // 显示多边形地图
+  showPolygonMap(){
+    this.positionPickerPolygonService.show({
+      isRemoteImage: true,
+      longitude: enterpriseInfo.longitude,
+      latitude: enterpriseInfo.latitude,
+    }).then(res => {
+      console.log(res);
+    }).catch(e => null);
+  }
 
   showMap() {
     this.positionPickerService.show({

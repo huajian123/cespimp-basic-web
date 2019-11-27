@@ -1,0 +1,12 @@
+<div style="width: 100%;height: 500px">
+  <div #mapDivModal style="width: 100%;height:500px"></div>
+</div>
+<div *nzModalFooter>
+  <button nz-button nzType="primary" (click)="repaint()">绘制范围</button>
+  <button nz-button nzType="primary" *ngIf="polygonPoints.length>0" (click)="edit()">{{canEdit?"完成编辑":"编辑范围"}}</button>
+  <button nz-button nzType="primary" [disabled]="canEdit" (click)="getCurrentValue()">确认</button>
+  <button nz-button nzType="primary" (click)="cancle()">取消</button>
+</div>
+<!--<div>
+  <span>当前标点坐标：{{currentPosition.latitude}}，{{currentPosition.longitude}}</span>
+</div>-->

@@ -38,7 +38,6 @@ export class PositionPickerRectComponent extends BaseConfirmModal.BasicConfirmMo
     super();
     this.zoom = 10;
     this.entprBasicInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
-    console.log(this.entprBasicInfo);
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.currentPosition = {
       longitude:  this.entprBasicInfo.longitude,
