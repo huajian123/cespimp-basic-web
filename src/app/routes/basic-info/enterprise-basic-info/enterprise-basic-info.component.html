@@ -271,8 +271,9 @@
         <nz-form-item>
           <nz-form-label>厂区范围</nz-form-label>
           <nz-form-control>
-            <input nz-input  class="cursor-pointer" readonly (click)="showPolygonMap()" formControlName="entprScope" placeholder="请输入纬度" />
-            <nz-form-explain *ngIf="validateForm.get('latitude').dirty && validateForm.get('latitude').errors">请输入纬度
+           <span class="operate-text cursor-pointer" (click)="showPolygonMap()">查看</span>
+            <input nz-input [hidden]="true" formControlName="entprScope" placeholder="请输入纬度" />
+            <nz-form-explain *ngIf="validateForm.get('entprScope').dirty && validateForm.get('entprScope').errors">请点击查看并绘制区域
             </nz-form-explain>
           </nz-form-control>
         </nz-form-item>

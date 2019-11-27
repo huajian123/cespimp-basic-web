@@ -104,13 +104,20 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
   }
 
   // 显示多边形地图
-  showPolygonMap(){
+  showPolygonMap() {
     this.positionPickerPolygonService.show({
       isRemoteImage: true,
       longitude: enterpriseInfo.longitude,
       latitude: enterpriseInfo.latitude,
-    }).then(res => {
-      console.log(res);
+    }).then((res: ({ lat: number, lng: number }[])) => {
+      let tempArray = [];
+      if (res) {
+        res.forEach(({ lat, lng }) => {
+          const obj = { lat, lng };
+          tempArray.push(obj);
+        });
+        this.validateForm.get('entprScope').setValue(tempArray);
+      }
     }).catch(e => null);
   }
 
