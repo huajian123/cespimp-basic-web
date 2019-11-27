@@ -10,7 +10,7 @@ export namespace EnterpriseBasicInfoServiceNs {
     entprSimpleName?: string;
     region?: string;
     detailAddr?: string;
-    entprScope?: string;
+    entprScope?: { lng: number, lat: number }[];
     longitude: number; // 经度
     latitude: number; // 纬度
     legalPerson?: string;
@@ -31,12 +31,15 @@ export namespace EnterpriseBasicInfoServiceNs {
     safetySupervisionLevel?: number;
     localSafetyAdmin?: number;
   }
+
   export interface EntprSearch {
     entprId: number;
   }
-  export interface EnterpriseName extends EntprSearch{
-  applicationName:string;
-}
+
+  export interface EnterpriseName extends EntprSearch {
+    applicationName: string;
+  }
+
   export class EnterpriseBasicInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
@@ -50,10 +53,10 @@ export namespace EnterpriseBasicInfoServiceNs {
       return this.http.put('data/basic/enterprise/' + param.entprId, param).toPromise();
     }
 
-     /*企业提交审核*/
+    /*企业提交审核*/
     public getExamine(param: EnterpriseName): Promise<PageInfo<EnterpriseInfoModel>> {
-        return this.http.post('data/basic/enterprise/examination', param).toPromise();
-      }
+      return this.http.post('data/basic/enterprise/examination', param).toPromise();
+    }
   }
 }
 

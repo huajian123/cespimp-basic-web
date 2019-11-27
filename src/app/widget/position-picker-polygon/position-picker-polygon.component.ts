@@ -1,10 +1,9 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { BaseConfirmModal } from '../base-confirm-modal';
-import { EVENT_KEY } from '../../../environments/staticVariable';
-import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import { LoginServiceNs } from '@core/biz-services/login-services/login.service';
 import LoginEntprModel = LoginServiceNs.LoginEntprModel;
 import { NzModalRef } from 'ng-zorro-antd';
+import { EVENT_KEY } from '@env/staticVariable';
 
 interface PositionModel {
   longitude: number; // 经度
@@ -27,28 +26,15 @@ export class PositionPickerPolygonComponent extends BaseConfirmModal.BasicConfir
   currentPosition: PositionModel;
   params;
   entprBasicInfo: LoginEntprModel;
-  loginInfo: LoginInfoModel;
   canEdit: boolean;
 
   constructor(private cdr: ChangeDetectorRef, private nzModalRef: NzModalRef) {
     super();
     this.zoom = 10;
     this.entprBasicInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
-    this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.polygonPoints = [];
     this.polygon = {};
     this.canEdit = false;
-  }
-
-  ngOnInit() {
-    this.currentPosition = {
-      longitude: this.params.longitude || this.entprBasicInfo.longitude,
-      latitude: this.params.latitude || this.entprBasicInfo.latitude,
-    };
-    this.center = {
-      longitude: this.params.longitude || this.entprBasicInfo.longitude,
-      latitude: this.params.latitude || this.entprBasicInfo.latitude,
-    };
   }
 
   protected getCurrentValue(): any {
@@ -65,8 +51,11 @@ export class PositionPickerPolygonComponent extends BaseConfirmModal.BasicConfir
     this.canEdit = !this.canEdit;
     if (this.canEdit) {
       this.polygon.enableEdit();
+      this.polygonPoints = [...this.polygon.getLngLats()[0]];
+
     } else {
       this.polygon.disableEdit();
+      this.polygonPoints = [...this.polygon.getLngLats()[0]];
     }
 
   }
@@ -114,7 +103,6 @@ export class PositionPickerPolygonComponent extends BaseConfirmModal.BasicConfir
         this.canEdit = false;
         this.polygonPoints = [...type.currentLnglats];
         this.painPolygon(this.polygonPoints);
-        this.cdr.markForCheck();
       });
       let imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
         'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
@@ -122,7 +110,27 @@ export class PositionPickerPolygonComponent extends BaseConfirmModal.BasicConfir
       // 创建自定义图层对象
       const tilePhoto = new T.TileLayer(imageURL, { minZoom: 5, maxZoom: 18 });
       this.map.addLayer(tilePhoto);
+
+
+      // 如果是编辑
+      if (this.params.currentPolygonList.length > 0) {
+        this.polygonPoints.length = 0;
+        this.params.currentPolygonList.forEach(({ lat, lng }) => {
+          this.polygonPoints.push(new T.LngLat(lng, lat));
+        });
+        this.painPolygon(this.polygonPoints);
+      }
     }, 0);
   }
 
+  ngOnInit() {
+    this.currentPosition = {
+      longitude: this.params.longitude || this.entprBasicInfo.longitude,
+      latitude: this.params.latitude || this.entprBasicInfo.latitude,
+    };
+    this.center = {
+      longitude: this.params.longitude || this.entprBasicInfo.longitude,
+      latitude: this.params.latitude || this.entprBasicInfo.latitude,
+    };
+  }
 }

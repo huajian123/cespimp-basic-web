@@ -47,6 +47,7 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
   @Input() id: number;
   @Input() currentPageNum: number;
   @Output() returnBack: EventEmitter<any>;
+  currentPolygonList: any[];
 
   constructor(private fb: FormBuilder, private positionPickerService: PositionPickerService, private dataService: EnterpriseBasicInfoService,
               private cdr: ChangeDetectorRef, private messageService: ShowMessageService, private msg: NzMessageService,
@@ -71,6 +72,7 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
       updateTime: new Date(),
       userName: '',
     };
+    this.currentPolygonList = [];
     this.returnBack = new EventEmitter<any>();
   }
 
@@ -109,6 +111,7 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
       isRemoteImage: true,
       longitude: enterpriseInfo.longitude,
       latitude: enterpriseInfo.latitude,
+      currentPolygonList: this.currentPolygonList,
     }).then((res: ({ lat: number, lng: number }[])) => {
       let tempArray = [];
       if (res) {
@@ -116,6 +119,7 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
           const obj = { lat, lng };
           tempArray.push(obj);
         });
+        this.currentPolygonList = [...tempArray];
         this.validateForm.get('entprScope').setValue(tempArray);
       }
     }).catch(e => null);
@@ -153,10 +157,17 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
   }
 
   async getDetail() {
+    this.currentPolygonList.length = 0;
     const param: EntprSearch = {
       entprId: this.loginInfo.entprId,
     };
     const dataInfo = await this.dataService.getEnterpriseInfoDetail(param);
+    if (dataInfo.entprScope) {
+      dataInfo.entprScope.forEach(({ lng, lat }) => {
+        this.currentPolygonList.push({ lng, lat });
+      });
+    }
+
     this.validateForm.patchValue(dataInfo);
     this.cdr.markForCheck();
   }
