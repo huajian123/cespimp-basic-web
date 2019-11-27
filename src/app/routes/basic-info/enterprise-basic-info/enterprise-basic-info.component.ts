@@ -20,6 +20,7 @@ import {
 import EntprSearch = EnterpriseBasicInfoServiceNs.EntprSearch;
 import { NzMessageService } from 'ng-zorro-antd';
 import EnterpriseName = EnterpriseBasicInfoServiceNs.EnterpriseName;
+import { enterpriseInfo } from '@env/environment';
 
 interface OptionsInterface {
   value: string;
@@ -101,7 +102,11 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
 
 
   showMap() {
-    this.positionPickerService.show({ isRemoteImage: true }).then(res => {
+    this.positionPickerService.show({
+      isRemoteImage: true,
+      longitude: enterpriseInfo.longitude,
+      latitude: enterpriseInfo.latitude,
+    }).then(res => {
       this.validateForm.get('longitude').setValue(res.longitude);
       this.validateForm.get('latitude').setValue(res.latitude);
     }).catch(e => null);
@@ -118,7 +123,7 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
     } else {
       const params = this.validateForm.getRawValue();
       params.entprId = this.loginInfo.entprId;
-      params.updateBy =this.loginInfo.realName;
+      params.updateBy = this.loginInfo.realName;
       let submitHandel = null;
       submitHandel = this.dataService.editEnterpriseInfoDetail(params);
       await submitHandel;
@@ -147,7 +152,7 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
         entprId: this.loginInfo.entprId,
         applicationName: this.loginInfo.realName,
       };
-       this.dataService.getExamine(param);
+      this.dataService.getExamine(param);
     });
   }
 

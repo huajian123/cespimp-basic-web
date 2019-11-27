@@ -2,6 +2,8 @@
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { EVENT_KEY } from '@env/staticVariable';
+
 export const localUrl = 'http://172.16.0.136:4201';
 export const webServerUrl = `${localUrl}/site`;
 
@@ -20,6 +22,8 @@ export const loginUserInfo = {
   'avatar': './assets/tmp/img/avatar.jpg',
   'email': 'cipchk@qq.com',
 };
+
+export const enterpriseInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
 
 export const environment = {
   SERVER_URL: `${webServerUrl}`,
