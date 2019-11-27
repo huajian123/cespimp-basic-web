@@ -40,7 +40,7 @@ export class UserLoginComponent {
               public msg: NzMessageService,
               private loginService: LoginService,
               private aclService: ACLService,
-              private menuSrv: MenuService,) {
+              private menuSrv: MenuService) {
     this.remark = '';
     this.loading = false;
     this.isSubmit = true;
@@ -70,9 +70,15 @@ export class UserLoginComponent {
     window.sessionStorage.setItem(EVENT_KEY.entprBasicInfo, JSON.stringify(data.entprBasicInfo));
     this.menuSrv.resume();
     this.tokenService.set({ token: data.user.realName });
-    this.router.navigateByUrl('/hazard/login-manage/login-plant');
 
+    // 根据不同的角色跳转不同的位置
+    if (data.user.role === RoleEnum.ParkManage) {
+      this.router.navigateByUrl('/hazard/login-manage/login-plant');
+    } else if (data.user.role === RoleEnum.Enterprise) {
+      this.router.navigateByUrl('/hazard/safety-map/safety-map-list');
+    }
   }
+
 
   ngOnInit() {
     this.validateForm = this.formBuilder.group({
