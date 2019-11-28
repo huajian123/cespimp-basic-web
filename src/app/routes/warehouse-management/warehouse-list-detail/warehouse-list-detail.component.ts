@@ -15,9 +15,8 @@ import WarehouseListInfoModel = WarehouseListServiceNs.WarehouseListInfoModel;
 import { STColumn } from '@delon/abc';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd';
-import { TankListInfoService, TankListServiceNs } from '@core/biz-services/storage-tank-management/tank-list.service';
 import { PositionPickerService } from '../../../widget/position-picker/position-picker.service';
-import TankListInfoModel = TankListServiceNs.TankListInfoModel;
+
 
 @Component({
   selector: 'app-warehouse-management-warehouse-list-detail',
@@ -75,7 +74,7 @@ export class WarehouseManagementWarehouseListDetailComponent implements OnInit {
 
   async getDetailInfo() {
     this.dataInfo = await this.dataService.getWarehouseInfoDetail(this.id);
-    console.log(this.dataInfo);
+    //console.log(this.dataInfo);
     this.cdr.markForCheck();
   }
 
