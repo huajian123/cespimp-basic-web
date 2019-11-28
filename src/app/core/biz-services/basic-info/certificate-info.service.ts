@@ -48,7 +48,10 @@ export namespace CertificateInfoServiceNs {
     public getIdCardInfoDetail(id: number): Promise<IdCardTabModel> {
       return this.http.get('data/basic/document/' + id).toPromise();
     }
-
+    /*修改证照详情接口*/
+    public editIdCardInfoDetail(param:IdCardTabModel): Promise<IdCardTabModel> {
+      return this.http.put('data/basic/document/',param).toPromise();
+    }
   }
 }
 
