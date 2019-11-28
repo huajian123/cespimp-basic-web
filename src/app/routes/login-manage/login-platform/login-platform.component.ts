@@ -283,6 +283,7 @@ export class LoginPlatformComponent implements OnInit {
         x: 'center',
         textStyle: {
           color: '#ffffff',
+          fontSize:'12px'
         },
         top: '5px',
       },
@@ -354,10 +355,11 @@ export class LoginPlatformComponent implements OnInit {
         x: 'center',
         textStyle: {
           color: '#ffffff',
+          fontSize:'12px'
         },
         top: '5px',
       },
-
+      color: ['#FF222D', '#EE8E00', '#FFE800'],
       tooltip: {
         trigger: 'item',
         formatter: '{a} <br/>{b} : {c} ({d}%)',
@@ -390,7 +392,7 @@ export class LoginPlatformComponent implements OnInit {
         {
           name: '半径模式',
           type: 'pie',
-          radius: [15, 70],
+          radius: [15, 60],
           center: ['32%', '55%'],
           roseType: 'radius',
           label: {
@@ -410,9 +412,9 @@ export class LoginPlatformComponent implements OnInit {
             },
           },
           data: [
-            { value: 10, name: '氯化工艺' },
-            { value: 5, name: '新型煤化工艺' },
-            { value: 15, name: '合成氨工艺' },
+            { value: 18, name: '氯化工艺' },
+            { value: 16, name: '新型煤化工艺' },
+            { value: 13, name: '合成氨工艺' },
           ],
         },
 
