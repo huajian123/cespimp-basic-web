@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { BasicInfoService, BasicInfoServiceNs } from '@core/biz-services/basic-info/basic-info.service';
 import { OptionsInterface, SearchCommonVO } from '@core/vo/comm/BusinessEnum';
 import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
+import * as d3 from 'd3';
 
 enum EnterpriseUrlEnum {
   Normal = '../../../../assets/imgs/safeOnePage/cover.png',
@@ -27,17 +28,37 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
   selectedEnterpriseId = -1; // 选中的企业
   pageTypeEnum = PageTypeEnum;
   currentPageType: number;
+  tilePhoto: Object; // 倾斜摄影对象
 
+  /*d3图层*/
+  industrialPark = [];
+  industrialParkRealArea = [];
+  industrialParkPlanArea = [];
+  realArea:any;
+  planArea:any;
+  pointArea:any;
   constructor(private basicInfoService: BasicInfoService, private cdr: ChangeDetectorRef) {
     this.businessSelOptions = [];
     this.enterpriseArray = [];
     this.currentPageType = this.pageTypeEnum.EnterpriseList;
+    const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
+      'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
+      '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=0a65163e2ebdf5a37abb7f49274b85df';
+    this.tilePhoto = new T.TileLayer(imageURL, { minZoom: 1, maxZoom: 18 });
+
+
+    this.realArea = new T.D3Overlay(this.realAreaInit, this.realAreaRedraw);
+    this.planArea = new T.D3Overlay(this.planAreaInit, this.planAreaRedraw);
+    this.pointArea = new T.D3Overlay(this.pointInit, this.pointRedraw);
   }
 
   initMap() {
     this.map = new T.Map('mapDiv');
     this.map.centerAndZoom(new T.LngLat(120.680416, 31.206039), 14);
+    this.map.addLayer(this.tilePhoto);
+    this.initD3Layer();
   }
+
 
   // 获取企业列表
   async getBusinessList() {
@@ -94,6 +115,87 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
           this.cdr.markForCheck();
         }, 0);
       });
+    });
+  }
+
+  realAreaInit = (sel, transform) => {
+    const upd = sel.selectAll('path.geojson1').data(this.industrialParkRealArea);
+    upd.enter()
+      .append('path')
+      .attr('class', 'geojson1')
+      .attr('stroke', 'red')
+      .attr('stroke-width', '5')
+      .attr('fill', '#ffffff')
+      .attr('fill-opacity', '0');
+  };
+
+  realAreaRedraw = (sel, transform) => {
+    sel.selectAll('path.geojson1').each(
+      function(d, i) {
+        d3.select(this).attr('d', transform.pathFromGeojson);
+      },
+    );
+  };
+
+  planAreaInit = (sel, transform) => {
+    const upd = sel.selectAll('path.geojson1').data(this.industrialParkPlanArea);
+    upd.enter()
+      .append('path')
+      .attr('class', 'geojson1')
+      .attr('stroke', 'red')
+      .attr('stroke-dasharray', '10,10')
+      .attr('stroke-width', '5')
+      .attr('fill', '#ffffff')
+      .attr('fill-opacity', '0');
+  };
+
+  planAreaRedraw = (sel, transform) => {
+    sel.selectAll('path.geojson1').each(
+      function(d, i) {
+        d3.select(this).attr('d', transform.pathFromGeojson);
+      },
+    );
+  };
+
+  pointInit = (sel, transform) => {
+    const upd = sel.selectAll('path.geojson1').data(this.industrialPark);
+    upd.enter()
+      .append('path')
+      .attr('class', 'geojson1')
+      .attr('stroke', 'red')
+      .attr('stroke-width', '5')
+      .attr('fill', '#ffffff')
+      .attr('fill-opacity', '0');
+  };
+
+  pointRedraw = (sel, transform) => {
+    sel.selectAll('path.geojson1').each(
+      function(d, i) {
+        d3.select(this).attr('d', transform.pathFromGeojson);
+      },
+    );
+  };
+
+
+
+  // 初始化d3相关图层
+  initD3Layer() {
+    d3.json('../../../../assets/d3/WuZhongRealArea.json', (data) => {
+      this.industrialParkRealArea = data.features;
+      this.map.addOverLay(this.realArea);
+      this.realArea.bringToBack();
+    });
+
+    d3.json('../../../../assets/d3/WuZhongPlanArea.json', (data) => {
+      this.industrialParkPlanArea = data.features;
+      this.map.addOverLay(this.planArea);
+      this.realArea.bringToBack();
+    });
+
+    d3.json('../../../../assets/d3/point.json', (data) => {
+      this.industrialPark = data.features;
+      this.map.addOverLay(this.pointArea);
+      this.realArea.bringToBack();
     });
   }
 
