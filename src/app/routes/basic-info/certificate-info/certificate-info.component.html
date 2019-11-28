@@ -2,8 +2,8 @@
 <form nz-form [formGroup]="validateForm" [nzLayout]="'vertical'">
   <nz-card [nzHoverable]="false" [nzBordered]="true">
     <nz-card nzType="inner" nzTitle="1、营业执照">
-      <nz-row nzGutter="20">
-        <nz-col nzLg="4" nzMd="10" nzSm="24">
+      <nz-row nzGutter="24">
+        <nz-col nzLg="6" nzMd="10" nzSm="24">
           <nz-form-item>
             <nz-form-label nzFor="name">统一社会信用代码</nz-form-label>
             <nz-form-control>
@@ -14,7 +14,7 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+        <nz-col [nzXl]="{ span: 6, offset: 3 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
           <nz-form-item>
             <nz-form-label nzFor="name">有效时间</nz-form-label>
             <nz-form-control>
@@ -26,7 +26,7 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+        <nz-col [nzXl]="{ span: 6, offset: 3 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
           <nz-form-item>
             <nz-form-label>经营范围</nz-form-label>
             <nz-form-control>
@@ -38,7 +38,7 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+        <nz-col nzLg="6" nzMd="10" nzSm="24">
           <nz-form-item>
             <nz-form-label>发证机关</nz-form-label>
             <nz-form-control>
@@ -50,11 +50,32 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
+        <nz-col [nzXl]="{ span: 6, offset: 3 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+          <nz-form-item>
+            <nz-form-label>附件</nz-form-label>
+            <nz-form-control>
+              <nz-upload
+                (nzChange)="uploadFn($event,'businessLicencesAccessory')"
+                [nzRemove]="handleRemove"
+                [nzLimit]="1"
+                [nzAction]="uploadUrl"
+                nzListType="picture-card"
+                [(nzFileList)]="businessFileList"
+                [nzShowButton]="businessFileList.length < 1"
+                [nzShowUploadList]="showUploadList"
+                [nzPreview]="handlePreview">
+                <i nz-icon nzType="plus"></i>
+                <div class="ant-upload-text">上传</div>
+              </nz-upload>
+              <input nz-input formControlName="businessLicencesAccessory" [hidden]="true">
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
       </nz-row>
     </nz-card>
     <nz-card nzType="inner" nzTitle="2、安全许可证">
-      <nz-row nzGutter="20">
-        <nz-col nzLg="4" nzMd="10" nzSm="24">
+      <nz-row nzGutter="24">
+        <nz-col nzLg="6" nzMd="10" nzSm="24">
           <nz-form-item>
             <nz-form-label>编号</nz-form-label>
             <nz-form-control>
@@ -66,7 +87,7 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+        <nz-col [nzXl]="{ span: 6, offset: 3 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
           <nz-form-item>
             <nz-form-label>有效期</nz-form-label>
             <nz-form-control>
@@ -78,7 +99,7 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+        <nz-col [nzXl]="{ span: 6, offset: 3 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
           <nz-form-item>
             <nz-form-label>许可范围</nz-form-label>
             <nz-form-control>
@@ -90,7 +111,7 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+        <nz-col nzLg="6" nzMd="10" nzSm="24">
           <nz-form-item>
             <nz-form-label>发证机关</nz-form-label>
             <nz-form-control>
@@ -102,21 +123,32 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col nzLg="4" nzMd="10" nzSm="24">
+        <nz-col [nzXl]="{ span: 6, offset: 3 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
           <nz-form-item>
             <nz-form-label>附件</nz-form-label>
             <nz-form-control>
-              <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/">
-                <button nz-button><i nz-icon nzType="upload"></i><span>上传附件</span></button>
+              <nz-upload
+                (nzChange)="uploadFn($event,'safetyCertificateAccessory')"
+                [nzRemove]="handleRemove"
+                [nzLimit]="1"
+                [nzAction]="uploadUrl"
+                nzListType="picture-card"
+                [(nzFileList)]="safetyCertificateFileList"
+                [nzShowButton]="safetyCertificateFileList.length < 1"
+                [nzShowUploadList]="showUploadList"
+                [nzPreview]="handlePreview">
+                <i nz-icon nzType="plus"></i>
+                <div class="ant-upload-text">上传</div>
               </nz-upload>
+              <input nz-input formControlName="safetyCertificateAccessory"  [hidden]="true">
             </nz-form-control>
           </nz-form-item>
         </nz-col>
       </nz-row>
     </nz-card>
     <nz-card nzType="inner" nzTitle="3、排污许可证">
-      <nz-row nzGutter="20">
-        <nz-col nzLg="4" nzMd="10" nzSm="24">
+      <nz-row nzGutter="24">
+        <nz-col nzLg="6" nzMd="10" nzSm="24">
           <nz-form-item>
             <nz-form-label>许可证编号</nz-form-label>
             <nz-form-control>
@@ -128,7 +160,7 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+        <nz-col [nzXl]="{ span: 6, offset: 3 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
           <nz-form-item>
             <nz-form-label>有效期</nz-form-label>
             <nz-form-control>
@@ -140,7 +172,7 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+        <nz-col [nzXl]="{ span: 6, offset: 3 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
           <nz-form-item>
             <nz-form-label>排污种类</nz-form-label>
             <nz-form-control>
@@ -152,7 +184,7 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+        <nz-col nzLg="6" nzMd="10" nzSm="24">
           <nz-form-item>
             <nz-form-label>发证机关</nz-form-label>
             <nz-form-control>
@@ -164,21 +196,32 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col nzLg="4" nzMd="10" nzSm="24">
+        <nz-col [nzXl]="{ span: 6, offset: 3 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
           <nz-form-item>
             <nz-form-label>附件</nz-form-label>
             <nz-form-control>
-              <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/">
-                <button nz-button><i nz-icon nzType="upload"></i><span>上传附件</span></button>
+              <nz-upload
+                (nzChange)="uploadFn($event,'dischargePermitAccessory')"
+                [nzRemove]="handleRemove"
+                [nzLimit]="1"
+                [nzAction]="uploadUrl"
+                nzListType="picture-card"
+                [(nzFileList)]="dischargePermitFileList"
+                [nzShowButton]="dischargePermitFileList.length < 1"
+                [nzShowUploadList]="showUploadList"
+                [nzPreview]="handlePreview">
+                <i nz-icon nzType="plus"></i>
+                <div class="ant-upload-text">上传</div>
               </nz-upload>
+              <input nz-input formControlName="dischargePermitAccessory"  [hidden]="true">
             </nz-form-control>
           </nz-form-item>
         </nz-col>
       </nz-row>
     </nz-card>
     <nz-card nzType="inner" nzTitle="4、安评报告">
-      <nz-row nzGutter="20">
-        <nz-col nzLg="4" nzMd="10" nzSm="24">
+      <nz-row nzGutter="24">
+        <nz-col nzLg="6" nzMd="10" nzSm="24">
           <nz-form-item>
             <nz-form-label>报告名称</nz-form-label>
             <nz-form-control>
@@ -190,7 +233,7 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+        <nz-col [nzXl]="{ span: 6, offset: 3 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
           <nz-form-item>
             <nz-form-label>备案时间</nz-form-label>
             <nz-form-control>
@@ -202,7 +245,7 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+        <nz-col [nzXl]="{ span: 6, offset: 3 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
           <nz-form-item>
             <nz-form-label>安评机构名称</nz-form-label>
             <nz-form-control>
@@ -214,21 +257,32 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
-          <nz-form-item>
+        <nz-col nzLg="6" nzMd="10" nzSm="24">
+        <nz-form-item>
             <nz-form-label>安评报告附件</nz-form-label>
             <nz-form-control>
-              <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/">
-                <button nz-button><i nz-icon nzType="upload"></i><span>上传附件</span></button>
+              <nz-upload
+                (nzChange)="uploadFn($event,'safetyReportAccessory')"
+                [nzRemove]="handleRemove"
+                [nzLimit]="1"
+                [nzAction]="uploadUrl"
+                nzListType="picture-card"
+                [(nzFileList)]="safetyReportFileList"
+                [nzShowButton]="safetyReportFileList.length < 1"
+                [nzShowUploadList]="showUploadList"
+                [nzPreview]="handlePreview">
+                <i nz-icon nzType="plus"></i>
+                <div class="ant-upload-text">上传</div>
               </nz-upload>
+              <input nz-input formControlName="safetyReportAccessory"  [hidden]="true">
             </nz-form-control>
           </nz-form-item>
         </nz-col>
       </nz-row>
     </nz-card>
     <nz-card nzType="inner" nzTitle="5、环评报告">
-      <nz-row nzGutter="20">
-        <nz-col nzLg="4" nzMd="10" nzSm="24">
+      <nz-row nzGutter="24">
+        <nz-col nzLg="6" nzMd="10" nzSm="24">
           <nz-form-item>
             <nz-form-label>环评报告名称</nz-form-label>
             <nz-form-control>
@@ -240,8 +294,8 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
-          <nz-form-item>
+        <nz-col [nzXl]="{ span: 6, offset: 3 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
             <nz-form-label>备案时间</nz-form-label>
             <nz-form-control>
               <input nz-input formControlName="environmentRecordTime" placeholder="请输入备案时间"/>
@@ -252,8 +306,8 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
-          <nz-form-item>
+        <nz-col [nzXl]="{ span: 6, offset: 3 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
             <nz-form-label>环评机构名称</nz-form-label>
             <nz-form-control>
               <input nz-input formControlName="environmentReportAgency" placeholder="请输入企业简称"/>
@@ -264,13 +318,24 @@
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-        <nz-col [nzXl]="{ span: 4, offset: 2 }" [nzLg]="{ span: 6 }" [nzMd]="{ span: 10 }" nzSm="24">
+        <nz-col nzLg="6" nzMd="10" nzSm="24">
           <nz-form-item>
             <nz-form-label>环评报告附件</nz-form-label>
             <nz-form-control>
-              <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/">
-                <button nz-button><i nz-icon nzType="upload"></i><span>上传附件</span></button>
+              <nz-upload
+                (nzChange)="uploadFn($event,'environmentReportAccessory')"
+                [nzRemove]="handleRemove"
+                [nzLimit]="1"
+                [nzAction]="uploadUrl"
+                nzListType="picture-card"
+                [(nzFileList)]="environmentReportFileList"
+                [nzShowButton]="environmentReportFileList.length < 1"
+                [nzShowUploadList]="showUploadList"
+                [nzPreview]="handlePreview">
+                <i nz-icon nzType="plus"></i>
+                <div class="ant-upload-text">上传</div>
               </nz-upload>
+              <input nz-input formControlName="environmentReportAccessory"  [hidden]="true">
             </nz-form-control>
           </nz-form-item>
         </nz-col>
@@ -281,5 +346,14 @@
     <button nz-button type="submit" nzType="primary" (click)="submitForm()">更新基本信息</button>
   </footer-toolbar>
 </form>
-
+<nz-modal
+  [nzVisible]="previewVisible"
+  [nzContent]="modalContent"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-template #modalContent>
+    <img [src]="previewImage" [ngStyle]="{ width: '100%' }"/>
+  </ng-template>
+</nz-modal>
 
