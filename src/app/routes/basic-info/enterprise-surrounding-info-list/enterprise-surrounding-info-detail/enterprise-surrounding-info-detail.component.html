@@ -1,0 +1,54 @@
+<page-header [title]="'周边环境详情'"></page-header>
+<nz-card [nzHoverable]="true" [nzBordered]="false">
+    <form nz-form [formGroup]="validateForm" se-container="1" labelWidth="200">
+      <se label="周边环境类型">
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+          <input nz-input formControlName="envrType" readonly />
+        </nz-form-control>
+      </se>
+      <se label="周边环境名称">
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+          <input nz-input formControlName="envrName" readonly />
+        </nz-form-control>
+      </se>
+      <se label="周边环境方位">
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+          <input nz-input formControlName="envrDirection" readonly />
+        </nz-form-control>
+      </se>
+      <se label="与本企业最小距离（米）">
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+          <input nz-input formControlName="miniDistance" readonly />
+        </nz-form-control>
+      </se>
+      <se label="建筑结构">
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+          <input nz-input formControlName="buildStruct" readonly />
+        </nz-form-control>
+      </se>
+      <se label="相邻建筑高度（米）">
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+          <input nz-input formControlName="adjacentBuildHeight" readonly />
+        </nz-form-control>
+      </se>
+      <se label="人员数量（人）">
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+          <input nz-input formControlName="personNum" readonly />
+        </nz-form-control>
+      </se>
+      <se label="联系人">
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+          <input nz-input formControlName="envrContacts" readonly />
+        </nz-form-control>
+      </se>
+      <se label="联系人移动电话">
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+          <input nz-input formControlName="contactMoble"readonly />
+        </nz-form-control>
+      </se>
+      <se>
+        <button nz-button type="primary" (click)="returnToList()" nzType="primary">返回</button>
+      </se>
+    </form>
+</nz-card>
+

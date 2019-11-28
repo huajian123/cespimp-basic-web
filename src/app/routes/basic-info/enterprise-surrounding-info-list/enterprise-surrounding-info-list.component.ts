@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STComponent, STData } from '@delon/abc';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { STColumn,STData } from '@delon/abc';
 import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import {
   EnterpriseSurroundingInfoService,
@@ -8,6 +8,7 @@ import {
 import EnterpriseSurroundingModel = EnterpriseSurroundingInfoServiceNs.EnterpriseSurroundingModel;
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
+import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 
 @Component({
   selector: 'app-basic-info-enterprise-surrounding-info-list',
@@ -68,7 +69,13 @@ export class BasicInfoEnterpriseSurroundingInfoListComponent implements OnInit {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
   }
-
+  async returnToList(e?: GoBackParam) {
+    this.currentPage = this.pageTypeEnum.List;
+    if (!!e && e.refesh) {
+      this.listPageInfo.pi = e.pageNo;
+      await this.getDataList(e.pageNo);
+    }
+  }
   goDetailPage(item, modal) {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
@@ -81,7 +88,7 @@ export class BasicInfoEnterpriseSurroundingInfoListComponent implements OnInit {
         return;
       }
       this.itemId = item.id;
-      //this.dataService.delWarehouseInfo(this.itemId).then(() => this.getDataList(1));
+      this.dataService.delEnterpriseSurrounding(this.itemId).then(() => this.getDataList(1));
     });
   }
   private initTable(): void {

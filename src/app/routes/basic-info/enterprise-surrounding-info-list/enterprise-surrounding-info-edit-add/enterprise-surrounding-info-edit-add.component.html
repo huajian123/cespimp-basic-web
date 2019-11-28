@@ -1,0 +1,75 @@
+<page-header [title]="'周边环境新增编辑页'"></page-header>
+<nz-card [nzBordered]="false">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
+    <se label="周边环境类型">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <nz-select formControlName="envrType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择周边环境类型'">
+          <nz-option *ngFor="let item of envrTypeOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+        </nz-select>
+        <nz-form-explain *ngIf="validateForm.get('envrType').dirty && validateForm.get('envrType').errors">请选择周边环境类型
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+
+    <se label="周边环境名称">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="envrName" placeholder="周边环境名称"/>
+        <nz-form-explain *ngIf="validateForm.get('envrName').dirty && validateForm.get('envrName').errors">请输入周边环境名称
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="周边环境方位">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <nz-select formControlName="envrDirection" [nzShowSearch]="true" [nzPlaceHolder]="'请选择周边环境方位'">
+          <nz-option *ngFor="let item of envrDirectionOptions" [nzLabel]="item.label"
+                     [nzValue]="item.value"></nz-option>
+        </nz-select>
+        <nz-form-explain *ngIf="validateForm.get('envrDirection').dirty && validateForm.get('envrDirection').errors">
+          请选择周边环境方位
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="与本企业最小距离（米）">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="miniDistance" placeholder="与本企业最小距离（米）">
+      </nz-form-control>
+    </se>
+    <se label="建筑结构">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <nz-select formControlName="buildStruct" [nzShowSearch]="true" [nzPlaceHolder]="'请选择建筑结构'">
+          <nz-option *ngFor="let item of buildStructOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+        </nz-select>
+        <nz-form-explain *ngIf="validateForm.get('buildStruct').dirty && validateForm.get('buildStruct').errors">请选择建筑结构
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="相邻建筑高度（米）">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="adjacentBuildHeight" placeholder="相邻建筑高度（米）">
+      </nz-form-control>
+    </se>
+    <se label="人员数量（人）">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="personNum" placeholder="人员数量（人）">
+      </nz-form-control>
+    </se>
+    <se label="联系人">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="envrContacts" placeholder="联系人">
+      </nz-form-control>
+    </se>
+    <se label="联系人移动电话">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="contactMoble" placeholder="联系人移动电话">
+      </nz-form-control>
+    </se>
+    <se>
+      <button nz-button nzType="primary" type="submit">提交</button>
+      <button nz-button class="ml-sm" (click)="returnToList()">返回</button>
+    </se>
+  </form>
+</nz-card>
+
+
+
+

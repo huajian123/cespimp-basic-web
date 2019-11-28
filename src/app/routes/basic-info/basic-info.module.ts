@@ -17,6 +17,14 @@ import { BasicInfoBasicInfoAuditEditAddComponent } from './basic-info-audit-list
 import { BasicInfoProductionDeviceInfoListComponent } from './production-device-info-list/production-device-info-list.component';
 import { BasicInfoProductionDeviceInfoEditAddComponent } from './production-device-info-list/production-device-info-edit-add/production-device-info-edit-add.component';
 import { BasicInfoProductionDeviceInfoDetailComponent } from './production-device-info-list/production-device-info-detail/production-device-info-detail.component';
+import { BasicInfoEnterpriseSurroundingInfoEditAddComponent } from './enterprise-surrounding-info-list/enterprise-surrounding-info-edit-add/enterprise-surrounding-info-edit-add.component';
+import { BasicInfoEnterpriseSurroundingInfoDetailComponent } from './enterprise-surrounding-info-list/enterprise-surrounding-info-detail/enterprise-surrounding-info-detail.component';
+import { BasicInfoProductionMaterialsInfoDetailComponent } from './production-materials-info-list/production-materials-info-detail/production-materials-info-detail.component';
+import { BasicInfoProductionMaterialsInfoEditAddComponent } from './production-materials-info-list/production-materials-info-edit-add/production-materials-info-edit-add.component';
+import { BasicInfoIntermediateProductInfoEditAddComponent } from './intermediate-product-info-list/intermediate-product-info-edit-add/intermediate-product-info-edit-add.component';
+import { BasicInfoIntermediateProductInfoDetailComponent } from './intermediate-product-info-list/intermediate-product-info-detail/intermediate-product-info-detail.component';
+import { BasicInfoFinalProductInfoDetailComponent } from './final-product-info-list/final-product-info-detail/final-product-info-detail.component';
+import { BasicInfoFinalProductInfoEditAddComponent } from './final-product-info-list/final-product-info-edit-add/final-product-info-edit-add.component';
 
 
 const COMPONENTS = [
@@ -37,7 +45,15 @@ const COMPONENTS_NOROUNT = [
   BasicInfoBasicInfoAuditDetailComponent,
   BasicInfoProductionDeviceInfoEditAddComponent,
   BasicInfoProductionDeviceInfoEditAddComponent,
-  BasicInfoProductionDeviceInfoDetailComponent];
+  BasicInfoProductionDeviceInfoDetailComponent,
+  BasicInfoEnterpriseSurroundingInfoEditAddComponent,
+  BasicInfoEnterpriseSurroundingInfoDetailComponent,
+  BasicInfoProductionMaterialsInfoDetailComponent,
+  BasicInfoProductionMaterialsInfoEditAddComponent,
+  BasicInfoIntermediateProductInfoEditAddComponent,
+  BasicInfoIntermediateProductInfoDetailComponent,
+  BasicInfoFinalProductInfoDetailComponent,
+  BasicInfoFinalProductInfoEditAddComponent];
 
 @NgModule({
   imports: [

@@ -15,10 +15,7 @@ import MajorHazardListInfoModel = MajorHazardListServiceNs.MajorHazardListInfoMo
 import { STColumn, STColumnButton, STData } from '@delon/abc';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd';
-import { PositionPickerService } from '../../../../widget/position-picker/position-picker.service';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
-import { StorageTankManagementTankListDetailComponent } from '../../../storage-tank-management/tank-list-detail/tank-list-detail.component';
-
 enum PartTypeEnum {
   Tank = 1,
   Warehouse,
@@ -36,14 +33,9 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
   @Input() currentPageNum: number;
   dataInfo: MajorHazardListInfoModel;
   columns: STColumn[];
-  storageTankManagementTankListDetailComponent = StorageTankManagementTankListDetailComponent;
-
   constructor(private http: _HttpClient, private msg: NzMessageService,
-              private dataService: MajorHazardListInfoService, private cdr: ChangeDetectorRef,
-              private positionPickerService: PositionPickerService) {
+              private dataService: MajorHazardListInfoService, private cdr: ChangeDetectorRef) {
     this.returnBack = new EventEmitter<any>();
-
-
     this.dataInfo = {
       id: -1,
       majorHazardNo: '',
@@ -90,13 +82,7 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
     return new MapPipe().transform(toBeFormat, arg);
   }
 
-  showMap() {
-    /* this.positionPickerService.show({
-       isRemoteImage: true,
-       longitude: this.dataInfo.longitude,
-       latitude: this.dataInfo.latitude,
-     }).then().catch(e => e);*/
-  }
+
 
   async getDetailInfo(id?) {
     this.dataInfo = await this.dataService.getMajorHazardInfoDetail(id ? id : this.id);
