@@ -37,7 +37,7 @@ export class PositionPickerPolygonComponent extends BaseConfirmModal.BasicConfir
     this.canEdit = false;
   }
 
-  protected getCurrentValue(): any {
+  public getCurrentValue(): any {
     const obj = { value: this.polygonPoints };
     this.nzModalRef.close(obj);
   }
