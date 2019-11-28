@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EVENT_KEY } from '@env/staticVariable';
 import { localUrl } from '@env/environment';
 import { LoginService, LoginServiceNs } from '@core/biz-services/login-services/login.service';
 import UrlsModelInterface = LoginServiceNs.UrlsModelInterface;
 import { RoleEnum } from '@core/vo/comm/BusinessEnum';
+import {
+  LoginWorkBoardService,
+  LoginWorkBoardServiceNs,
+} from '@core/biz-services/login-work-board/login-work-board.service';
+import AirQualityModel = LoginWorkBoardServiceNs.AirQualityModel;
 
 enum SideEnum {
   IntegratedMnageControl, // 综合管控
@@ -26,6 +31,14 @@ enum PageTypeEnum {
   IndustryNewsDetail
 }
 
+enum AirQualityLevelEnum {
+  Excellent = 1,
+  Good,
+  MildPollution,
+  ModeratePollution,
+  SeverePollution,
+  SeriousPollution
+}
 
 @Component({
   selector: 'app-login-platform',
@@ -43,8 +56,11 @@ export class LoginPlatformComponent implements OnInit {
   pageTypeEnum = PageTypeEnum;
   loginUrls: UrlsModelInterface;
   localUrl: string;
+  airQualityData: AirQualityModel;
+  airLevelColor: string;
 
-  constructor(private router: Router, private loginService: LoginService) {
+
+  constructor(private router: Router, private loginService: LoginService, private loginWorkBoardService: LoginWorkBoardService, private cdr: ChangeDetectorRef) {
     this.currentSideIndex = this.sideEnum.IntegratedMnageControl;
     this.currentPageNum = this.pageTypeEnum.MainPage;
     this.loginUrls = {
@@ -72,6 +88,23 @@ export class LoginPlatformComponent implements OnInit {
       },
     };
     this.localUrl = localUrl;
+
+    this.airQualityData = {
+      'dateTime': '2019-11-28',
+      'aqiValue': 0,
+      'mainPolluter': '无',
+      'status': null,
+      'total': null,
+      'rate': '',
+      'goodDays': null,
+      'noTwo': '',
+      'soTwo': '',
+      'pmTwoDotFive': '',
+      'pmTen': '',
+      'co': '',
+      'othree': '',
+    };
+    this.airLevelColor = '#30d284';
   }
 
   changeSideIndex(currentSideIndex) {
@@ -283,7 +316,7 @@ export class LoginPlatformComponent implements OnInit {
         x: 'center',
         textStyle: {
           color: '#ffffff',
-          fontSize:'12px'
+          fontSize: '12px',
         },
         top: '5px',
       },
@@ -355,7 +388,7 @@ export class LoginPlatformComponent implements OnInit {
         x: 'center',
         textStyle: {
           color: '#ffffff',
-          fontSize:'12px'
+          fontSize: '12px',
         },
         top: '5px',
       },
@@ -471,10 +504,37 @@ export class LoginPlatformComponent implements OnInit {
     window.open(url, '_blank');
   }
 
+  // 获取空气质量
+  async getAirQualityData() {
+    this.airQualityData = await this.loginWorkBoardService.getAirQuality();
+    switch (this.airQualityData.status) {
+      case AirQualityLevelEnum.Excellent:
+        this.airLevelColor = '#30d284';
+        break;
+      case AirQualityLevelEnum.Good:
+        this.airLevelColor = '#ffd802';
+        break;
+      case AirQualityLevelEnum.MildPollution:
+        this.airLevelColor = '#ff9902';
+        break;
+      case AirQualityLevelEnum.ModeratePollution:
+        this.airLevelColor = '#ff0201';
+        break;
+      case AirQualityLevelEnum.SeverePollution:
+        this.airLevelColor = '#980098';
+        break;
+      case AirQualityLevelEnum.SeriousPollution:
+        this.airLevelColor = '#990000';
+        break;
+    }
+    this.cdr.markForCheck();
+  }
+
   ngOnInit() {
     // this.loginUserInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.intiRadarOption();
     this.initPipeOption();
     this.getPageUrls();
+    this.getAirQualityData();
   }
 }

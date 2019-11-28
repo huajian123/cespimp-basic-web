@@ -366,6 +366,16 @@ export const MapSet = {
     2: '中间产品',
     3: '最终产品',
   },
+
+  // 空气质量
+  airQualityStatus: {
+    1: '优',
+    2: '良',
+    3: '轻度污染',
+    4: '中度污染',
+    5: '重度污染',
+    6: '严重污染',
+  },
 };
 
 export interface MapItem {

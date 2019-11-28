@@ -109,20 +109,20 @@
           <h5>园区空气质量</h5>
           <div class="card-item">
             <div class="cards-item-left">
-              <time>2019.04.12 13:00</time>
+              <time>{{airQualityData.dateTime}}</time>
               <div class="line-two">
-                <div class="number">256</div>
+                <div class="number" [ngStyle]="{color:airLevelColor}">{{airQualityData.aqiValue}}</div>
                 <div class="unit">
                   <span>AQI</span>
                   <span>/500</span>
                 </div>
               </div>
               <div class="line-three">
-                <div class="result">良</div>
+                <div class="result" [ngStyle]="{background:airLevelColor}">{{airQualityData.status|map:'airQualityStatus'}}</div>
               </div>
               <div class="line-four">
                 <span>首要污染物</span>
-                <span>PM2.5</span>
+                <span>{{airQualityData.mainPolluter?airQualityData.mainPolluter:'无'}}</span>
               </div>
             </div>
             <div class="cards-item-right-air">
@@ -132,13 +132,13 @@
                                nzStrokeLinecap="square" nzType="circle" nzPercent="78" [nzShowInfo]="false"></nz-progress>
                 </div>
                 <div class="content">
-                  <div class="content-text"><span class="label">优良天数</span><span class="value">234 天</span></div>
-                  <div class="content-text"><span class="label">优良率</span><span class="value">78 %</span></div>
+                  <div class="content-text"><span class="label">优良天数</span><span class="value">{{airQualityData.goodDays}} 天</span></div>
+                  <div class="content-text"><span class="label">优良率</span><span class="value">{{airQualityData.rate}}</span></div>
                 </div>
               </div>
               <p class="contaminants-title">全年首要污染物占比</p>
               <p class="contaminants-name contaminants-flex"><span>PM2.5</span><span>O₃</span><span>PM10</span></p>
-              <p class="contaminants contaminants-flex"><span>61.2%</span><span>12.0%</span><span>26.9%</span></p>
+              <p class="contaminants contaminants-flex"><span>{{airQualityData.pmTwoDotFive}}</span><span>{{airQualityData.othree}}</span><span>{{airQualityData.pmTen}}</span></p>
             </div>
           </div>
         </div>
