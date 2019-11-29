@@ -39,7 +39,6 @@ export namespace CertificateInfoServiceNs {
      entprId: number;
    }
 
-
   export class CertificateInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }

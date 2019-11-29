@@ -138,7 +138,7 @@ export namespace BasicInfoServiceNs {
       return this.http.get('data/basic/enterprise/devices/', param).toPromise();
     }
     // 获取企业产品列表
-    public getEnterProduct(param: EntprProductSearchModel): Promise<PageInfo<ProductionDeviceListInfoModel>> {
+    public getEnterProductList(param: EntprProductSearchModel): Promise<PageInfo<ProductionDeviceListInfoModel>> {
       return this.http.get('data/basic/enterprise/products/', param).toPromise();
     }
 

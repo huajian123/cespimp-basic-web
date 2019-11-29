@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpUtilService } from '@core/net/http-util.service';
 import { PageInfo } from '@core/vo/comm/PageInfo';
 import { SearchCommonVO } from '@core/vo/comm/BusinessEnum';
@@ -31,33 +31,41 @@ export namespace EnterpriseOriginalProductServiceNs {
     productType: ProductEnum;
   }
 
-  export class  EnterpriseOriginalProductServiceClass {
+  export class EnterpriseOriginalProductServiceClass {
     constructor(private http: HttpUtilService) {
     }
-
-    /* public getEnterpriseInfoDetail(param: EntprSearch): Promise<EnterpriseInfoModel> {
-       return this.http.get('data/basic/enterprise/' + param.entprId).toPromise();
-     }*/
     // 获取企业产品列表
-    public getEnterProduct(param: EntprProductSearchModel): Promise<PageInfo<EnterpriseProductModel>> {
+    public getEnterProductList(param: EntprProductSearchModel): Promise<PageInfo<EnterpriseProductModel>> {
       return this.http.get('data/basic/enterprise/products/', param).toPromise();
     }
-    /*修改接口*/
-    /* public editEnterpriseInfoDetail(param: EntprSearch): Promise<EnterpriseInfoModel> {
-       return this.http.put('data/basic/enterprise/' + param.entprId, param).toPromise();
-     }*/
 
-    /*企业提交审核*/
-    /*  public getExamine(param: EnterpriseName): Promise<PageInfo<EnterpriseInfoModel>> {
-        return this.http.post('data/basic/enterprise/examination', param).toPromise();
-      }*/
+    /*详情*/
+    public getEnterProductInfoDetail(id: number): Promise<EnterpriseProductModel> {
+      return this.http.get('data/basic/enterprise/products/' + id).toPromise();
+    }
+
+    /*修改接口*/
+    public editEnterProductInfoDetail(param: EnterpriseProductModel): Promise<EnterpriseProductModel> {
+      return this.http.put('data/basic/enterprise/products/', param).toPromise();
+    }
+
+    /*新增*/
+    public addProductionMaterialsInfo(param: EnterpriseProductModel): Promise<void> {
+      return this.http.post('data/basic/enterprise/products', param).toPromise();
+    }
+
+    /*删除*/
+    public delEnterProductInfo(id: number): Promise<EnterpriseProductModel> {
+      return this.http.del('data/basic/enterprise/products/'+ id).toPromise();
+    }
+
   }
 }
 
 @Injectable({
   providedIn: 'root',
 })
-export class  EnterpriseOriginalProductService extends EnterpriseOriginalProductServiceNs. EnterpriseOriginalProductServiceClass {
+export class EnterpriseOriginalProductService extends EnterpriseOriginalProductServiceNs.EnterpriseOriginalProductServiceClass {
 
   constructor(http: HttpUtilService) {
     super(http);

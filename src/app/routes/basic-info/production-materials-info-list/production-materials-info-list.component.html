@@ -14,11 +14,11 @@
   </nz-card>
 </ng-container>
 
-<!--<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
-  <app-warehouse-management-warehouse-list-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-warehouse-management-warehouse-list-detail>
+<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
+  <app-basic-info-production-materials-info-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-basic-info-production-materials-info-detail>
 </ng-container>
 
 <ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
-  <app-warehouse-management-warehouse-list-edit-add [id]="this.itemId" [currentPageNum]="listPageInfo.pi" (returnBack)="returnToList($event)"></app-warehouse-management-warehouse-list-edit-add>
-</ng-container>-->
+  <app-basic-info-production-materials-info-edit-add [id]="this.itemId" [currentPageNum]="listPageInfo.pi" (returnBack)="returnToList($event)"></app-basic-info-production-materials-info-edit-add>
+</ng-container>
 

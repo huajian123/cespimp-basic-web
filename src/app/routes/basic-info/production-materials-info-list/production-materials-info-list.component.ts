@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STData } from '@delon/abc';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { STColumn } from '@delon/abc';
 import { ListPageInfo, LoginInfoModel, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
-import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import {
   EnterpriseOriginalProductService,
   EnterpriseOriginalProductServiceNs,
@@ -11,6 +10,8 @@ import {
 import EntprProductSearchModel = EnterpriseOriginalProductServiceNs.EntprProductSearchModel;
 import EnterpriseProductModel = EnterpriseOriginalProductServiceNs.EnterpriseProductModel;
 import { EVENT_KEY } from '@env/staticVariable';
+import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
+import ProductEnum = EnterpriseOriginalProductServiceNs.ProductEnum;
 
 @Component({
   selector: 'app-basic-info-production-materials-info-list',
@@ -44,14 +45,14 @@ export class BasicInfoProductionMaterialsInfoListComponent implements OnInit {
   }
 
   // 生产原料信息，中间产品信息，最终产品信息
-  async getDataList(currentProductType = 1) {
+  async getDataList(pageNumber?: number) {
     const param: EntprProductSearchModel = {
-      productType: currentProductType,
+      productType: ProductEnum.RawMateriPro,
       entprId: this.loginInfo.entprId,
-      pageNum: this.listPageInfo.pi,
+      pageNum:  pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
     };
-    const { total, pageNum, list } = await this.dataService.getEnterProduct(param);
+    const { total, pageNum, list } = await this.dataService.getEnterProductList(param);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
     this.dataList = list || [];
@@ -63,15 +64,18 @@ export class BasicInfoProductionMaterialsInfoListComponent implements OnInit {
     this.itemId = null;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
   }
-
+  async returnToList(e?: GoBackParam) {
+    this.currentPage = this.pageTypeEnum.List;
+    if (!!e && e.refesh) {
+      this.listPageInfo.pi = e.pageNo;
+      await this.getDataList(e.pageNo);
+    }
+  }
   changePage(e) {
     this.listPageInfo = e;
     this.getDataList();
   }
 
-  format(toBeFormat, arg) {
-    return new MapPipe().transform(toBeFormat, arg);
-  }
   goEditAddPage(item, modal) {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
@@ -89,17 +93,11 @@ export class BasicInfoProductionMaterialsInfoListComponent implements OnInit {
         return;
       }
       this.itemId = item.id;
-      //this.dataService.delWarehouseInfo(this.itemId).then(() => this.getDataList(1));
+      this.dataService.delEnterProductInfo(this.itemId).then(() => this.getDataList(1));
     });
   }
   private initTable(): void {
     this.columns = [
-      {
-        title: '产品类型',
-        index: 'productType',
-        width: 120,
-        format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
-      },
       { title: '品名', index: 'productName', width: 100 },
       {
         title: '别名',

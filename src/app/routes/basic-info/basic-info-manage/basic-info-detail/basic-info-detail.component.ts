@@ -236,7 +236,7 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
       pageNum: this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
     };
-    const { total, pageNum, list } = await this.dataService.getEnterProduct(param);
+    const { total, pageNum, list } = await this.dataService.getEnterProductList(param);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
     this.dataList = list || [];

@@ -1,10 +1,43 @@
-<div class="modal-header">
-  <div class="modal-title">编辑 {{ record.id }} 信息</div>
-</div>
-<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
-<sf *ngIf="i" #sf mode="edit" [schema]="schema" [ui]="ui" [formData]="i" button="none">
-  <div class="modal-footer">
-    <button nz-button type="button" (click)="close()">关闭</button>
-    <button nz-button type="submit" nzType="primary" (click)="save(sf.value)" [disabled]="!sf.valid" [nzLoading]="http.loading">保存</button>
-  </div>
-</sf>
+<page-header [title]="'最终产品新增编辑页'"></page-header>
+<nz-card [nzBordered]="false">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
+    <se label="产品类型" style="display: none;">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="productType" placeholder="品名">
+      </nz-form-control>
+    </se>
+    <se label="品名">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="productName" placeholder="品名">
+      </nz-form-control>
+    </se>
+    <se label="别名">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="alias" placeholder="别名">
+      </nz-form-control>
+    </se>
+    <se label="CAS号">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="casNo" placeholder="CAS号">
+      </nz-form-control>
+    </se>
+    <se label="年消耗量（吨）">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="annualConsumption" placeholder="年消耗量（吨）">
+      </nz-form-control>
+    </se>
+    <se label="设计贮存最大量（吨）">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="maximumReserves" placeholder="设计贮存最大量（吨）">
+      </nz-form-control>
+    </se>
+    <se>
+      <button nz-button nzType="primary" type="submit">提交</button>
+      <button nz-button class="ml-sm" (click)="returnToList()">返回</button>
+    </se>
+  </form>
+</nz-card>
+
+
+
+

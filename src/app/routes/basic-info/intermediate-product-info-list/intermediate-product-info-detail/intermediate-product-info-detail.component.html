@@ -1,14 +1,34 @@
-<div class="modal-header">
-  <div class="modal-title">查看 {{ record.id }} 信息</div>
-</div>
-<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
-<div sv-container *ngIf="i">
-  <sv label="姓名">{{ i.owner }}</sv>
-  <sv label="会员卡号">32943898021309809423</sv>
-  <sv label="身份证">3321944288191034921</sv>
-  <sv label="联系方式">18112345678</sv>
-  <sv label="联系地址">曲丽丽 18100000000 浙江省杭州市西湖区黄姑山路工专路交叉路口</sv>
-</div>
-<div class="modal-footer">
-  <button nz-button type="button" (click)="close()">关闭</button>
-</div>
+<page-header [title]="'中间产品详情'"></page-header>
+<nz-card [nzHoverable]="true" [nzBordered]="false">
+  <form nz-form [formGroup]="validateForm" se-container="1" labelWidth="200">
+    <se label="品名">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="productName" readonly />
+      </nz-form-control>
+    </se>
+    <se label="别名">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="alias" readonly />
+      </nz-form-control>
+    </se>
+    <se label="CAS号">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="casNo" readonly />
+      </nz-form-control>
+    </se>
+    <se label="年消耗量（吨）">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="annualConsumption" readonly />
+      </nz-form-control>
+    </se>
+    <se label="设计贮存最大量（吨）">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="maximumReserves" readonly />
+      </nz-form-control>
+    </se>
+    <se>
+      <button nz-button type="primary" (click)="returnToList()" nzType="primary">返回</button>
+    </se>
+  </form>
+</nz-card>
+
