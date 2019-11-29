@@ -37,10 +37,10 @@ export namespace SensorManagementListServiceNs {
     public getSensorManagementList(param: SearchCommonVO): Promise<PageInfo<SensorManagementListInfoModel>> {
       return this.http.get('data/major/hazard/sensors', param).toPromise();
     }
-    /* /!*删除接口*!/
-     public delWarehouseInfo(id: number): Promise<WarehouseListInfoModel> {
-       return this.http.del('data/basic/enterprise/rooms/'+ id).toPromise();
-     }*/
+     /*删除接口*/
+     public delSensorInfo(id: number): Promise<SensorManagementListInfoModel> {
+       return this.http.del('data/major/hazard/sensor/'+ id).toPromise();
+     }
   }
 }
 

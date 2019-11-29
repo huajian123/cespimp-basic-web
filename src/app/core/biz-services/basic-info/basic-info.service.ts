@@ -1,7 +1,8 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpUtilService } from '@core/net/http-util.service';
 import { SearchCommonVO } from '@core/vo/comm/BusinessEnum';
 import { PageInfo } from '@core/vo/comm/PageInfo';
+
 
 
 export namespace BasicInfoServiceNs {
@@ -62,6 +63,7 @@ export namespace BasicInfoServiceNs {
     environmentReportAccessory?: string;
     dischargePermitAccessory?: string;
   }
+
   /*生产设备模型*/
   export interface ProductionDeviceListInfoModel {
     id: number;
@@ -109,6 +111,11 @@ export namespace BasicInfoServiceNs {
     entprId: number;
   }
 
+  export interface EntprInfoSearch extends SearchCommonVO {
+    entprName?: string;
+    reviewStatus?: number;
+  }
+
   export interface EntprPageSearchModel extends SearchCommonVO {
     entprId: number;
   }
@@ -116,14 +123,17 @@ export namespace BasicInfoServiceNs {
   export interface EntprProductSearchModel extends EntprPageSearchModel {
     productType: ProductEnum;
   }
+
   export class BasicInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
 
+    // 获取企业位置详情
     public getFactoryInfoDetail(param: EntprSearch): Promise<FactoryInfoModel> {
       return this.http.get('data/basic/enterprise/' + param.entprId).toPromise();
     }
 
+    // 获取证照信息详情
     public getIdCardInfoDetail(param: EntprSearch): Promise<PageInfo<IdCardTabModel>> {
       return this.http.get('data/basic/document/', param).toPromise();
     }
@@ -137,14 +147,25 @@ export namespace BasicInfoServiceNs {
     public getProductionDeviceList(param: EntprPageSearchModel): Promise<PageInfo<EnterpriseEnvironModel>> {
       return this.http.get('data/basic/enterprise/devices/', param).toPromise();
     }
+
     // 获取企业产品列表
     public getEnterProductList(param: EntprProductSearchModel): Promise<PageInfo<ProductionDeviceListInfoModel>> {
       return this.http.get('data/basic/enterprise/products/', param).toPromise();
     }
 
+    //获取企业列表
     public getFactoryList(param: SearchCommonVO): Promise<PageInfo<FactoryInfoModel>> {
       return this.http.get('data/basic/enterprises', param).toPromise();
     }
+
+    //企业搜索接口
+    public getFactoryInfoSearch(param: EntprInfoSearch): Promise<FactoryInfoModel> {
+      return this.http.get('data/basic/enterprise/', param).toPromise();
+    }
+    //删除接口
+ /*   public delFactoryInfo(id: number): Promise<FactoryInfoModel> {
+      return this.http.del('data/basic/enterprise/' + id).toPromise();
+    }*/
   }
 }
 

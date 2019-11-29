@@ -35,9 +35,6 @@ export class BasicInfoManageComponent implements OnInit {
     this.itemId = -1;
   }
 
-/*  goDetail() {
-    this.currentPage = this.pageTypeEnum.DetailOrExamine;
-  }*/
 
   changePage(e) {
     this.listPageInfo = e;
@@ -116,7 +113,7 @@ export class BasicInfoManageComponent implements OnInit {
         return;
       }
       this.itemId = item.id;
-      //this.dataService.delProductionInfo(this.itemId).then(() => this.getDataList(1));
+      //this.dataService.delFactoryInfo(this.itemId).then(() => this.getDataList(1));
     });
   }
   async returnToList(e?: GoBackParam) {

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import { STColumn, STComponent, STData } from '@delon/abc';
+import { STColumn, STData } from '@delon/abc';
 import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
@@ -80,7 +80,7 @@ export class SensorManagementSensorListComponent implements OnInit {
         return;
       }
       this.itemId = item.id;
-      //this.dataService.delWarehouseInfo(this.itemId).then(() => this.getDataList(1));
+      this.dataService.delSensorInfo(this.itemId).then(() => this.getDataList(1));
     });
   }
 
@@ -98,15 +98,15 @@ export class SensorManagementSensorListComponent implements OnInit {
       { title: '传感器编号', index: 'sensorNo', width: 100 },
       { title: '经度', index: 'longitude', width: 100 },
       { title: '经度', index: 'latitude', width: 100 },
-      { title: '所属重大危险源ID', index: 'majorHazardId', width: 120 },
+      { title: '重大危险源名称', index: 'majorHazardName', width: 120 },
       {
         title: '重大危险源组成类型',
         index: 'partType',
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '组成部分ID',
-        index: 'partId',
+      { title: '组成部分名称',
+        index: 'partName',
         width: 100
       },
       { title: '在厂区的位置', index: 'locFactory', width: 100 },

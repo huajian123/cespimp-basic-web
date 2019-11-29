@@ -98,15 +98,15 @@ export class CameraManagementCameraListComponent implements OnInit {
       { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
       { title: '摄像头编号', index: 'cameraNo', width: 120 },
       { title: '摄像头名称', index: 'cameraName', width: 100 },
-      { title: '所属重大危险源ID', index: 'majorHazardId', width: 120 },
+      { title: '重大危险源名称', index: 'majorHazardName', width: 120 },
       {
         title: '重大危险源组成类型',
         index: 'partType',
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '组成部分ID',
-        index: 'partId',
+      { title: '组成部分名称',
+        index: 'partName',
         width: 100
       },
       { title: '经度', index: 'longitude', width: 100 },
