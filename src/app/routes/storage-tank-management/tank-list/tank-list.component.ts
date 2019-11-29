@@ -7,6 +7,7 @@ import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 import TankListSearchModel = TankListServiceNs.TankListSearchModel;
+import { ActivatedRoute, Params } from '@angular/router';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class TankListComponent implements OnInit {
   itemId: number;
   searchParam: TankListSearchModel;
 
-  constructor(private dataService: TankListInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
+  constructor(private dataService: TankListInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService,
+              private activateInfo:ActivatedRoute) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -169,6 +171,10 @@ export class TankListComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.activateInfo.queryParams.subscribe((params: Params) => {
+      console.log(params);
+    });
     this.initTable();
     this.getDataList();
   }

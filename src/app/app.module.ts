@@ -68,6 +68,8 @@ import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 import { RoutesModule } from './routes/routes.module';
 import { LayoutModule } from './layout/layout.module';
+import { RouteReuseStrategy } from '@angular/router';
+import { ReuseTabService, ReuseTabStrategy } from '@delon/abc';
 
 @NgModule({
   declarations: [
@@ -88,7 +90,12 @@ import { LayoutModule } from './layout/layout.module';
   providers: [
     ...LANG_PROVIDES,
     ...INTERCEPTOR_PROVIDES,
-    ...APPINIT_PROVIDES
+    ...APPINIT_PROVIDES,
+    {
+      provide: RouteReuseStrategy,
+      useClass: ReuseTabStrategy,
+      deps: [ReuseTabService],
+    }
   ],
   bootstrap: [AppComponent]
 })

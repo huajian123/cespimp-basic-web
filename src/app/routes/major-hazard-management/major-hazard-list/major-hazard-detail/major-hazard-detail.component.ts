@@ -74,11 +74,11 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
   }
 
   tableBtnClick(record, modal, instance) {
-    console.log(record);
-    console.log(modal);
-    console.log(instance);
     if (record.partType === PartTypeEnum.Tank) {
-      this.router.navigateByUrl('/hazard/storage-tank-management/tank-list');
+      this.router.navigate(['/hazard/storage-tank-management/tank-list'], {
+        queryParams: { tankNo: record.partNo },
+      });
+     // this.router.navigateByUrl(`?tankNo=${record.partNo}`);
     }
   }
 

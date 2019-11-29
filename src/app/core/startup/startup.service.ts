@@ -12,6 +12,7 @@ import { ICONS_AUTO } from '../../../style-icons-auto';
 import { ICONS } from '../../../style-icons';
 import { menus } from '@env/menu';
 import { appInfo, loginUserInfo } from '@env/environment';
+import { ReuseTabMatchMode, ReuseTabService } from '@delon/abc';
 
 /**
  * Used for application startup
@@ -29,8 +30,11 @@ export class StartupService {
     private httpClient: HttpClient,
     private injector: Injector,
     public aclSrv: ACLService,
+    public reuseTabService: ReuseTabService,
   ) {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
+    this.reuseTabService.mode = ReuseTabMatchMode.URL;
+    this.reuseTabService.excludes=[/\/passport\/login/,/hazard\/login-manage\/login-plant/]
   }
 
   private viaHttp(resolve: any, reject: any) {
