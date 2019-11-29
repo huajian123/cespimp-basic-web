@@ -51,6 +51,7 @@ export class SpecialOperationManagementEarthMovingListComponent implements OnIni
   }
 
   changePage(e) {
+    if (e.type === 'click' || e.type === 'dblClick') return;
     this.listPageInfo = e;
     this.getDataList();
   }

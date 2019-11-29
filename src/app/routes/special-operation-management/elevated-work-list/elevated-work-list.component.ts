@@ -52,6 +52,7 @@ export class SpecialOperationManagementElevatedWorkListComponent implements OnIn
   }
 
   changePage(e) {
+    if (e.type === 'click' || e.type === 'dblClick') return;
     this.listPageInfo = e;
     this.getDataList();
   }

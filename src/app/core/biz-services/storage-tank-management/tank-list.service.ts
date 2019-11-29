@@ -22,6 +22,11 @@ export namespace TankListServiceNs {
     majorHazardMaterialInsertDTOS: FormGroup[];
   }
 
+  export interface TankListSearchModel{
+    entprName?: string;
+    tankNo?: string;
+  }
+
   export class TankListInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
@@ -40,7 +45,7 @@ export namespace TankListServiceNs {
       return this.http.get('data/basic/enterprise/tanks/' + id).toPromise();
     }
 
-    public getTankList(param: SearchCommonVO): Promise<PageInfo<TankListInfoModel>> {
+    public getTankList(param: SearchCommonVO & TankListSearchModel): Promise<PageInfo<TankListInfoModel>> {
       return this.http.get('data/basic/enterprise/tanks', param).toPromise();
     }
 

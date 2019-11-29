@@ -43,6 +43,7 @@ export class AlarmManagementRealtimeAlarmListComponent implements OnInit {
     }*/
 
   changePage(e) {
+    if (e.type === 'click' || e.type === 'dblClick') return;
     this.listPageInfo = e;
     this.getDataList();
   }

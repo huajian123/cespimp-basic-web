@@ -6,6 +6,8 @@ import TankListInfoModel = TankListServiceNs.TankListInfoModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
+import TankListSearchModel = TankListServiceNs.TankListSearchModel;
+
 
 @Component({
   selector: 'app-storage-tank-management-tank-list',
@@ -21,7 +23,7 @@ export class TankListComponent implements OnInit {
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
-
+  searchParam: TankListSearchModel;
 
   constructor(private dataService: TankListInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
     this.expandForm = false;
@@ -34,18 +36,27 @@ export class TankListComponent implements OnInit {
     };
     this.dataList = [];
     this.itemId = -1;
+
+    this.searchParam = {};
   }
 
   changePage(e) {
+    if (e.type === 'click' || e.type === 'dblClick') return;
     this.listPageInfo = e;
     this.getDataList();
+  }
+
+  reset() {
+    this.searchParam = {};
   }
 
   async getDataList(pageNumber?: number) {
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      ...this.searchParam,
     };
+
     const { total, list, pageNum } = await this.dataService.getTankList(params);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
