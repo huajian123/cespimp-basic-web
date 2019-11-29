@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { loadModules } from 'esri-loader';
-import esri = __esri;
-import { environment } from '@env/environment';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import * as d3 from 'd3';
+
 
 
 @Component({
@@ -10,15 +9,31 @@ import { environment } from '@env/environment';
   styleUrls: ['./park-introduction-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ParkIntroductionDetailComponent implements OnInit {
+export class ParkIntroductionDetailComponent implements OnInit , AfterViewInit{
   @Output() returnToMainPage: EventEmitter<any>;
   tilePhoto: Object; // 倾斜摄影对象
   map;
   zoom = 10;
   cenL = 118.30612;  // 默认中心坐标经度
   cenB =  34.29057; // 默认中心坐标纬度
+
+  /*d3图层*/
+  industrialPark = [];
+  industrialParkRealArea = [];
+  industrialParkPlanArea = [];
+  realArea:any;
+  planArea:any;
+  pointArea:any;
   constructor() {
     this.returnToMainPage = new EventEmitter<any>();
+    const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
+      'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
+      '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=0a65163e2ebdf5a37abb7f49274b85df';
+    this.tilePhoto = new T.TileLayer(imageURL, { minZoom: 1, maxZoom: 18 });
+
+    this.realArea = new T.D3Overlay(this.realAreaInit, this.realAreaRedraw);
+    this.planArea = new T.D3Overlay(this.planAreaInit, this.planAreaRedraw);
+    this.pointArea = new T.D3Overlay(this.pointInit, this.pointRedraw);
   }
 
   goNoticeList() {
@@ -48,8 +63,101 @@ export class ParkIntroductionDetailComponent implements OnInit {
   // Finalize a few things once the MapView has been loaded
 
 
+
+  realAreaInit = (sel, transform) => {
+    const upd = sel.selectAll('path.geojson1').data(this.industrialParkRealArea);
+    upd.enter()
+      .append('path')
+      .attr('class', 'geojson1')
+      .attr('stroke', 'red')
+      .attr('stroke-width', '5')
+      .attr('fill', '#ffffff')
+      .attr('fill-opacity', '0');
+  };
+
+  realAreaRedraw = (sel, transform) => {
+    sel.selectAll('path.geojson1').each(
+      function(d, i) {
+        d3.select(this).attr('d', transform.pathFromGeojson);
+      },
+    );
+  };
+
+  planAreaInit = (sel, transform) => {
+    const upd = sel.selectAll('path.geojson1').data(this.industrialParkPlanArea);
+    upd.enter()
+      .append('path')
+      .attr('class', 'geojson1')
+      .attr('stroke', 'red')
+      .attr('stroke-dasharray', '10,10')
+      .attr('stroke-width', '5')
+      .attr('fill', '#ffffff')
+      .attr('fill-opacity', '0');
+  };
+
+  planAreaRedraw = (sel, transform) => {
+    sel.selectAll('path.geojson1').each(
+      function(d, i) {
+        d3.select(this).attr('d', transform.pathFromGeojson);
+      },
+    );
+  };
+
+  pointInit = (sel, transform) => {
+    const upd = sel.selectAll('path.geojson1').data(this.industrialPark);
+    upd.enter()
+      .append('path')
+      .attr('class', 'geojson1')
+      .attr('stroke', 'red')
+      .attr('stroke-width', '5')
+      .attr('fill', '#ffffff')
+      .attr('fill-opacity', '0');
+  };
+
+  pointRedraw = (sel, transform) => {
+    sel.selectAll('path.geojson1').each(
+      function(d, i) {
+        d3.select(this).attr('d', transform.pathFromGeojson);
+      },
+    );
+  };
+
+
+
+  // 初始化d3相关图层
+  initD3Layer() {
+    d3.json('../../../../assets/d3/WuZhongRealArea.json', (data) => {
+      this.industrialParkRealArea = data.features;
+      this.map.addOverLay(this.realArea);
+      this.realArea.bringToBack();
+    });
+
+    d3.json('../../../../assets/d3/WuZhongPlanArea.json', (data) => {
+      this.industrialParkPlanArea = data.features;
+      this.map.addOverLay(this.planArea);
+      this.realArea.bringToBack();
+    });
+
+    d3.json('../../../../assets/d3/point.json', (data) => {
+      this.industrialPark = data.features;
+      this.map.addOverLay(this.pointArea);
+      this.realArea.bringToBack();
+    });
+  }
+
+  initMap() {
+    this.map = new T.Map('mapDiv');
+    this.map.centerAndZoom(new T.LngLat(120.680410, 31.20600), 14);
+    this.map.addLayer(this.tilePhoto);
+    this.initD3Layer();
+  }
+
   ngOnInit() {
-    this.initializeMap()
+  //  this.initializeMap()
+  }
+
+  ngAfterViewInit(): void {
+    this.initMap();
   }
 
 }

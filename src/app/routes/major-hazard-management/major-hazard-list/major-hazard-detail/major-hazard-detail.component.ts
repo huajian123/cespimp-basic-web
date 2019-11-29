@@ -16,6 +16,8 @@ import { STColumn, STColumnButton, STData } from '@delon/abc';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
+import { Router } from '@angular/router';
+
 enum PartTypeEnum {
   Tank = 1,
   Warehouse,
@@ -33,8 +35,10 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
   @Input() currentPageNum: number;
   dataInfo: MajorHazardListInfoModel;
   columns: STColumn[];
+
   constructor(private http: _HttpClient, private msg: NzMessageService,
-              private dataService: MajorHazardListInfoService, private cdr: ChangeDetectorRef) {
+              private dataService: MajorHazardListInfoService, private cdr: ChangeDetectorRef,
+              private router: Router) {
     this.returnBack = new EventEmitter<any>();
     this.dataInfo = {
       id: -1,
@@ -60,7 +64,7 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
         title: '组成部分编号',
         index: '',
         width: 60,
-        buttons: [{ type: 'link', text: '点击跳转', click: this.tableBtnClick, format: this.formateData }],
+        buttons: [{ type: 'link', text: '点击跳转', click: this.tableBtnClick.bind(this), format: this.formateData }],
       },
     ];
   }
@@ -70,7 +74,11 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
   }
 
   tableBtnClick(record, modal, instance) {
+    console.log(record);
+    console.log(modal);
+    console.log(instance);
     if (record.partType === PartTypeEnum.Tank) {
+      this.router.navigateByUrl('/hazard/storage-tank-management/tank-list');
     }
   }
 
@@ -81,7 +89,6 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
   format(toBeFormat, arg) {
     return new MapPipe().transform(toBeFormat, arg);
   }
-
 
 
   async getDetailInfo(id?) {

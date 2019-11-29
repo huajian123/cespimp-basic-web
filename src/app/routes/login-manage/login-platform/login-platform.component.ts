@@ -476,7 +476,7 @@ export class LoginPlatformComponent implements OnInit {
   async goLoginPage() {
     window.sessionStorage.clear();
     await this.loginService.loginOut();
-    this.router.navigateByUrl('/hazard/passport/login');
+    this.router.navigateByUrl('/passport/login');
   }
 
   goMainPage() {
