@@ -16,7 +16,7 @@ export namespace MajorHazardRecordListServiceNs {
   }
 /*定义搜索的接口*/
   export interface FiltersInfoModel {
-    entprId?: number;
+    entprName?: number;
     reviewStatus?: number;
   }
 /*定义入参的接口*/

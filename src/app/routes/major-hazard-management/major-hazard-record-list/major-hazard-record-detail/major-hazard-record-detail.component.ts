@@ -39,7 +39,6 @@ export class MajorHazardManagementMajorHazardRecordDetailComponent implements On
   }
   async getDetailInfo(){
     this.dataInfo = await this.dataService.getMajorHazardRecordInfoDetail(this.id);
-    console.log(this.dataInfo);
     this.cdr.markForCheck();
   }
 

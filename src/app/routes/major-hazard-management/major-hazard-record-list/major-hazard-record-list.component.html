@@ -5,9 +5,9 @@
       <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
         <div nz-col nzMd="8" nzSm="24" [acl]="roleEnum[roleEnum.ParkManage]">
           <nz-form-item>
-            <nz-form-label nzFor="no">企业编号</nz-form-label>
+            <nz-form-label nzFor="no">企业名称</nz-form-label>
             <nz-form-control>
-              <input nz-input  placeholder="请输入企业编号" [(ngModel)]="filters.reviewStatus" [ngModelOptions]="{standalone: true}"/>
+              <input nz-input  placeholder="请输入企业名称" [(ngModel)]="filters.entprName" [ngModelOptions]="{standalone: true}"/>
             </nz-form-control>
           </nz-form-item>
         </div>
