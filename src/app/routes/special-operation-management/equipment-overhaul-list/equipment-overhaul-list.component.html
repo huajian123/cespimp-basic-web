@@ -1,6 +1,6 @@
 <ng-container *ngIf="currentPage===pageTypeEnum.List">
   <page-header [autoBreadcrumb]="false" [title]="'设备检修列表'"></page-header>
-  <nz-card [nzBordered]="false">
+  <nz-card [nzBordered]="true">
     <form nz-form [nzLayout]="'inline'" class="search__form" [acl]="roleEnum[roleEnum.ParkManage]">
       <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
         <div nz-col nzMd="8" nzSm="24" >

@@ -13,6 +13,7 @@ import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import { MajorHazardListInfoService } from '@core/biz-services/major-hazard-management/major-hazard-list.service';
 import { EVENT_KEY } from '@env/staticVariable';
 import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
+import { PositionPickerService } from '../../../../widget/position-picker/position-picker.service';
 
 interface OptionsInterface {
   value: string;
@@ -38,7 +39,7 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
   editObj = {};
 
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
-              private dataService: MajorHazardListInfoService) {
+              private dataService: MajorHazardListInfoService, private positionPickerService: PositionPickerService) {
     this.returnBack = new EventEmitter<any>();
     this.unitTypeOptions = [];
     this.HazardLevelOptions = [];
@@ -71,7 +72,10 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       rvalue: [null, []],
       managerMobile: [null, []],
       description: [null, []],
-      majorHazardUnitUpdateDTOS: this.fb.array([]) as FormArray,
+      longitude: [null, [Validators.required]],
+      latitude: [null, [Validators.required]],
+      locFactory: [null, []],
+      majorHazardUnitUpdateDTOS: <FormArray>this.fb.array([]),
     });
   }
 
@@ -151,24 +155,30 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
     if (this.validateForm.invalid) {
       return;
     }
-    if ((this.validateForm.controls.majorHazardUnitUpdateDTOS as FormGroup).invalid) {
+    if ((this.validateForm.controls['majorHazardUnitUpdateDTOS'] as FormGroup).invalid) {
       return;
     }
     const params = this.validateForm.getRawValue();
     params.entprId = this.loginInfo.entprId;
-    params.updateBy = this.loginInfo.userName;
-    params.createBy = this.loginInfo.userName;
     let submitHandel = null;
-
     if (!this.id) {
+      params.createBy = this.loginInfo.userName;
       submitHandel = this.dataService.addMajorHazard(params);
     } else {
       params.id = this.id;
+      params.updateBy = this.loginInfo.userName;
       submitHandel = this.dataService.editMajorHazard(params);
     }
 
     await submitHandel;
     this.returnBack.emit({ refesh: true, pageNo: this.currentPageNum });
+  }
+
+  showMap() {
+    this.positionPickerService.show({ isRemoteImage: true }).then(res => {
+      this.validateForm.get('longitude').setValue(res.longitude);
+      this.validateForm.get('latitude').setValue(res.latitude);
+    }).catch(e => null);
   }
 
   ngOnInit() {

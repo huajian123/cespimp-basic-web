@@ -25,7 +25,7 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
   listPageInfo: ListPageInfo;
   itemId: number;
 
-  constructor(private dataService: MajorHazardListInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
+  constructor(private dataService: MajorHazardListInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -55,10 +55,12 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
     this.dataList = list || [];
     this.cdr.markForCheck();
   }
+
   add() {
     this.itemId = null;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
   }
+
   format(toBeFormat, arg) {
     return new MapPipe().transform(toBeFormat, arg);
   }
@@ -72,6 +74,7 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
+
   goDeletePage(item, modal) {
     const modalCtrl = this.messageService.showAlertMessage('', '您确定要删除吗？', MessageType.Confirm);
     modalCtrl.afterClose.subscribe((type: string) => {
@@ -82,6 +85,7 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
       this.dataService.delMajorHazard(this.itemId).then(() => this.getDataList(1));
     });
   }
+
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
@@ -95,19 +99,25 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
       { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
       { title: '重大危险源编号', index: 'majorHazardNo', width: 120 },
       { title: '重大危险源名称', index: 'majorHazardName', width: 100 },
-      { title: '单元类型',
+      {
+        title: '单元类型',
         index: 'unitType',
         width: 120,
-        format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey)
+        format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '投用时间', index: 'useDate', width: 100,type:'date' },
+      { title: '投用时间', index: 'useDate', width: 100, type: 'date' },
+      { title: '经度', index: 'longitude', width: 100 },
+      { title: '纬度', index: 'latitude', width: 100 },
+      { title: '在厂区的位置', index: 'locFactory', width: 100 },
       { title: 'R值', index: 'rvalue', width: 100 },
-      { title: '重大危险源等级',
+      {
+        title: '重大危险源等级',
         index: 'majorHazardLevel',
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '重大危险源性质',
+      {
+        title: '重大危险源性质',
         index: 'majorHazardNature',
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),

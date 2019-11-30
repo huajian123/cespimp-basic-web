@@ -15,6 +15,9 @@ export namespace MajorHazardListServiceNs {
     majorHazardLevel: number;
     majorHazardNature?: number;
     rvalue?: number;
+    longitude: number; // 经度
+    latitude: number; // 纬度
+    locFactory?: string;
     managerMobile?: string;
     description?: string;
     majorHazardUnits: FormGroup[];
@@ -41,7 +44,7 @@ export namespace MajorHazardListServiceNs {
       return this.http.get('data/major/hazard/info/' + id).toPromise();
     }
 
-    /*列表接口*/
+    /*列表信息接口*/
     public getMajorHazardList(param: SearchCommonVO): Promise<PageInfo<MajorHazardListInfoModel>> {
       return this.http.get('data/major/hazard/infos', param).toPromise();
     }
@@ -49,6 +52,10 @@ export namespace MajorHazardListServiceNs {
     /*删除接口*/
     public delMajorHazard(id: number): Promise<MajorHazardListInfoModel> {
       return this.http.del('data/major/hazard/info/' + id).toPromise();
+    }
+    /*重大危险源组成信息下拉列表*/
+    public getMajorList(id: number): Promise<any> {
+      return this.http.get('/data/major/hazard/need'+ id).toPromise();
     }
   }
 }

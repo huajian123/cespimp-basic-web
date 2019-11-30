@@ -35,7 +35,7 @@
     <nz-tab nzTitle="生产设备信息"></nz-tab>
   </nz-tabset>
 </ng-template>
-<nz-card [nzHoverable]="true" [nzBordered]="false" *ngIf="currentTab===tabEnum.BaseInfoTab">
+<nz-card [nzHoverable]="true" [nzBordered]="true" *ngIf="currentTab===tabEnum.BaseInfoTab">
   <sv-container size="large" title="企业基础信息">
     <sv label="企业全称">{{dataInfo.entprName}}</sv>
     <sv label="企业简称">{{dataInfo.entprSimpleName}}</sv>
