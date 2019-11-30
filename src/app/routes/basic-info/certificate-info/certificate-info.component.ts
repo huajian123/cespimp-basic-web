@@ -21,9 +21,9 @@ import { NzMessageService, UploadFile } from 'ng-zorro-antd';
 export enum FileImgEnum {
   BusinessLicenseImg,  // 营业执照
   SafetyReportImg, // 安全报告
-  SafetyCertificateImg,//安全许可
-  EnvironmentReportImg,//环评报告
-  DischargePermitImg,//排污报告
+  SafetyCertificateImg,// 安全许可
+  EnvironmentReportImg,// 环评报告
+  DischargePermitImg,// 排污报告
 }
 
 @Component({
@@ -61,7 +61,7 @@ export class BasicInfoCertificateInfoComponent implements OnInit {
     this.dischargePermitFileList = [];
     this.environmentReportFileList = [];
     this.uploadUrl = environment.baseUrl[getwayKey.Bs] + 'upload?_allow_anonymous=true';
-    //console.log(this.uploadUrl);
+    // console.log(this.uploadUrl);
     this.isAdd = true;
 
     this.loginInfo = {
@@ -191,7 +191,7 @@ export class BasicInfoCertificateInfoComponent implements OnInit {
     await this.getIdCardInfo();
     if (this.dataInfo !== null) {
       this.isAdd = false;
-      //console.log(this.dataInfo);
+      // console.log(this.dataInfo);
       this.validateForm.patchValue(this.dataInfo);
       this.businessFileList = [{
         name: FileImgEnum.BusinessLicenseImg,

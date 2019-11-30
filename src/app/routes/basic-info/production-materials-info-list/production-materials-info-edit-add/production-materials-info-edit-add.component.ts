@@ -80,7 +80,7 @@ export class BasicInfoProductionMaterialsInfoEditAddComponent implements OnInit 
     params.entprId = this.loginInfo.entprId;
     let submitHandel = null;
     if (!this.id) {
-      params.productType = ProductEnum.RawMateriPro;//所属生产原料一类
+      params.productType = ProductEnum.RawMateriPro;// 所属生产原料一类
       params.createBy = this.loginInfo.userName;
       submitHandel = this.dataService.addProductionMaterialsInfo(params);
     } else {

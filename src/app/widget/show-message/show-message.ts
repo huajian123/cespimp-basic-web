@@ -34,7 +34,7 @@ export class ShowMessageService {
     this.modalCtrl = [];
     this.loadEvent = new EventEmitter();
 
-    (<Observable<any>>this.router.events.pipe(filter((event: any) => event instanceof NavigationEnd))).subscribe((event: any) => {
+    (this.router.events.pipe(filter((event: any) => event instanceof NavigationEnd)) as Observable<any>).subscribe((event: any) => {
       for (let i = 0, len = this.modalCtrl.length; i < len; i++) {
         this.modalCtrl[i].destroy(MessageCallback.Cancel);
       }
@@ -98,7 +98,7 @@ export class ShowMessageService {
     this.loading = true;
     this.loadEvent.emit({
       loading: this.loading,
-      message: message
+      message
     });
   }
 

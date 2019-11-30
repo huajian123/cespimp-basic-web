@@ -57,7 +57,7 @@ export class ProductionManagementProductionListEditAddComponent implements OnIni
       longitude: [null, [Validators.required]],
       latitude: [null, [Validators.required]],
       locFactory: [null, []],
-      majorHazardMaterialInsertDTOS: <FormArray>this.fb.array([]),
+      majorHazardMaterialInsertDTOS: this.fb.array([]) as FormArray,
     });
   }
 
@@ -146,7 +146,7 @@ export class ProductionManagementProductionListEditAddComponent implements OnIni
     if (this.validateForm.invalid) {
       return;
     }
-    if ((this.validateForm.controls['majorHazardMaterialInsertDTOS'] as FormGroup).invalid) {
+    if ((this.validateForm.controls.majorHazardMaterialInsertDTOS as FormGroup).invalid) {
       return;
     }
     const params = this.validateForm.getRawValue();

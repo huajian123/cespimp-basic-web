@@ -77,11 +77,11 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
   // 创建工厂覆盖物
   createMarker(iconUrl: string, longitude: number, latitude: number, markId: number, type?) {
     const icon = new T.Icon({
-      iconUrl: iconUrl,
+      iconUrl,
       iconSize: new T.Point(27, 27),
       iconAnchor: new T.Point(10, 25),
     });
-    const marker = new T.Marker(new T.LngLat(longitude, latitude), { icon: icon });
+    const marker = new T.Marker(new T.LngLat(longitude, latitude), { icon });
     marker.setOptions = { id: markId, type: type || null };
     return marker;
   }

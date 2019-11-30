@@ -334,10 +334,10 @@ export class LoginPlatformComponent implements OnInit {
         textStyle: {
           color: '#ffffff',
         },
-        formatter: function(name) {
+        formatter(name) {
           let index = 0;
-          let clientlabels = ['一级', '二级', '三级', '四级'];
-          let clientcounts = [335, 310, 234, 135];
+          const clientlabels = ['一级', '二级', '三级', '四级'];
+          const clientcounts = [335, 310, 234, 135];
           clientlabels.forEach(function(value, i) {
             if (value == name) {
               index = i;
@@ -407,10 +407,10 @@ export class LoginPlatformComponent implements OnInit {
         textStyle: {
           color: '#ffffff',
         },
-        formatter: function(name) {
+        formatter(name) {
           let index = 0;
-          let clientlabels = ['氯化工艺', '新型煤化工艺', '合成氨工艺'];
-          let clientcounts = [335, 310, 234, 135];
+          const clientlabels = ['氯化工艺', '新型煤化工艺', '合成氨工艺'];
+          const clientcounts = [335, 310, 234, 135];
           clientlabels.forEach(function(value, i) {
             if (value == name) {
               index = i;

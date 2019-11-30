@@ -79,7 +79,7 @@ export class BasicInfoIntermediateProductInfoEditAddComponent implements OnInit 
     params.entprId = this.loginInfo.entprId;
     let submitHandel = null;
     if (!this.id) {
-      params.productType = ProductEnum.MidPro;//所属中间产品一类
+      params.productType = ProductEnum.MidPro;// 所属中间产品一类
       params.createBy = this.loginInfo.userName;
       submitHandel = this.dataService.addProductionMaterialsInfo(params);
     } else {

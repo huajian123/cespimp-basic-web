@@ -17,6 +17,7 @@ import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { Router } from '@angular/router';
+import { EVENT_KEY } from '@env/staticVariable';
 
 enum PartTypeEnum {
   Tank = 1,
@@ -53,7 +54,7 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
       managerMobile: '',
       description: '',
       majorHazardUnits: [],
-      majorHazardUnitUpdateDTOS:[],
+      majorHazardUnitUpdateDTOS: [],
     };
 
     this.columns = [
@@ -76,10 +77,16 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
 
   tableBtnClick(record, modal, instance) {
     if (record.partType === PartTypeEnum.Tank) {
-      this.router.navigate(['/hazard/storage-tank-management/tank-list'], {
-        queryParams: { tankNo: record.partNo },
-      });
-     // this.router.navigateByUrl(`?tankNo=${record.partNo}`);
+      this.router.navigate(['/hazard/storage-tank-management/tank-list']);
+      window.sessionStorage.setItem(EVENT_KEY.tankNo, record.partNo);
+    }
+    if (record.partType === PartTypeEnum.ProductionPlace) {
+      this.router.navigate(['/hazard/production-management/production-list']);
+      window.sessionStorage.setItem(EVENT_KEY.tankNo, record.partNo);
+    }
+    if (record.partType === PartTypeEnum.Warehouse) {
+      this.router.navigate(['/hazard/storage-tank-management/tank-list']);
+      window.sessionStorage.setItem(EVENT_KEY.tankNo, record.partNo);
     }
   }
 

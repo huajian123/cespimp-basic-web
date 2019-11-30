@@ -2,6 +2,7 @@ export const EVENT_KEY = {
   role: 'role',
   loginInfo: 'loginInfo',
   entprBasicInfo: 'entprBasicInfo',
+  tankNo: 'tankNo',
 };
 
 export const CESIUM_URL = {

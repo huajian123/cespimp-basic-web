@@ -113,7 +113,7 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
       latitude: enterpriseInfo.latitude,
       currentPolygonList: this.currentPolygonList,
     }).then((res: ({ lat: number, lng: number }[])) => {
-      let tempArray = [];
+      const tempArray = [];
       if (res) {
         res.forEach(({ lat, lng }) => {
           const obj = { lat, lng };

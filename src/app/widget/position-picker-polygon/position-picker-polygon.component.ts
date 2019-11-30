@@ -91,9 +91,9 @@ export class PositionPickerPolygonComponent extends BaseConfirmModal.BasicConfir
         opacity: 0.5,
         fillColor: '#FFFFFF',
         fillOpacity: 0.5,
-        strokeOpacity: 0.5,  //折线的透明度，取值范围0 - 1
+        strokeOpacity: 0.5,  // 折线的透明度，取值范围0 - 1
       };
-      //创建测面工具对象
+      // 创建测面工具对象
       this.polygonTool = new T.PolygonTool(this.map, config);
 
       // 监听绘制完成后的事件
@@ -104,7 +104,7 @@ export class PositionPickerPolygonComponent extends BaseConfirmModal.BasicConfir
         this.polygonPoints = [...type.currentLnglats];
         this.painPolygon(this.polygonPoints);
       });
-      let imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
+      const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
         'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
         '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=0a65163e2ebdf5a37abb7f49274b85df';
       // 创建自定义图层对象

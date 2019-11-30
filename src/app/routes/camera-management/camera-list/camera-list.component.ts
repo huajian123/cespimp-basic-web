@@ -82,7 +82,7 @@ export class CameraManagementCameraListComponent implements OnInit {
         return;
       }
       this.itemId = item.id;
-      //this.dataService.delWarehouseInfo(this.itemId).then(() => this.getDataList(1));
+      // this.dataService.delWarehouseInfo(this.itemId).then(() => this.getDataList(1));
     });
   }
 

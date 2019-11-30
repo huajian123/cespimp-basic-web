@@ -17,7 +17,7 @@ export class PositionPickerRectService extends BaseConfirmModal.BaseConfirmModal
 
   private confirmCallback_child(contentComponentInstance?: any) {
     console.log(contentComponentInstance);
-    return <any>contentComponentInstance.clean();
+    return contentComponentInstance.clean() as any;
   }
 
 

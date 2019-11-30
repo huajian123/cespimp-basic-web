@@ -8,6 +8,7 @@ import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 import TankListSearchModel = TankListServiceNs.TankListSearchModel;
 import { ActivatedRoute, Params } from '@angular/router';
+import { EVENT_KEY } from '@env/staticVariable';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class TankListComponent implements OnInit {
   searchParam: TankListSearchModel;
 
   constructor(private dataService: TankListInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService,
-              private activateInfo:ActivatedRoute) {
+              private activateInfo: ActivatedRoute) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -170,11 +171,21 @@ export class TankListComponent implements OnInit {
     ];
   }
 
+  routeInit() {
+    if (!!window.sessionStorage.getItem(EVENT_KEY.tankNo)) {
+      this.searchParam.tankNo = window.sessionStorage.getItem(EVENT_KEY.tankNo);
+    }
+    window.sessionStorage.removeItem(EVENT_KEY.tankNo);
+    this.getDataList(1);
+  }
+
+  _onReuseInit() {
+    this.routeInit();
+  }
+
   ngOnInit() {
-    this.activateInfo.queryParams.subscribe((params: Params) => {
-    });
     this.initTable();
-    this.getDataList();
+    this.routeInit();
   }
 
 

@@ -29,18 +29,18 @@ export class BasicInfoBasicInfoStatisticsComponent implements OnInit {
         itemWidth: 8,
         itemHeight: 8,
         itemGap: 16,
-        formatter: function(name) {
+        formatter(name) {
           return '' + name;
         },
       },
       series: [{
         type: 'pie',
-        clockwise: false, //饼图的扇区是否是顺时针排布
-        minAngle: 2, //最小的扇区角度（0 ~ 360）
+        clockwise: false, // 饼图的扇区是否是顺时针排布
+        minAngle: 2, // 最小的扇区角度（0 ~ 360）
         radius: ['40%', '70%'],
         center: ['30%', '50%'],
         avoidLabelOverlap: false,
-        itemStyle: { //图形样式
+        itemStyle: { // 图形样式
           normal: {
             borderColor: '#ffffff',
             borderWidth: 6,

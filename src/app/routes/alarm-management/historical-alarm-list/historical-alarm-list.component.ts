@@ -128,7 +128,7 @@ export class AlarmManagementHistoricalAlarmListComponent implements OnInit {
         return;
       }
       this.itemId = item.id;
-      //this.dataService.delProductionInfo(this.itemId).then(() => this.getDataList(1));
+      // this.dataService.delProductionInfo(this.itemId).then(() => this.getDataList(1));
     });
   }
 

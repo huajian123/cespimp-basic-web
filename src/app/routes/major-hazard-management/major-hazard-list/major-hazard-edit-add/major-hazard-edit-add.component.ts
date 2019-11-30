@@ -71,7 +71,7 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       rvalue: [null, []],
       managerMobile: [null, []],
       description: [null, []],
-      majorHazardUnitUpdateDTOS: <FormArray>this.fb.array([]),
+      majorHazardUnitUpdateDTOS: this.fb.array([]) as FormArray,
     });
   }
 
@@ -151,7 +151,7 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
     if (this.validateForm.invalid) {
       return;
     }
-    if ((this.validateForm.controls['majorHazardUnitUpdateDTOS'] as FormGroup).invalid) {
+    if ((this.validateForm.controls.majorHazardUnitUpdateDTOS as FormGroup).invalid) {
       return;
     }
     const params = this.validateForm.getRawValue();

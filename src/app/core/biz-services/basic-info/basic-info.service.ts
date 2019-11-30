@@ -89,7 +89,7 @@ export namespace BasicInfoServiceNs {
   }
 
   export enum ProductEnum {
-    RawMateriPro = 1, //生产原料
+    RawMateriPro = 1, // 生产原料
     MidPro, // 中间产品
     FinalPro // 最终产品
   }
@@ -153,16 +153,16 @@ export namespace BasicInfoServiceNs {
       return this.http.get('data/basic/enterprise/products/', param).toPromise();
     }
 
-    //获取企业列表
+    // 获取企业列表
     public getFactoryList(param: SearchCommonVO): Promise<PageInfo<FactoryInfoModel>> {
       return this.http.get('data/basic/enterprises', param).toPromise();
     }
 
-    //企业搜索接口
+    // 企业搜索接口
     public getFactoryInfoSearch(param: EntprInfoSearch): Promise<FactoryInfoModel> {
       return this.http.get('data/basic/enterprise/', param).toPromise();
     }
-    //删除接口
+    // 删除接口
  /*   public delFactoryInfo(id: number): Promise<FactoryInfoModel> {
       return this.http.del('data/basic/enterprise/' + id).toPromise();
     }*/

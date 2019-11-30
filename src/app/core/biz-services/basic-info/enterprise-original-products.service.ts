@@ -18,7 +18,7 @@ export namespace EnterpriseOriginalProductServiceNs {
   }
 
   export enum ProductEnum {
-    RawMateriPro = 1, //生产原料
+    RawMateriPro = 1, // 生产原料
     MidPro, // 中间产品
     FinalPro // 最终产品
   }

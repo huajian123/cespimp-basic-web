@@ -22,15 +22,15 @@ export namespace SpecialOperationManagementServiceNs {
     reviewStatus: number;
   }
   export enum SpecialInfoEnum {
-    HotWork = 1, //动火作业
+    HotWork = 1, // 动火作业
     ConfinedSpaceWork, // 受限空间作业
     ElevatedWork,// 高处作业
-    HoistingOperation,//吊装作业
-    TemporaryElectricity,//临时用电
-    EquipmentOverhaul,//设备检修
-    BlindPlate,//盲板抽堵
-    OpenCircuit,//断路作业
-    EarthMoving,//动土作业
+    HoistingOperation,// 吊装作业
+    TemporaryElectricity,// 临时用电
+    EquipmentOverhaul,// 设备检修
+    BlindPlate,// 盲板抽堵
+    OpenCircuit,// 断路作业
+    EarthMoving,// 动土作业
   }
 
   export class SpecialOperationInfoServiceClass {
