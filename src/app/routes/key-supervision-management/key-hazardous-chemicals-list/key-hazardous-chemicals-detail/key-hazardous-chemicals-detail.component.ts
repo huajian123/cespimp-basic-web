@@ -9,9 +9,8 @@ import {
 } from '@angular/core';
 import {
   HazardousChemicalInfoService,
-  HazardousChemicalListServiceNs,
 } from '@core/biz-services/key-supervision-management/key-hazardous-chemicals.service';
-import HazardousChemicalInfoModel = HazardousChemicalListServiceNs.HazardousChemicalInfoModel;
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-key-supervision-management-key-hazardous-chemicals-detail',
@@ -19,32 +18,37 @@ import HazardousChemicalInfoModel = HazardousChemicalListServiceNs.HazardousChem
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KeySupervisionManagementKeyHazardousChemicalsDetailComponent implements OnInit {
+  validateForm: FormGroup;
   @Output() returnBack: EventEmitter<any>;
   @Input() id: number;
   @Input() currentPageNum: number;
-  dataInfo: HazardousChemicalInfoModel;
-  constructor(private dataService: HazardousChemicalInfoService, private cdr: ChangeDetectorRef) {
-    this.dataInfo = {
-      id: null,
-      productName: '',
-      alias: '',
-      casNo: '',
-    };
+
+  constructor(private dataService: HazardousChemicalInfoService, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
+
     this.returnBack = new EventEmitter<any>();
   }
 
-  async getDetailInfo(){
-    this.dataInfo = await this.dataService.getHazardousChemicalInfoDetail(this.id);
+  async getDetailInfo() {
+    const dataInfo = await this.dataService.getHazardousChemicalInfoDetail(this.id);
+    this.validateForm.patchValue(dataInfo);
     this.cdr.markForCheck();
   }
 
+  initForm() {
+    this.validateForm = this.fb.group({
+      productName: [null, []],
+      alias: [null, []],
+      casNo: [null, []],
+    });
+  }
 
   returnBackToList() {
-    this.returnBack.emit({refesh: false, pageNo: this.currentPageNum});
+    this.returnBack.emit({ refesh: false, pageNo: this.currentPageNum });
   }
 
   ngOnInit() {
-    this.getDetailInfo()
+    this.initForm();
+    this.getDetailInfo();
   }
 
 

@@ -9,10 +9,8 @@ import {
 } from '@angular/core';
 import {
   HazardousChemicalProcessesInfoService,
-  HazardousChemicalProcessesListServiceNs,
 } from '@core/biz-services/key-supervision-management/hazardous-chemical-processes.service';
-import HazardousChemicalProcessesInfoModel = HazardousChemicalProcessesListServiceNs.HazardousChemicalProcessesInfoModel;
-
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -21,31 +19,36 @@ import HazardousChemicalProcessesInfoModel = HazardousChemicalProcessesListServi
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KeySupervisionManagementHazardousChemicalProcessesDetailComponent implements OnInit {
+  validateForm: FormGroup;
   @Output() returnBack: EventEmitter<any>;
   @Input() id: number;
   @Input() currentPageNum: number;
-  dataInfo: HazardousChemicalProcessesInfoModel;
 
-  constructor(private dataService: HazardousChemicalProcessesInfoService, private cdr: ChangeDetectorRef) {
-    this.dataInfo = {
-      id: null,
-      processName: '',
-    };
+
+  constructor(private dataService: HazardousChemicalProcessesInfoService, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
     this.returnBack = new EventEmitter<any>();
   }
 
-  async getDetailInfo(){
-    this.dataInfo = await this.dataService.getHazardousChemicalProcessesInfoDetail(this.id);
+  initForm() {
+    this.validateForm = this.fb.group({
+      processName: [null, []],
+    });
+  }
+
+  async getDetailInfo() {
+    const dataInfo = await this.dataService.getHazardousChemicalProcessesInfoDetail(this.id);
+    this.validateForm.patchValue(dataInfo);
     this.cdr.markForCheck();
   }
 
 
   returnBackToList() {
-    this.returnBack.emit({refesh: false, pageNo: this.currentPageNum});
+    this.returnBack.emit({ refesh: false, pageNo: this.currentPageNum });
   }
 
   ngOnInit() {
-    this.getDetailInfo()
+    this.initForm();
+    this.getDetailInfo();
   }
 
 }

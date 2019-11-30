@@ -1,15 +1,13 @@
 <page-header [autoBreadcrumb]="false" [title]="'重点监管危险化工工艺详情'"></page-header>
 <nz-card [nzBordered]="false">
-  <form nz-form   se-container="1" labelWidth="200">
-    <se label="品名">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.processName}}
-      </nz-col>
+  <form nz-form [formGroup]="validateForm" se-container="1" labelWidth="200">
+    <se label="危险工艺名称">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="processName" readonly />
+      </nz-form-control>
     </se>
     <se>
-      <div class="detail-modal-footer">
-        <button nz-button type="button" (click)="returnBackToList()" nzType="primary">返回</button>
-      </div>
+      <button nz-button type="button" (click)="returnBackToList()" nzType="primary">返回</button>
     </se>
   </form>
 </nz-card>
