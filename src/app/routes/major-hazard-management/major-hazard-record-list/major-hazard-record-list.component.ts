@@ -35,7 +35,7 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
   filters: FiltersInfoModel;
 
   constructor(private fb: FormBuilder, private dataService: MajorHazardRecordListInfoService, private cdr: ChangeDetectorRef) {
-    this.filters = { entprName: null, reviewStatus: null };
+    this.filters = {};
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -68,9 +68,10 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
     const params: EntprSearch = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      ...this.filters,
     };
-    this.filters.reviewStatus ? params.reviewStatus = this.filters.reviewStatus : '';
-    this.filters.entprName ? params.entprId = this.filters.entprName : '';
+   /* this.filters.reviewStatus ? params.reviewStatus = this.filters.reviewStatus : '';
+    this.filters.entprName ? params.entprId = this.filters.entprName : '';*/
 
     const { total, list, pageNum } = await this.dataService.getMajorHazardRecordList(params);
     this.listPageInfo.total = total;
@@ -120,11 +121,6 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
   /*重置*/
   resetSearchParam() {
     this.filters = {};
-  }
-
-  /*查询*/
-  searchListByParams() {
-    this.getDataList(1);
   }
 
   /*取消审核*/

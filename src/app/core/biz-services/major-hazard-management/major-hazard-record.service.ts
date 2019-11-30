@@ -39,7 +39,7 @@ export namespace MajorHazardRecordListServiceNs {
       return this.http.put('data/basic/enterprise/examination/' + param.id, param).toPromise();
     }
 
-    public getMajorHazardRecordList(param: EntprSearch): Promise<PageInfo<MajorHazardRecordListInfoModel>> {
+    public getMajorHazardRecordList(param: EntprSearch & FiltersInfoModel): Promise<PageInfo<MajorHazardRecordListInfoModel>> {
       return this.http.get('data/major/hazard/examine', param).toPromise();
     }
   }
