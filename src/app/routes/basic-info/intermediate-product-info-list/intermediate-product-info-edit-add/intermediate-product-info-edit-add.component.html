@@ -1,4 +1,4 @@
-<page-header [title]="'中间产品新增编辑页'"></page-header>
+<page-header [autoBreadcrumb]="false"  [title]="'中间产品新增编辑页'"></page-header>
 <nz-card [nzBordered]="false">
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
     <se label="产品类型" style="display: none;">
