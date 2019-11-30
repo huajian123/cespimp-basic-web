@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { STColumn,STData } from '@delon/abc';
+import { STColumn, STData } from '@delon/abc';
 import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
@@ -9,6 +9,8 @@ import {
 } from '@core/biz-services/warehouse-management/warehouse-list.service';
 import WarehouseListInfoModel = WarehouseListServiceNs.WarehouseListInfoModel;
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
+import WarehouseSearchModel = WarehouseListServiceNs.WarehouseSearchModel;
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-warehouse-management-warehouse-list',
@@ -24,9 +26,10 @@ export class WarehouseListComponent implements OnInit {
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
+  searchParam: WarehouseSearchModel;
 
-
-  constructor(private dataService: WarehouseListInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
+  constructor(private dataService: WarehouseListInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService,
+              private activateInfo:ActivatedRoute) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -37,6 +40,7 @@ export class WarehouseListComponent implements OnInit {
     };
     this.dataList = [];
     this.itemId = -1;
+    this.searchParam = {};
   }
 
   changePage(e) {
@@ -49,6 +53,7 @@ export class WarehouseListComponent implements OnInit {
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      ...this.searchParam,
     };
     const { total, list, pageNum } = await this.dataService.getWarehouseList(params);
     this.listPageInfo.total = total;
@@ -76,16 +81,20 @@ export class WarehouseListComponent implements OnInit {
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
 
+  reset() {
+    this.searchParam = {};
+  }
+
   goDeletePage(item, modal) {
     const modalCtrl = this.messageService.showAlertMessage('', '您确定要删除吗？', MessageType.Confirm);
     modalCtrl.afterClose.subscribe((type: string) => {
       if (type !== 'onOk') {
         return;
       }
-    this.itemId = item.id;
-    this.dataService.delWarehouseInfo(this.itemId).then(() => this.getDataList(1));
-  });
-    }
+      this.itemId = item.id;
+      this.dataService.delWarehouseInfo(this.itemId).then(() => this.getDataList(1));
+    });
+  }
 
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
@@ -107,7 +116,8 @@ export class WarehouseListComponent implements OnInit {
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '火灾危险性等级',
+      {
+        title: '火灾危险性等级',
         index: 'fireLevel',
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),

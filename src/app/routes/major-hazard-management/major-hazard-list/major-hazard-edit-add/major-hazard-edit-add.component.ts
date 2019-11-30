@@ -8,15 +8,17 @@ import {
   Output,
 } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import { MajorHazardListInfoService } from '@core/biz-services/major-hazard-management/major-hazard-list.service';
 import { EVENT_KEY } from '@env/staticVariable';
 import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
+
 interface OptionsInterface {
   value: string;
   label: string;
 }
+
 @Component({
   selector: 'app-major-hazard-management-major-hazard-edit-add',
   templateUrl: './major-hazard-edit-add.component.html',
@@ -32,6 +34,9 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
   HazardLevelOptions: OptionsInterface[];
   HazardNatureOptions: OptionsInterface[];
   loginInfo: LoginInfoModel;
+  editIndex = -1;
+  editObj = {};
+
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: MajorHazardListInfoService) {
     this.returnBack = new EventEmitter<any>();
@@ -53,6 +58,7 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       userName: '',
     };
   }
+
   initForm() {
     this.validateForm = this.fb.group({
       majorHazardNo: [null, [Validators.required]],
@@ -65,22 +71,87 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       rvalue: [null, []],
       managerMobile: [null, []],
       description: [null, []],
+      majorHazardUnitUpdateDTOS: <FormArray>this.fb.array([]),
     });
   }
+
   async getDetail() {
     const dataInfo = await this.dataService.getMajorHazardInfoDetail(this.id);
     this.validateForm.patchValue(dataInfo);
+    dataInfo.majorHazardUnits.forEach(item => {
+      const field = this.createMedium();
+      field.patchValue(item);
+      this.mediumArray.push(field);
+    });
     this.cdr.markForCheck();
   }
+
+// 创建组成单元
+  createMedium(): FormGroup {
+    return this.fb.group({
+      partType: [null, [Validators.required]],
+      partNo: [null, [Validators.required]],
+      entprId: [this.loginInfo.entprId],
+    });
+  }
+
+  //#region get form fields
+  get mediumArray() {
+    return this.validateForm.controls.majorHazardUnitUpdateDTOS as FormArray;
+  }
+
+  //#endregion
+
+  // 新增组成单元
+  add() {
+    this.mediumArray.push(this.createMedium());
+    this.edit(this.mediumArray.length - 1);
+  }
+
+  // 删除组成单元
+  del(index: number) {
+    this.mediumArray.removeAt(index);
+  }
+
+  // 编辑组成单元
+  edit(index: number) {
+    if (this.editIndex !== -1 && this.editObj) {
+      this.mediumArray.at(this.editIndex).patchValue(this.editObj);
+    }
+    this.editObj = { ...this.mediumArray.at(index).value };
+    this.editIndex = index;
+  }
+
+  // 保存单个组成单元
+  save(index: number) {
+    this.mediumArray.at(index).markAsDirty();
+    if (this.mediumArray.at(index).invalid) return;
+    this.editIndex = -1;
+  }
+
+  // 取消
+  cancel(index: number) {
+    if (!this.mediumArray.at(index).value.key) {
+      this.del(index);
+    } else {
+      this.mediumArray.at(index).patchValue(this.editObj);
+    }
+    this.editIndex = -1;
+  }
+
   returnToList() {
     this.returnBack.emit();
   }
+
   async submit() {
     Object.keys(this.validateForm.controls).forEach(key => {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     });
     if (this.validateForm.invalid) {
+      return;
+    }
+    if ((this.validateForm.controls['majorHazardUnitUpdateDTOS'] as FormGroup).invalid) {
       return;
     }
     const params = this.validateForm.getRawValue();
@@ -99,6 +170,7 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
     await submitHandel;
     this.returnBack.emit({ refesh: true, pageNo: this.currentPageNum });
   }
+
   ngOnInit() {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.unitTypeOptions = [...MapPipe.transformMapToArray(MapSet.unitType)];
@@ -109,7 +181,6 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       this.getDetail();
     }
   }
-
 
 
 }

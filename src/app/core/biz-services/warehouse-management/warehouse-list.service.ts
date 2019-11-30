@@ -18,6 +18,10 @@ export namespace WarehouseListServiceNs {
     majorHazardMaterials: FormGroup[];
     majorHazardMaterialInsertDTOS: FormGroup[];
   }
+  export interface WarehouseSearchModel{
+    entprName?: string;
+    roomNo?: string;
+  }
 
   export class WarehouseListInfoServiceClass {
     constructor(private http: HttpUtilService) {
@@ -39,7 +43,7 @@ export namespace WarehouseListServiceNs {
     }
 
     /*库房列表*/
-    public getWarehouseList(param: SearchCommonVO): Promise<PageInfo<WarehouseListInfoModel>> {
+    public getWarehouseList(param: SearchCommonVO & WarehouseSearchModel): Promise<PageInfo<WarehouseListInfoModel>> {
       return this.http.get('data/basic/enterprise/rooms', param).toPromise();
     }
 

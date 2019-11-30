@@ -9,6 +9,8 @@ import {
 } from '@core/biz-services/production-management/production-list.service';
 import ProductionListInfoModel = ProductionListServiceNs.ProductionListInfoModel;
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
+import ProductionSearchModel = ProductionListServiceNs.ProductionSearchModel;
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-production-management-production-list',
@@ -24,8 +26,9 @@ export class ProductionListComponent implements OnInit {
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
-
-  constructor(private dataService: ProductionListInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
+  searchParam: ProductionSearchModel;
+  constructor(private dataService: ProductionListInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService,
+              private activateInfo:ActivatedRoute) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -36,6 +39,7 @@ export class ProductionListComponent implements OnInit {
     };
     this.dataList = [];
     this.itemId = -1;
+    this.searchParam = {};
   }
 
   changePage(e) {
@@ -43,11 +47,15 @@ export class ProductionListComponent implements OnInit {
     this.listPageInfo = e;
     this.getDataList();
   }
+  reset() {
+    this.searchParam = {};
+  }
 
   async getDataList(pageNumber?: number) {
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      ...this.searchParam,
     };
     const { total, list, pageNum } = await this.dataService.getProductionList(params);
     this.listPageInfo.total = total;

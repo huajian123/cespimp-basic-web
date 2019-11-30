@@ -18,6 +18,10 @@ export namespace ProductionListServiceNs {
     majorHazardMaterialInsertDTOS: FormGroup[];
   }
 
+  export interface ProductionSearchModel{
+    entprName?: string;
+    placeNo?: string;
+  }
 
   export class ProductionListInfoServiceClass {
     constructor(private http: HttpUtilService) {
@@ -37,7 +41,7 @@ export namespace ProductionListServiceNs {
       return this.http.get('data/basic/enterprise/place/' + id).toPromise();
     }
 
-    public getProductionList(param: SearchCommonVO): Promise<PageInfo<ProductionListInfoModel>> {
+    public getProductionList(param: SearchCommonVO & ProductionSearchModel): Promise<PageInfo<ProductionListInfoModel>> {
       return this.http.get('data/basic/enterprise/place', param).toPromise();
     }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpUtilService } from '@core/net/http-util.service';
 import { SearchCommonVO } from '@core/vo/comm/BusinessEnum';
 import { PageInfo } from '@core/vo/comm/PageInfo';
+import { FormGroup } from '@angular/forms';
 
 export namespace MajorHazardListServiceNs {
   export interface MajorHazardListInfoModel {
@@ -16,7 +17,8 @@ export namespace MajorHazardListServiceNs {
     rvalue?: number;
     managerMobile?: string;
     description?: string;
-    majorHazardUnits: any[];
+    majorHazardUnits: FormGroup[];
+    majorHazardUnitUpdateDTOS:FormGroup[];
   }
 
 

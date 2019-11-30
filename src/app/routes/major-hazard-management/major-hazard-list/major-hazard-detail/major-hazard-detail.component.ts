@@ -53,6 +53,7 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
       managerMobile: '',
       description: '',
       majorHazardUnits: [],
+      majorHazardUnitUpdateDTOS:[],
     };
 
     this.columns = [

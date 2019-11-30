@@ -70,18 +70,6 @@ export class BasicInfoManageComponent implements OnInit {
         width: '80px',
         buttons: [
           {
-            text: '编辑',
-            icon: 'edit',
-            click: this.goEditAddPage.bind(this),
-            acl: this.roleEnum[this.roleEnum.Enterprise],
-          },
-          {
-            text: '删除',
-            icon: 'delete',
-            click: this.goDeletePage.bind(this),
-            acl:this.roleEnum[this.roleEnum.Enterprise],
-          },
-          {
             text: '查看',
             icon: 'eye',
             click: this.goDetailPage.bind(this),
@@ -98,25 +86,13 @@ export class BasicInfoManageComponent implements OnInit {
     return new MapPipe().transform(toBeFormat, arg);
   }
 
-  goEditAddPage(item, modal) {
-    this.currentPage = this.pageTypeEnum.AddOrEdit;
-  }
 
   goDetailPage(item, modal) {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
 
-  goDeletePage(item, modal) {
-    const modalCtrl = this.messageService.showAlertMessage('', '您确定要删除吗？', MessageType.Confirm);
-    modalCtrl.afterClose.subscribe((type: string) => {
-      if (type !== 'onOk') {
-        return;
-      }
-      this.itemId = item.id;
-      //this.dataService.delFactoryInfo(this.itemId).then(() => this.getDataList(1));
-    });
-  }
+
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {

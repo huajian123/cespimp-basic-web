@@ -171,9 +171,7 @@ export class TankListComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.activateInfo.queryParams.subscribe((params: Params) => {
-      console.log(params);
     });
     this.initTable();
     this.getDataList();
