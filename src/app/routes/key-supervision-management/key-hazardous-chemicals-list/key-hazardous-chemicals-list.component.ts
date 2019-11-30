@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn} from '@delon/abc';
+import { STColumn } from '@delon/abc';
 import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import {
   HazardousChemicalInfoService,
@@ -8,6 +8,8 @@ import {
 import HazardousChemicalInfoModel = HazardousChemicalListServiceNs.HazardousChemicalInfoModel;
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
+import HazardousChemicalSearchModel = HazardousChemicalListServiceNs.HazardousChemicalSearchModel;
+
 
 @Component({
   selector: 'app-key-supervision-management-key-hazardous-chemicals-list',
@@ -23,7 +25,9 @@ export class KeySupervisionManagementKeyHazardousChemicalsListComponent implemen
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
-  constructor(private dataService: HazardousChemicalInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
+  searchParam: HazardousChemicalSearchModel;
+
+  constructor(private dataService: HazardousChemicalInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -34,6 +38,7 @@ export class KeySupervisionManagementKeyHazardousChemicalsListComponent implemen
     };
     this.dataList = [];
     this.itemId = -1;
+    this.searchParam = {};
   }
 
   changePage(e) {
@@ -46,6 +51,7 @@ export class KeySupervisionManagementKeyHazardousChemicalsListComponent implemen
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      ...this.searchParam,
     };
     const { total, list, pageNum } = await this.dataService.getHazardousChemicalList(params);
     this.listPageInfo.total = total;
@@ -79,12 +85,16 @@ export class KeySupervisionManagementKeyHazardousChemicalsListComponent implemen
       this.dataService.delHazardousChemical(this.itemId).then(() => this.getDataList(1));
     });
   }
+
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
       this.listPageInfo.pi = e.pageNo;
       await this.getDataList(e.pageNo);
     }
+  }
+  reset() {
+    this.searchParam = {};
   }
   private initTable(): void {
     this.columns = [

@@ -8,6 +8,7 @@ import {
 } from '@core/biz-services/key-supervision-management/hazardous-chemical-processes.service';
 import HazardousChemicalProcessesInfoModel = HazardousChemicalProcessesListServiceNs.HazardousChemicalProcessesInfoModel;
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
+import HazardousChemicalProcessesSearchModel = HazardousChemicalProcessesListServiceNs.HazardousChemicalProcessesSearchModel;
 
 @Component({
   selector: 'app-key-supervision-management-hazardous-chemical-processes-list',
@@ -23,7 +24,9 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
-  constructor(private dataService: HazardousChemicalProcessesInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
+  searchParam: HazardousChemicalProcessesSearchModel;
+
+  constructor(private dataService: HazardousChemicalProcessesInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -34,6 +37,7 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
     };
     this.dataList = [];
     this.itemId = -1;
+    this.searchParam = {};
   }
 
   changePage(e) {
@@ -42,10 +46,15 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
     this.getDataList();
   }
 
+  reset() {
+    this.searchParam = {};
+  }
+
   async getDataList(pageNumber?: number) {
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      ...this.searchParam,
     };
     const { total, list, pageNum } = await this.dataService.getHazardousChemicalProcessesList(params);
     this.listPageInfo.total = total;
@@ -58,6 +67,7 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
     this.itemId = null;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
   }
+
   goEditAddPage(item, modal) {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
@@ -67,6 +77,7 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
+
   goDeletePage(item, modal) {
     const modalCtrl = this.messageService.showAlertMessage('', '您确定要删除吗？', MessageType.Confirm);
     modalCtrl.afterClose.subscribe((type: string) => {
@@ -77,6 +88,7 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
       this.dataService.delHazardousChemicalProcesses(this.itemId).then(() => this.getDataList(1));
     });
   }
+
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
@@ -84,6 +96,7 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
       await this.getDataList(e.pageNo);
     }
   }
+
   private initTable(): void {
     this.columns = [
       { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
