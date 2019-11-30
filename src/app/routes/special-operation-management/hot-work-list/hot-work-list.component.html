@@ -1,5 +1,5 @@
 <ng-container *ngIf="currentPage===pageTypeEnum.List">
-  <page-header [title]="'动火作业列表'"></page-header>
+  <page-header [autoBreadcrumb]="false" [title]="'动火作业列表'"></page-header>
   <nz-card [nzBordered]="false">
     <form nz-form [nzLayout]="'inline'" class="search__form" [acl]="roleEnum[roleEnum.ParkManage]">
       <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
