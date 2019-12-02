@@ -1,18 +1,23 @@
-
+#mapDiv{
+  z-index: 0;
+}
 .wraper {
   margin-top: 10px;
-}
- .ant-card-body{
-  padding: 0!important;
+  ::ng-deep .ant-card-body{
+    padding: 0!important;
+  }
 }
 
 .sel-business {
   position: absolute;
   top: 30px;
   left: 30px;
-  z-index: 400;
+  z-index: 0;
 
   .sel {
     width: 260px;
   }
 }
+
+
+

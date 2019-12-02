@@ -1,4 +1,11 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import { BasicInfoService, BasicInfoServiceNs } from '@core/biz-services/basic-info/basic-info.service';
 import { OptionsInterface, SearchCommonVO } from '@core/vo/comm/BusinessEnum';
 import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
@@ -34,9 +41,10 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
   industrialPark = [];
   industrialParkRealArea = [];
   industrialParkPlanArea = [];
-  realArea:any;
-  planArea:any;
-  pointArea:any;
+  realArea: any;
+  planArea: any;
+  pointArea: any;
+
   constructor(private basicInfoService: BasicInfoService, private cdr: ChangeDetectorRef) {
     this.businessSelOptions = [];
     this.enterpriseArray = [];
@@ -175,7 +183,6 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
       },
     );
   };
-
 
 
   // 初始化d3相关图层

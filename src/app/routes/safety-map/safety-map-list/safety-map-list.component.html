@@ -1,6 +1,6 @@
 <ng-container *ngIf="currentPageType===pageTypeEnum.EnterpriseList">
   <nz-card [nzBordered]="true" class="wraper">
-    <div id="mapDiv" style="width: 100%;height: 800px"></div>
+    <div id="mapDiv" style="width: 100%;height: 750px"></div>
 
     <div class="sel-business">
       <nz-select  [(ngModel)]="selectedEnterpriseId" (ngModelChange)="changeSelValue($event)" [nzSize]="'large'" class="sel" nzShowSearch nzAllowClear nzPlaceHolder="搜索企业">

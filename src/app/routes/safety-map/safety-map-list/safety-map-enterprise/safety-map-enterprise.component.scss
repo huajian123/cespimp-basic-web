@@ -1,7 +1,33 @@
+#mapDiv{
+  z-index: 0;
+}
+
 .wraper {
   margin-top: 10px;
   position: relative;
+  z-index: 0;
 }
+
+.layer-wrap{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ffffff;
+  z-index: 400;
+  .layer-item{
+    user-select: none;
+    height: 40px;
+    width: 150px;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    color: #CDCDCD;
+    cursor: pointer;
+  }
+}
+
 
 .identification-wrap {
   position: absolute;
@@ -12,6 +38,7 @@
   background: #ffffff;
 
   .identification {
+    user-select: none;
     height: 40px;
     width: 150px;
     padding: 0 10px;
@@ -45,4 +72,3 @@
 .unActive {
   color: #CDCDCD!important;
 }
-

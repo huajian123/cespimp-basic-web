@@ -2,13 +2,14 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, I
 import { BasicInfoService } from '@core/biz-services/basic-info/basic-info.service';
 
 enum LayerEnum {
-  Alarm,
-  Temperature,
-  Pressure,
-  WaterLevel,
-  FireGas,
-  PoisonousGas,
-  Camera
+  Alarm, // 告警
+  Temperature, // 温度
+  Pressure, // 压力
+  WaterLevel, // 液位
+  FireGas, // 可燃气体
+  PoisonousGas, // 有毒气体
+  Camera, // 摄像头
+  HazardSources, // 重大危险源
 }
 
 interface LayerBtnInterface {
@@ -32,7 +33,8 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   layerEnum = LayerEnum;
   tilePhoto: Object; // 倾斜摄影对象
   currentSelLayerBtnIndex: number;
-  layerBtnObjArray: LayerBtnInterface[];
+  identificationBtnObjArray: LayerBtnInterface[]; // 标识图层数组
+  layerObjArray:LayerBtnInterface[]; // 图层数组
   selLayerNumberArray: number[]; // 存储选中的图层的数组
 // /safety-map/safety-map-list
   constructor(private cdr: ChangeDetectorRef) {
@@ -41,7 +43,11 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=0a65163e2ebdf5a37abb7f49274b85df';
     this.tilePhoto = new T.TileLayer(imageURL, { minZoom: 1, maxZoom: 18 });
     this.currentSelLayerBtnIndex = -1;
-    this.layerBtnObjArray = [
+    this.layerObjArray=[
+      { name: '重大危险源', type: 'default', icon: 'warning', isSel: false, layNum: LayerEnum.HazardSources, count: 2 },
+    ];
+
+    this.identificationBtnObjArray = [
       { name: '实时报警', type: 'default', icon: 'bell', isSel: false, layNum: LayerEnum.Alarm, count: 2 },
       { name: '温度传感器', type: 'default', icon: 'temperature', isSel: false, layNum: LayerEnum.Temperature , count: 2 },
       { name: '压力传感器', type: 'default', icon: 'pressure', isSel: false, layNum: LayerEnum.Pressure, count: 2  },

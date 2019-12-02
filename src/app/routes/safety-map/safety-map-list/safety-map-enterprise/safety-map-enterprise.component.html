@@ -2,8 +2,17 @@
 <div class="wraper">
   <div id="map" style="width: 100%;height: 800px"></div>
 
+  <div class="layer-wrap">
+    <div class="layer-item" [ngClass]="{active:item.isSel,unActive:!item.isSel}"  *ngFor="let item of layerObjArray" (click)="selIdentification(item)">
+      <span class="icon iconfont" [ngClass]="item.icon" ></span>
+      <span>{{item.name}}</span>
+      <span>（{{item.count}}）</span>
+    </div>
+  </div>
+
+
   <div class="identification-wrap">
-    <div class="identification" [ngClass]="{active:item.isSel,unActive:!item.isSel}" *ngFor="let item of layerBtnObjArray;" (click)="selIdentification(item)">
+    <div class="identification" [ngClass]="{active:item.isSel,unActive:!item.isSel}" *ngFor="let item of identificationBtnObjArray;" (click)="selIdentification(item)">
       <span class="icon iconfont" [ngClass]="item.icon" ></span>
       <span>{{item.name}}</span>
       <span>（{{item.count}}）</span>
