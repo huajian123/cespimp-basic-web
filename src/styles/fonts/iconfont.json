@@ -88,6 +88,55 @@
       "font_class": "to-left",
       "unicode": "e648",
       "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "12072042",
+      "name": "fire",
+      "font_class": "fire",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "12072046",
+      "name": "camera",
+      "font_class": "camera",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
+      "icon_id": "12072050",
+      "name": "temperature",
+      "font_class": "temperature",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "12072059",
+      "name": "pressure",
+      "font_class": "pressure",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "12072061",
+      "name": "water-level",
+      "font_class": "water-level",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "12072064",
+      "name": "poison",
+      "font_class": "poison",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "12072068",
+      "name": "warning",
+      "font_class": "warning",
+      "unicode": "e650",
+      "unicode_decimal": 58960
     }
   ]
 }

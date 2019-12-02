@@ -2,10 +2,49 @@
 <div class="wraper">
   <div id="map" style="width: 100%;height: 800px"></div>
 
-  <div class="layers">
+<!--  <div class="layers">
     <button [ngClass]="{active:item.isSel,unActive:!item.isSel}" *ngFor="let item of layerBtnObjArray" nz-button [nzType]="item.type"  [autofocus]="item.isSel"  (click)="changeLayer(item.layNum,item)" nzGhost>
       <i nz-icon nzType="download"></i>{{item.name}}
     </button>
+  </div>-->
+
+
+  <div class="identification-wrap">
+    <div class="identification">
+      <span class="icon iconfont warning"></span>
+      <span>实时报警</span>
+      <span>（2）</span>
+    </div>
+    <div class="identification">
+      <span class="icon iconfont temperature"></span>
+      <span>温度传感器</span>
+      <span>（2）</span>
+    </div>
+    <div class="identification">
+      <span class="icon iconfont pressure"></span>
+      <span>压力传感器</span>
+      <span>（2）</span>
+    </div>
+    <div class="identification">
+      <span class="icon iconfont water-level"></span>
+      <span>液位传感器</span>
+      <span>（2）</span>
+    </div>
+    <div class="identification">
+      <span class="icon iconfont fire"></span>
+      <span>可燃气体</span>
+      <span>（2）</span>
+    </div>
+    <div class="identification">
+      <span class="icon iconfont poison"></span>
+      <span>有毒气体</span>
+      <span>（2）</span>
+    </div>
+    <div class="identification">
+      <span class="icon iconfont camera"></span>
+      <span>摄像头</span>
+      <span>（2）</span>
+    </div>
   </div>
 </div>
 
