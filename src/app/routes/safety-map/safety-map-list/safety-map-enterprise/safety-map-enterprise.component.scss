@@ -37,6 +37,21 @@
   display: flex;
   background: #ffffff;
 
+  @media screen and (max-width: 1500px) {
+    width: 605px;
+  }
+  @media screen and (max-width: 1080px) {
+    width: 452px;
+  }
+  @media screen and (max-width: 880px) {
+    width: 315px;
+  }
+
+  @media screen and (max-width: 550px) {
+    width: 155px;
+  }
+
+  flex-wrap: wrap;
   .identification {
     user-select: none;
     height: 40px;
