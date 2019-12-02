@@ -137,6 +137,13 @@
       "font_class": "warning",
       "unicode": "e650",
       "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "12073373",
+      "name": "bell",
+      "font_class": "bell",
+      "unicode": "e651",
+      "unicode_decimal": 58961
     }
   ]
 }

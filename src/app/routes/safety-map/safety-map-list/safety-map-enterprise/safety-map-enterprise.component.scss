@@ -6,7 +6,7 @@
 .identification-wrap {
   position: absolute;
   top: 10px;
-  left: 10px;
+  right: 10px;
   z-index: 400;
   display: flex;
   background: #ffffff;
@@ -20,6 +20,10 @@
     align-items: center;
     position: relative;
     color: #CDCDCD;
+    cursor: pointer;
+    &:hover{
+      color: #409eff;
+    }
     &:not(:last-child):after {
       content: "";
       position: absolute;
@@ -35,13 +39,10 @@
 }
 
 .active {
-  border: 1px solid #1D2E59;
-  color: #00D6FF;
-  background: #1D2E59 !important;
+  color: #409eff!important;
 }
 
 .unActive {
-  color: #ffffff;
-  border-color: #ffffff;
+  color: #CDCDCD!important;
 }
 

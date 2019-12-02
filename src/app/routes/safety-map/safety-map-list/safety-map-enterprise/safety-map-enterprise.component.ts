@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, I
 import { BasicInfoService } from '@core/biz-services/basic-info/basic-info.service';
 
 enum LayerEnum {
-  HazardSource,
+  Alarm,
   Temperature,
   Pressure,
   WaterLevel,
@@ -17,6 +17,7 @@ interface LayerBtnInterface {
   icon: string;
   isSel: boolean;
   layNum: number;
+  count: number;
 }
 
 @Component({
@@ -41,22 +42,39 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     this.tilePhoto = new T.TileLayer(imageURL, { minZoom: 1, maxZoom: 18 });
     this.currentSelLayerBtnIndex = -1;
     this.layerBtnObjArray = [
-      { name: '重大危险源', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.HazardSource },
-      { name: '温度传感器', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.Temperature },
-      { name: '压力传感器', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.Pressure },
-      { name: '液位传感器', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.WaterLevel },
-      { name: '可燃气体', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.FireGas },
-      { name: '有毒气体', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.PoisonousGas },
-      { name: '摄像头', type: 'default', icon: 'download', isSel: false, layNum: LayerEnum.Camera },
+      { name: '实时报警', type: 'default', icon: 'bell', isSel: false, layNum: LayerEnum.Alarm, count: 2 },
+      { name: '温度传感器', type: 'default', icon: 'temperature', isSel: false, layNum: LayerEnum.Temperature , count: 2 },
+      { name: '压力传感器', type: 'default', icon: 'pressure', isSel: false, layNum: LayerEnum.Pressure, count: 2  },
+      { name: '液位传感器', type: 'default', icon: 'water-level', isSel: false, layNum: LayerEnum.WaterLevel, count: 2  },
+      { name: '可燃气体', type: 'default', icon: 'fire', isSel: false, layNum: LayerEnum.FireGas , count: 2 },
+      { name: '有毒气体', type: 'default', icon: 'poison', isSel: false, layNum: LayerEnum.PoisonousGas, count: 2  },
+      { name: '摄像头', type: 'default', icon: 'camera', isSel: false, layNum: LayerEnum.Camera , count: 2 },
     ];
     this.selLayerNumberArray = [];
+  }
+
+  // 选择标识
+  selIdentification(item){
+    item.isSel = !item.isSel;
+    this.currentSelLayerBtnIndex = item.layNum;
+
+    const index = this.selLayerNumberArray.indexOf(item.layNum);
+    if (index === -1) {
+      this.selLayerNumberArray.push(item.layNum);
+    } else {
+      this.selLayerNumberArray.splice(index, 1);
+    }
+    console.log(this.selLayerNumberArray);
   }
 
   // 切换图层
   changeLayer(layerEnum, item) {
     item.isSel = !item.isSel;
     this.currentSelLayerBtnIndex = layerEnum;
+    this.checkLayerNumberIsIndex(layerEnum);
+  }
 
+  checkLayerNumberIsIndex(layerEnum){
     const index = this.selLayerNumberArray.indexOf(layerEnum);
     if (index === -1) {
       this.selLayerNumberArray.push(layerEnum);
