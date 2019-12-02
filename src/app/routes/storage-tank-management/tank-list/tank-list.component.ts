@@ -176,6 +176,7 @@ export class TankListComponent implements OnInit {
       this.searchParam.tankNo = window.sessionStorage.getItem(EVENT_KEY.tankNo);
     }
     window.sessionStorage.removeItem(EVENT_KEY.tankNo);
+    this.currentPage = this.pageTypeEnum.List;
     this.getDataList(1);
   }
 
