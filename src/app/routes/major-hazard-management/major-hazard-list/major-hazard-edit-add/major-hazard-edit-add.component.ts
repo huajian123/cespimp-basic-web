@@ -20,6 +20,13 @@ interface OptionsInterface {
   label: string;
 }
 
+interface OptionInterface {
+  label: string;
+  value: number;
+  type: number;
+  id: number;
+}
+
 @Component({
   selector: 'app-major-hazard-management-major-hazard-edit-add',
   templateUrl: './major-hazard-edit-add.component.html',
@@ -29,6 +36,7 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
   validateForm: FormGroup;
   form: FormGroup;
   @Input() id: number;
+  @Input() entprId: number;
   @Input() currentPageNum: number;
   @Output() returnBack: EventEmitter<any>;
   unitTypeOptions: OptionsInterface[];
@@ -37,10 +45,12 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
   loginInfo: LoginInfoModel;
   editIndex = -1;
   editObj = {};
+  majorList: OptionInterface[];
 
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: MajorHazardListInfoService, private positionPickerService: PositionPickerService) {
     this.returnBack = new EventEmitter<any>();
+    this.majorList = [];
     this.unitTypeOptions = [];
     this.HazardLevelOptions = [];
     this.HazardNatureOptions = [];
@@ -90,22 +100,42 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
     this.cdr.markForCheck();
   }
 
+  changeMajor(e) {
+    const temp = this.majorList.filter(({ value }) => {
+      return value === e;
+    })[0];
+    console.log(this.mediumArray);
+    this.mediumArray.get('partType').setValue(temp.type);
+
+  /*  this.mediumArray.get('partId').setValue(temp.id);*/
+  }
+
+  async getMajorList() {
+    this.entprId = this.loginInfo.entprId;
+    //console.log(this.entprId);
+   const data = await this.dataService.getMajorList(this.entprId);
+  /* console.log(data);*/
+    data.majorHazardPartDTOS.forEach(item => {
+      this.majorList.push({ label: item.partName, value: item.partNo, type: item.partType ,id:item.partId});
+    });
+  }
+
 // 创建组成单元
   createMedium(): FormGroup {
     return this.fb.group({
       partType: [null, [Validators.required]],
       partNo: [null, [Validators.required]],
       entprId: [this.loginInfo.entprId],
+      partId:[null,[]],
     });
   }
 
   //#region get form fields
   get mediumArray() {
-    return this.validateForm.controls.majorHazardUnitUpdateDTOS as FormArray;
+    return this.validateForm.controls['majorHazardUnitUpdateDTOS'] as FormArray;
   }
 
   //#endregion
-
   // 新增组成单元
   add() {
     this.mediumArray.push(this.createMedium());
@@ -183,9 +213,11 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
 
   ngOnInit() {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+    //console.log(this.loginInfo);
     this.unitTypeOptions = [...MapPipe.transformMapToArray(MapSet.unitType)];
     this.HazardLevelOptions = [...MapPipe.transformMapToArray(MapSet.majorHazardLevel)];
     this.HazardNatureOptions = [...MapPipe.transformMapToArray(MapSet.majorHazardNature)];
+    this.getMajorList();
     this.initForm();
     if (this.id) {
       this.getDetail();

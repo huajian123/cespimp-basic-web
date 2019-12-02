@@ -142,20 +142,28 @@
       </thead>
       <tbody>
       <tr *ngFor="let item of mediumArray.controls; let i = index" [formGroupName]="i">
+        <td style="display: none;">
+          <span *ngIf="editIndex !== i">{{ mediumArray.value[i].partId }}</span>
+          <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入组成ID">
+             <nz-select (ngModelChange)="changeMajor($event)" formControlName="partId" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成ID'">
+              <nz-option *ngFor="let item of majorList" [nzLabel]="item.label" [nzValue]="item.id"></nz-option>
+            </nz-select>
+          </span>
+        </td>
         <td>
           <span *ngIf="editIndex !== i">{{ mediumArray.value[i].partType }}</span>
           <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入组成类型">
-            <!-- <nz-select formControlName="partType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成类型'">
-              <nz-option *ngFor="let item of partTypeOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
-            </nz-select>-->
+             <nz-select (ngModelChange)="changeMajor($event)" formControlName="partType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成类型'">
+              <nz-option *ngFor="let item of majorList" [nzLabel]="item.label" [nzValue]="item.type"></nz-option>
+            </nz-select>
           </span>
         </td>
         <td>
           <span *ngIf="editIndex !== i">{{ mediumArray.value[i].partNo }}</span>
           <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入组成部分编号">
-           <!-- <nz-select formControlName="partNo" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成部分编号'">
-              <nz-option *ngFor="let item of partNoOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
-            </nz-select>-->
+            <nz-select (ngModelChange)="changeMajor($event)" formControlName="partNo" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成部分编号'">
+              <nz-option *ngFor="let item of majorList" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+            </nz-select>
           </span>
         </td>
         <td>

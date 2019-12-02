@@ -10,6 +10,7 @@ import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 
+
 @Component({
   selector: 'app-major-hazard-management-major-hazard-list',
   templateUrl: './major-hazard-list.component.html',

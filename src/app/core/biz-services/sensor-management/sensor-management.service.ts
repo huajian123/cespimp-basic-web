@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpUtilService } from '@core/net/http-util.service';
 import { SearchCommonVO } from '@core/vo/comm/BusinessEnum';
 import { PageInfo } from '@core/vo/comm/PageInfo';
+
 export namespace SensorManagementListServiceNs {
   export interface SensorManagementListInfoModel {
     id: number;
     sensorType: string;
+    sensorName: string;
     majorHazardId?: number;
     partType?: number;
     partId?: number;
@@ -21,6 +23,7 @@ export namespace SensorManagementListServiceNs {
   export class SensorManagementListInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
+
     /*   /!*新增接口*!/
        public addWarehouse(param:WarehouseListInfoModel): Promise<void> {
          return this.http.post('data/basic/enterprise/rooms',param,{needSuccessInfo: true}).toPromise();
@@ -33,14 +36,16 @@ export namespace SensorManagementListServiceNs {
        public getWarehouseInfoDetail(id: number): Promise<WarehouseListInfoModel> {
          return this.http.get('data/basic/enterprise/rooms/'+ id).toPromise();
        }*/
+
     /*库房列表*/
     public getSensorManagementList(param: SearchCommonVO): Promise<PageInfo<SensorManagementListInfoModel>> {
       return this.http.get('data/major/hazard/sensors', param).toPromise();
     }
-     /*删除接口*/
-     public delSensorInfo(id: number): Promise<SensorManagementListInfoModel> {
-       return this.http.del('data/major/hazard/sensor/'+ id).toPromise();
-     }
+
+    /*删除接口*/
+    public delSensorInfo(id: number): Promise<SensorManagementListInfoModel> {
+      return this.http.del('data/major/hazard/sensor/' + id).toPromise();
+    }
   }
 }
 

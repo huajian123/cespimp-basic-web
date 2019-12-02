@@ -21,9 +21,23 @@ export namespace MajorHazardListServiceNs {
     managerMobile?: string;
     description?: string;
     majorHazardUnits: FormGroup[];
-    majorHazardUnitUpdateDTOS:FormGroup[];
+    majorHazardUnitUpdateDTOS: FormGroup[];
   }
 
+  export interface majorHazardData {
+    majorHazardPartDTOS: MajorHazardUnitList[],
+    majorHazardInfoNeedListDTOS: any;
+  }
+
+  export interface MajorHazardUnitList {
+    id?: number;
+    entprId?: number;
+    majorHazardId: number;
+    partType: number;
+    partId: number;
+    partNo: number;
+    partName?:string;
+  }
 
   export class MajorHazardListInfoServiceClass {
     constructor(private http: HttpUtilService) {
@@ -53,9 +67,10 @@ export namespace MajorHazardListServiceNs {
     public delMajorHazard(id: number): Promise<MajorHazardListInfoModel> {
       return this.http.del('data/major/hazard/info/' + id).toPromise();
     }
+
     /*重大危险源组成信息下拉列表*/
-    public getMajorList(id: number): Promise<any> {
-      return this.http.get('/data/major/hazard/need'+ id).toPromise();
+    public getMajorList(entprId: number): Promise<majorHazardData> {
+      return this.http.get('data/major/hazard/need', { entprId: entprId }).toPromise();
     }
   }
 }
