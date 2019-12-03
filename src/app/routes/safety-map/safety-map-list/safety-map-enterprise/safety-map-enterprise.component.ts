@@ -108,60 +108,42 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     this.map.clearOverLays();
     // 创建覆盖物标识
     Object.keys(this.identificationData).forEach(key => {
-      switch (key) {
-        // 温度
-        case 'temp':
-          this.identificationData[key].forEach(item => {
+      this.identificationData[key].forEach(item => {
+        switch (key) {
+          // 温度
+          case 'temp':
             this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.TempNormal, item.longitude, item.latitude, item.id));
-          });
-          break;
-        // 液位
-        case 'liquid':
-          this.identificationData[key].forEach(item => {
+            break;
+          // 液位
+          case 'liquid':
             this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.WaterLevelNormal, item.longitude, item.latitude, item.id));
-          });
-          break;
-        // 压力
-        case 'pressure':
-          this.identificationData[key].forEach(item => {
+            break;
+          // 压力
+          case 'pressure':
             this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.PressNormal, item.longitude, item.latitude, item.id));
-          });
-          break;
-
-        // 摄像头
-        case 'camera':
-          this.identificationData[key].forEach(item => {
+            break;
+          // 摄像头
+          case 'camera':
             this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.CameraNormal, item.longitude, item.latitude, item.id));
-          });
-          break;
-
-        // 有毒气体
-        case 'poisonous':
-          this.identificationData[key].forEach(item => {
+            break;
+          // 有毒气体
+          case 'poisonous':
             this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.PoisonNormal, item.longitude, item.latitude, item.id));
-          });
-          break;
-
-        // 可燃气体
-        case 'combustible':
-          this.identificationData[key].forEach(item => {
+            break;
+          // 可燃气体
+          case 'combustible':
             this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.FireNormal, item.longitude, item.latitude, item.id));
-          });
-          break;
-
-        // 重大危险源
-        case 'majorHazardInfo':
-
-          this.identificationData[key].forEach(item => {
+            break;
+          // 重大危险源
+          case 'majorHazardInfo':
             const polygonPoints = [];
             item.majorScope.forEach(({ lat, lng }) => {
               polygonPoints.push(new T.LngLat(lng, lat));
             });
             this.painPolygon(polygonPoints);
-            //  this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.FireNormal, item.longitude, item.latitude, item.id));
-          });
-          break;
-      }
+            break;
+        }
+      });
     });
   }
 
