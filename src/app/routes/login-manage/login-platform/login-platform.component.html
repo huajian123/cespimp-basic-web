@@ -153,7 +153,7 @@
                   园区入水口
                 </div>
                 <div class="water-btn">
-                  <span class="btn">Ⅴ类</span>
+                  <span class="btn">IV类</span>
                   <span class="content">达标</span>
                 </div>
               </div>
@@ -162,26 +162,28 @@
                   园区出水口
                 </div>
                 <div class="water-btn">
-                  <span class="btn exits">Ⅳ类</span>
-                  <span class="content exits">未达标</span>
+<!--                  <span class="btn exits">Ⅳ类</span>-->
+<!--                  <span class="content exits">达标</span>-->
+                  <span class="btn">Ⅳ类</span>
+                  <span class="content">达标</span>
                 </div>
               </div>
             </div>
             <div class="cards-item-right-water">
               <div class="radar-chart">
                 <div class="title">全年周水质等级分布</div>
-                <div class="radar" style="width: 150px;height:150px" echarts [options]="radarWaterOption"></div>
+                <div class="radar" style="width: 130px;height:130px" echarts [options]="radarWaterOption"></div>
               </div>
               <div class="radar-chart">
                 <div class="title">全年主要污染物分布</div>
-                <div class="radar" style="width: 150px;height:150px" echarts [options]="radarContaminatedOption"></div>
+                <div class="radar" style="width: 130px;height:130px" echarts [options]="radarContaminatedOption"></div>
               </div>
             </div>
           </div>
         </div>
 
         <div class="card">
-          <h5>数据统计</h5>
+          <h5>园区危险源</h5>
           <div class="card-item notice">
             <div echarts  style="width: 250px;height:178px" [options]="pipeOption"></div>
             <div echarts  style="width: 250px;height:178px" [options]="pipeOptionTwo"></div>

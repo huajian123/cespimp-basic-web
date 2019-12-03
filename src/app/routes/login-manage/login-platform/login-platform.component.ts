@@ -337,7 +337,7 @@ export class LoginPlatformComponent implements OnInit {
         formatter(name) {
           let index = 0;
           const clientlabels = ['一级', '二级', '三级', '四级'];
-          const clientcounts = [335, 310, 234, 135];
+          const clientcounts = [0, 0, 1, 1];
           clientlabels.forEach(function(value, i) {
             if (value == name) {
               index = i;
@@ -373,10 +373,10 @@ export class LoginPlatformComponent implements OnInit {
             },
           },
           data: [
-            { value: 335, name: '一级' },
-            { value: 310, name: '二级' },
-            { value: 234, name: '三级' },
-            { value: 135, name: '四级' },
+            { value: 0, name: '一级' },
+            { value: 0, name: '二级' },
+            { value: 1, name: '三级' },
+            { value: 1, name: '四级' },
           ],
         },
       ],
@@ -392,14 +392,14 @@ export class LoginPlatformComponent implements OnInit {
         },
         top: '5px',
       },
-      color: ['#FF222D', '#EE8E00', '#FFE800'],
+      color: ['#c487ee', '#deb140','#49dff0', '#034079', '#6f81da', '#00ffb4'],
       tooltip: {
         trigger: 'item',
         formatter: '{a} <br/>{b} : {c} ({d}%)',
       },
       legend: {
         orient: 'vertical',
-        data: ['氯化工艺', '新型煤化工艺', '合成氨工艺'],
+        data: ['氯化工艺', '磺化工艺', '氧化工艺','聚合工艺','电解工艺'],
         x: 'left',
         y: 'center',
         left: '135px',
@@ -409,7 +409,7 @@ export class LoginPlatformComponent implements OnInit {
         },
         formatter(name) {
           let index = 0;
-          const clientlabels = ['氯化工艺', '新型煤化工艺', '合成氨工艺'];
+          const clientlabels = ['氯化工艺', '磺化工艺', '氧化工艺','聚合工艺','电解工艺'];
           const clientcounts = [335, 310, 234, 135];
           clientlabels.forEach(function(value, i) {
             if (value == name) {
@@ -445,9 +445,11 @@ export class LoginPlatformComponent implements OnInit {
             },
           },
           data: [
-            { value: 18, name: '氯化工艺' },
-            { value: 16, name: '新型煤化工艺' },
-            { value: 13, name: '合成氨工艺' },
+            { value: 1, name: '氯化工艺' },
+            { value: 1, name: '磺化工艺' },
+            { value: 1, name: '氧化工艺' },
+            { value: 1, name: '聚合工艺' },
+            { value: 1, name: '电解工艺' },
           ],
         },
 

@@ -325,6 +325,7 @@ main {
 
           &.water {
             max-width: 480px;
+            min-width: 460px;
           }
 
           &.notice {
@@ -556,7 +557,7 @@ main {
             align-items: center;
 
             .radar-chart {
-              padding-top: 10px;
+              flex: 1;
               .title {
                 text-align: center;
                 opacity: 0.8;

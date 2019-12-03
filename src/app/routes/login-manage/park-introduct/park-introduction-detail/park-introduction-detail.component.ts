@@ -14,6 +14,7 @@ export class ParkIntroductionDetailComponent implements OnInit , AfterViewInit{
   tilePhoto: Object; // 倾斜摄影对象
   map;
   zoom = 10;
+
   cenL = 118.30612;  // 默认中心坐标经度
   cenB =  34.29057; // 默认中心坐标纬度
 
@@ -147,7 +148,7 @@ export class ParkIntroductionDetailComponent implements OnInit , AfterViewInit{
 
   initMap() {
     this.map = new T.Map('mapDiv');
-    this.map.centerAndZoom(new T.LngLat(120.680410, 31.20600), 14);
+    this.map.centerAndZoom(new T.LngLat(120.662161,31.222261), 14);
     this.map.addLayer(this.tilePhoto);
     this.initD3Layer();
   }
