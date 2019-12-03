@@ -15,13 +15,11 @@ export namespace MajorHazardListServiceNs {
     majorHazardLevel: number;
     majorHazardNature?: number;
     rvalue?: number;
-    longitude: number; // 经度
-    latitude: number; // 纬度
+    majorScope?: { lng: number, lat: number }[];
     locFactory?: string;
     managerMobile?: string;
     description?: string;
     majorHazardUnits: FormGroup[];
-    majorHazardUnitUpdateDTOS: FormGroup[];
   }
 
   export interface majorHazardData {
@@ -35,8 +33,12 @@ export namespace MajorHazardListServiceNs {
     majorHazardId: number;
     partType: number;
     partId: number;
-    partNo: number;
-    partName?:string;
+    partNo: string;
+    partName?: string;
+  }
+
+  export interface EntprSearch {
+    entprId: number;
   }
 
   export class MajorHazardListInfoServiceClass {

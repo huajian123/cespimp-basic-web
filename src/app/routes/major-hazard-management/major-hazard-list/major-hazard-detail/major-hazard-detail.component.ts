@@ -51,13 +51,11 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
       majorHazardLevel: -1,
       majorHazardNature: -1,
       rvalue: -1,
-      longitude: null,
-      latitude: null,
+      majorScope: [],
       locFactory: '',
       managerMobile: '',
       description: '',
       majorHazardUnits: [],
-      majorHazardUnitUpdateDTOS: [],
     };
 
     this.columns = [
@@ -67,7 +65,7 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
       },
       {
         title: '组成部分编号',
-        index: '',
+        index: 'partNo',
         width: 60,
         buttons: [{ type: 'link', text: '点击跳转', click: this.tableBtnClick.bind(this), format: this.formateData }],
       },
@@ -85,11 +83,11 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
     }
     if (record.partType === PartTypeEnum.ProductionPlace) {
       this.router.navigate(['/hazard/production-management/production-list']);
-      window.sessionStorage.setItem(EVENT_KEY.tankNo, record.partNo);
+      window.sessionStorage.setItem(EVENT_KEY.placeNo, record.placeNo);
     }
     if (record.partType === PartTypeEnum.Warehouse) {
-      this.router.navigate(['/hazard/storage-tank-management/tank-list']);
-      window.sessionStorage.setItem(EVENT_KEY.tankNo, record.partNo);
+      this.router.navigate(['/hazard/storage-tank-management/warehouse-list']);
+      window.sessionStorage.setItem(EVENT_KEY.roomNo, record.roomNo);
     }
   }
 

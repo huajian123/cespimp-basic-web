@@ -11,6 +11,7 @@ import ProductionListInfoModel = ProductionListServiceNs.ProductionListInfoModel
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 import ProductionSearchModel = ProductionListServiceNs.ProductionSearchModel;
 import { ActivatedRoute, Params } from '@angular/router';
+import { EVENT_KEY } from '@env/staticVariable';
 
 @Component({
   selector: 'app-production-management-production-list',
@@ -137,7 +138,18 @@ export class ProductionListComponent implements OnInit {
       },
     ];
   }
+  routeInit() {
+    if (!!window.sessionStorage.getItem(EVENT_KEY.placeNo)) {
+      this.searchParam.placeNo = window.sessionStorage.getItem(EVENT_KEY.placeNo);
+    }
+    window.sessionStorage.removeItem(EVENT_KEY.placeNo);
+    this.currentPage = this.pageTypeEnum.List;
+    this.getDataList(1);
+  }
 
+  _onReuseInit() {
+    this.routeInit();
+  }
   ngOnInit() {
     this.initTable();
     this.getDataList();

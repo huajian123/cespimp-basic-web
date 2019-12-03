@@ -10,21 +10,28 @@ import {
 import { NzMessageService } from 'ng-zorro-antd';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
-import { MajorHazardListInfoService } from '@core/biz-services/major-hazard-management/major-hazard-list.service';
+import {
+  MajorHazardListInfoService,
+  MajorHazardListServiceNs,
+} from '@core/biz-services/major-hazard-management/major-hazard-list.service';
 import { EVENT_KEY } from '@env/staticVariable';
 import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
 import { PositionPickerService } from '../../../../widget/position-picker/position-picker.service';
+import { enterpriseInfo } from '@env/environment';
+import { PositionPickerPolygonService } from '../../../../widget/position-picker-polygon/position-picker-polygon.service';
+import EntprSearch = MajorHazardListServiceNs.EntprSearch;
 
 interface OptionsInterface {
-  value: string;
+  value: string | number;
   label: string;
+  partType?: number;
 }
 
-interface OptionInterface {
-  label: string;
-  value: number;
-  type: number;
-  id: number;
+interface MajorHazardPartModel {
+  partType: number;
+  partNo: string;
+  partName: string;
+  partId: number;
 }
 
 @Component({
@@ -45,12 +52,22 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
   loginInfo: LoginInfoModel;
   editIndex = -1;
   editObj = {};
-  majorList: OptionInterface[];
+  majorList: OptionsInterface[];
+  majorAllNo: MajorHazardPartModel[];
+  selMajorNoArray: OptionsInterface[];
+  currentPolygonList: any[];
 
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
-              private dataService: MajorHazardListInfoService, private positionPickerService: PositionPickerService) {
+              private dataService: MajorHazardListInfoService, private positionPickerService: PositionPickerService,
+              private positionPickerPolygonService: PositionPickerPolygonService) {
     this.returnBack = new EventEmitter<any>();
-    this.majorList = [];
+    this.majorAllNo = [];
+    this.selMajorNoArray = [];
+    this.majorList = [
+      { value: '1', label: '储罐' },
+      { value: '2', label: '库房' },
+      { value: '3', label: '生产场所' },
+    ];
     this.unitTypeOptions = [];
     this.HazardLevelOptions = [];
     this.HazardNatureOptions = [];
@@ -68,6 +85,7 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       updateTime: new Date(),
       userName: '',
     };
+    this.currentPolygonList = [];
   }
 
   initForm() {
@@ -82,41 +100,70 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       rvalue: [null, []],
       managerMobile: [null, []],
       description: [null, []],
-      longitude: [null, [Validators.required]],
-      latitude: [null, [Validators.required]],
+      majorScope: [null, [Validators.required]],
       locFactory: [null, []],
-      majorHazardUnitUpdateDTOS: <FormArray>this.fb.array([]),
+      majorHazardUnits: <FormArray>this.fb.array([]),
     });
   }
 
   async getDetail() {
+    this.currentPolygonList.length = 0;
+    const param: EntprSearch = {
+      entprId: this.loginInfo.entprId,
+    };
     const dataInfo = await this.dataService.getMajorHazardInfoDetail(this.id);
+    if (dataInfo.majorScope) {
+      dataInfo.majorScope.forEach(({ lng, lat }) => {
+        this.currentPolygonList.push({ lng, lat });
+      });
+    }
     this.validateForm.patchValue(dataInfo);
     dataInfo.majorHazardUnits.forEach(item => {
       const field = this.createMedium();
       field.patchValue(item);
       this.mediumArray.push(field);
+      //console.log(this.mediumArray.controls[0]);
     });
+    //this.mediumArray.controls[0].partTypeLabel
+    //this.mediumArray.controls[0].get('partTypeLabel').setValue('partNo');
     this.cdr.markForCheck();
   }
 
-  changeMajor(e) {
-    const temp = this.majorList.filter(({ value }) => {
-      return value === e;
-    })[0];
-    console.log(this.mediumArray);
-    this.mediumArray.get('partType').setValue(temp.type);
+  // 重大危险源type类型选取改变
+  changeMajorType(type, index) {
+    // type为当前选中的重大危险源type
+    const tempArray = this.majorAllNo.filter(item => {
+      return '' + item.partType === type;
+    });//
+    this.selMajorNoArray = [];//先初始化一个类型下面的list菜单内容
+    tempArray.forEach(item => {
+      const obj = { value: item.partId, label: item.partNo, partType: item.partType };
+      this.selMajorNoArray.push(obj);//循环插入当前类型下面的list下拉内容菜单需传递的参数（partId，partNo，partType）；
+    });
+    this.mediumArray.controls[index].get('partTypeLabel').reset();//重置formgroup中的选取显示内容
+    this.mediumArray.controls[index].get('partNo').reset();//重置formgroup中的选取传递内容
+  }
 
-  /*  this.mediumArray.get('partId').setValue(temp.id);*/
+  changeMajorNo(partId, index) {
+    if (partId) {
+      const selObj = this.selMajorNoArray.find(item => {
+        return item.value === partId;
+      });
+      this.mediumArray.controls[index].get('partTypeLabel').setValue(selObj.label);
+      this.mediumArray.controls[index].get('partId').setValue(selObj.value);
+    }
   }
 
   async getMajorList() {
     this.entprId = this.loginInfo.entprId;
-    //console.log(this.entprId);
-   const data = await this.dataService.getMajorList(this.entprId);
-  /* console.log(data);*/
+    const data = await this.dataService.getMajorList(this.entprId);
     data.majorHazardPartDTOS.forEach(item => {
-      this.majorList.push({ label: item.partName, value: item.partNo, type: item.partType ,id:item.partId});
+      this.majorAllNo.push({
+        partType: item.partType,
+        partNo: item.partNo,
+        partName: item.partName,
+        partId: item.partId,
+      });
     });
   }
 
@@ -126,13 +173,14 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       partType: [null, [Validators.required]],
       partNo: [null, [Validators.required]],
       entprId: [this.loginInfo.entprId],
-      partId:[null,[]],
+      partId: [null, []],
+      partTypeLabel: [null, []],
     });
   }
 
   //#region get form fields
   get mediumArray() {
-    return this.validateForm.controls['majorHazardUnitUpdateDTOS'] as FormArray;
+    return this.validateForm.controls['majorHazardUnits'] as FormArray;
   }
 
   //#endregion
@@ -185,7 +233,7 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
     if (this.validateForm.invalid) {
       return;
     }
-    if ((this.validateForm.controls['majorHazardUnitUpdateDTOS'] as FormGroup).invalid) {
+    if ((this.validateForm.controls['majorHazardUnits'] as FormGroup).invalid) {
       return;
     }
     const params = this.validateForm.getRawValue();
@@ -205,15 +253,39 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
   }
 
   showMap() {
-    this.positionPickerService.show({ isRemoteImage: true }).then(res => {
+    this.positionPickerService.show({
+      isRemoteImage: true,
+      longitude: enterpriseInfo.longitude,
+      latitude: enterpriseInfo.latitude,
+    }).then(res => {
       this.validateForm.get('longitude').setValue(res.longitude);
       this.validateForm.get('latitude').setValue(res.latitude);
     }).catch(e => null);
   }
 
+  // 显示多边形地图
+  showPolygonMap() {
+    this.positionPickerPolygonService.show({
+      isRemoteImage: true,
+      longitude: enterpriseInfo.longitude,
+      latitude: enterpriseInfo.latitude,
+      currentPolygonList: this.currentPolygonList,
+    }).then((res: ({ lat: number, lng: number }[])) => {
+      const tempArray = [];
+      if (res) {
+        res.forEach(({ lat, lng }) => {
+          const obj = { lat, lng };
+          tempArray.push(obj);
+        });
+        this.currentPolygonList = [...tempArray];
+        console.log(this.currentPolygonList);
+        this.validateForm.get('majorScope').setValue(tempArray);
+      }
+    }).catch(e => null);
+  }
+
   ngOnInit() {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
-    //console.log(this.loginInfo);
     this.unitTypeOptions = [...MapPipe.transformMapToArray(MapSet.unitType)];
     this.HazardLevelOptions = [...MapPipe.transformMapToArray(MapSet.majorHazardLevel)];
     this.HazardNatureOptions = [...MapPipe.transformMapToArray(MapSet.majorHazardNature)];

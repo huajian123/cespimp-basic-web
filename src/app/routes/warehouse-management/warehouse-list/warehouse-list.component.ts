@@ -11,6 +11,7 @@ import WarehouseListInfoModel = WarehouseListServiceNs.WarehouseListInfoModel;
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 import WarehouseSearchModel = WarehouseListServiceNs.WarehouseSearchModel;
 import { ActivatedRoute, Params } from '@angular/router';
+import { EVENT_KEY } from '@env/staticVariable';
 
 @Component({
   selector: 'app-warehouse-management-warehouse-list',
@@ -151,7 +152,18 @@ export class WarehouseListComponent implements OnInit {
       },
     ];
   }
+  routeInit() {
+    if (!!window.sessionStorage.getItem(EVENT_KEY.roomNo)) {
+      this.searchParam.roomNo = window.sessionStorage.getItem(EVENT_KEY.roomNo);
+    }
+    window.sessionStorage.removeItem(EVENT_KEY.roomNo);
+    this.currentPage = this.pageTypeEnum.List;
+    this.getDataList(1);
+  }
 
+  _onReuseInit() {
+    this.routeInit();
+  }
   ngOnInit() {
     this.initTable();
     this.getDataList();

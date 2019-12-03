@@ -106,17 +106,12 @@
     <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
-          <nz-form-label>经度</nz-form-label>
-          <nz-form-control nzErrorTip="请输入经度">
-            <input nz-input  class="cursor-pointer" readonly (click)="showMap()" formControlName="longitude" placeholder="请输入经度" />
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
-        <nz-form-item>
-          <nz-form-label>纬度</nz-form-label>
-          <nz-form-control nzErrorTip="请输入纬度">
-            <input nz-input  class="cursor-pointer" readonly (click)="showMap()" formControlName="latitude" placeholder="请输入纬度" />
+          <nz-form-label>厂区范围</nz-form-label>
+          <nz-form-control>
+            <span class="operate-text cursor-pointer" (click)="showPolygonMap()">查看</span>
+            <input nz-input [hidden]="true" formControlName="majorScope" placeholder="请输入经纬度" />
+            <nz-form-explain *ngIf="validateForm.get('majorScope').dirty && validateForm.get('majorScope').errors">请点击查看并绘制区域
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -131,7 +126,7 @@
     </nz-row>
   </nz-card>
   <nz-card [nzBordered]="true" nzTitle="重大危险源组成单元列表">
-    <nz-table [nzBordered]="true" formArrayName="majorHazardUnitUpdateDTOS" [nzData]="mediumArray.value"
+    <nz-table [nzBordered]="true" formArrayName="majorHazardUnits" [nzData]="mediumArray.value"
               [nzShowPagination]="false">
       <thead>
       <tr>
@@ -142,27 +137,22 @@
       </thead>
       <tbody>
       <tr *ngFor="let item of mediumArray.controls; let i = index" [formGroupName]="i">
-        <td style="display: none;">
-          <span *ngIf="editIndex !== i">{{ mediumArray.value[i].partId }}</span>
-          <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入组成ID">
-             <nz-select (ngModelChange)="changeMajor($event)" formControlName="partId" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成ID'">
-              <nz-option *ngFor="let item of majorList" [nzLabel]="item.label" [nzValue]="item.id"></nz-option>
-            </nz-select>
-          </span>
+        <td [hidden]="true">
+          <input nz-input   formControlName="partId"  />
         </td>
         <td>
-          <span *ngIf="editIndex !== i">{{ mediumArray.value[i].partType }}</span>
+          <span *ngIf="editIndex !== i">{{ mediumArray.value[i].partType|map:'partType'}}</span>
           <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入组成类型">
-             <nz-select (ngModelChange)="changeMajor($event)" formControlName="partType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成类型'">
-              <nz-option *ngFor="let item of majorList" [nzLabel]="item.label" [nzValue]="item.type"></nz-option>
+             <nz-select (ngModelChange)="changeMajorType($event,i)" formControlName="partType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成类型'">
+              <nz-option *ngFor="let item of majorList" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
             </nz-select>
           </span>
         </td>
         <td>
-          <span *ngIf="editIndex !== i">{{ mediumArray.value[i].partNo }}</span>
+          <span *ngIf="editIndex !== i">{{ mediumArray.value[i].partTypeLabel }}</span>
           <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入组成部分编号">
-            <nz-select (ngModelChange)="changeMajor($event)" formControlName="partNo" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成部分编号'">
-              <nz-option *ngFor="let item of majorList" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+            <nz-select  (ngModelChange)="changeMajorNo($event,i)" formControlName="partNo" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成部分编号'">
+              <nz-option *ngFor="let item of selMajorNoArray" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
             </nz-select>
           </span>
         </td>
