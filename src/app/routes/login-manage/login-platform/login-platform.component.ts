@@ -58,7 +58,7 @@ export class LoginPlatformComponent implements OnInit {
   localUrl: string;
   airQualityData: AirQualityModel;
   airLevelColor: string;
-
+  realName: string;
 
   constructor(private router: Router, private loginService: LoginService, private loginWorkBoardService: LoginWorkBoardService, private cdr: ChangeDetectorRef) {
     this.currentSideIndex = this.sideEnum.IntegratedMnageControl;
@@ -105,6 +105,8 @@ export class LoginPlatformComponent implements OnInit {
       'othree': '',
     };
     this.airLevelColor = '#30d284';
+    this.realName = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo)).realName;
+    console.log(this.realName);
   }
 
   changeSideIndex(currentSideIndex) {
@@ -183,7 +185,7 @@ export class LoginPlatformComponent implements OnInit {
         type: 'radar',
         data: [
           {
-            value: [800, 7000, 20000, 35000, 31000, 15000],
+            value: [3800, 7000, 20000, 35000, 31000, 15000],
             itemStyle: {
               normal: {
                 color: '#00E3FF',
@@ -200,7 +202,7 @@ export class LoginPlatformComponent implements OnInit {
             },
           },
           {
-            value: [3000, 15000, 28000, 31000, 17000, 8000],
+            value: [3000, 6500, 28000, 31000, 17000, 8000],
             itemStyle: {
               normal: {
                 color: 'rgba(255,64,192)',
@@ -392,14 +394,14 @@ export class LoginPlatformComponent implements OnInit {
         },
         top: '5px',
       },
-      color: ['#c487ee', '#deb140','#49dff0', '#034079', '#6f81da', '#00ffb4'],
+      color: ['#c487ee', '#deb140', '#49dff0', '#034079', '#6f81da'],
       tooltip: {
         trigger: 'item',
         formatter: '{a} <br/>{b} : {c} ({d}%)',
       },
       legend: {
         orient: 'vertical',
-        data: ['氯化工艺', '磺化工艺', '氧化工艺','聚合工艺','电解工艺'],
+        data: ['氯化工艺', '磺化工艺', '氧化工艺', '聚合工艺'],
         x: 'left',
         y: 'center',
         left: '135px',
@@ -409,7 +411,7 @@ export class LoginPlatformComponent implements OnInit {
         },
         formatter(name) {
           let index = 0;
-          const clientlabels = ['氯化工艺', '磺化工艺', '氧化工艺','聚合工艺','电解工艺'];
+          const clientlabels = ['氯化工艺', '磺化工艺', '氧化工艺', '聚合工艺'];
           const clientcounts = [335, 310, 234, 135];
           clientlabels.forEach(function(value, i) {
             if (value == name) {
@@ -449,7 +451,6 @@ export class LoginPlatformComponent implements OnInit {
             { value: 1, name: '磺化工艺' },
             { value: 1, name: '氧化工艺' },
             { value: 1, name: '聚合工艺' },
-            { value: 1, name: '电解工艺' },
           ],
         },
 

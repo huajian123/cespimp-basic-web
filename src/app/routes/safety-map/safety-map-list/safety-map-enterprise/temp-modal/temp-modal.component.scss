@@ -1,0 +1,58 @@
+.item-flex {
+  padding: 35px 0;
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  font-size: 16px;
+  border-bottom: 1px solid #000;
+}
+
+.item-flex span {
+  font-weight: bold;
+}
+
+
+
+.parent {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 60px;
+  .chart-wrap{
+  }
+}
+
+
+
+.item-table tr td {
+  width: 250px;
+  height: 30px;
+  border: 1px solid #000;
+  text-align: center;
+}
+
+table tr td:last-child {
+  background-color: #eee;
+}
+
+button {
+  border: 1px solid #0f0;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  color: #000;
+  border-radius: 5px;
+  text-align: center;
+  margin: 30px 50% 30px 50%;
+}
+
+
+
+.point {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #000000;
+}

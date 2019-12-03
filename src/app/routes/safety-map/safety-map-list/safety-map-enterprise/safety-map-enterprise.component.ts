@@ -52,6 +52,16 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   tilePhoto: Object; // 倾斜摄影对象
   currentSelLayerBtnIndex: number;
   identificationBtnObjArray: LayerBtnInterface[]; // 标识图层数组
+
+  hazardSourcesMarkerArray: any[]; // 重大危险源区域覆盖物存储数组
+  temperatureMarkerArray: any[];// 温度
+  pressureMarkerArray: any[];// 压力
+  waterLevelMarkerArray: any[];// 液位
+  fireGasMarkerArray: any[];// 可燃气体
+  poisonousGasMarkerArray: any[];// 有毒气体
+  cameraMarkerArray: any[];// 摄像头
+
+
   layerObjArray: LayerBtnInterface[]; // 图层数组
   selLayerNumberArray: number[]; // 存储选中的图层的数组
   majorHazardCurrentSelLay: number;// 重大危险源当前选中的图层
@@ -81,6 +91,9 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     this.selLayerNumberArray = [];
     this.majorHazardCurrentSelLay = -1;
     this.identificationData = {};
+
+    // 初始化标注数组
+    this.initIdentificationArray();
   }
 
   // 选择标识
@@ -107,33 +120,50 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     await this.getIdentificationData();
 
     this.map.clearOverLays();
+
+    this.initIdentificationArray();
     // 创建覆盖物标识
     Object.keys(this.identificationData).forEach(key => {
       this.identificationData[key].forEach(item => {
         switch (key) {
           // 温度
           case 'temp':
-            this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.TempNormal, item.longitude, item.latitude, item.id));
+            const tempMarker = this.createMarkers(IdentificationUrlEnum.TempNormal, item.longitude, item.latitude, item.id);
+            console.log(tempMarker.getIcon());
+            console.log(tempMarker);
+            this.temperatureMarkerArray.push(tempMarker);
+            console.log(this.temperatureMarkerArray);
+            this.map.addOverLay(tempMarker);
             break;
           // 液位
           case 'liquid':
-            this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.WaterLevelNormal, item.longitude, item.latitude, item.id));
+            const liquidMarker = this.createMarkers(IdentificationUrlEnum.WaterLevelNormal, item.longitude, item.latitude, item.id);
+            this.waterLevelMarkerArray.push(liquidMarker);
+            this.map.addOverLay(liquidMarker);
             break;
           // 压力
           case 'pressure':
-            this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.PressNormal, item.longitude, item.latitude, item.id));
+            const pressureMarker = this.createMarkers(IdentificationUrlEnum.PressNormal, item.longitude, item.latitude, item.id);
+            this.pressureMarkerArray.push(pressureMarker);
+            this.map.addOverLay(pressureMarker);
             break;
           // 摄像头
           case 'camera':
-            this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.CameraNormal, item.longitude, item.latitude, item.id));
+            const cameraMarker = this.createMarkers(IdentificationUrlEnum.CameraNormal, item.longitude, item.latitude, item.id);
+            this.cameraMarkerArray.push(cameraMarker);
+            this.map.addOverLay(cameraMarker);
             break;
           // 有毒气体
           case 'poisonous':
-            this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.PoisonNormal, item.longitude, item.latitude, item.id));
+            const poisonousMarker = this.createMarkers(IdentificationUrlEnum.PoisonNormal, item.longitude, item.latitude, item.id);
+            this.poisonousGasMarkerArray.push(poisonousMarker);
+            this.map.addOverLay(poisonousMarker);
             break;
           // 可燃气体
           case 'combustible':
-            this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.FireNormal, item.longitude, item.latitude, item.id));
+            const combustibleMarker = this.createMarkers(IdentificationUrlEnum.FireNormal, item.longitude, item.latitude, item.id);
+            this.fireGasMarkerArray.push(combustibleMarker);
+            this.map.addOverLay(combustibleMarker);
             break;
           // 重大危险源
           case 'majorHazardInfo':
@@ -141,11 +171,84 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
             item.majorScope.forEach(({ lat, lng }) => {
               polygonPoints.push(new T.LngLat(lng, lat));
             });
-            this.painPolygon(polygonPoints);
+            this.hazardSourcesMarkerArray.push(this.painPolygon(polygonPoints));
             break;
         }
       });
     });
+
+    this.addMarkerListenFn();
+  }
+
+  // 覆盖物监听方法
+  addMarkerListenFn() {
+    this.hazardSourcesMarkerArray.forEach(item => {
+      item.addEventListener('click', () => {
+        setTimeout(() => {
+          console.log('危险源覆盖物点击方法');
+          this.cdr.markForCheck();
+        }, 0);
+      });
+    });
+    this.temperatureMarkerArray.forEach(item => {
+      item.addEventListener('click', () => {
+        setTimeout(() => {
+          console.log('温度覆盖物点击方法');
+          this.currentSelLayerBtnIndex = this.layerEnum.Temperature;
+          this.cdr.markForCheck();
+        }, 0);
+      });
+    });
+    this.pressureMarkerArray.forEach(item => {
+      item.addEventListener('click', () => {
+        setTimeout(() => {
+          console.log('压力源覆盖物点击方法');
+          this.cdr.markForCheck();
+        }, 0);
+      });
+    });
+    this.waterLevelMarkerArray.forEach(item => {
+      item.addEventListener('click', () => {
+        setTimeout(() => {
+          console.log('液位源覆盖物点击方法');
+          this.cdr.markForCheck();
+        }, 0);
+      });
+    });
+    this.fireGasMarkerArray.forEach(item => {
+      item.addEventListener('click', () => {
+        setTimeout(() => {
+          console.log('可燃物覆盖物点击方法');
+          this.cdr.markForCheck();
+        }, 0);
+      });
+    });
+    this.poisonousGasMarkerArray.forEach(item => {
+      item.addEventListener('click', () => {
+        setTimeout(() => {
+          console.log('有毒覆盖物点击方法');
+          this.cdr.markForCheck();
+        }, 0);
+      });
+    });
+    this.cameraMarkerArray.forEach(item => {
+      item.addEventListener('click', () => {
+        setTimeout(() => {
+          console.log('摄像头覆盖物点击方法');
+          this.cdr.markForCheck();
+        }, 0);
+      });
+    });
+  }
+
+  initIdentificationArray() {
+    this.hazardSourcesMarkerArray = []; // 重大危险源区域覆盖物存储数组
+    this.temperatureMarkerArray = [];// 温度
+    this.pressureMarkerArray = [];// 压力
+    this.waterLevelMarkerArray = [];// 液位
+    this.fireGasMarkerArray = [];// 可燃气体
+    this.poisonousGasMarkerArray = [];// 有毒气体
+    this.cameraMarkerArray = [];// 摄像头
   }
 
   // 绘制多边形
@@ -158,6 +261,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       fillOpacity: 0.5,
     });
     this.map.addOverLay(polygon);
+    return polygon;
   }
 
   createMarkers(iconUrl: string, longitude: number, latitude: number, markId: number, type?) {
@@ -195,8 +299,6 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       this.selLayerNumberArray.splice(index, 1);
     }
   }
-
-  // 创建覆盖物
 
   initMap() {
     this.map = new T.Map('map');
