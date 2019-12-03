@@ -26,8 +26,8 @@
     </div>
   </div>
 
-  <div class="temp-wrap">
-    <temp-modal></temp-modal>
+  <div class="temp-wrap" *ngIf="modelIsShow.temp">
+    <temp-modal [(showModel)]="modelIsShow.temp"></temp-modal>
   </div>
 
 </div>

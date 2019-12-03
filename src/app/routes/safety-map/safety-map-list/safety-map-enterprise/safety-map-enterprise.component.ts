@@ -60,7 +60,9 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   fireGasMarkerArray: any[];// 可燃气体
   poisonousGasMarkerArray: any[];// 有毒气体
   cameraMarkerArray: any[];// 摄像头
-
+  modelIsShow: {
+    temp: boolean
+  };
 
   layerObjArray: LayerBtnInterface[]; // 图层数组
   selLayerNumberArray: number[]; // 存储选中的图层的数组
@@ -92,6 +94,9 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     this.majorHazardCurrentSelLay = -1;
     this.identificationData = {};
 
+    this.modelIsShow = {
+      temp: false,
+    };
     // 初始化标注数组
     this.initIdentificationArray();
   }
@@ -195,6 +200,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
           console.log('温度覆盖物点击方法');
           this.currentSelLayerBtnIndex = this.layerEnum.Temperature;
+          this.modelIsShow.temp = true;
           this.cdr.markForCheck();
         }, 0);
       });

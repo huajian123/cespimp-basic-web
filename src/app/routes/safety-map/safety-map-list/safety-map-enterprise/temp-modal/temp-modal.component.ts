@@ -1,4 +1,11 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component, EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'temp-modal',
@@ -6,18 +13,28 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/co
   styleUrls: ['./temp-modal.component.scss'],
 })
 export class TempModalComponent implements OnInit, AfterViewInit {
+  char: any;
   Option: any;
   value: any;
   kd: any;
   /*  data: any;*/
   borderColor: any;
   mercuryColor: any;
+  @Input() showModel: boolean;
+  @Output() showModelChange = new EventEmitter<boolean>();
+
   constructor(private cdr: ChangeDetectorRef) {
+    this.showModel = false;
     this.value = 40.0;
     this.borderColor = '#fd4d49';
     this.mercuryColor = '#fd4d49';
     this.kd = [];
 
+  }
+
+  close() {
+    this.showModel = false;
+    this.showModelChange.emit(false);
   }
 
 // 因为柱状初始化为0，温度存在负值，所以，原本的0-100，改为0-130，0-30用于表示负值
@@ -195,15 +212,21 @@ export class TempModalComponent implements OnInit, AfterViewInit {
       }],
 
     };
-
+  }
+  onChartInit(chart: any) {
+    this.char = chart;
+    setTimeout(() => {
+      this.char.resize();
+    }, 400);
   }
 
   ngOnInit() {
-
+    this.initCeShiOption();
   }
 
   ngAfterViewInit(): void {
     this.initCeShiOption();
+    this.cdr.markForCheck()
   }
 
 }

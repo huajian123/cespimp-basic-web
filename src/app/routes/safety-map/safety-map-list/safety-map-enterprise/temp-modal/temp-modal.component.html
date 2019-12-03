@@ -1,5 +1,5 @@
 <div class="temp-wrap">
-  <nz-modal [nzVisible]="true" nzWidth="800" [nzFooter]="null">
+  <nz-modal [(nzVisible)]="showModel" nzWidth="800" [nzFooter]="null" (nzOnCancel)="close()">
     <nz-tabset>
       <nz-tab nzTitle="实时温度">
         <div class="item-flex">
@@ -9,7 +9,7 @@
         </div>
         <div class="parent">
           <div class="chart-wrap">
-            <div echarts [options]="Option"></div>
+            <div echarts (chartInit)="onChartInit($event)" [options]="Option"></div>
             <dl class="temper">
               <dt>温度值：40℃</dt>
               <dd style="text-indent: 14px">状态：<i class="point"></i><span>正常</span></dd>
