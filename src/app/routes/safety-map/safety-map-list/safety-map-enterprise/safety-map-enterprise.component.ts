@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, I
 import { SafetyMapService, SafetyMapServiceNs } from '@core/biz-services/safety-map/safety-map.service';
 import IdentificationDataModel = SafetyMapServiceNs.IdentificationDataModel;
 import LatitudeLongitudeModel = SafetyMapServiceNs.LatitudeLongitudeModel;
+import Obj = echarts.EChartOption.Tooltip.Position.Obj;
 
 enum IdentificationUrlEnum {
   FireNormal = '../../../../../assets/imgs/safeOnePage/fire.png',
@@ -61,7 +62,8 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   poisonousGasMarkerArray: any[];// 有毒气体
   cameraMarkerArray: any[];// 摄像头
   modelIsShow: {
-    temp: boolean
+    temp: boolean,
+    press: boolean
   };
 
   layerObjArray: LayerBtnInterface[]; // 图层数组
@@ -96,6 +98,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
 
     this.modelIsShow = {
       temp: false,
+      press: false,
     };
     // 初始化标注数组
     this.initIdentificationArray();
@@ -185,6 +188,13 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     this.addMarkerListenFn();
   }
 
+  // 初始化所有模态框状态
+  initModelStatus(){
+    Object.keys(this.modelIsShow).forEach(key => {
+      this.modelIsShow[key] = false;
+    });
+  }
+
   // 覆盖物监听方法
   addMarkerListenFn() {
     this.hazardSourcesMarkerArray.forEach(item => {
@@ -200,6 +210,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
           console.log('温度覆盖物点击方法');
           this.currentSelLayerBtnIndex = this.layerEnum.Temperature;
+          this.initModelStatus();
           this.modelIsShow.temp = true;
           this.cdr.markForCheck();
         }, 0);
@@ -209,6 +220,9 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       item.addEventListener('click', () => {
         setTimeout(() => {
           console.log('压力源覆盖物点击方法');
+          this.currentSelLayerBtnIndex = this.layerEnum.Pressure;
+          this.initModelStatus();
+          this.modelIsShow.press = true;
           this.cdr.markForCheck();
         }, 0);
       });

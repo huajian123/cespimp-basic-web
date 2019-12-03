@@ -11,22 +11,24 @@
   font-weight: bold;
 }
 
-
+.item-ceshi {
+  display: inline-flex;
+  width: 300px;
+  height: 300px;
+}
 
 .parent {
   position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 60px;
-  .chart-wrap{
-  }
 }
 
-
+.item-table {
+  position: absolute;
+  right: 10%;
+  top: 28%;
+}
 
 .item-table tr td {
-  width: 250px;
+  width: 150px;
   height: 30px;
   border: 1px solid #000;
   text-align: center;
@@ -36,12 +38,18 @@ table tr td:last-child {
   background-color: #eee;
 }
 
+.temper {
+  position: absolute;
+  top: 78%;
+  left: 13%;
+  width: 150px;
 
+}
 
 .point {
   display: inline-block;
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color:#0f0;
+  background-color: #0f0;
 }

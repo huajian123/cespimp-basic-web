@@ -1,10 +1,10 @@
-
 <div class="wraper">
   <div id="map" style="width: 100%;height: 800px"></div>
 
   <div class="layer-wrap">
-    <div class="layer-item" [ngClass]="{active:item.isSel,unActive:!item.isSel}"  *ngFor="let item of layerObjArray" (click)="selIdentification(item)">
-      <span class="icon iconfont" [ngClass]="item.icon" ></span>
+    <div class="layer-item" [ngClass]="{active:item.isSel,unActive:!item.isSel}" *ngFor="let item of layerObjArray"
+         (click)="selIdentification(item)">
+      <span class="icon iconfont" [ngClass]="item.icon"></span>
       <span>{{item.name}}</span>
       <span>（{{item.count}}）</span>
     </div>
@@ -12,8 +12,9 @@
 
 
   <div class="identification-wrap">
-    <div class="identification" [ngClass]="{active:item.isSel,unActive:!item.isSel}" *ngFor="let item of identificationBtnObjArray;" (click)="selIdentification(item)">
-      <span class="icon iconfont" [ngClass]="item.icon" ></span>
+    <div class="identification" [ngClass]="{active:item.isSel,unActive:!item.isSel}"
+         *ngFor="let item of identificationBtnObjArray;" (click)="selIdentification(item)">
+      <span class="icon iconfont" [ngClass]="item.icon"></span>
       <span>{{item.name}}</span>
       <span>（{{item.count}}）</span>
     </div>
@@ -28,6 +29,10 @@
 
   <div class="temp-wrap" *ngIf="modelIsShow.temp">
     <temp-modal [(showModel)]="modelIsShow.temp"></temp-modal>
+  </div>
+
+  <div class="temp-wrap" *ngIf="modelIsShow.press">
+    <press-modal [(showModel)]="modelIsShow.press"></press-modal>
   </div>
 
 </div>

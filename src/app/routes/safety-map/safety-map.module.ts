@@ -5,6 +5,7 @@ import { SafetyMapSafetyMapListComponent } from './safety-map-list/safety-map-li
 import { SafetyMapEnterpriseComponent } from './safety-map-list/safety-map-enterprise/safety-map-enterprise.component';
 import { AlarmListComponent } from './safety-map-list/safety-map-enterprise/alarm-list/alarm-list.component';
 import { TempModalComponent } from './safety-map-list/safety-map-enterprise/temp-modal/temp-modal.component';
+import { PressModalComponent } from './safety-map-list/safety-map-enterprise/press-modal/press-modal.component';
 
 const COMPONENTS = [
   SafetyMapSafetyMapListComponent
@@ -23,6 +24,7 @@ const COMPONENTS_NOROUNT = [
     ...COMPONENTS,
     ...COMPONENTS_NOROUNT,
     TempModalComponent,
+    PressModalComponent,
   ],
   entryComponents: COMPONENTS_NOROUNT,
 })
