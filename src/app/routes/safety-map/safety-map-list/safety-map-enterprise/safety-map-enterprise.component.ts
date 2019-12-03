@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, I
 import { BasicInfoService } from '@core/biz-services/basic-info/basic-info.service';
 
 enum LayerEnum {
+  HazardSources, // 重大危险源
   Alarm, // 告警
   Temperature, // 温度
   Pressure, // 压力
@@ -9,7 +10,6 @@ enum LayerEnum {
   FireGas, // 可燃气体
   PoisonousGas, // 有毒气体
   Camera, // 摄像头
-  HazardSources, // 重大危险源
 }
 
 interface LayerBtnInterface {
@@ -34,8 +34,10 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   tilePhoto: Object; // 倾斜摄影对象
   currentSelLayerBtnIndex: number;
   identificationBtnObjArray: LayerBtnInterface[]; // 标识图层数组
-  layerObjArray:LayerBtnInterface[]; // 图层数组
+  layerObjArray: LayerBtnInterface[]; // 图层数组
   selLayerNumberArray: number[]; // 存储选中的图层的数组
+  majorHazardCurrentSelLay: number;// 重大危险源当前选中的图层
+
 // /safety-map/safety-map-list
   constructor(private cdr: ChangeDetectorRef) {
     const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
@@ -43,24 +45,25 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=0a65163e2ebdf5a37abb7f49274b85df';
     this.tilePhoto = new T.TileLayer(imageURL, { minZoom: 1, maxZoom: 18 });
     this.currentSelLayerBtnIndex = -1;
-    this.layerObjArray=[
+    this.layerObjArray = [
       { name: '重大危险源', type: 'default', icon: 'warning', isSel: false, layNum: LayerEnum.HazardSources, count: 2 },
     ];
 
     this.identificationBtnObjArray = [
       { name: '实时报警', type: 'default', icon: 'bell', isSel: false, layNum: LayerEnum.Alarm, count: 2 },
-      { name: '温度传感器', type: 'default', icon: 'temperature', isSel: false, layNum: LayerEnum.Temperature , count: 2 },
-      { name: '压力传感器', type: 'default', icon: 'pressure', isSel: false, layNum: LayerEnum.Pressure, count: 2  },
-      { name: '液位传感器', type: 'default', icon: 'water-level', isSel: false, layNum: LayerEnum.WaterLevel, count: 2  },
-      { name: '可燃气体', type: 'default', icon: 'fire', isSel: false, layNum: LayerEnum.FireGas , count: 2 },
-      { name: '有毒气体', type: 'default', icon: 'poison', isSel: false, layNum: LayerEnum.PoisonousGas, count: 2  },
-      { name: '摄像头', type: 'default', icon: 'camera', isSel: false, layNum: LayerEnum.Camera , count: 2 },
+      { name: '温度传感器', type: 'default', icon: 'temperature', isSel: false, layNum: LayerEnum.Temperature, count: 2 },
+      { name: '压力传感器', type: 'default', icon: 'pressure', isSel: false, layNum: LayerEnum.Pressure, count: 2 },
+      { name: '液位传感器', type: 'default', icon: 'water-level', isSel: false, layNum: LayerEnum.WaterLevel, count: 2 },
+      { name: '可燃气体', type: 'default', icon: 'fire', isSel: false, layNum: LayerEnum.FireGas, count: 2 },
+      { name: '有毒气体', type: 'default', icon: 'poison', isSel: false, layNum: LayerEnum.PoisonousGas, count: 2 },
+      { name: '摄像头', type: 'default', icon: 'camera', isSel: false, layNum: LayerEnum.Camera, count: 2 },
     ];
     this.selLayerNumberArray = [];
+    this.majorHazardCurrentSelLay = -1;
   }
 
   // 选择标识
-  selIdentification(item){
+  selIdentification(item) {
     item.isSel = !item.isSel;
     this.currentSelLayerBtnIndex = item.layNum;
 
@@ -70,7 +73,13 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     } else {
       this.selLayerNumberArray.splice(index, 1);
     }
-    console.log(this.selLayerNumberArray);
+
+    // 告警
+    if (item.layNum === this.layerEnum.Alarm && item.isSel) {
+      this.currentSelLayerBtnIndex = item.layNum;
+    } else {
+      this.currentSelLayerBtnIndex = -1;
+    }
   }
 
   // 切换图层
@@ -80,7 +89,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     this.checkLayerNumberIsIndex(layerEnum);
   }
 
-  checkLayerNumberIsIndex(layerEnum){
+  checkLayerNumberIsIndex(layerEnum) {
     const index = this.selLayerNumberArray.indexOf(layerEnum);
     if (index === -1) {
       this.selLayerNumberArray.push(layerEnum);

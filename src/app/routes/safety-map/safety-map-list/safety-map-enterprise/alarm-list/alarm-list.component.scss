@@ -1,0 +1,26 @@
+
+.table-wrap {
+  background: #ffffff;
+  border: 1px solid #409eff;
+  border-radius: 4px;
+  padding: 20px;
+  .title {
+    color: #409eff;
+    height: 35px;
+    line-height: 35px;
+    margin-left: 15px;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    &:before{
+      content: "";
+      height: 70%;
+      border-left: 4px solid #409eff;
+      position: absolute;
+      left: -10px;
+    }
+  }
+
+}
+

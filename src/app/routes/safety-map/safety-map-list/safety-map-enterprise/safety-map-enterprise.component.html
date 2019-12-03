@@ -18,6 +18,13 @@
       <span>（{{item.count}}）</span>
     </div>
   </div>
+
+  <div class="alarm-list" *ngIf="currentSelLayerBtnIndex===layerEnum.Alarm">
+
+    <div class="list-wrap">
+      <alarm-list></alarm-list>
+    </div>
+  </div>
 </div>
 
 
