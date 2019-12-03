@@ -118,7 +118,6 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
   // 修改搜索下拉框
   changeSelValue(event) {
     this.createEnterpriseMarker(event);
-
   }
 
   // 工厂覆盖物点击方法
@@ -136,6 +135,11 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
         }, 0);
       });
     });
+  }
+
+  returnToMap() {
+    this.currentPageType = this.pageTypeEnum.EnterpriseList;
+    this.initMap();
   }
 
   realAreaInit = (sel, transform) => {

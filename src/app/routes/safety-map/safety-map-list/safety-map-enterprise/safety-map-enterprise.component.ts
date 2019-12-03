@@ -1,4 +1,12 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component, EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { SafetyMapService, SafetyMapServiceNs } from '@core/biz-services/safety-map/safety-map.service';
 import IdentificationDataModel = SafetyMapServiceNs.IdentificationDataModel;
 import LatitudeLongitudeModel = SafetyMapServiceNs.LatitudeLongitudeModel;
@@ -48,6 +56,7 @@ interface LayerBtnInterface {
 export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   @Input() enterpriseId: number;
   @Input() enterprisePosition: LatitudeLongitudeModel;
+  @Output() returnBackBtn: EventEmitter<any>;
   map;
   layerEnum = LayerEnum;
   tilePhoto: Object; // 倾斜摄影对象
@@ -102,6 +111,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     };
     // 初始化标注数组
     this.initIdentificationArray();
+    this.returnBackBtn = new EventEmitter<any>();
   }
 
   // 选择标识
@@ -137,10 +147,8 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           // 温度
           case 'temp':
             const tempMarker = this.createMarkers(IdentificationUrlEnum.TempNormal, item.longitude, item.latitude, item.id);
-            console.log(tempMarker.getIcon());
-            console.log(tempMarker);
+
             this.temperatureMarkerArray.push(tempMarker);
-            console.log(this.temperatureMarkerArray);
             this.map.addOverLay(tempMarker);
             break;
           // 液位
@@ -189,7 +197,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   }
 
   // 初始化所有模态框状态
-  initModelStatus(){
+  initModelStatus() {
     Object.keys(this.modelIsShow).forEach(key => {
       this.modelIsShow[key] = false;
     });
@@ -324,6 +332,10 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     this.map = new T.Map('map');
     this.map.centerAndZoom(new T.LngLat(this.enterprisePosition.lng, this.enterprisePosition.lat), 18);
     this.map.addLayer(this.tilePhoto);
+  }
+
+  returnBack() {
+    this.returnBackBtn.emit();
   }
 
   ngOnInit() {
