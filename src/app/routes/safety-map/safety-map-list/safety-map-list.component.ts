@@ -10,6 +10,8 @@ import { BasicInfoService, BasicInfoServiceNs } from '@core/biz-services/basic-i
 import { OptionsInterface, SearchCommonVO } from '@core/vo/comm/BusinessEnum';
 import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
 import * as d3 from 'd3';
+import { SafetyMapServiceNs } from '@core/biz-services/safety-map/safety-map.service';
+import LatitudeLongitudeModel = SafetyMapServiceNs.LatitudeLongitudeModel;
 
 enum EnterpriseUrlEnum {
   Normal = '../../../../assets/imgs/safeOnePage/cover.png',
@@ -36,6 +38,8 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
   pageTypeEnum = PageTypeEnum;
   currentPageType: number;
   tilePhoto: Object; // 倾斜摄影对象
+  selEnterprisePosition: LatitudeLongitudeModel;
+
 
   /*d3图层*/
   industrialPark = [];
@@ -53,6 +57,10 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
       'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
       '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=0a65163e2ebdf5a37abb7f49274b85df';
     this.tilePhoto = new T.TileLayer(imageURL, { minZoom: 1, maxZoom: 18 });
+    this.selEnterprisePosition = {
+      lat: 0,
+      lng: 0,
+    };
 
 
     this.realArea = new T.D3Overlay(this.realAreaInit, this.realAreaRedraw);
@@ -120,6 +128,10 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
           this.selectedEnterpriseId = item.setOptions.id;
           this.currentPageType = this.pageTypeEnum.EnterpriseItem;
+          this.selEnterprisePosition = {
+            lng: item.or.lng,
+            lat: item.or.lat,
+          };
           this.cdr.markForCheck();
         }, 0);
       });

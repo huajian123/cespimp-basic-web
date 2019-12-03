@@ -1,5 +1,22 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { BasicInfoService } from '@core/biz-services/basic-info/basic-info.service';
+import { SafetyMapService, SafetyMapServiceNs } from '@core/biz-services/safety-map/safety-map.service';
+import IdentificationDataModel = SafetyMapServiceNs.IdentificationDataModel;
+import LatitudeLongitudeModel = SafetyMapServiceNs.LatitudeLongitudeModel;
+
+enum IdentificationUrlEnum {
+  FireNormal = '../../../../../assets/imgs/safeOnePage/fire.png',
+  FireSel = '../../../../../assets/imgs/safeOnePage/fire-sel.png',
+  CameraNormal = '../../../../../assets/imgs/safeOnePage/camera.png',
+  CameraSel = '../../../../../assets/imgs/safeOnePage/camera-sel.png',
+  TempNormal = '../../../../../assets/imgs/safeOnePage/temp.png',
+  TempSel = '../../../../../assets/imgs/safeOnePage/temp-sel.png',
+  WaterLevelNormal = '../../../../../assets/imgs/safeOnePage/water-level.png',
+  WaterLevelSel = '../../../../../assets/imgs/safeOnePage/water-level-sel.png',
+  PressNormal = '../../../../../assets/imgs/safeOnePage/press.png',
+  PressSel = '../../../../../assets/imgs/safeOnePage/press-sel.png',
+  PoisonNormal = '../../../../../assets/imgs/safeOnePage/poison.png',
+  PoisonSel = '../../../../../assets/imgs/safeOnePage/poison-sel.png',
+}
 
 enum LayerEnum {
   HazardSources, // 重大危险源
@@ -29,6 +46,7 @@ interface LayerBtnInterface {
 })
 export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   @Input() enterpriseId: number;
+  @Input() enterprisePosition: LatitudeLongitudeModel;
   map;
   layerEnum = LayerEnum;
   tilePhoto: Object; // 倾斜摄影对象
@@ -37,9 +55,11 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   layerObjArray: LayerBtnInterface[]; // 图层数组
   selLayerNumberArray: number[]; // 存储选中的图层的数组
   majorHazardCurrentSelLay: number;// 重大危险源当前选中的图层
+  identificationData: IdentificationDataModel; // 重大危险源图层标识符数据集合
+
 
 // /safety-map/safety-map-list
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(private cdr: ChangeDetectorRef, private safetyMapService: SafetyMapService) {
     const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
       'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
       '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=0a65163e2ebdf5a37abb7f49274b85df';
@@ -60,10 +80,11 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     ];
     this.selLayerNumberArray = [];
     this.majorHazardCurrentSelLay = -1;
+    this.identificationData = {};
   }
 
   // 选择标识
-  selIdentification(item) {
+  async selIdentification(item) {
     item.isSel = !item.isSel;
     this.currentSelLayerBtnIndex = item.layNum;
 
@@ -80,6 +101,100 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     } else {
       this.currentSelLayerBtnIndex = -1;
     }
+
+    // 获取标识数据
+    await this.getIdentificationData();
+
+    this.map.clearOverLays();
+    // 创建覆盖物标识
+    Object.keys(this.identificationData).forEach(key => {
+      switch (key) {
+        // 温度
+        case 'temp':
+          this.identificationData[key].forEach(item => {
+            this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.TempNormal, item.longitude, item.latitude, item.id));
+          });
+          break;
+        // 液位
+        case 'liquid':
+          this.identificationData[key].forEach(item => {
+            this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.WaterLevelNormal, item.longitude, item.latitude, item.id));
+          });
+          break;
+        // 压力
+        case 'pressure':
+          this.identificationData[key].forEach(item => {
+            this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.PressNormal, item.longitude, item.latitude, item.id));
+          });
+          break;
+
+        // 摄像头
+        case 'camera':
+          this.identificationData[key].forEach(item => {
+            this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.CameraNormal, item.longitude, item.latitude, item.id));
+          });
+          break;
+
+        // 有毒气体
+        case 'poisonous':
+          this.identificationData[key].forEach(item => {
+            this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.PoisonNormal, item.longitude, item.latitude, item.id));
+          });
+          break;
+
+        // 可燃气体
+        case 'combustible':
+          this.identificationData[key].forEach(item => {
+            this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.FireNormal, item.longitude, item.latitude, item.id));
+          });
+          break;
+
+        // 重大危险源
+        case 'majorHazardInfo':
+
+          this.identificationData[key].forEach(item => {
+            const polygonPoints = [];
+            item.majorScope.forEach(({ lat, lng }) => {
+              polygonPoints.push(new T.LngLat(lng, lat));
+            });
+            this.painPolygon(polygonPoints);
+            //  this.map.addOverLay(this.createMarkers(IdentificationUrlEnum.FireNormal, item.longitude, item.latitude, item.id));
+          });
+          break;
+      }
+    });
+  }
+
+  // 绘制多边形
+  painPolygon(list) {
+    const polygon = new T.Polygon(list, {
+      color: 'blue',
+      weight: 3,
+      opacity: 0.5,
+      fillColor: '#FFFFFF',
+      fillOpacity: 0.5,
+    });
+    this.map.addOverLay(polygon);
+  }
+
+  createMarkers(iconUrl: string, longitude: number, latitude: number, markId: number, type?) {
+    const icon = new T.Icon({
+      iconUrl,
+      iconSize: new T.Point(27, 27),
+      iconAnchor: new T.Point(10, 25),
+    });
+    const marker = new T.Marker(new T.LngLat(longitude, latitude), { icon });
+    marker.setOptions = { id: markId, type: type || null };
+    return marker;
+  }
+
+  // 点击重大危险源图层的标识，存储数据
+  async getIdentificationData() {
+    const data = await this.safetyMapService.getIdCardInfoDetail({
+      entprId: this.enterpriseId,
+      types: this.selLayerNumberArray,
+    });
+    this.identificationData = data;
   }
 
   // 切换图层
@@ -102,7 +217,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
 
   initMap() {
     this.map = new T.Map('map');
-    this.map.centerAndZoom(new T.LngLat(118.30612, 34.29057), 18);
+    this.map.centerAndZoom(new T.LngLat(this.enterprisePosition.lng, this.enterprisePosition.lat), 18);
     this.map.addLayer(this.tilePhoto);
   }
 
