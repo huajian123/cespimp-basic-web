@@ -11,7 +11,20 @@
   font-weight: bold;
 }
 
+.history-item {
+  display: inline-flex;
+  width: 100%;
+  height: 300px;
+}
 
+.history-parent{
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .chart-wrap{
+  }
+}
 
 .parent {
   position: relative;

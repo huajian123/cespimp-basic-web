@@ -8,6 +8,7 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } fro
 export class PressModalComponent implements OnInit {
   char: any;
   Option: any;
+  historyOption: any;
   value: any;
   kd: any;
   /*  data: any;*/
@@ -15,6 +16,7 @@ export class PressModalComponent implements OnInit {
   mercuryColor: any;
   @Input() showModel: boolean;
   @Output() showModelChange = new EventEmitter<boolean>();
+  dateRange = [];
 
   constructor(private cdr: ChangeDetectorRef) {
     this.showModel = false;
@@ -66,7 +68,123 @@ export class PressModalComponent implements OnInit {
 
       }],
     };
+
+    this.historyOption = {
+      backgroundColor: '#0A1651',
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          lineStyle: {
+            color: '#57617B',
+          },
+        },
+      },
+      legend: {},
+      grid: {
+        bottom: '10%',
+      },
+      xAxis: [{
+        name: '时间 （单位分钟）',
+        type: 'category',
+        boundaryGap: false,
+        axisLine: {
+          lineStyle: {
+            color: '#57617B',
+          },
+        },
+        data: ['0', '14:18', '15:28', '16:41', '17:32', '18:11', '19:22', '19:04', '20:01', '21:30'],
+      }],
+      yAxis: [{
+        type: 'value',
+        axisTick: {
+          show: false,
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#57617B',
+          },
+        },
+
+        axisLabel: {
+          margin: 10,
+          textStyle: {
+            color: 'rgba(255,255,255,.6)',
+            fontSize: '12',
+          },
+        },
+        splitLine: {
+          lineStyle: {
+            color: 'rgba(255,255,255,0.1)',
+          },
+        },
+      }],
+      visualMap: [
+        {
+          show: false,
+          pieces: [{
+            gt: 0,
+            lt: 100,
+            color: '#FFFF00',
+          }, {
+            gt: 100,
+            lt: 300,
+            color: '#00A1EA',
+          }],
+          outOfRange: {
+            color: '#FF5D1D',
+          },
+        },
+      ],
+      series: [{
+        name: '压力 kPa',
+        type: 'line',
+        smooth: true,
+        markLine: { //最大值和最小值
+          data: [
+            {
+              name: '阈值300',
+              yAxis: 300,
+              label: {
+                show: 'true',
+              },
+              lineStyle: {
+                normal: {
+                  width: 2,
+                  color: '#FF5D1D',
+                },
+              },
+
+            },
+            {
+              name: '阈值100',
+              yAxis: 100,
+              label: {
+                show: 'true',
+              },
+              lineStyle: {
+                normal: {
+                  width: 2,
+                  color: '#FF5D1D',
+                },
+              },
+            }],
+        },
+        lineStyle: {
+          normal: {
+            width: 1,
+          },
+        },
+        itemStyle: {
+          normal: {
+            color: '#00A1EA',
+          },
+        },
+        data: [150, 152, 252, 252, 152, 358, 252, 355, 344, 352],
+      }],
+
+    };
   }
+
   onChartInit(chart: any) {
     this.char = chart;
     setTimeout(() => {
@@ -80,7 +198,7 @@ export class PressModalComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.initCeShiOption();
-    this.cdr.markForCheck()
+    this.cdr.markForCheck();
   }
 
 }
