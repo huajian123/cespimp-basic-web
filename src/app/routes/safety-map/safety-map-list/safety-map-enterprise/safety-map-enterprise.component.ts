@@ -100,6 +100,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       this.currentSelLayerBtnIndex = item.layNum;
     } else {
       this.currentSelLayerBtnIndex = -1;
+      this.identificationBtnObjArray[0].isSel = false;
     }
 
     // 获取标识数据
