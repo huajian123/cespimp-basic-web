@@ -1,0 +1,56 @@
+<div class="temp-wrap">
+  <nz-modal [nzVisible]="true" nzWidth="800" [nzFooter]="null" (nzOnCancel)="close()">
+    <nz-tabset>
+      <nz-tab nzTitle="实时液位">
+        <div class="item-flex">
+          <div>传感器名称：<span>盐酸液位传感器</span></div>
+          <div>传感器编号：<span>JK-244</span></div>
+          <div>位置：<span>1号库房东北角</span></div>
+        </div>
+        <div class="parent">
+
+          <div class="item-ceshi">
+            <g2-water-wave title="实时液位" [percent]="34" [height]="161"></g2-water-wave>
+          </div>
+          <dl class="temper">
+            <dt>液位值：120cm</dt>
+            <dd style="text-indent: 14px">状态：<i class="point"></i> <span> 正常</span></dd>
+          </dl>
+          <table class="item-table">
+            <tr>
+              <td>上上限阈值（cm）</td>
+              <td>300</td>
+            </tr>
+            <tr>
+              <td>上限阈值（cm）</td>
+              <td>300</td>
+            </tr>
+            <tr>
+              <td>下限阈值（cm）</td>
+              <td>300</td>
+            </tr>
+            <tr>
+              <td>下下限阈值（cm）</td>
+              <td>300</td>
+            </tr>
+          </table>
+
+        </div>
+      </nz-tab>
+      <nz-tab nzTitle="历史液位">
+        <div class="item-flex">
+          <div>
+            <nz-range-picker [(ngModel)]="dateRange"></nz-range-picker>
+          </div>
+          <div>
+            <button nz-button  [nzType]="'primary'">查询</button>
+            <button nz-button class="mx-sm">重置</button>
+          </div>
+        </div>
+        <div class="parent">
+          <div class="history-item" echarts [options]="historyOption"></div>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </nz-modal>
+</div>

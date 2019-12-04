@@ -15,10 +15,12 @@ import { DirectivesModule } from '@shared/directives/directives.module';
 import { WidgetModule } from '../widget/widget.module';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { LoginManageHeadComponent } from './businessComp/login-manage-head/login-manage-head.component';
+import { G2WaterWaveModule } from '@delon/chart';
 const THIRDMODULES = [
   NgZorroAntdModule,
   CountdownModule,
-  NgxEchartsModule
+  NgxEchartsModule,
+  G2WaterWaveModule
 ];
 // #endregion
 
