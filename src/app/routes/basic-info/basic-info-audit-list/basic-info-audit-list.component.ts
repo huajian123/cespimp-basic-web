@@ -7,6 +7,8 @@ import { BasicInfoAuditService, BasicInfoAuditServiceNs } from '@core/biz-servic
 import { EVENT_KEY } from '@env/staticVariable';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import BasicInfoAuditModel = BasicInfoAuditServiceNs.BasicInfoAuditModel;
+import FiltersInfoModel = BasicInfoAuditServiceNs.FiltersInfoModel;
+import EntprSearchModel = BasicInfoAuditServiceNs.EntprSearchModel;
 
 interface OptionsInterface {
   value: string;
@@ -32,9 +34,11 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
   statusOptions: OptionsInterface[];
   seacher: BasicInfoAuditModel;
   loginInfo: LoginInfoModel;
+  filters: FiltersInfoModel;
 
-  constructor(private fb: FormBuilder,private dataService: BasicInfoAuditService, private cdr: ChangeDetectorRef) {
+  constructor(private fb: FormBuilder, private dataService: BasicInfoAuditService, private cdr: ChangeDetectorRef) {
     this.expandForm = false;
+    this.filters = {};
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
     this.loginInfo = {
@@ -53,7 +57,6 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
     };
     this.seacher = {
       id: null,
-      entprName: '',
       applicationName: '',
       applicationTime: new Date(),
       reviewName: '',
@@ -71,7 +74,7 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
   }
 
   /*确认审核*/
-  async handleOk(){
+  async handleOk() {
     Object.keys(this.validateForm.controls).forEach(key => {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
@@ -86,8 +89,13 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
   }
 
   /*取消审核*/
-   handleCancel(): void  {
+  handleCancel(): void {
     this.isVisible = false;
+  }
+
+  /*重置*/
+  resetSearchParam() {
+    this.filters = {};
   }
 
   changePage(e) {
@@ -96,7 +104,7 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
     this.getDataList();
   }
 
- goExamine(item) {
+  goExamine(item) {
     this.isVisible = true;
     this.validateForm.reset();
 
@@ -147,6 +155,7 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
       reviewExplain: [null, [Validators.required]],
     });
   }
+
   goDetailPage(item, modal) {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
@@ -161,9 +170,10 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
   }
 
   async getDataList(pageNumber?: number) {
-    const params = {
+    const params: EntprSearchModel = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      ...this.filters,
     };
     const { total, pageNum, list } = await this.dataService.getFactoryAuditList(params);
     this.listPageInfo.total = total;
