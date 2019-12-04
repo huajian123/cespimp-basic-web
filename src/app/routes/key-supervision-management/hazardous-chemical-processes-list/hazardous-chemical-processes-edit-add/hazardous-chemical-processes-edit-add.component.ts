@@ -13,8 +13,12 @@ import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import { PositionPickerService } from '../../../../widget/position-picker/position-picker.service';
 import { EVENT_KEY } from '@env/staticVariable';
 import { HazardousChemicalProcessesInfoService } from '@core/biz-services/key-supervision-management/hazardous-chemical-processes.service';
+import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
 
-
+interface OptionsInterface {
+  value: string | number;
+  label: string;
+}
 @Component({
   selector: 'app-key-supervision-management-hazardous-chemical-processes-edit-add',
   templateUrl: './hazardous-chemical-processes-edit-add.component.html',
@@ -27,10 +31,11 @@ export class KeySupervisionManagementHazardousChemicalProcessesEditAddComponent 
   @Input() currentPageNum: number;
   @Output() returnBack: EventEmitter<any>;
   loginInfo: LoginInfoModel;
-
+  processTypeOptions:OptionsInterface[];
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: HazardousChemicalProcessesInfoService, private positionPickerService: PositionPickerService) {
     this.returnBack = new EventEmitter<any>();
+    this.processTypeOptions = [];
     this.loginInfo = {
       createBy: '',
       createTime: new Date(),
@@ -50,7 +55,7 @@ export class KeySupervisionManagementHazardousChemicalProcessesEditAddComponent 
 
   initForm() {
     this.validateForm = this.fb.group({
-      processName: [null, [Validators.required]],
+      processType: [null, [Validators.required]],
     });
   }
 
@@ -89,6 +94,7 @@ export class KeySupervisionManagementHazardousChemicalProcessesEditAddComponent 
 
   ngOnInit() {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+    this.processTypeOptions = [...MapPipe.transformMapToArray(MapSet.processType)];
     this.initForm();
     if (this.id) {
       this.getDetail();

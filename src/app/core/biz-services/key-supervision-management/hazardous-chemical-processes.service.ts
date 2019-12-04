@@ -6,7 +6,7 @@ import { PageInfo } from '@core/vo/comm/PageInfo';
 export namespace HazardousChemicalProcessesListServiceNs {
   export interface HazardousChemicalProcessesInfoModel {
     id: number;
-    processName: string;
+    processType: number;
   }
 
   export interface HazardousChemicalProcessesSearchModel {

@@ -3,8 +3,10 @@
   <form nz-form  [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
     <se label="危险工艺名称" >
       <nz-form-control nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input  formControlName="processName" placeholder="危险工艺名称"/>
-        <nz-form-explain *ngIf="validateForm.get('processName').dirty && validateForm.get('processName').errors">请输入危险工艺名称
+        <nz-select formControlName="processType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择危险工艺名称'">
+          <nz-option *ngFor="let item of processTypeOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+        </nz-select>
+        <nz-form-explain *ngIf="validateForm.get('processType').dirty && validateForm.get('processType').errors">请输入危险工艺名称
         </nz-form-explain>
       </nz-form-control>
     </se>
