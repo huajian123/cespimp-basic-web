@@ -35,7 +35,7 @@ export class BasicInfoBasicInfoAuditDetailComponent implements OnInit {
   }
   async getDetailInfo(){
     this.dataInfo = await this.dataService.getBasicInfoAuditInfoDetail(this.id);
-    console.log(this.dataInfo);
+    //console.log(this.dataInfo);
     this.cdr.markForCheck();
   }
 

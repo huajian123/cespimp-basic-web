@@ -6,6 +6,7 @@ import { PageInfo } from '@core/vo/comm/PageInfo';
 export namespace BasicInfoAuditServiceNs {
   export interface BasicInfoAuditModel {
     id?: number;
+    entprName?:string;
     applicationName?: string;
     applicationTime?: Date;
     reviewName: string;
@@ -20,7 +21,7 @@ export namespace BasicInfoAuditServiceNs {
 
   /*定义搜索的接口*/
   export interface FiltersInfoModel {
-    entprName?: number;
+    entprName?: string;
     reviewStatus?: number;
   }
   /*定义入参的接口*/
