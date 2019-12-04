@@ -1,6 +1,6 @@
-<page-header [autoBreadcrumb]="false" [title]="'企业生产场所新增编辑页'"></page-header>
+<page-header [autoBreadcrumb]="false" [title]="'生产场所列表'"></page-header>
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submit()" [nzLayout]="'vertical'">
-  <nz-card [nzBordered]="true" nzTitle="生产场所管理">
+  <nz-card [nzBordered]="true" nzTitle="生产场所信息">
     <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
@@ -45,7 +45,7 @@
     </nz-row>
   </nz-card>
 
-  <nz-card [nzBordered]="true" nzTitle="位置管理">
+  <nz-card [nzBordered]="true" nzTitle="位置信息">
     <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
@@ -76,7 +76,7 @@
     </nz-row>
   </nz-card>
 
-  <nz-card [nzBordered]="true" nzTitle="介质管理">
+  <nz-card [nzBordered]="true" nzTitle="存储危化品信息">
     <nz-table [nzBordered]="true" formArrayName="majorHazardMaterialInsertDTOS" [nzData]="mediumArray.value" [nzShowPagination]="false">
       <thead>
       <tr>

@@ -1,29 +1,29 @@
-<page-header [autoBreadcrumb]="false" [autoBreadcrumb]="false" [title]="'企业库区新增编辑页'"></page-header>
+<page-header [autoBreadcrumb]="false" [autoBreadcrumb]="false" [title]="'重点监管危险化学品列表'"></page-header>
 <nz-card [nzBordered]="true">
-  <form nz-form  [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
 
-    <se label="品名" >
+    <se label="品名">
       <nz-form-control nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input  formControlName="productName" placeholder="品名"/>
+        <input nz-input formControlName="productName" placeholder="品名"/>
         <nz-form-explain *ngIf="validateForm.get('productName').dirty && validateForm.get('productName').errors">请输入品名
         </nz-form-explain>
       </nz-form-control>
     </se>
 
-    <se label="别名" >
+    <se label="别名">
       <nz-form-control nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input  formControlName="alias" placeholder="别名"/>
+        <input nz-input formControlName="alias" placeholder="别名"/>
       </nz-form-control>
     </se>
-    <se label="CAS号"  >
+    <se label="CAS号">
       <nz-form-control nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input  formControlName="casNo" placeholder="CAS号" />
+        <input nz-input formControlName="casNo" placeholder="CAS号"/>
         <nz-form-explain *ngIf="validateForm.get('casNo').dirty && validateForm.get('casNo').errors">请输入CAS号
         </nz-form-explain>
       </nz-form-control>
     </se>
     <se>
-      <button nz-button nzType="primary" type="submit" >提交</button>
+      <button nz-button nzType="primary" type="submit">提交</button>
       <button nz-button class="ml-sm" (click)="returnToList()">返回</button>
     </se>
   </form>

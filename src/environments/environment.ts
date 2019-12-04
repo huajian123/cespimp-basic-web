@@ -4,7 +4,7 @@
 
 import { EVENT_KEY } from '@env/staticVariable';
 
-export const localUrl = 'http://172.16.0.136:4201';
+export const localUrl = 'http://172.16.1.8:4201';
 export const webServerUrl = `${localUrl}/site`;
 
 export const getwayKey = {

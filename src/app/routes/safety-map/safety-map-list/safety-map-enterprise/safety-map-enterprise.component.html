@@ -39,6 +39,10 @@
     <press-modal [(showModel)]="modelIsShow.press"></press-modal>
   </div>
 
+  <div class="temp-wrap" *ngIf="modelIsShow.waterLevel">
+    <water-level-modal [(showModel)]="modelIsShow.waterLevel"></water-level-modal>
+  </div>
+
 </div>
 
 

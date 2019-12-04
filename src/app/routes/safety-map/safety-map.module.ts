@@ -6,6 +6,7 @@ import { SafetyMapEnterpriseComponent } from './safety-map-list/safety-map-enter
 import { AlarmListComponent } from './safety-map-list/safety-map-enterprise/alarm-list/alarm-list.component';
 import { TempModalComponent } from './safety-map-list/safety-map-enterprise/temp-modal/temp-modal.component';
 import { PressModalComponent } from './safety-map-list/safety-map-enterprise/press-modal/press-modal.component';
+import { WaterLevelModalComponent } from './safety-map-list/safety-map-enterprise/water-level-modal/water-level-modal.component';
 
 const COMPONENTS = [
   SafetyMapSafetyMapListComponent
@@ -25,6 +26,7 @@ const COMPONENTS_NOROUNT = [
     ...COMPONENTS_NOROUNT,
     TempModalComponent,
     PressModalComponent,
+    WaterLevelModalComponent,
   ],
   entryComponents: COMPONENTS_NOROUNT,
 })

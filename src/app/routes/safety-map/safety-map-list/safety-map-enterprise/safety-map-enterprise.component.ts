@@ -72,7 +72,8 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   cameraMarkerArray: any[];// 摄像头
   modelIsShow: {
     temp: boolean,
-    press: boolean
+    press: boolean,
+    waterLevel: boolean
   };
 
   layerObjArray: LayerBtnInterface[]; // 图层数组
@@ -108,6 +109,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     this.modelIsShow = {
       temp: false,
       press: false,
+      waterLevel: false,
     };
     // 初始化标注数组
     this.initIdentificationArray();
@@ -239,6 +241,9 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       item.addEventListener('click', () => {
         setTimeout(() => {
           console.log('液位源覆盖物点击方法');
+          this.currentSelLayerBtnIndex = this.layerEnum.WaterLevel;
+          this.initModelStatus();
+          this.modelIsShow.waterLevel = true;
           this.cdr.markForCheck();
         }, 0);
       });
