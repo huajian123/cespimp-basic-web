@@ -37,9 +37,9 @@ export namespace MajorHazardListServiceNs {
     partName?: string;
   }
 
-/*  export interface EntprSearch {
+  export interface EntprSearch {
     entprId: number;
-  }*/
+  }
   export interface MajorHazardSearchModel{
    /* entprName?: string;*/
     majorHazardNo?: string;
