@@ -9,6 +9,7 @@ import MajorHazardListInfoModel = MajorHazardListServiceNs.MajorHazardListInfoMo
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
+import MajorHazardSearchModel = MajorHazardListServiceNs.MajorHazardSearchModel;
 
 
 @Component({
@@ -25,6 +26,7 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
+  searchParam: MajorHazardSearchModel;
 
   constructor(private dataService: MajorHazardListInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
     this.expandForm = false;
@@ -37,6 +39,7 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
     };
     this.dataList = [];
     this.itemId = -1;
+    this.searchParam = {};
   }
 
   changePage(e) {
@@ -49,6 +52,7 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      ...this.searchParam,
     };
     const { total, list, pageNum } = await this.dataService.getMajorHazardList(params);
     this.listPageInfo.total = total;
@@ -85,6 +89,10 @@ export class MajorHazardManagementMajorHazardListComponent implements OnInit {
       this.itemId = item.id;
       this.dataService.delMajorHazard(this.itemId).then(() => this.getDataList(1));
     });
+  }
+
+  reset() {
+    this.searchParam = {};
   }
 
   async returnToList(e?: GoBackParam) {
