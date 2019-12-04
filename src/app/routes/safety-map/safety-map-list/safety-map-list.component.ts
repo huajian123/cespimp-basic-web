@@ -139,7 +139,11 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
 
   returnToMap() {
     this.currentPageType = this.pageTypeEnum.EnterpriseList;
-    this.initMap();
+    setTimeout(()=>{
+      this.map.checkResize();
+    },0);
+
+    console.log(this.map);
   }
 
   realAreaInit = (sel, transform) => {
