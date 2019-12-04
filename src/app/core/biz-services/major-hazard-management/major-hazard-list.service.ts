@@ -37,8 +37,12 @@ export namespace MajorHazardListServiceNs {
     partName?: string;
   }
 
-  export interface EntprSearch {
+/*  export interface EntprSearch {
     entprId: number;
+  }*/
+  export interface MajorHazardSearchModel{
+   /* entprName?: string;*/
+    majorHazardNo?: string;
   }
 
   export class MajorHazardListInfoServiceClass {
@@ -61,7 +65,7 @@ export namespace MajorHazardListServiceNs {
     }
 
     /*列表信息接口*/
-    public getMajorHazardList(param: SearchCommonVO): Promise<PageInfo<MajorHazardListInfoModel>> {
+    public getMajorHazardList(param: SearchCommonVO & MajorHazardSearchModel): Promise<PageInfo<MajorHazardListInfoModel>> {
       return this.http.get('data/major/hazard/infos', param).toPromise();
     }
 
