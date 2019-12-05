@@ -106,6 +106,18 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
     });
   }
 
+  getPartNoOptions(type, index) {
+    // type为当前选中的重大危险源type
+    const tempArray = this.majorAllNo.filter(item => {
+      return '' + item.partType === '' + type;
+    });//
+    this.selMajorNoArray = [];//先初始化一个类型下面的list菜单内容
+    tempArray.forEach(item => {
+      const obj = { value: item.partId, label: item.partNo, partType: item.partType };
+      this.selMajorNoArray.push(obj);//循环插入当前类型下面的list下拉内容菜单需传递的参数（partId，partNo，partType）；
+    });
+  }
+
   async getDetail() {
     this.currentPolygonList.length = 0;
     const param: EntprSearch = {
@@ -118,28 +130,20 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       });
     }
     this.validateForm.patchValue(dataInfo);
-    dataInfo.majorHazardUnits.forEach(item => {
+
+    dataInfo.majorHazardUnits.forEach((item, index) => {
       const field = this.createMedium();
+      this.getPartNoOptions((item as any).partType, index);
       field.patchValue(item);
+      field.get('partTypeLabel').setValue((item as any).partNo);
       this.mediumArray.push(field);
-      //console.log(this.mediumArray.controls[0]);
     });
-    //this.mediumArray.controls[0].partTypeLabel
-    //this.mediumArray.controls[0].get('partTypeLabel').setValue('partNo');
     this.cdr.markForCheck();
   }
 
   // 重大危险源type类型选取改变
   changeMajorType(type, index) {
-    // type为当前选中的重大危险源type
-    const tempArray = this.majorAllNo.filter(item => {
-      return '' + item.partType === type;
-    });//
-    this.selMajorNoArray = [];//先初始化一个类型下面的list菜单内容
-    tempArray.forEach(item => {
-      const obj = { value: item.partId, label: item.partNo, partType: item.partType };
-      this.selMajorNoArray.push(obj);//循环插入当前类型下面的list下拉内容菜单需传递的参数（partId，partNo，partType）；
-    });
+    this.getPartNoOptions(type, index);
     this.mediumArray.controls[index].get('partTypeLabel').reset();//重置formgroup中的选取显示内容
     this.mediumArray.controls[index].get('partNo').reset();//重置formgroup中的选取传递内容
   }
@@ -197,10 +201,16 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
 
   // 编辑组成单元
   edit(index: number) {
+
     if (this.editIndex !== -1 && this.editObj) {
       this.mediumArray.at(this.editIndex).patchValue(this.editObj);
     }
     this.editObj = { ...this.mediumArray.at(index).value };
+    console.log(this.editObj);
+    this.mediumArray.at(index).get('partType').setValue('' + (this.editObj as any).partType);
+    this.mediumArray.at(index).get('partNo').setValue((this.editObj as any).partId);
+    console.log(this.selMajorNoArray);
+    console.log((this.editObj as any).partId);
     this.editIndex = index;
   }
 

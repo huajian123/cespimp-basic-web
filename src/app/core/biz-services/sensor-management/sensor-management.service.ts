@@ -7,6 +7,7 @@ export namespace SensorManagementListServiceNs {
   export interface SensorManagementListInfoModel {
     id: number;
     sensorType: string;
+    sensorNo: string;
     sensorName: string;
     majorHazardId?: number;
     partType?: number;
@@ -20,25 +21,32 @@ export namespace SensorManagementListServiceNs {
     fourthAlarmThreshold: number;
   }
 
+  export interface SensorSearchModel {
+    entprName?: string;
+    sensorNo?: string;
+  }
+
   export class SensorManagementListInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
 
-    /*   /!*新增接口*!/
-       public addWarehouse(param:WarehouseListInfoModel): Promise<void> {
-         return this.http.post('data/basic/enterprise/rooms',param,{needSuccessInfo: true}).toPromise();
-       }
-       /!*修改接口*!/
-       public editWarehouse(param: WarehouseListInfoModel): Promise<void> {
-         return this.http.put('data/basic/enterprise/rooms',param,{needSuccessInfo: true}).toPromise();
-       }
-       /!*库房详情*!/
-       public getWarehouseInfoDetail(id: number): Promise<WarehouseListInfoModel> {
-         return this.http.get('data/basic/enterprise/rooms/'+ id).toPromise();
-       }*/
+    /*新增接口*/
+    public addSensor(param: SensorManagementListInfoModel): Promise<void> {
+      return this.http.post('data/major/hazard/sensor', param, { needSuccessInfo: true }).toPromise();
+    }
 
-    /*库房列表*/
-    public getSensorManagementList(param: SearchCommonVO): Promise<PageInfo<SensorManagementListInfoModel>> {
+    /*修改接口*/
+    public editSensor(param: SensorManagementListInfoModel): Promise<void> {
+      return this.http.put('data/major/hazard/sensor', param, { needSuccessInfo: true }).toPromise();
+    }
+
+    /*传感器详情*/
+    public getSensorInfoDetail(id: number): Promise<SensorManagementListInfoModel> {
+      return this.http.get('data/major/hazard/sensor/' + id).toPromise();
+    }
+
+    /*传感器列表*/
+    public getSensorManagementList(param: SearchCommonVO & SensorSearchModel): Promise<PageInfo<SensorManagementListInfoModel>> {
       return this.http.get('data/major/hazard/sensors', param).toPromise();
     }
 
