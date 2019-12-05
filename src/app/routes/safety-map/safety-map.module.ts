@@ -10,6 +10,7 @@ import { WaterLevelModalComponent } from './safety-map-list/safety-map-enterpris
 import { ToxicGasModalComponent } from './safety-map-list/safety-map-enterprise/toxic-gas-modal/toxic-gas-modal.component';
 import { CameraListModalComponent } from './safety-map-list/safety-map-enterprise/camera-list-modal/camera-list-modal.component';
 import { CombustibleGasModalComponent } from './safety-map-list/safety-map-enterprise/combustible-gas-modal/combustible-gas-modal.component';
+import { MajorHazardSourcesComponent } from './safety-map-list/safety-map-enterprise/major-hazard-sources/major-hazard-sources.component';
 
 
 const COMPONENTS = [
@@ -34,6 +35,7 @@ const COMPONENTS_NOROUNT = [
   declarations: [
     ...COMPONENTS,
     ...COMPONENTS_NOROUNT,
+    MajorHazardSourcesComponent,
   ],
   entryComponents: COMPONENTS_NOROUNT,
 })
