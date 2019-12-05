@@ -43,6 +43,17 @@
     <water-level-modal [(showModel)]="modelIsShow.waterLevel"></water-level-modal>
   </div>
 
+  <div class="temp-wrap" *ngIf="modelIsShow.fireGas">
+    <combustible-gas-modal [(showModel)]="modelIsShow.fireGas"></combustible-gas-modal>
+  </div>
+
+  <div class="temp-wrap" *ngIf="modelIsShow.poisonousGas">
+    <toxic-gas-modal [(showModel)]="modelIsShow.poisonousGas"></toxic-gas-modal>
+  </div>
+
+  <div class="temp-wrap" *ngIf="modelIsShow.camera">
+    <camera-list-modal [(showModel)]="modelIsShow.camera"></camera-list-modal>
+  </div>
 </div>
 
 

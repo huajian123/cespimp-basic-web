@@ -73,7 +73,10 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   modelIsShow: {
     temp: boolean,
     press: boolean,
-    waterLevel: boolean
+    waterLevel: boolean,
+    fireGas: boolean,
+    poisonousGas: boolean,
+    camera: boolean,
   };
 
   layerObjArray: LayerBtnInterface[]; // 图层数组
@@ -110,6 +113,9 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       temp: false,
       press: false,
       waterLevel: false,
+      fireGas: false,
+      poisonousGas: false,
+      camera:false,
     };
     // 初始化标注数组
     this.initIdentificationArray();
@@ -252,6 +258,9 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       item.addEventListener('click', () => {
         setTimeout(() => {
           console.log('可燃物覆盖物点击方法');
+          this.currentSelLayerBtnIndex = this.layerEnum.FireGas;
+          this.initModelStatus();
+          this.modelIsShow.fireGas = true;
           this.cdr.markForCheck();
         }, 0);
       });
@@ -260,6 +269,9 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       item.addEventListener('click', () => {
         setTimeout(() => {
           console.log('有毒覆盖物点击方法');
+          this.currentSelLayerBtnIndex = this.layerEnum.PoisonousGas;
+          this.initModelStatus();
+          this.modelIsShow.poisonousGas = true;
           this.cdr.markForCheck();
         }, 0);
       });
@@ -268,6 +280,9 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       item.addEventListener('click', () => {
         setTimeout(() => {
           console.log('摄像头覆盖物点击方法');
+          this.currentSelLayerBtnIndex = this.layerEnum.Camera;
+          this.initModelStatus();
+          this.modelIsShow.camera = true;
           this.cdr.markForCheck();
         }, 0);
       });

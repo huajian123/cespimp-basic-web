@@ -7,6 +7,9 @@ import { AlarmListComponent } from './safety-map-list/safety-map-enterprise/alar
 import { TempModalComponent } from './safety-map-list/safety-map-enterprise/temp-modal/temp-modal.component';
 import { PressModalComponent } from './safety-map-list/safety-map-enterprise/press-modal/press-modal.component';
 import { WaterLevelModalComponent } from './safety-map-list/safety-map-enterprise/water-level-modal/water-level-modal.component';
+import { ToxicGasModalComponent } from './safety-map-list/safety-map-enterprise/toxic-gas-modal/toxic-gas-modal.component';
+import { CameraListModalComponent } from './safety-map-list/safety-map-enterprise/camera-list-modal/camera-list-modal.component';
+import { CombustibleGasModalComponent } from './safety-map-list/safety-map-enterprise/combustible-gas-modal/combustible-gas-modal.component';
 
 
 const COMPONENTS = [
@@ -14,6 +17,9 @@ const COMPONENTS = [
   WaterLevelModalComponent,
   TempModalComponent,
   PressModalComponent,
+  ToxicGasModalComponent,
+  CombustibleGasModalComponent,
+  CameraListModalComponent,
 ];
 const COMPONENTS_NOROUNT = [
   AlarmListComponent,
