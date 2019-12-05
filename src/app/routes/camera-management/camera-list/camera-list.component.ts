@@ -9,6 +9,7 @@ import {
   CameraManagementListServiceNs,
 } from '@core/biz-services/camera-management/camera-list.service';
 import CameraManagementListInfoModel = CameraManagementListServiceNs.CameraManagementListInfoModel;
+import CameraSearchModel = CameraManagementListServiceNs.CameraSearchModel;
 
 @Component({
   selector: 'app-camera-management-camera-list',
@@ -24,8 +25,9 @@ export class CameraManagementCameraListComponent implements OnInit {
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
+  searchParam: CameraSearchModel;
 
-  constructor(private dataService: CameraManagementListInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
+  constructor(private dataService: CameraManagementListInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -36,6 +38,7 @@ export class CameraManagementCameraListComponent implements OnInit {
     };
     this.dataList = [];
     this.itemId = -1;
+    this.searchParam = {};
   }
 
   changePage(e) {
@@ -48,6 +51,7 @@ export class CameraManagementCameraListComponent implements OnInit {
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      ...this.searchParam,
     };
     const { total, list, pageNum } = await this.dataService.getCameraManagementList(params);
     this.listPageInfo.total = total;
@@ -73,6 +77,10 @@ export class CameraManagementCameraListComponent implements OnInit {
   goDetailPage(item, modal) {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
+  }
+
+  reset() {
+    this.searchParam = {};
   }
 
   goDeletePage(item, modal) {
@@ -106,9 +114,10 @@ export class CameraManagementCameraListComponent implements OnInit {
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '组成部分名称',
+      {
+        title: '组成部分名称',
         index: 'partName',
-        width: 100
+        width: 100,
       },
       { title: '经度', index: 'longitude', width: 100 },
       { title: '纬度', index: 'latitude', width: 100 },

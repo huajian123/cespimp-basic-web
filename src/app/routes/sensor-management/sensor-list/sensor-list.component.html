@@ -1,27 +1,27 @@
 <ng-container *ngIf="currentPage===pageTypeEnum.List">
   <page-header [autoBreadcrumb]="false" [title]="'传感器列表'"></page-header>
   <nz-card [nzBordered]="true">
-    <form nz-form [nzLayout]="'inline'" class="search__form">
+    <form nz-form [nzLayout]="'inline'" (ngSubmit)="getDataList(1)" class="search__form">
       <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
         <div nz-col nzMd="8" nzSm="24" [acl]="roleEnum[roleEnum.ParkManage]">
           <nz-form-item>
             <nz-form-label nzFor="no">企业名称</nz-form-label>
             <nz-form-control>
-              <input nz-input name="no" placeholder="请输入企业名称"/>
+              <input nz-input [(ngModel)]="searchParam.entprName" name="no" placeholder="请输入企业名称"/>
             </nz-form-control>
           </nz-form-item>
         </div>
         <div nz-col nzMd="8" nzSm="24">
           <nz-form-item>
-            <nz-form-label nzFor="status">库房编号</nz-form-label>
+            <nz-form-label nzFor="status">传感器编号</nz-form-label>
             <nz-form-control>
-              <input nz-input name="no" placeholder="请输入库房编号"/>
+              <input nz-input [(ngModel)]="searchParam.sensorNo" name="no" placeholder="请输入传感器编号"/>
             </nz-form-control>
           </nz-form-item>
         </div>
         <div nz-col [nzSpan]="expandForm ? 24 : 8" [class.text-right]="expandForm">
           <button nz-button type="submit" [nzType]="'primary'">查询</button>
-          <button nz-button type="reset" class="mx-sm">重置</button>
+          <button nz-button (click)="reset()" class="mx-sm">重置</button>
         </div>
       </div>
     </form>
@@ -38,10 +38,10 @@
 </ng-container>
 
 <!--<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
-  <app-warehouse-management-warehouse-list-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-warehouse-management-warehouse-list-detail>
+  <app-sensor-management-sensor-list-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-sensor-management-sensor-list-detail>
 </ng-container>-->
 
-<!--<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
-  <app-warehouse-management-warehouse-list-edit-add [id]="this.itemId" [currentPageNum]="listPageInfo.pi" (returnBack)="returnToList($event)"></app-warehouse-management-warehouse-list-edit-add>
-</ng-container>-->
+<ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
+  <app-sensor-management-sensor-list-edit-add [id]="this.itemId" [currentPageNum]="listPageInfo.pi" (returnBack)="returnToList($event)"></app-sensor-management-sensor-list-edit-add>
+</ng-container>
 

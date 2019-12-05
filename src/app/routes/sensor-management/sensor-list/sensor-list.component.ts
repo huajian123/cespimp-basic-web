@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { STColumn, STData } from '@delon/abc';
 import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
@@ -9,6 +9,7 @@ import {
   SensorManagementListServiceNs,
 } from '@core/biz-services/sensor-management/sensor-management.service';
 import SensorManagementListInfoModel = SensorManagementListServiceNs.SensorManagementListInfoModel;
+import SensorSearchModel = SensorManagementListServiceNs.SensorSearchModel;
 
 @Component({
   selector: 'app-sensor-management-sensor-list',
@@ -23,8 +24,9 @@ export class SensorManagementSensorListComponent implements OnInit {
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
+  searchParam: SensorSearchModel;
 
-  constructor(private dataService: SensorManagementListInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
+  constructor(private dataService: SensorManagementListInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -35,6 +37,7 @@ export class SensorManagementSensorListComponent implements OnInit {
     };
     this.dataList = [];
     this.itemId = -1;
+    this.searchParam = {};
   }
 
   changePage(e) {
@@ -47,6 +50,7 @@ export class SensorManagementSensorListComponent implements OnInit {
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      ...this.searchParam,
     };
     const { total, list, pageNum } = await this.dataService.getSensorManagementList(params);
     this.listPageInfo.total = total;
@@ -58,6 +62,10 @@ export class SensorManagementSensorListComponent implements OnInit {
   add() {
     this.itemId = null;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
+  }
+
+  reset() {
+    this.searchParam = {};
   }
 
   format(toBeFormat, arg) {
@@ -107,9 +115,10 @@ export class SensorManagementSensorListComponent implements OnInit {
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '组成部分名称',
+      {
+        title: '组成部分名称',
         index: 'partName',
-        width: 100
+        width: 100,
       },
       { title: '在厂区的位置', index: 'locFactory', width: 100 },
       { title: '低低位限', index: 'firstAlarmThreshold', width: 120 },
