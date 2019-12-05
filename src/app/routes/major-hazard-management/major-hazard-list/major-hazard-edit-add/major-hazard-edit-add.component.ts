@@ -154,7 +154,7 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
         return item.value === partId;
       });
       this.mediumArray.controls[index].get('partTypeLabel').setValue(selObj.label);
-      this.mediumArray.controls[index].get('partId').setValue(selObj.value);
+      this.mediumArray.controls[index].get('partNo').setValue(selObj.label);
     }
   }
 
@@ -206,11 +206,8 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       this.mediumArray.at(this.editIndex).patchValue(this.editObj);
     }
     this.editObj = { ...this.mediumArray.at(index).value };
-    console.log(this.editObj);
     this.mediumArray.at(index).get('partType').setValue('' + (this.editObj as any).partType);
-    this.mediumArray.at(index).get('partNo').setValue((this.editObj as any).partId);
-    console.log(this.selMajorNoArray);
-    console.log((this.editObj as any).partId);
+    this.mediumArray.at(index).get('partNo').setValue((this.editObj as any).partNo);
     this.editIndex = index;
   }
 
@@ -288,7 +285,6 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
           tempArray.push(obj);
         });
         this.currentPolygonList = [...tempArray];
-        console.log(this.currentPolygonList);
         this.validateForm.get('majorScope').setValue(tempArray);
       }
     }).catch(e => null);

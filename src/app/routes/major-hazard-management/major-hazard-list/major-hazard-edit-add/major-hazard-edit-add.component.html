@@ -151,7 +151,7 @@
         <td>
           <span *ngIf="editIndex !== i">{{ mediumArray.value[i].partTypeLabel }}</span>
           <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入组成部分编号">
-            <nz-select  (ngModelChange)="changeMajorNo($event,i)" formControlName="partNo" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成部分编号'">
+            <nz-select  (ngModelChange)="changeMajorNo($event,i)" formControlName="partId" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成部分编号'">
               <nz-option *ngFor="let item of selMajorNoArray" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
             </nz-select>
           </span>
