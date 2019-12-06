@@ -4,14 +4,14 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
-  ViewEncapsulation,
 } from '@angular/core';
 import { BasicInfoService, BasicInfoServiceNs } from '@core/biz-services/basic-info/basic-info.service';
-import { OptionsInterface, SearchCommonVO } from '@core/vo/comm/BusinessEnum';
+import { OptionsInterface, RoleEnum, SearchCommonVO } from '@core/vo/comm/BusinessEnum';
 import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
 import * as d3 from 'd3';
 import { SafetyMapServiceNs } from '@core/biz-services/safety-map/safety-map.service';
 import LatitudeLongitudeModel = SafetyMapServiceNs.LatitudeLongitudeModel;
+import { EVENT_KEY } from '@env/staticVariable';
 
 enum EnterpriseUrlEnum {
   Normal = '../../../../assets/imgs/safeOnePage/cover.png',
@@ -139,11 +139,9 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
 
   returnToMap() {
     this.currentPageType = this.pageTypeEnum.EnterpriseList;
-    setTimeout(()=>{
+    setTimeout(() => {
       this.map.checkResize();
-    },0);
-
-    console.log(this.map);
+    }, 0);
   }
 
   realAreaInit = (sel, transform) => {
@@ -228,6 +226,17 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
 
 
   async ngOnInit() {
+    if (window.sessionStorage.getItem(EVENT_KEY.role) === RoleEnum[RoleEnum.Enterprise]) {
+      const entprInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
+      this.selectedEnterpriseId = entprInfo.id;
+      this.currentPageType = this.pageTypeEnum.EnterpriseItem;
+      this.selEnterprisePosition = {
+        lng: entprInfo.longitude,
+        lat: entprInfo.latitude,
+      };
+      this.cdr.markForCheck();
+    }
+
     await this.getBusinessList();
     this.createEnterpriseMarker();
 

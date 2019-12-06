@@ -10,7 +10,8 @@ import {
 import { SafetyMapService, SafetyMapServiceNs } from '@core/biz-services/safety-map/safety-map.service';
 import IdentificationDataModel = SafetyMapServiceNs.IdentificationDataModel;
 import LatitudeLongitudeModel = SafetyMapServiceNs.LatitudeLongitudeModel;
-import Obj = echarts.EChartOption.Tooltip.Position.Obj;
+import { RoleEnum } from '@core/vo/comm/BusinessEnum';
+import { EVENT_KEY } from '@env/staticVariable';
 
 enum IdentificationUrlEnum {
   FireNormal = '../../../../../assets/imgs/safeOnePage/fire.png',
@@ -54,6 +55,8 @@ interface LayerBtnInterface {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
+  currentRole: string;
+  roleEnum = RoleEnum;
   @Input() enterpriseId: number;
   @Input() enterprisePosition: LatitudeLongitudeModel;
   @Output() returnBackBtn: EventEmitter<any>;
@@ -85,8 +88,8 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   identificationData: IdentificationDataModel; // 重大危险源图层标识符数据集合
 
 
-// /safety-map/safety-map-list
   constructor(private cdr: ChangeDetectorRef, private safetyMapService: SafetyMapService) {
+    this.currentRole = RoleEnum[RoleEnum.ParkManage];
     const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
       'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
       '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=0a65163e2ebdf5a37abb7f49274b85df';
@@ -115,7 +118,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       waterLevel: false,
       fireGas: false,
       poisonousGas: false,
-      camera:false,
+      camera: false,
     };
     // 初始化标注数组
     this.initIdentificationArray();
@@ -325,11 +328,10 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
 
   // 点击重大危险源图层的标识，存储数据
   async getIdentificationData() {
-    const data = await this.safetyMapService.getIdCardInfoDetail({
+    this.identificationData = await this.safetyMapService.getIdCardInfoDetail({
       entprId: this.enterpriseId,
       types: this.selLayerNumberArray,
     });
-    this.identificationData = data;
   }
 
   // 切换图层
@@ -359,7 +361,9 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.currentRole = window.sessionStorage.getItem(EVENT_KEY.role);
     console.log(this.enterpriseId);
+    console.log(this.enterprisePosition);
   }
 
   ngAfterViewInit(): void {
