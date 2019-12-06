@@ -55,7 +55,7 @@ export class PositionPickerComponent extends BaseConfirmModal.BasicConfirmModalC
     setTimeout(() => {
       this.map = new T.Map(this.mapElement.nativeElement);
       // 设置显示地图的中心点和级别
-      this.map.centerAndZoom(new T.LngLat(this.center.longitude, this.center.latitude), this.entprBasicInfo.zoom||18);
+      this.map.centerAndZoom(new T.LngLat(this.center.longitude, this.center.latitude), this.params.zoom|| this.entprBasicInfo.zoom||18);
       if (this.params.isRemoteImage) {
         const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
           'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +

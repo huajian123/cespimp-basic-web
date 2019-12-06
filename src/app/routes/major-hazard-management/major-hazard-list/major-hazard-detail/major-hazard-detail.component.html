@@ -3,14 +3,19 @@
   <sv-container size="large" title="基本信息">
     <sv label="重大危险源编号">{{dataInfo.majorHazardNo}}</sv>
     <sv label="重大危险源名称">{{dataInfo.majorHazardName}}</sv>
-    <sv label="R值">{{dataInfo.rvalue}}</sv>
-    <sv label="单元类型">{{dataInfo.unitType|map:'unitType'}}</sv>
-    <sv label="投用时间">{{dataInfo.useDate|map:'date:yyyy-MM-dd HH:mm:ss'}}</sv>
     <sv label="重大危险源等级">{{dataInfo.majorHazardLevel|map:'majorHazardLevel'}}</sv>
     <sv label="重大危险源性质">{{dataInfo.majorHazardNature|map:'majorHazardNature'}}</sv>
+    <sv label="单元类型">{{dataInfo.unitType|map:'unitType'}}</sv>
+    <sv label="R值">{{dataInfo.rvalue}}</sv>
     <sv label="重大危险源管理员">{{dataInfo.manager}}</sv>
     <sv label="管理员联系电话">{{dataInfo.managerMobile}}</sv>
+    <sv label="投用时间">{{dataInfo.useDate|map:'date:yyyy-MM-dd HH:mm:ss'}}</sv>
     <sv label="重大危险源描述">{{dataInfo.description}}</sv>
+  </sv-container>
+  <nz-divider></nz-divider>
+  <sv-container size="large" title="位置信息">
+    <sv label="重大危险源区域">{{dataInfo.majorScope}}</sv>
+    <sv label="厂区中的位置">{{dataInfo.locFactory}}</sv>
   </sv-container>
   <nz-divider></nz-divider>
   <div class="text-lg mb-md">重大危险源组成单元列表</div>

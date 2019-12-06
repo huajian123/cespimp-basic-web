@@ -36,6 +36,7 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
   loginInfo: LoginInfoModel;
   editIndex = -1;
   editObj = {};
+
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: WarehouseListInfoService, private positionPickerService: PositionPickerService) {
     this.returnBack = new EventEmitter<any>();
@@ -115,11 +116,18 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
   }
 
   showMap() {
-    this.positionPickerService.show({ isRemoteImage: true }).then(res => {
+    const longitude = this.validateForm.get('longitude').value;
+    const latitude = this.validateForm.get('latitude').value;
+    this.positionPickerService.show({
+      isRemoteImage: true, longitude: longitude,
+      latitude: latitude,
+      zoom: 18,
+    }).then(res => {
       this.validateForm.get('longitude').setValue(res.longitude);
       this.validateForm.get('latitude').setValue(res.latitude);
     }).catch(e => null);
   }
+
   // 创建介质
   createMedium(): FormGroup {
     return this.fb.group({
@@ -130,6 +138,7 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
       entprId: [this.loginInfo.entprId],
     });
   }
+
   //#region get form fields
   get mediumArray() {
     return this.validateForm.controls.majorHazardMaterialInsertDTOS as FormArray;

@@ -8,7 +8,8 @@
   </sv-container>
   <nz-divider></nz-divider>
   <sv-container size="large" title="位置管理">
-    <sv label="经纬度"><span (click)="showMap()" class="operate-text">查看</span></sv>
+    <sv><div #mapDivModal style="width: 1000px;height:300px;z-index: 1"></div></sv>
+    <sv></sv>
     <sv label="厂区中位置">{{dataInfo.locFactory}}</sv>
   </sv-container>
   <nz-divider></nz-divider>

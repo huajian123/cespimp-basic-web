@@ -132,7 +132,14 @@ export class ProductionManagementProductionListEditAddComponent implements OnIni
   }
 
   showMap() {
-    this.positionPickerService.show({ isRemoteImage: true }).then(res => {
+    const longitude = this.validateForm.get('longitude').value;
+    const latitude = this.validateForm.get('latitude').value;
+    this.positionPickerService.show({
+      isRemoteImage: true,
+      longitude: longitude,
+      latitude: latitude,
+      zoom: 18,
+    }).then(res => {
       this.validateForm.get('longitude').setValue(res.longitude);
       this.validateForm.get('latitude').setValue(res.latitude);
     }).catch(e => null);

@@ -4,99 +4,81 @@
     <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="name">传感器源编号</nz-form-label>
-          <nz-form-control nzErrorTip="请输入传感器源编号">
-            <input nz-input formControlName="sensorNo" placeholder="请输入传感器源编号"/>
+          <nz-form-label nzFor="name">传感器编号</nz-form-label>
+          <nz-form-control nzErrorTip="请输入传感器编号">
+            <input nz-input formControlName="sensorNo" placeholder="请输入传感器编号"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="name">传感器源名称</nz-form-label>
-          <nz-form-control nzErrorTip="请输入传感器源名称">
-            <input nz-input formControlName="sensorName" placeholder="请输入传感器源名称"/>
+          <nz-form-label nzFor="name">传感器名称</nz-form-label>
+          <nz-form-control nzErrorTip="请输入传感器名称">
+            <input nz-input formControlName="sensorName" placeholder="请输入传感器名称"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
         <nz-form-item>
-          <nz-form-label>传感器源等级</nz-form-label>
-          <nz-form-control nzErrorTip="请选择传感器源等级">
-           <!-- <nz-select formControlName="majorHazardLevel" [nzPlaceHolder]="'请选择火灾危险性等级'" [nzShowSearch]="true">
-              <nz-option *ngFor="let i of HazardLevelOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
-            </nz-select>-->
+          <nz-form-label>传感器类型</nz-form-label>
+          <nz-form-control nzErrorTip="请选择传感器类型">
+            <nz-select (ngModelChange)="changeSensorType($event)" formControlName="sensorType" [nzPlaceHolder]="'请选择火灾危险性类型'" [nzShowSearch]="true">
+              <nz-option *ngFor="let i of sensorTypeOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
     </nz-row>
-    <nz-row nzGutter="16">
+    <nz-row nzGutter="16" *ngIf="showTrue">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
-          <nz-form-label>传感器源性质</nz-form-label>
-          <nz-form-control nzErrorTip="请选择传感器源性质">
-        <!--    <nz-select formControlName="majorHazardNature" [nzShowSearch]="true" [nzPlaceHolder]="'请选择传感器源性质'">
-              <nz-option *ngFor="let item of HazardNatureOptions" [nzLabel]="item.label"
-                         [nzValue]="item.value"></nz-option>
-            </nz-select>-->
+          <nz-form-label nzFor="name">一级报警阈值</nz-form-label>
+          <nz-form-control nzErrorTip="请输入一级报警阈值">
+            <input nz-input formControlName="firstAlarmThreshold" placeholder="请输入一级报警阈值"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
-          <nz-form-label>单元类型</nz-form-label>
-          <nz-form-control nzErrorTip="请选择单元类型">
-           <!-- <nz-select formControlName="unitType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择单元类型'">
-              <nz-option *ngFor="let item of unitTypeOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
-            </nz-select>-->
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
-        <nz-form-item>
-          <nz-form-label>R值</nz-form-label>
-          <nz-form-control nzErrorTip="请输入R值">
-            <input nz-input formControlName="rvalue" placeholder="R值">
+          <nz-form-label nzFor="name">二级报警阈值</nz-form-label>
+          <nz-form-control nzErrorTip="请输入二级报警阈值">
+            <input nz-input formControlName="secondAlarmThreshold" placeholder="请输入二级报警阈值"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
     </nz-row>
-    <nz-row nzGutter="16">
+    <nz-row nzGutter="16" *ngIf="!showTrue">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
-          <nz-form-label>传感器源管理员</nz-form-label>
-          <nz-form-control nzErrorTip="请输入传感器源管理员">
-            <input nz-input maxlength="10" formControlName="manager" placeholder="传感器源管理员">
+          <nz-form-label nzFor="name">低低位限报警阈值</nz-form-label>
+          <nz-form-control nzErrorTip="请输入低低位限报警阈值">
+            <input nz-input formControlName="firstAlarmThreshold" placeholder="请输入低低位限报警阈值"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
-          <nz-form-label>管理员联系电话</nz-form-label>
-          <nz-form-control nzErrorTip="请输入管理员联系电话">
-            <input nz-input maxlength="11" formControlName="managerMobile" placeholder="管理员联系电话">
+          <nz-form-label nzFor="name">低位限报警阈值</nz-form-label>
+          <nz-form-control nzErrorTip="请输入低位限报警阈值">
+            <input nz-input formControlName="secondAlarmThreshold" placeholder="请输入低位限报警阈值"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
         <nz-form-item>
-          <nz-form-label>投产时间</nz-form-label>
-          <nz-form-control nzErrorTip="投产时间">
-            <nz-date-picker
-              nzShowTime
-              nzFormat="yyyy-MM-dd HH:mm:ss"
-              nzPlaceHolder="请选择投产时间"
-              formControlName="useDate"
-            ></nz-date-picker>
+          <nz-form-label>高位限报警阈值</nz-form-label>
+          <nz-form-control nzErrorTip="高位限报警阈值">
+            <input nz-input formControlName="thirdAlarmThreshold" placeholder="请输入高位限报警阈值"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
     </nz-row>
-    <nz-row nzGutter="16">
+    <nz-row nzGutter="16" *ngIf="!showTrue">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
-          <nz-form-label>传感器源描述</nz-form-label>
-          <nz-form-control nzErrorTip="请输入传感器源描述">
-            <textarea nz-input formControlName="description"  [nzAutosize]="{ minRows: 4 }" placeholder="请输入传感器源描述"></textarea>
+          <nz-form-label nzFor="name">高高位限报警阈值</nz-form-label>
+          <nz-form-control nzErrorTip="请输入高高位限报警阈值">
+            <input nz-input formControlName="fourthAlarmThreshold" placeholder="请输入高高位限报警阈值"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -106,7 +88,7 @@
     <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
-          <nz-form-label>传感器源区域</nz-form-label>
+          <nz-form-label>传感器区域</nz-form-label>
           <nz-form-control>
             <span class="operate-text cursor-pointer" (click)="showPolygonMap()">查看</span>
             <input nz-input [hidden]="true" formControlName="majorScope" placeholder="请输入经纬度" />
@@ -125,56 +107,35 @@
       </nz-col>
     </nz-row>
   </nz-card>
-  <nz-card [nzBordered]="true" nzTitle="传感器源组成单元列表">
-    <!--<nz-table [nzBordered]="true" formArrayName="majorHazardUnits" [nzData]="mediumArray.value"
-              [nzShowPagination]="false">
-      <thead>
-      <tr>
-        <th>传感器源组成类型</th>
-        <th>组成部分编号</th>
-        <th>操作</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let item of mediumArray.controls; let i = index" [formGroupName]="i">
-        <td [hidden]="true">
-          <input nz-input   formControlName="partId"  />
-        </td>
-        <td>
-          <span *ngIf="editIndex !== i">{{ mediumArray.value[i].partType|map:'partType'}}</span>
-          <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入组成类型">
-             <nz-select (ngModelChange)="changeMajorType($event,i)" formControlName="partType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成类型'">
+  <nz-card [nzBordered]="true" nzTitle="重大危险源信息">
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">重大危险源名称</nz-form-label>
+            <nz-form-control nzErrorTip="请选择重大危险源名称">
+              <input nz-input formControlName="majorHazardId" placeholder="请选择重大危险源名称"/>
+            </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">重大危险源类型</nz-form-label>
+          <nz-form-control nzErrorTip="请选择重大危险源类型">
+            <nz-select  formControlName="partType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成类型'">
               <nz-option *ngFor="let item of majorList" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
             </nz-select>
-          </span>
-        </td>
-        <td>
-          <span *ngIf="editIndex !== i">{{ mediumArray.value[i].partTypeLabel }}</span>
-          <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入组成部分编号">
-            <nz-select  (ngModelChange)="changeMajorNo($event,i)" formControlName="partNo" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成部分编号'">
-              <nz-option *ngFor="let item of selMajorNoArray" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
-            </nz-select>
-          </span>
-        </td>
-        <td>
-          <span *ngIf="editIndex !== i">
-            <a (click)="edit(i)">编辑</a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a nz-popconfirm nzPopconfirmTitle="是否要删除此行？" (nzOnConfirm)="del(i)">删除</a>
-          </span>
-          <span *ngIf="editIndex === i">
-            <a (click)="save(i)">保存</a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a nz-popconfirm nzPopconfirmTitle="是否要取消操作？" (nzOnConfirm)="cancel(i)">取消</a>
-          </span>
-        </td>
-      </tr>
-      </tbody>
-    </nz-table>
-    <button *ngIf="editIndex === -1" nz-button [nzType]="'dashed'" (click)="add()" nzBlock class="mt-md">
-      <i nz-icon nzType="plus"></i>
-      <span>新增传感器源组成单元</span>
-    </button>-->
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">重大危险源组成部分名称</nz-form-label>
+          <nz-form-control nzErrorTip="请选择重大危险源组成部分名称">
+            <input nz-input formControlName="partId" placeholder="请选择重大危险源组成部分名称"/>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
   </nz-card>
   <footer-toolbar errorCollect>
     <button nz-button type="primary" nzType="primary">提交</button>

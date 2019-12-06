@@ -37,9 +37,9 @@
   </nz-card>
 </ng-container>
 
-<!--<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
+<ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
   <app-sensor-management-sensor-list-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-sensor-management-sensor-list-detail>
-</ng-container>-->
+</ng-container>
 
 <ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
   <app-sensor-management-sensor-list-edit-add [id]="this.itemId" [currentPageNum]="listPageInfo.pi" (returnBack)="returnToList($event)"></app-sensor-management-sensor-list-edit-add>
