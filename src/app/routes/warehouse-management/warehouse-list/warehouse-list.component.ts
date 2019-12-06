@@ -166,7 +166,7 @@ export class WarehouseListComponent implements OnInit {
   }
   ngOnInit() {
     this.initTable();
-    this.getDataList();
+    this.routeInit();
   }
 
 }

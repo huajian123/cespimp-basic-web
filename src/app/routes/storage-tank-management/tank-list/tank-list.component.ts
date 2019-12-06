@@ -174,6 +174,7 @@ export class TankListComponent implements OnInit {
   routeInit() {
     if (!!window.sessionStorage.getItem(EVENT_KEY.tankNo)) {
       this.searchParam.tankNo = window.sessionStorage.getItem(EVENT_KEY.tankNo);
+      console.log(this.searchParam);
     }
     window.sessionStorage.removeItem(EVENT_KEY.tankNo);
     this.currentPage = this.pageTypeEnum.List;
@@ -181,6 +182,7 @@ export class TankListComponent implements OnInit {
   }
 
   _onReuseInit() {
+    console.log(222);
     this.routeInit();
   }
 

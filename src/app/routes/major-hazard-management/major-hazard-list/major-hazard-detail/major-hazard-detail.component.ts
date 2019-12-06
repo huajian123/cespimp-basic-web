@@ -83,11 +83,12 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
     }
     if (record.partType === PartTypeEnum.ProductionPlace) {
       this.router.navigate(['/hazard/production-management/production-list']);
-      window.sessionStorage.setItem(EVENT_KEY.placeNo, record.placeNo);
+      window.sessionStorage.setItem(EVENT_KEY.placeNo, record.partNo);
     }
     if (record.partType === PartTypeEnum.Warehouse) {
-      this.router.navigate(['/hazard/storage-tank-management/warehouse-list']);
-      window.sessionStorage.setItem(EVENT_KEY.roomNo, record.roomNo);
+      this.router.navigate(['/hazard/warehouse-management/warehouse-list']);
+      console.log(record);
+      window.sessionStorage.setItem(EVENT_KEY.roomNo, record.partNo);
     }
   }
 
