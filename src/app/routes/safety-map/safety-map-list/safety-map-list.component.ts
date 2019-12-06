@@ -70,7 +70,7 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
 
   initMap() {
     this.map = new T.Map('mapDiv');
-    this.map.centerAndZoom(new T.LngLat(120.680416, 31.206039), 14);
+    this.map.centerAndZoom(new T.LngLat(120.66217, 31.22423), 14);
     this.map.addLayer(this.tilePhoto);
     this.initD3Layer();
   }
