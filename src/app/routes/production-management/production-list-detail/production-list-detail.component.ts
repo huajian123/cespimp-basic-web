@@ -33,8 +33,7 @@ export class ProductionManagementProductionListDetailComponent implements OnInit
   columns: STColumn[];
 
   constructor(private http: _HttpClient, private msg: NzMessageService,
-              private dataService: ProductionListInfoService, private cdr: ChangeDetectorRef,
-              private positionPickerService: PositionPickerService) {
+              private dataService: ProductionListInfoService, private cdr: ChangeDetectorRef) {
     this.returnBack = new EventEmitter<any>();
 
     this.dataInfo = {
