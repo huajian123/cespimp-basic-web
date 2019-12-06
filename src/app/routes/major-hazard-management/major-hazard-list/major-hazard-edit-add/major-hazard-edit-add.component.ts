@@ -146,6 +146,7 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
     this.getPartNoOptions(type, index);
     this.mediumArray.controls[index].get('partTypeLabel').reset();//重置formgroup中的选取显示内容
     this.mediumArray.controls[index].get('partNo').reset();//重置formgroup中的选取传递内容
+    this.mediumArray.controls[index].get('partId').reset();//重置formgroup中的选取传递内容
   }
 
   changeMajorNo(partId, index) {
@@ -201,14 +202,11 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
 
   // 编辑组成单元
   edit(index: number) {
-
-    if (this.editIndex !== -1 && this.editObj) {
-      this.mediumArray.at(this.editIndex).patchValue(this.editObj);
-    }
+    this.editIndex = index;
     this.editObj = { ...this.mediumArray.at(index).value };
     this.mediumArray.at(index).get('partType').setValue('' + (this.editObj as any).partType);
     this.mediumArray.at(index).get('partNo').setValue((this.editObj as any).partNo);
-    this.editIndex = index;
+    this.mediumArray.at(index).get('partId').setValue((this.editObj as any).partId);
   }
 
   // 保存单个组成单元
@@ -301,6 +299,4 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       this.getDetail();
     }
   }
-
-
 }

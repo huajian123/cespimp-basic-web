@@ -65,7 +65,7 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
       },
       {
         title: '组成部分编号',
-        index: 'partNo',
+        index: '',
         width: 60,
         buttons: [{ type: 'link', text: '点击跳转', click: this.tableBtnClick.bind(this), format: this.formateData }],
       },
