@@ -2,6 +2,7 @@ import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { EVENT_KEY } from '@env/staticVariable';
 
 @Component({
   selector: 'header-user',
@@ -48,6 +49,9 @@ export class HeaderUserComponent {
 
   logout() {
     this.tokenService.clear();
+    window.sessionStorage.removeItem(EVENT_KEY.loginInfo);
+    window.sessionStorage.removeItem(EVENT_KEY.entprBasicInfo);
+    window.sessionStorage.removeItem(EVENT_KEY.role);
     this.router.navigateByUrl(this.tokenService.login_url!);
   }
 }

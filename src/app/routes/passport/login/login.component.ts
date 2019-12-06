@@ -60,8 +60,9 @@ export class UserLoginComponent {
     }
     const params = this.validateForm.getRawValue();
     const data = await this.loginService.login({ username: params.userAccount, password: params.password });
-
-    window.sessionStorage.clear();
+    window.sessionStorage.removeItem(EVENT_KEY.loginInfo);
+    window.sessionStorage.removeItem(EVENT_KEY.entprBasicInfo);
+    window.sessionStorage.removeItem(EVENT_KEY.role);
     // 清空路由复用信息
     this.reuseTabService.clear();
     this.aclService.set({ role: [RoleEnum[data.user.role]] });
@@ -70,7 +71,7 @@ export class UserLoginComponent {
     window.sessionStorage.setItem(EVENT_KEY.entprBasicInfo, JSON.stringify(data.entprBasicInfo));
     this.menuSrv.resume();
     this.tokenService.set({ token: data.user.realName });
-
+    this.startupSrv.load();
     // 根据不同的角色跳转不同的位置
     if (data.user.role === RoleEnum.ParkManage) {
       this.router.navigateByUrl('/hazard/login-manage/login-plant');

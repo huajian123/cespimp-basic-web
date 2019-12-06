@@ -477,7 +477,9 @@ export class LoginPlatformComponent implements OnInit {
   }
 
   async goLoginPage() {
-    window.sessionStorage.clear();
+    window.sessionStorage.removeItem(EVENT_KEY.loginInfo);
+    window.sessionStorage.removeItem(EVENT_KEY.entprBasicInfo);
+    window.sessionStorage.removeItem(EVENT_KEY.role);
     await this.loginService.loginOut();
     this.router.navigateByUrl('/passport/login');
   }

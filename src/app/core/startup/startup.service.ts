@@ -13,6 +13,7 @@ import { ICONS } from '../../../style-icons';
 import { menus } from '@env/menu';
 import { appInfo, loginUserInfo } from '@env/environment';
 import { ReuseTabMatchMode, ReuseTabService } from '@delon/abc';
+import { EVENT_KEY } from '@env/staticVariable';
 
 /**
  * Used for application startup
@@ -34,7 +35,7 @@ export class StartupService {
   ) {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
     this.reuseTabService.mode = ReuseTabMatchMode.URL;
-    this.reuseTabService.excludes=[/\/passport\/login/,/hazard\/login-manage\/login-plant/]
+    this.reuseTabService.excludes = [/\/passport\/login/, /hazard\/login-manage\/login-plant/];
   }
 
   private viaHttp(resolve: any, reject: any) {
@@ -128,6 +129,7 @@ export class StartupService {
       // 应用信息：包括站点名、描述、年份
       this.settingService.setApp(appInfo);
       // 用户信息：包括姓名、头像、邮箱地址
+      loginUserInfo.name = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo)).userName;
       this.settingService.setUser(loginUserInfo);
       // ACL：设置权限为全量
       // this.aclService.setFull(true);
