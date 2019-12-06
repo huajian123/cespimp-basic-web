@@ -151,10 +151,10 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
     upd.enter()
       .append('path')
       .attr('class', 'geojson1')
-      .attr('stroke', 'red')
+      .attr('stroke', '#39D510')
       .attr('stroke-width', '5')
-      .attr('fill', '#ffffff')
-      .attr('fill-opacity', '0');
+      .attr('fill', '#39D510')
+      .attr('fill-opacity', '0.1');
   };
 
   realAreaRedraw = (sel, transform) => {
@@ -170,11 +170,11 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
     upd.enter()
       .append('path')
       .attr('class', 'geojson1')
-      .attr('stroke', 'red')
+      .attr('stroke', '#39D510')
       .attr('stroke-dasharray', '10,10')
       .attr('stroke-width', '5')
-      .attr('fill', '#ffffff')
-      .attr('fill-opacity', '0');
+      .attr('fill', '#39D510')
+      .attr('fill-opacity', '0.1');
   };
 
   planAreaRedraw = (sel, transform) => {
@@ -190,10 +190,10 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
     upd.enter()
       .append('path')
       .attr('class', 'geojson1')
-      .attr('stroke', 'red')
+      .attr('stroke', '#39D510')
       .attr('stroke-width', '5')
-      .attr('fill', '#ffffff')
-      .attr('fill-opacity', '0');
+      .attr('fill', '#39D510')
+      .attr('fill-opacity', '0.1');
   };
 
   pointRedraw = (sel, transform) => {
