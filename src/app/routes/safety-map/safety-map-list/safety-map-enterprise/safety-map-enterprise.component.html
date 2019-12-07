@@ -47,13 +47,13 @@
     <combustible-gas-modal [(showModel)]="modelIsShow.fireGas"></combustible-gas-modal>
   </div>
 
-  <!--<div class="temp-wrap" *ngIf="modelIsShow.poisonousGas">
+  <div class="temp-wrap" *ngIf="modelIsShow.poisonousGas">
     <toxic-gas-modal [(showModel)]="modelIsShow.poisonousGas"></toxic-gas-modal>
-  </div>-->
+  </div>
 
   <!--危险源-->
-  <div class="temp-wrap" *ngIf="modelIsShow.poisonousGas">
-    <major-hazard-sources [(showModel)]="modelIsShow.poisonousGas"></major-hazard-sources>
+  <div class="temp-wrap" *ngIf="modelIsShow.hazardSource">
+    <major-hazard-sources [(showModel)]="modelIsShow.hazardSource"></major-hazard-sources>
   </div>
 
   <div class="temp-wrap" *ngIf="modelIsShow.camera">

@@ -80,6 +80,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     fireGas: boolean,
     poisonousGas: boolean,
     camera: boolean,
+    hazardSource: boolean,
   };
 
   layerObjArray: LayerBtnInterface[]; // 图层数组
@@ -119,6 +120,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       fireGas: false,
       poisonousGas: false,
       camera: false,
+      hazardSource: false,
     };
     // 初始化标注数组
     this.initIdentificationArray();
@@ -220,6 +222,9 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       item.addEventListener('click', () => {
         setTimeout(() => {
           console.log('危险源覆盖物点击方法');
+          this.currentSelLayerBtnIndex=this.layerEnum.HazardSources;
+          this.initModelStatus();
+          this.modelIsShow.hazardSource = true;
           this.cdr.markForCheck();
         }, 0);
       });
