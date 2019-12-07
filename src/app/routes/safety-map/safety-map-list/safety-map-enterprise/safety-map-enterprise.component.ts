@@ -154,7 +154,8 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     await this.getIdentificationData();
 
     this.map.clearOverLays();
-
+    // 绘制厂区范围
+    this.initEnterpriseArea();
     // 初始化标注数组
     this.initIdentificationArray();
     // 创建覆盖物标识
@@ -209,8 +210,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
         }
       });
     });
-    // 绘制厂区范围
-    this.initEnterpriseArea();
+
     this.addMarkerListenFn();
   }
 
