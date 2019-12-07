@@ -72,7 +72,7 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
       entprSimpleName: '',
       region: '',
       detailAddr: '',
-      entprScope: '',
+      entprScope: [],
       legalPerson: '',
       legalMobile: '',
       boss: '',

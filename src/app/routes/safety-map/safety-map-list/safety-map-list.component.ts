@@ -12,6 +12,8 @@ import * as d3 from 'd3';
 import { SafetyMapServiceNs } from '@core/biz-services/safety-map/safety-map.service';
 import LatitudeLongitudeModel = SafetyMapServiceNs.LatitudeLongitudeModel;
 import { EVENT_KEY } from '@env/staticVariable';
+import { EnterpriseBasicInfoServiceNs } from '@core/biz-services/basic-info/enterprise-basic-info.service';
+import EnterpriseInfoModel = EnterpriseBasicInfoServiceNs.EnterpriseInfoModel;
 
 enum EnterpriseUrlEnum {
   Normal = '../../../../assets/imgs/safeOnePage/cover.png',
@@ -39,7 +41,7 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
   currentPageType: number;
   tilePhoto: Object; // 倾斜摄影对象
   selEnterprisePosition: LatitudeLongitudeModel;
-
+  selEnterpriseInfo: EnterpriseInfoModel;
 
   /*d3图层*/
   industrialPark = [];
@@ -60,6 +62,13 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
     this.selEnterprisePosition = {
       lat: 0,
       lng: 0,
+    };
+
+    this.selEnterpriseInfo = {
+      id: -1,
+      entprName: '',
+      longitude: 0,
+      latitude: 0,
     };
 
 
@@ -127,6 +136,9 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
           this.selectedEnterpriseId = item.setOptions.id;
           this.currentPageType = this.pageTypeEnum.EnterpriseItem;
+          this.selEnterpriseInfo = this.enterpriseList.find(({ id }) => {
+            return id === this.selectedEnterpriseId;
+          });
           this.selEnterprisePosition = {
             lng: item.or.lng,
             lat: item.or.lat,

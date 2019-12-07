@@ -12,6 +12,8 @@ import IdentificationDataModel = SafetyMapServiceNs.IdentificationDataModel;
 import LatitudeLongitudeModel = SafetyMapServiceNs.LatitudeLongitudeModel;
 import { RoleEnum } from '@core/vo/comm/BusinessEnum';
 import { EVENT_KEY } from '@env/staticVariable';
+import { EnterpriseBasicInfoServiceNs } from '@core/biz-services/basic-info/enterprise-basic-info.service';
+import EnterpriseInfoModel = EnterpriseBasicInfoServiceNs.EnterpriseInfoModel;
 
 enum IdentificationUrlEnum {
   FireNormal = '../../../../../assets/imgs/safeOnePage/fire.png',
@@ -60,6 +62,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   @Input() enterpriseId: number;
   @Input() enterprisePosition: LatitudeLongitudeModel;
   @Output() returnBackBtn: EventEmitter<any>;
+  @Input() enterpriseInfo: EnterpriseInfoModel;
   map;
   layerEnum = LayerEnum;
   tilePhoto: Object; // 倾斜摄影对象
@@ -152,6 +155,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
 
     this.map.clearOverLays();
 
+    // 初始化标注数组
     this.initIdentificationArray();
     // 创建覆盖物标识
     Object.keys(this.identificationData).forEach(key => {
@@ -205,7 +209,8 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
         }
       });
     });
-
+    // 绘制厂区范围
+    this.initEnterpriseArea();
     this.addMarkerListenFn();
   }
 
@@ -222,7 +227,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       item.addEventListener('click', () => {
         setTimeout(() => {
           console.log('危险源覆盖物点击方法');
-          this.currentSelLayerBtnIndex=this.layerEnum.HazardSources;
+          this.currentSelLayerBtnIndex = this.layerEnum.HazardSources;
           this.initModelStatus();
           this.modelIsShow.hazardSource = true;
           this.cdr.markForCheck();
@@ -310,7 +315,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   // 绘制多边形
   painPolygon(list) {
     const polygon = new T.Polygon(list, {
-      color: 'blue',
+      color: 'red',
       weight: 3,
       opacity: 0.5,
       fillColor: '#FFFFFF',
@@ -365,14 +370,32 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     this.returnBackBtn.emit();
   }
 
+  // 初始化企业范围
+  initEnterpriseArea() {
+    const points = [];
+    if (!this.enterpriseInfo.entprScope) {
+      const data = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
+      this.enterpriseInfo.entprScope = JSON.parse(data.entprScope);
+    }
+    this.enterpriseInfo.entprScope.forEach(({ lat, lng }) => {
+      points.push(new T.LngLat(lng, lat));
+    });
+    const polygon = new T.Polygon(points, {
+      color: 'blue', weight: 3, opacity: 0.5, fillColor: '#FFFFFF', fillOpacity: 0,
+    });
+    this.map.addOverLay(polygon);
+  }
+
   ngOnInit() {
     this.currentRole = window.sessionStorage.getItem(EVENT_KEY.role);
     console.log(this.enterpriseId);
     console.log(this.enterprisePosition);
+    console.log(this.enterpriseInfo);
   }
 
   ngAfterViewInit(): void {
     this.initMap();
+    this.initEnterpriseArea();
   }
 
 }

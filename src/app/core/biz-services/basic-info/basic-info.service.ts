@@ -4,7 +4,6 @@ import { SearchCommonVO } from '@core/vo/comm/BusinessEnum';
 import { PageInfo } from '@core/vo/comm/PageInfo';
 
 
-
 export namespace BasicInfoServiceNs {
   export interface FactoryInfoModel {
     id: number;
@@ -12,7 +11,7 @@ export namespace BasicInfoServiceNs {
     entprSimpleName?: string;
     region?: string;
     detailAddr?: string;
-    entprScope?: string;
+    entprScope?:  { lng: number, lat: number }[];
     longitude: number; // 经度
     latitude: number; // 纬度
     legalPerson?: string;
@@ -162,10 +161,11 @@ export namespace BasicInfoServiceNs {
     public getFactoryInfoSearch(param: EntprInfoSearch): Promise<FactoryInfoModel> {
       return this.http.get('data/basic/enterprise/', param).toPromise();
     }
+
     // 删除接口
- /*   public delFactoryInfo(id: number): Promise<FactoryInfoModel> {
-      return this.http.del('data/basic/enterprise/' + id).toPromise();
-    }*/
+    /*   public delFactoryInfo(id: number): Promise<FactoryInfoModel> {
+         return this.http.del('data/basic/enterprise/' + id).toPromise();
+       }*/
   }
 }
 

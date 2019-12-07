@@ -129,7 +129,12 @@ export class StartupService {
       // 应用信息：包括站点名、描述、年份
       this.settingService.setApp(appInfo);
       // 用户信息：包括姓名、头像、邮箱地址
-      loginUserInfo.name = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo)).userName;
+      if (JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo))) {
+        loginUserInfo.name = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo)).userName;
+      } else {
+        loginUserInfo.name = 'admin';
+      }
+
       this.settingService.setUser(loginUserInfo);
       // ACL：设置权限为全量
       // this.aclService.setFull(true);
