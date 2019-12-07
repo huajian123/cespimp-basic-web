@@ -28,11 +28,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.less"
+              "src/styles.less",
+              "node_modules/video.js/dist/video-js.min.css"
             ],
             "scripts": [
-              "node_modules/ajv/dist/ajv.bundle.js",
-              "node_modules/echarts/dist/echarts.min.js"
+              "node_modules/ajv/dist/ajv.bundle.js"
             ]
           },
           "configurations": {

@@ -39,6 +39,7 @@
     "@delon/util": "^8.5.1",
     "@types/arcgis-js-api": "^4.13.0",
     "@types/d3": "^3.5.43",
+    "@types/video.js": "^7.3.3",
     "ajv": "^6.10.2",
     "d3": "^3.5.17",
     "echarts": "^4.5.0",
@@ -49,6 +50,7 @@
     "rxjs": "~6.4.0",
     "screenfull": "^4.2.1",
     "tslib": "^1.10.0",
+    "video.js": "^7.6.6",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {

@@ -10,7 +10,15 @@
   font-weight: bold;
 }
 
+.camera-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
+  .video-js {
+    flex: 1;
+  }
+}
 
 
 
