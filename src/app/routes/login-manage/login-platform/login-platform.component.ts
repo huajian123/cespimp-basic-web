@@ -185,7 +185,7 @@ export class LoginPlatformComponent implements OnInit {
         type: 'radar',
         data: [
           {
-            value: [3800, 7000, 20000, 35000, 31000, 15000],
+            value: [3800, 7000, 20000, 30000, 31000, 15000],
             itemStyle: {
               normal: {
                 color: '#00E3FF',
@@ -202,7 +202,7 @@ export class LoginPlatformComponent implements OnInit {
             },
           },
           {
-            value: [3000, 6500, 28000, 31000, 17000, 8000],
+            value: [3000, 6500, 22000, 34500, 17000, 8000],
             itemStyle: {
               normal: {
                 color: 'rgba(255,64,192)',
@@ -339,7 +339,7 @@ export class LoginPlatformComponent implements OnInit {
         formatter(name) {
           let index = 0;
           const clientlabels = ['一级', '二级', '三级', '四级'];
-          const clientcounts = [0, 0, 1, 1];
+          const clientcounts = [0, 0, 1, 2];
           clientlabels.forEach(function(value, i) {
             if (value == name) {
               index = i;
@@ -378,7 +378,7 @@ export class LoginPlatformComponent implements OnInit {
             { value: 0, name: '一级' },
             { value: 0, name: '二级' },
             { value: 1, name: '三级' },
-            { value: 1, name: '四级' },
+            { value: 2, name: '四级' },
           ],
         },
       ],

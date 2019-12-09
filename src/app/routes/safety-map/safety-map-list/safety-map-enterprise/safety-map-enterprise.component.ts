@@ -376,12 +376,6 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   // 初始化企业范围
   initEnterpriseArea() {
     const points = [];
-    if (!this.enterpriseInfo.entprScope) {
-      const data = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
-      console.log(data);
-      console.log(this.enterpriseInfo);
-      this.enterpriseInfo.entprScope = JSON.parse(data.entprScope);
-    }
     this.enterpriseInfo.entprScope.forEach(({ lat, lng }) => {
       points.push(new T.LngLat(lng, lat));
     });
