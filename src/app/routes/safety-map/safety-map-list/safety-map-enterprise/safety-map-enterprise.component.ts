@@ -12,7 +12,10 @@ import IdentificationDataModel = SafetyMapServiceNs.IdentificationDataModel;
 import LatitudeLongitudeModel = SafetyMapServiceNs.LatitudeLongitudeModel;
 import { RoleEnum } from '@core/vo/comm/BusinessEnum';
 import { EVENT_KEY } from '@env/staticVariable';
-import { EnterpriseBasicInfoServiceNs } from '@core/biz-services/basic-info/enterprise-basic-info.service';
+import {
+  EnterpriseBasicInfoService,
+  EnterpriseBasicInfoServiceNs,
+} from '@core/biz-services/basic-info/enterprise-basic-info.service';
 import EnterpriseInfoModel = EnterpriseBasicInfoServiceNs.EnterpriseInfoModel;
 
 enum IdentificationUrlEnum {
@@ -62,7 +65,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   @Input() enterpriseId: number;
   @Input() enterprisePosition: LatitudeLongitudeModel;
   @Output() returnBackBtn: EventEmitter<any>;
-  @Input() enterpriseInfo: EnterpriseInfoModel;
+  enterpriseInfo: EnterpriseInfoModel;
   map;
   layerEnum = LayerEnum;
   tilePhoto: Object; // 倾斜摄影对象
@@ -92,7 +95,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   identificationData: IdentificationDataModel; // 重大危险源图层标识符数据集合
 
 
-  constructor(private cdr: ChangeDetectorRef, private safetyMapService: SafetyMapService) {
+  constructor(private cdr: ChangeDetectorRef, private safetyMapService: SafetyMapService, private enterpriseBasicInfoService: EnterpriseBasicInfoService) {
     this.currentRole = RoleEnum[RoleEnum.ParkManage];
     const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
       'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
@@ -375,6 +378,8 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     const points = [];
     if (!this.enterpriseInfo.entprScope) {
       const data = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
+      console.log(data);
+      console.log(this.enterpriseInfo);
       this.enterpriseInfo.entprScope = JSON.parse(data.entprScope);
     }
     this.enterpriseInfo.entprScope.forEach(({ lat, lng }) => {
@@ -386,15 +391,20 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     this.map.addOverLay(polygon);
   }
 
-  ngOnInit() {
+  // 获取企业详情
+  async getEnterpriseInfo() {
+    this.enterpriseInfo = await this.enterpriseBasicInfoService.getEnterpriseInfoDetail({ entprId: this.enterpriseId });
+  }
+
+  async ngOnInit() {
     this.currentRole = window.sessionStorage.getItem(EVENT_KEY.role);
     console.log(this.enterpriseId);
     console.log(this.enterprisePosition);
-    console.log(this.enterpriseInfo);
   }
 
-  ngAfterViewInit(): void {
+  async ngAfterViewInit() {
     this.initMap();
+    await this.getEnterpriseInfo();
     this.initEnterpriseArea();
   }
 
