@@ -185,7 +185,7 @@ export class LoginPlatformComponent implements OnInit {
         type: 'radar',
         data: [
           {
-            value: [3800, 7000, 20000, 30000, 31000, 15000],
+            value: [3800, 10000, 23500, 30000, 31000, 15000],
             itemStyle: {
               normal: {
                 color: '#00E3FF',
@@ -202,7 +202,7 @@ export class LoginPlatformComponent implements OnInit {
             },
           },
           {
-            value: [3000, 6500, 22000, 34500, 17000, 8000],
+            value: [5000, 6500, 18000, 27000, 42000, 19000],
             itemStyle: {
               normal: {
                 color: 'rgba(255,64,192)',
@@ -272,7 +272,7 @@ export class LoginPlatformComponent implements OnInit {
         type: 'radar',
         data: [
           {
-            value: [4500, 10000, 20000, 31000, 30000, 18000],
+            value: [5500, 10000, 22000, 27000, 25000, 17000],
             itemStyle: {
               normal: {
                 color: 'rgba(255,64,192)',
@@ -289,7 +289,7 @@ export class LoginPlatformComponent implements OnInit {
             },
           },
           {
-            value: [3000, 10000, 23000, 11000, 22000, 18000],
+            value: [4500, 7000, 17000, 22000, 15000, 13000],
             itemStyle: {
               normal: {
                 color: '#00E3FF',

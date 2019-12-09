@@ -2,29 +2,29 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, OnInit
 import * as d3 from 'd3';
 
 
-
 @Component({
   selector: 'park-introduction-detail',
   templateUrl: './park-introduction-detail.component.html',
   styleUrls: ['./park-introduction-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ParkIntroductionDetailComponent implements OnInit , AfterViewInit{
+export class ParkIntroductionDetailComponent implements OnInit, AfterViewInit {
   @Output() returnToMainPage: EventEmitter<any>;
   tilePhoto: Object; // 倾斜摄影对象
   map;
   zoom = 10;
 
   cenL = 118.30612;  // 默认中心坐标经度
-  cenB =  34.29057; // 默认中心坐标纬度
+  cenB = 34.29057; // 默认中心坐标纬度
 
   /*d3图层*/
   industrialPark = [];
   industrialParkRealArea = [];
   industrialParkPlanArea = [];
-  realArea:any;
-  planArea:any;
-  pointArea:any;
+  realArea: any;
+  planArea: any;
+  pointArea: any;
+
   constructor() {
     this.returnToMainPage = new EventEmitter<any>();
     const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
@@ -55,7 +55,7 @@ export class ParkIntroductionDetailComponent implements OnInit , AfterViewInit{
       layers: '0',
       transparent: false,
       srs: 'EPSG:4326',
-      crs: 'EPSG:4326'
+      crs: 'EPSG:4326',
     };
     this.tilePhoto = new T.TileLayer.WMS('http://192.168.10.5:6080/arcgis/services/Region/MapServer/WMSServer', config);
     this.map.addLayer(this.tilePhoto);
@@ -64,16 +64,15 @@ export class ParkIntroductionDetailComponent implements OnInit , AfterViewInit{
   // Finalize a few things once the MapView has been loaded
 
 
-
   realAreaInit = (sel, transform) => {
     const upd = sel.selectAll('path.geojson1').data(this.industrialParkRealArea);
     upd.enter()
       .append('path')
       .attr('class', 'geojson1')
-      .attr('stroke', 'red')
+      .attr('stroke', '#39D510')
       .attr('stroke-width', '5')
-      .attr('fill', '#ffffff')
-      .attr('fill-opacity', '0');
+      .attr('fill', '#39D510')
+      .attr('fill-opacity', '0.1');
   };
 
   realAreaRedraw = (sel, transform) => {
@@ -87,13 +86,15 @@ export class ParkIntroductionDetailComponent implements OnInit , AfterViewInit{
   planAreaInit = (sel, transform) => {
     const upd = sel.selectAll('path.geojson1').data(this.industrialParkPlanArea);
     upd.enter()
+
+
       .append('path')
       .attr('class', 'geojson1')
-      .attr('stroke', 'red')
-      .attr('stroke-dasharray', '10,10')
+      .attr('stroke', '#39D510')
       .attr('stroke-width', '5')
-      .attr('fill', '#ffffff')
-      .attr('fill-opacity', '0');
+      .attr('fill', '#39D510')
+      .attr('stroke-dasharray', '10,10')
+      .attr('fill-opacity', '0.1');
   };
 
   planAreaRedraw = (sel, transform) => {
@@ -109,10 +110,10 @@ export class ParkIntroductionDetailComponent implements OnInit , AfterViewInit{
     upd.enter()
       .append('path')
       .attr('class', 'geojson1')
-      .attr('stroke', 'red')
+      .attr('stroke', '#39D510')
       .attr('stroke-width', '5')
-      .attr('fill', '#ffffff')
-      .attr('fill-opacity', '0');
+      .attr('fill', '#39D510')
+      .attr('fill-opacity', '0.1');
   };
 
   pointRedraw = (sel, transform) => {
@@ -122,7 +123,6 @@ export class ParkIntroductionDetailComponent implements OnInit , AfterViewInit{
       },
     );
   };
-
 
 
   // 初始化d3相关图层
@@ -148,13 +148,13 @@ export class ParkIntroductionDetailComponent implements OnInit , AfterViewInit{
 
   initMap() {
     this.map = new T.Map('mapDiv');
-    this.map.centerAndZoom(new T.LngLat(120.662161,31.222261), 14);
+    this.map.centerAndZoom(new T.LngLat(120.662161, 31.222261), 14);
     this.map.addLayer(this.tilePhoto);
     this.initD3Layer();
   }
 
   ngOnInit() {
-  //  this.initializeMap()
+    //  this.initializeMap()
   }
 
   ngAfterViewInit(): void {
