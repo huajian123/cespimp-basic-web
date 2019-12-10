@@ -1,22 +1,33 @@
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import videojs from 'video.js';
-import { SafetyMapService } from '@core/biz-services/safety-map/safety-map.service';
+import { SafetyMapService, SafetyMapServiceNs } from '@core/biz-services/safety-map/safety-map.service';
+import VideoCameraModel = SafetyMapServiceNs.VideoCameraModel;
 
 @Component({
   selector: 'camera-list-modal',
   templateUrl: './camera-list-modal.component.html',
   styleUrls: ['./camera-list-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CameraListModalComponent implements OnInit {
   @Input() showModel: boolean;
   @Input() id: number;
   @Output() showModelChange = new EventEmitter<boolean>();
   player: any;
-
+  // @ts-ignore
+  dataInfo: VideoCameraModel;
 
   constructor(private cdr: ChangeDetectorRef, private dataService: SafetyMapService) {
     this.showModel = false;
-
+    this.dataInfo = {};
 
   }
 
@@ -28,9 +39,11 @@ export class CameraListModalComponent implements OnInit {
 
 
   async getDetailInfo(id?) {
-    const dataInfo = await this.dataService.getCameraInfoDetail(id ? id : this.id);
+    this.dataInfo = await this.dataService.getCameraInfoDetail(id ? id : this.id);
+   /* console.log(this.dataInfo.cameraName);
+    console.log(this.dataInfo.url);*/
     this.player = videojs('my-video', {
-      sources: [{ src: dataInfo }],
+      sources: [{ src: this.dataInfo.url }],
       loop: true,
       muted: true,
       height: 400,
@@ -44,7 +57,4 @@ export class CameraListModalComponent implements OnInit {
     this.getDetailInfo();
   }
 
- /* ngAfterViewInit(): void {
-
-  }*/
 }

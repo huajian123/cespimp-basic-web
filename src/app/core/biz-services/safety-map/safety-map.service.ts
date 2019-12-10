@@ -3,6 +3,12 @@ import { HttpUtilService } from '@core/net/http-util.service';
 
 
 export namespace SafetyMapServiceNs {
+  export interface VideoCameraModel {
+    id?: number;
+    entprId?: number;
+    url?: string;
+    cameraName?: string;
+  }
 
   export interface IdentificationSearchModel {
     entprId: number;
@@ -20,28 +26,28 @@ export namespace SafetyMapServiceNs {
     combustible?: IdentificationNormalInterface[];
   }
 
-  interface CameraModel{
-    "id": number,
-    "entprId": number,
-    "cameraNo": string,
-    "cameraName": string,
-    "majorHazardId": number,
-    "partType": number,
-    "partId": number,
-    "longitude": number,
-    "latitude": number,
-    "locFactory": string,
-    "entprName": string,
-    "majorHazardName": string,
-    "partName": string,
+  export interface CameraModel {
+    'id': number,
+    'entprId': number,
+    'cameraNo': string,
+    'cameraName': string,
+    'majorHazardId': number,
+    'partType': number,
+    'partId': number,
+    'longitude': number,
+    'latitude': number,
+    'locFactory': string,
+    'entprName': string,
+    'majorHazardName': string,
+    'partName': string,
   }
 
-  export interface LatitudeLongitudeModel{
+  export interface LatitudeLongitudeModel {
     lng: number,
     lat: number,
   }
 
-  interface MajorHazardModel {
+  export interface MajorHazardModel {
     'id': number,
     'entprId': number,
     'entprName': string,
@@ -58,7 +64,8 @@ export namespace SafetyMapServiceNs {
     majorScope: LatitudeLongitudeModel[];
   }
 
-  interface AlarmModel {
+
+  export interface AlarmModel {
     'id': number,
     'total': number,
     'deviceNo': string,
@@ -68,7 +75,7 @@ export namespace SafetyMapServiceNs {
     'latitude': number,
   }
 
-  interface IdentificationNormalInterface {
+  export interface IdentificationNormalInterface {
     'id': number,
     'sensorName': string,
     'sensorNo': string,
@@ -84,7 +91,7 @@ export namespace SafetyMapServiceNs {
     historyData: HistoryDataModel[]
   }
 
-  interface HistoryDataModel {
+  export interface HistoryDataModel {
     'id': number,
     'entprId': number,
     'sensorId': number,
@@ -104,7 +111,7 @@ export namespace SafetyMapServiceNs {
       return this.http.post('data/major/hazard/maps', param).toPromise();
     }
 
-    public getCameraInfoDetail(id: number): Promise<string> {
+    public getCameraInfoDetail(id: number): Promise<VideoCameraModel> {
       return this.http.get('data/major/hazard/realTimeCamera/' + id).toPromise();
     }
 
