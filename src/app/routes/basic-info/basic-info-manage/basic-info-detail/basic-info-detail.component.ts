@@ -250,7 +250,7 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
       this.getEnterpriseEnviron();
       this.changeTap(TabEnum.EnterpriseEnvirTab);
     }
-    if(args.index === TabEnum.ProductionDeviceTab){
+    if (args.index === TabEnum.ProductionDeviceTab) {
       this.getProductionDevice();
       this.changeTap(TabEnum.ProductionDeviceTab);
     }
@@ -294,11 +294,36 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
 
   initMap(latitude, longitude) {
     setTimeout(() => {
-      const zoom = 10;
+      const zoom = 18;
+      const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
+        'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
+        '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=0a65163e2ebdf5a37abb7f49274b85df';
+      const tilePhoto = new T.TileLayer(imageURL, { minZoom: 1, maxZoom: 18 });
       this.map = new T.Map(this.mapElement.nativeElement);
       // 设置显示地图的中心点和级别
       this.map.centerAndZoom(new T.LngLat(longitude, latitude), zoom);
+      this.map.addLayer(tilePhoto);
+      this.initEnterpriseArea();
     });
+  }
+
+  // 初始化企业范围
+  initEnterpriseArea() {
+    const points = [];
+    this.dataInfo.entprScope.forEach(({ lat, lng }) => {
+      points.push(new T.LngLat(lng, lat));
+    });
+    const polygon = new T.Polygon(points, {
+      color: 'blue', weight: 3, opacity: 0.5, fillColor: '#FFFFFF', fillOpacity: 0,
+    });
+    this.map.addOverLay(polygon);
+    this.addMarkerToMap(this.dataInfo.latitude,this.dataInfo.longitude)
+  }
+
+  addMarkerToMap(lat,lng){
+    const marker = new T.Marker(new T.LngLat(lat, lng));
+    marker.disableDragging();
+    this.map.addOverLay(marker);
   }
 
   async getFactoryInfo() {
@@ -306,6 +331,7 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
       entprId: this.entprId,
     };
     this.dataInfo = await this.dataService.getFactoryInfoDetail(param);
+    console.log(this.dataInfo);
     this.initMap(this.dataInfo.latitude, this.dataInfo.longitude);
     this.cdr.markForCheck();
   }
