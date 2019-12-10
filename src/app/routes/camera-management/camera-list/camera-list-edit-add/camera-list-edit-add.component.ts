@@ -1,61 +1,46 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NzModalRef, NzMessageService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { SFSchema, SFUISchema } from '@delon/form';
+import { FormGroup } from '@angular/forms';
+import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
+
+interface OptionsInterface {
+  value: string | number;
+  label: string;
+  partType?: number;
+}
 
 @Component({
   selector: 'app-camera-management-camera-list-edit-add',
   templateUrl: './camera-list-edit-add.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CameraManagementCameraListEditAddComponent implements OnInit {
-  record: any = {};
-  i: any;
-  schema: SFSchema = {
-    properties: {
-      no: { type: 'string', title: '编号' },
-      owner: { type: 'string', title: '姓名', maxLength: 15 },
-      callNo: { type: 'number', title: '调用次数' },
-      href: { type: 'string', title: '链接', format: 'uri' },
-      description: { type: 'string', title: '描述', maxLength: 140 },
-    },
-    required: ['owner', 'callNo', 'href', 'description'],
-  };
-  ui: SFUISchema = {
-    '*': {
-      spanLabelFixed: 100,
-      grid: { span: 12 },
-    },
-    $no: {
-      widget: 'text'
-    },
-    $href: {
-      widget: 'string',
-    },
-    $description: {
-      widget: 'textarea',
-      grid: { span: 24 },
-    },
-  };
+  validateForm: FormGroup;
+  @Input() id: number;
+  @Input() currentPageNum: number;
+  @Output() returnBack: EventEmitter<any>;
+  loginInfo: LoginInfoModel;
+  unitTypeOptions: OptionsInterface[];
+  sensorTypeOptions: OptionsInterface[];
+  HazardNatureOptions: OptionsInterface[];
+  majorList: OptionsInterface[];
+  selMajorNoArray: OptionsInterface[];
+  currentPolygonList: any[];
+  showTrue: boolean;
 
   constructor(
     private modal: NzModalRef,
     private msgSrv: NzMessageService,
     public http: _HttpClient,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
-    if (this.record.id > 0)
-    this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
+
   }
 
-  save(value: any) {
-    this.http.post(`/user/${this.record.id}`, value).subscribe(res => {
-      this.msgSrv.success('保存成功');
-      this.modal.close(true);
-    });
-  }
 
-  close() {
-    this.modal.destroy();
-  }
+
 }

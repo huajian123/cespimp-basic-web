@@ -11,7 +11,7 @@ export namespace BasicInfoServiceNs {
     entprSimpleName?: string;
     region?: string;
     detailAddr?: string;
-    entprScope?:  { lng: number, lat: number }[];
+    entprScope?: { lng: number, lat: number }[];
     longitude: number; // 经度
     latitude: number; // 纬度
     legalPerson?: string;
@@ -106,6 +106,10 @@ export namespace BasicInfoServiceNs {
     maximumReserves: number;
   }
 
+  export interface BasicInfoEntprSearchModel {
+    entprName?: string;
+  }
+
   export interface EntprSearch {
     entprId: number;
   }
@@ -153,7 +157,7 @@ export namespace BasicInfoServiceNs {
     }
 
     // 获取企业列表
-    public getFactoryList(param: SearchCommonVO): Promise<PageInfo<FactoryInfoModel>> {
+    public getFactoryList(param: SearchCommonVO & BasicInfoEntprSearchModel): Promise<PageInfo<FactoryInfoModel>> {
       return this.http.get('data/basic/enterprises', param).toPromise();
     }
 

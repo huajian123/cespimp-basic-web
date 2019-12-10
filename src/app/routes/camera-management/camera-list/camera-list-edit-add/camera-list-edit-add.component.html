@@ -1,10 +1,150 @@
-<div class="modal-header">
-  <div class="modal-title">编辑 {{ record.id }} 信息</div>
-</div>
-<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
-<sf *ngIf="i" #sf mode="edit" [schema]="schema" [ui]="ui" [formData]="i" button="none">
-  <div class="modal-footer">
-    <button nz-button type="button" (click)="close()">关闭</button>
-    <button nz-button type="submit" nzType="primary" (click)="save(sf.value)" [disabled]="!sf.valid" [nzLoading]="http.loading">保存</button>
-  </div>
-</sf>
+<!--
+<page-header [autoBreadcrumb]="false" [title]="'摄像头列表'"></page-header>
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submit()" [nzLayout]="'vertical'">
+  <nz-card [nzBordered]="true" nzTitle="摄像头信息">
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">摄像头编号</nz-form-label>
+          <nz-form-control nzErrorTip="请输入摄像头编号">
+            <input nz-input formControlName="sensorNo" placeholder="请输入摄像头编号"/>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">摄像头名称</nz-form-label>
+          <nz-form-control nzErrorTip="请输入摄像头名称">
+            <input nz-input formControlName="sensorName" placeholder="请输入摄像头名称"/>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>摄像头类型</nz-form-label>
+          <nz-form-control nzErrorTip="请选择摄像头类型">
+            <nz-select (ngModelChange)="changeSensorType($event)" formControlName="sensorType" [nzPlaceHolder]="'请选择火灾危险性类型'" [nzShowSearch]="true">
+              <nz-option *ngFor="let i of sensorTypeOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16" *ngIf="showTrue">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">一级报警阈值</nz-form-label>
+          <nz-form-control nzErrorTip="请输入一级报警阈值">
+            <input nz-input formControlName="firstAlarmThreshold" placeholder="请输入一级报警阈值"/>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">二级报警阈值</nz-form-label>
+          <nz-form-control nzErrorTip="请输入二级报警阈值">
+            <input nz-input formControlName="secondAlarmThreshold" placeholder="请输入二级报警阈值"/>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16" *ngIf="!showTrue">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">低低位限报警阈值</nz-form-label>
+          <nz-form-control nzErrorTip="请输入低低位限报警阈值">
+            <input nz-input formControlName="firstAlarmThreshold" placeholder="请输入低低位限报警阈值"/>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">低位限报警阈值</nz-form-label>
+          <nz-form-control nzErrorTip="请输入低位限报警阈值">
+            <input nz-input formControlName="secondAlarmThreshold" placeholder="请输入低位限报警阈值"/>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>高位限报警阈值</nz-form-label>
+          <nz-form-control nzErrorTip="高位限报警阈值">
+            <input nz-input formControlName="thirdAlarmThreshold" placeholder="请输入高位限报警阈值"/>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16" *ngIf="!showTrue">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">高高位限报警阈值</nz-form-label>
+          <nz-form-control nzErrorTip="请输入高高位限报警阈值">
+            <input nz-input formControlName="fourthAlarmThreshold" placeholder="请输入高高位限报警阈值"/>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+  <nz-card [nzBordered]="true" nzTitle="位置信息">
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>摄像头区域</nz-form-label>
+          <nz-form-control>
+            <span class="operate-text cursor-pointer" (click)="showPolygonMap()">查看</span>
+            <input nz-input [hidden]="true" formControlName="majorScope" placeholder="请输入经纬度" />
+            <nz-form-explain *ngIf="validateForm.get('majorScope').dirty && validateForm.get('majorScope').errors">请点击查看并绘制区域
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>厂区中位置</nz-form-label>
+          <nz-form-control nzErrorTip="请输入厂区中位置">
+            <textarea nz-input formControlName="locFactory"  [nzAutosize]="{ minRows: 4 }" placeholder="请输入厂区中位置"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+  <nz-card [nzBordered]="true" nzTitle="重大危险源信息">
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">重大危险源名称</nz-form-label>
+          <nz-form-control nzErrorTip="请选择重大危险源名称">
+            <input nz-input formControlName="majorHazardId" placeholder="请选择重大危险源名称"/>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">重大危险源类型</nz-form-label>
+          <nz-form-control nzErrorTip="请选择重大危险源类型">
+            <nz-select  formControlName="partType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成类型'">
+              <nz-option *ngFor="let item of majorList" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">重大危险源组成部分名称</nz-form-label>
+          <nz-form-control nzErrorTip="请选择重大危险源组成部分名称">
+            <input nz-input formControlName="partId" placeholder="请选择重大危险源组成部分名称"/>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+  <footer-toolbar errorCollect>
+    <button nz-button type="primary" nzType="primary">提交</button>
+    <button nz-button type="primary" (click)="returnToList()" nzType="default">返回</button>
+  </footer-toolbar>
+</form>
+
+
+
+
+-->

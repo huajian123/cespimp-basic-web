@@ -6,6 +6,7 @@ import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum
 import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
+import BasicInfoEntprSearchModel = BasicInfoServiceNs.BasicInfoEntprSearchModel;
 
 @Component({
   selector: 'app-basic-info-manage',
@@ -21,8 +22,9 @@ export class BasicInfoManageComponent implements OnInit {
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
+  searchParam: BasicInfoEntprSearchModel;
 
-  constructor(private dataService: BasicInfoService, private cdr: ChangeDetectorRef,private messageService: ShowMessageService) {
+  constructor(private dataService: BasicInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -33,6 +35,7 @@ export class BasicInfoManageComponent implements OnInit {
     };
     this.dataList = [];
     this.itemId = -1;
+    this.searchParam = {};
   }
 
 
@@ -42,6 +45,9 @@ export class BasicInfoManageComponent implements OnInit {
     this.getDataList();
   }
 
+  reset() {
+    this.searchParam = {};
+  }
 
   private initTable(): void {
     this.columns = [
@@ -54,12 +60,14 @@ export class BasicInfoManageComponent implements OnInit {
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '经济类型',
+      {
+        title: '经济类型',
         index: 'ecoType',
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '企业规模',
+      {
+        title: '企业规模',
         index: 'entprScale',
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
@@ -78,10 +86,12 @@ export class BasicInfoManageComponent implements OnInit {
       },
     ];
   }
+
   add() {
     this.itemId = null;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
   }
+
   format(toBeFormat, arg) {
     return new MapPipe().transform(toBeFormat, arg);
   }
@@ -105,6 +115,7 @@ export class BasicInfoManageComponent implements OnInit {
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      ...this.searchParam,
     };
     const { total, pageNum, list } = await this.dataService.getFactoryList(params);
     this.listPageInfo.total = total;

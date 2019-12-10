@@ -185,7 +185,7 @@ export class LoginPlatformComponent implements OnInit {
         type: 'radar',
         data: [
           {
-            value: [3800, 10000, 23500, 30000, 31000, 15000],
+            value: [1000, 7000, 23500, 38000, 27000, 7000],
             itemStyle: {
               normal: {
                 color: '#00E3FF',
@@ -202,7 +202,7 @@ export class LoginPlatformComponent implements OnInit {
             },
           },
           {
-            value: [5000, 6500, 18000, 27000, 42000, 19000],
+            value: [1000, 7000, 20000, 38000, 25000, 7000],
             itemStyle: {
               normal: {
                 color: 'rgba(255,64,192)',
@@ -268,28 +268,11 @@ export class LoginPlatformComponent implements OnInit {
         },
       },
       series: [{
-        name: '污染物入水口 vs 污染物出水口',  // 全年主要污染物分布雷达图
+        name: '污染物入口 vs 污染物出口',  // 全年主要污染物分布雷达图
         type: 'radar',
         data: [
           {
-            value: [5500, 10000, 22000, 27000, 25000, 17000],
-            itemStyle: {
-              normal: {
-                color: 'rgba(255,64,192)',
-                lineStyle: {
-                  color: 'rgba(255,64,192)',
-                },
-              },
-            },
-            areaStyle: {
-              normal: {
-                color: 'rgba(255,64,192,0.6)',
-              },
-
-            },
-          },
-          {
-            value: [4500, 7000, 17000, 22000, 15000, 13000],
+            value: [5500, 10000, 22000, 20000, 25000, 17000],
             itemStyle: {
               normal: {
                 color: '#00E3FF',
@@ -305,6 +288,23 @@ export class LoginPlatformComponent implements OnInit {
 
             },
 
+          },
+          {
+            value: [3700, 8000, 17000, 20000, 24000, 13000],
+            itemStyle: {
+              normal: {
+                color: 'rgba(255,64,192)',
+                lineStyle: {
+                  color: 'rgba(255,64,192)',
+                },
+              },
+            },
+            areaStyle: {
+              normal: {
+                color: 'rgba(255,64,192,0.6)',
+              },
+
+            },
           },
         ],
       }],
@@ -408,24 +408,12 @@ export class LoginPlatformComponent implements OnInit {
         height: '120px',
         textStyle: {
           color: '#ffffff',
-        },
-        formatter(name) {
-          let index = 0;
-          const clientlabels = ['氯化工艺', '磺化工艺', '氧化工艺', '聚合工艺'];
-          const clientcounts = [335, 310, 234, 135];
-          clientlabels.forEach(function(value, i) {
-            if (value == name) {
-              index = i;
-            }
-          });
-          // return name + '  ' + clientcounts[index] + '个';
-          return name;
-        },
+        }
       },
       calculable: true,
       series: [
         {
-          name: '半径模式',
+          name: '',
           type: 'pie',
           radius: [15, 60],
           center: ['32%', '55%'],
