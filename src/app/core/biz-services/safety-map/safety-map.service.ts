@@ -104,6 +104,10 @@ export namespace SafetyMapServiceNs {
       return this.http.post('data/major/hazard/maps', param).toPromise();
     }
 
+    public getCameraInfoDetail(id: number): Promise<string> {
+      return this.http.get('data/major/hazard/realTimeCamera/' + id).toPromise();
+    }
+
   }
 }
 

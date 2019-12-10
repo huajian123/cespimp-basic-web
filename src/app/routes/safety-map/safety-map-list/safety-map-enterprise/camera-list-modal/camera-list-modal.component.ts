@@ -1,17 +1,20 @@
 import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import videojs from 'video.js';
+import { SafetyMapService } from '@core/biz-services/safety-map/safety-map.service';
 
 @Component({
   selector: 'camera-list-modal',
   templateUrl: './camera-list-modal.component.html',
   styleUrls: ['./camera-list-modal.component.scss'],
 })
-export class CameraListModalComponent implements OnInit, AfterViewInit {
+export class CameraListModalComponent implements OnInit {
   @Input() showModel: boolean;
+  @Input() id: number;
   @Output() showModelChange = new EventEmitter<boolean>();
   player: any;
 
-  constructor(private cdr: ChangeDetectorRef) {
+
+  constructor(private cdr: ChangeDetectorRef, private dataService: SafetyMapService) {
     this.showModel = false;
 
 
@@ -23,18 +26,25 @@ export class CameraListModalComponent implements OnInit, AfterViewInit {
     this.showModelChange.emit(false);
   }
 
-  ngOnInit() {
-  }
 
-  ngAfterViewInit(): void {
+  async getDetailInfo(id?) {
+    const dataInfo = await this.dataService.getCameraInfoDetail(id ? id : this.id);
     this.player = videojs('my-video', {
-      sources: [{ src: 'http://cyberplayerplay.kaywang.cn/cyberplayer/demo201711-L1.m3u8' }],
-      // sources: [{ src: 'http://192.168.10.9:83/openUrl/618vdN6/live.m3u8'}],
+      sources: [{ src: dataInfo }],
       loop: true,
       muted: true,
       height: 400,
       controls: true,
     });
     this.player.autoplay('muted');
+    this.cdr.markForCheck();
   }
+
+  ngOnInit() {
+    this.getDetailInfo();
+  }
+
+ /* ngAfterViewInit(): void {
+
+  }*/
 }

@@ -60,6 +60,7 @@ interface LayerBtnInterface {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
+  selectCameraId:number;
   currentRole: string;
   roleEnum = RoleEnum;
   @Input() enterpriseId: number;
@@ -96,6 +97,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
 
 
   constructor(private cdr: ChangeDetectorRef, private safetyMapService: SafetyMapService, private enterpriseBasicInfoService: EnterpriseBasicInfoService) {
+    this.selectCameraId = -1;
     this.currentRole = RoleEnum[RoleEnum.ParkManage];
     const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
       'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
@@ -103,17 +105,17 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     this.tilePhoto = new T.TileLayer(imageURL, { minZoom: 1, maxZoom: 18 });
     this.currentSelLayerBtnIndex = -1;
     this.layerObjArray = [
-      { name: '重大危险源', type: 'default', icon: 'warning', isSel: false, layNum: LayerEnum.HazardSources, count: 2 },
+      { name: '重大危险源', type: 'default', icon: 'warning', isSel: false, layNum: LayerEnum.HazardSources, count: 0 },
     ];
 
     this.identificationBtnObjArray = [
-      { name: '实时报警', type: 'default', icon: 'bell', isSel: false, layNum: LayerEnum.Alarm, count: 2 },
-      { name: '温度传感器', type: 'default', icon: 'temperature', isSel: false, layNum: LayerEnum.Temperature, count: 2 },
-      { name: '压力传感器', type: 'default', icon: 'pressure', isSel: false, layNum: LayerEnum.Pressure, count: 2 },
-      { name: '液位传感器', type: 'default', icon: 'water-level', isSel: false, layNum: LayerEnum.WaterLevel, count: 2 },
-      { name: '可燃气体', type: 'default', icon: 'fire', isSel: false, layNum: LayerEnum.FireGas, count: 2 },
-      { name: '有毒气体', type: 'default', icon: 'poison', isSel: false, layNum: LayerEnum.PoisonousGas, count: 2 },
-      { name: '摄像头', type: 'default', icon: 'camera', isSel: false, layNum: LayerEnum.Camera, count: 2 },
+      { name: '实时报警', type: 'default', icon: 'bell', isSel: false, layNum: LayerEnum.Alarm, count: 0 },
+      { name: '温度传感器', type: 'default', icon: 'temperature', isSel: false, layNum: LayerEnum.Temperature, count: 0 },
+      { name: '压力传感器', type: 'default', icon: 'pressure', isSel: false, layNum: LayerEnum.Pressure, count: 0 },
+      { name: '液位传感器', type: 'default', icon: 'water-level', isSel: false, layNum: LayerEnum.WaterLevel, count: 0 },
+      { name: '可燃气体', type: 'default', icon: 'fire', isSel: false, layNum: LayerEnum.FireGas, count: 0 },
+      { name: '有毒气体', type: 'default', icon: 'poison', isSel: false, layNum: LayerEnum.PoisonousGas, count: 0 },
+      { name: '摄像头', type: 'default', icon: 'camera', isSel: false, layNum: LayerEnum.Camera, count: 5 },
     ];
     this.selLayerNumberArray = [];
     this.majorHazardCurrentSelLay = -1;
@@ -188,6 +190,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           case 'camera':
             const cameraMarker = this.createMarkers(IdentificationUrlEnum.CameraNormal, item.longitude, item.latitude, item.id);
             this.cameraMarkerArray.push(cameraMarker);
+            //console.log(item.id);
             this.map.addOverLay(cameraMarker);
             break;
           // 有毒气体
@@ -299,6 +302,8 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           this.currentSelLayerBtnIndex = this.layerEnum.Camera;
           this.initModelStatus();
           this.modelIsShow.camera = true;
+          this.selectCameraId = item.setOptions.id;
+          //console.log(this.selectCameraId);
           this.cdr.markForCheck();
         }, 0);
       });
@@ -392,8 +397,8 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     this.currentRole = window.sessionStorage.getItem(EVENT_KEY.role);
-    console.log(this.enterpriseId);
-    console.log(this.enterprisePosition);
+    //console.log(this.currentRole);
+    /*console.log(this.enterprisePosition);*/
   }
 
   async ngAfterViewInit() {
