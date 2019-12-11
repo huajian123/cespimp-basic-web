@@ -1,5 +1,6 @@
 import { EVENT_KEY } from '@env/staticVariable';
 
+export const webSocketIp = '192.168.10.5';
  export const localUrl = 'http://192.168.10.5:8081';
 // export const localUrl = 'http://172.16.1.18:8081';
 // export const localUrl = 'http://172.16.0.157:8081';

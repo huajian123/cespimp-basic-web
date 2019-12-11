@@ -3,6 +3,7 @@ import { STColumn, STData } from '@delon/abc';
 import { AlarmListService, AlarmListServiceNs } from '@core/biz-services/alarm-management/alarm-list.service';
 import RealTimeAlarmModel = AlarmListServiceNs.RealTimeAlarmModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
+import { webSocketIp } from '@env/environment';
 
 
 @Component({
@@ -46,7 +47,7 @@ export class AlarmListComponent implements OnInit,OnDestroy {
     if (this.ws != null) {
       this.ws.close();
     }
-    this.ws = new WebSocket('ws://172.16.1.18:8081/websocket');
+    this.ws = new WebSocket(`ws://${webSocketIp}:8081/websocket`);
     this.ws.onopen = (e) => {
       //socket 开启后执行，可以向后端传递信息
       // this.ws.send('sonmething');
