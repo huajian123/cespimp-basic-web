@@ -70,75 +70,57 @@ export class PressModalComponent implements OnInit {
     };
 
     this.historyOption = {
-      backgroundColor: '#0A1651',
+      backgroundColor: '#FFF',
+      grid: {
+        top: '9%',
+        bottom: '19%',
+        left: '6%',
+        right: '4%',
+      },
       tooltip: {
         trigger: 'axis',
-        axisPointer: {
-          lineStyle: {
-            color: '#57617B',
-          },
+        label: {
+          show: true,
         },
       },
-      legend: {},
-      grid: {
-        bottom: '10%',
-      },
-      xAxis: [{
-        name: '时间 （单位分钟）',
-        type: 'category',
-        boundaryGap: false,
+      xAxis: {
+        boundaryGap: true, //默认，坐标轴留白策略
         axisLine: {
-          lineStyle: {
-            color: '#57617B',
-          },
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+          alignWithLabel: true,
         },
         data: ['0', '14:18', '15:28', '16:41', '17:32', '18:11', '19:22', '19:04', '20:01', '21:30'],
-      }],
-      yAxis: [{
-        type: 'value',
+      },
+      yAxis: {
+        axisLine: {
+          show: false,
+        },
+        splitLine: {
+          show: true,
+          lineStyle: {
+            type: 'dashed',
+            color: 'rgba(33,148,246,0.2)',
+          },
+        },
         axisTick: {
           show: false,
         },
-        axisLine: {
-          lineStyle: {
-            color: '#57617B',
+        splitArea: {
+          show: true,
+          areaStyle: {
+            color: 'rgb(245,250,254)',
           },
         },
-
-        axisLabel: {
-          margin: 10,
-          textStyle: {
-            color: 'rgba(255,255,255,.6)',
-            fontSize: '12',
-          },
-        },
-        splitLine: {
-          lineStyle: {
-            color: 'rgba(255,255,255,0.1)',
-          },
-        },
-      }],
-      visualMap: [
-        {
-          show: false,
-          pieces: [{
-            gt: 0,
-            lt: 100,
-            color: '#FFFF00',
-          }, {
-            gt: 100,
-            lt: 300,
-            color: '#00A1EA',
-          }],
-          outOfRange: {
-            color: '#FF5D1D',
-          },
-        },
-      ],
+      },
       series: [{
-        name: '压力 kPa',
         type: 'line',
-        smooth: true,
+        symbol: 'circle',
         markLine: { //最大值和最小值
           data: [
             {
@@ -169,19 +151,61 @@ export class PressModalComponent implements OnInit {
               },
             }],
         },
+        symbolSize: 7,
         lineStyle: {
-          normal: {
-            width: 1,
-          },
+          color: 'rgb(33,148,246)',
+          shadowBlur: 12,
+          shadowColor: 'rgb(33,148,246,0.9)',
+          shadowOffsetX: 1,
+          shadowOffsetY: 1,
         },
         itemStyle: {
-          normal: {
-            color: '#00A1EA',
+          color: 'rgb(33,148,246)',
+          borderWidth: 1,
+          borderColor: '#FFF',
+        },
+        label: {
+          show: false,
+          distance: 1,
+          emphasis: {
+            show: true,
+            offset: [25, -2],
+            //borderWidth:1,
+            // borderColor:'rgb(33,148,246)',
+            //formatter:'{bg|{b}\n数据量:{c}}',
+            backgroundColor: {
+              image: '../../../../../../assets/66.png',
+            },
+            color: '#FFF',
+            padding: [8, 20, 8, 6],
+            //width:60,
+            height: 36,
+            formatter: function(params) {
+              let name = params.name;
+              let value = params.data;
+              let str = name + '\n数据量：' + value;
+              return str;
+            },
+            rich: {
+              bg: {
+                backgroundColor: {
+                  image: '../../../../../../assets/66.png',
+                },
+                width: 78,
+                //height:42,
+                color: '#FFF',
+                padding: [20, 0, 20, 10],
+              },
+              br: {
+                width: '100%',
+                height: '100%',
+              },
+
+            },
           },
         },
         data: [150, 152, 252, 252, 152, 358, 252, 355, 344, 352],
       }],
-
     };
   }
 

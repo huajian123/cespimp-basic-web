@@ -324,7 +324,19 @@ export class LoginPlatformComponent implements OnInit {
       },
       tooltip: {
         trigger: 'item',
-        formatter: '{a} <br/>{b}: {c} ({d}%)',
+        /*formatter: '{a} <br/>{b}: {c} ({d}%)',*/
+        formatter: (params) => {
+          switch (params.data.name) {
+            case '一级':
+              return ;
+            case '二级':
+              return ;
+            case '三级':
+              return '华统食品:<br/>液氨';
+            case '四级':
+              return '晶瑞化学:<br/>双氧水<br/>双桥液化气站:<br/>瓶装液化气';
+          }
+        },
       },
       legend: {
         orient: 'vertical',
@@ -398,7 +410,7 @@ export class LoginPlatformComponent implements OnInit {
       tooltip: {
         trigger: 'item',
         // formatter: '{a} <br/>{b}: {c} ({d}%)',
-        formatter: (params, ticket) => {
+        formatter: (params) => {
           switch (params.data.name) {
             case '氯化工艺':
               return '长征欣凯';
