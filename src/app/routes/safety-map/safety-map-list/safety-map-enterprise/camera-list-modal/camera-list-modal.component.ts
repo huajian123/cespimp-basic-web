@@ -40,8 +40,6 @@ export class CameraListModalComponent implements OnInit {
 
   async getDetailInfo(id?) {
     this.dataInfo = await this.dataService.getCameraInfoDetail(id ? id : this.id);
-   /* console.log(this.dataInfo.cameraName);
-    console.log(this.dataInfo.url);*/
     this.player = videojs('my-video', {
       sources: [{ src: this.dataInfo.url }],
       loop: true,

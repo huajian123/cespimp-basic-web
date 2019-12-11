@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { STColumn } from '@delon/abc';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { STColumn, STData } from '@delon/abc';
+import { AlarmListService, AlarmListServiceNs } from '@core/biz-services/alarm-management/alarm-list.service';
+import RealTimeAlarmModel = AlarmListServiceNs.RealTimeAlarmModel;
+import { MapPipe } from '@shared/directives/pipe/map.pipe';
 
 @Component({
   selector: 'alarm-list',
@@ -8,40 +11,33 @@ import { STColumn } from '@delon/abc';
 })
 export class AlarmListComponent implements OnInit {
   columns: STColumn[];
-  dataList: any[];
+  dataList: RealTimeAlarmModel[];
+  @Input() entprId: number;
 
-  constructor() {
-    this.dataList = [
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-      { productName: 'No234', title: '设备类型', casNo: '2018-01-12' },
-    ];
+  constructor(private alarmListService: AlarmListService, private cdr: ChangeDetectorRef) {
+    this.dataList = [];
   }
 
   private initTable(): void {
     this.columns = [
-      { title: '设备编号', index: 'productName', width: 180 },
-      { title: '报警类型', index: 'title', width: 180 },
-      { title: '报警时间', index: 'casNo', width: 180 },
+      { title: '设备编号', index: 'sensorNo', width: 180 },
+      { title: '报警类型', index: 'alarmType', width: 180 ,  format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),},
+      { title: '报警时间', index: 'alarmStartTime', width: 180, type: 'date' },
     ];
   }
 
+  format(toBeFormat, arg) {
+    return new MapPipe().transform(toBeFormat, arg);
+  }
+
+  async getAlarmList() {
+    this.dataList = await this.alarmListService.getRealTimeAlarm(this.entprId);
+    this.cdr.markForCheck();
+  };
+
   ngOnInit() {
     this.initTable();
+    this.getAlarmList();
   }
 
 }

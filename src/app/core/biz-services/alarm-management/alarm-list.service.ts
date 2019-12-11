@@ -20,6 +20,12 @@ export namespace AlarmListServiceNs {
     handleResult: string;
   }
 
+  export interface RealTimeAlarmModel {
+    sensorNo: string;
+    alarmType: number;
+    alarmStartTime: number;
+  }
+
 
   export class AlarmListServiceClass {
     constructor(private http: HttpUtilService) {
@@ -27,6 +33,10 @@ export namespace AlarmListServiceNs {
 
     public getAlarmList(param: SearchCommonVO): Promise<PageInfo<AlarmModel>> {
       return this.http.get('data/major/hazard/alarms', param).toPromise();
+    }
+
+    public getRealTimeAlarm(entprId: number): Promise<RealTimeAlarmModel[]> {
+      return this.http.get('/data/major/hazard/realTimeAlarm/' + entprId).toPromise();
     }
   }
 }
