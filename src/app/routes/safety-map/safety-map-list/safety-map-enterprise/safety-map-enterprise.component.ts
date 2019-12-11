@@ -104,9 +104,6 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=0a65163e2ebdf5a37abb7f49274b85df';
     this.tilePhoto = new T.TileLayer(imageURL, { minZoom: 1, maxZoom: 18 });
     this.currentSelLayerBtnIndex = -1;
-    this.layerObjArray = [
-      { name: '重大危险源', type: 'default', icon: 'warning', isSel: false, layNum: LayerEnum.HazardSources, count: 0 },
-    ];
     this.selLayerNumberArray = [];
     this.majorHazardCurrentSelLay = -1;
     this.identificationData = {};
@@ -448,6 +445,16 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
         isSel: false,
         layNum: LayerEnum.Camera,
         count: this.enterpriseInfo.hazardDatas.monitorCameras,
+      },
+    ];
+    this.layerObjArray = [
+      {
+        name: '重大危险源',
+        type: 'default',
+        icon: 'warning',
+        isSel: false,
+        layNum: LayerEnum.HazardSources,
+        count: this.enterpriseInfo.hazardDatas.hazardInfo,
       },
     ];
     this.initEnterpriseArea();
