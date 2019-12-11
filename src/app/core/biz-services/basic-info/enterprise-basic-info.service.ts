@@ -30,7 +30,7 @@ export namespace EnterpriseBasicInfoServiceNs {
     standLevel?: number;
     safetySupervisionLevel?: number;
     localSafetyAdmin?: number;
-    hazardDatas:{
+    hazardDatas?:{
       temp:number;
       liquid:number;
       monitorCameras:number;
