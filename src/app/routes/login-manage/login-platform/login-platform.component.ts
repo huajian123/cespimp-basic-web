@@ -397,7 +397,18 @@ export class LoginPlatformComponent implements OnInit {
       color: ['#c487ee', '#deb140', '#49dff0', '#034079', '#6f81da'],
       tooltip: {
         trigger: 'item',
-        formatter: '{a} <br/>{b} : {c} ({d}%)',
+        // formatter: '{a} <br/>{b}: {c} ({d}%)',
+        formatter: (params, ticket) => {
+          switch (params.data.name) {
+            case '氯化工艺':
+              return '长征欣凯';
+            case '磺化工艺':
+            case '氧化工艺':
+              return '吴中医药';
+            case '聚合工艺':
+              return '瑞红电子';
+          }
+        },
       },
       legend: {
         orient: 'vertical',
@@ -408,7 +419,7 @@ export class LoginPlatformComponent implements OnInit {
         height: '120px',
         textStyle: {
           color: '#ffffff',
-        }
+        },
       },
       calculable: true,
       series: [
