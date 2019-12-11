@@ -72,7 +72,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     // 业务处理：一些通用操作
     switch (ev.status) {
       case 200:
-        if (ev instanceof HttpResponse) {
+        if (ev instanceof HttpResponse&&!ev.body.size) {
           const body: any = ev.body;
           if (body && body.code !== 0) {
             return throwError({ errorMsg: body.msg });

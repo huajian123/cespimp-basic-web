@@ -30,6 +30,17 @@ export namespace EnterpriseBasicInfoServiceNs {
     standLevel?: number;
     safetySupervisionLevel?: number;
     localSafetyAdmin?: number;
+    hazardDatas:{
+      temp:number;
+      liquid:number;
+      monitorCameras:number;
+      alarm:number;
+      pressure:number;
+      poisonous:number;
+      hazardInfo:number;
+      combustible:number;
+
+    }
   }
 
   export interface EntprSearch {

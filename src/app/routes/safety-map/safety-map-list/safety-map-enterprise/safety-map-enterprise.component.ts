@@ -60,7 +60,7 @@ interface LayerBtnInterface {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
-  selectCameraId:number;
+  selectCameraId: number;
   currentRole: string;
   roleEnum = RoleEnum;
   @Input() enterpriseId: number;
@@ -106,16 +106,6 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     this.currentSelLayerBtnIndex = -1;
     this.layerObjArray = [
       { name: '重大危险源', type: 'default', icon: 'warning', isSel: false, layNum: LayerEnum.HazardSources, count: 0 },
-    ];
-
-    this.identificationBtnObjArray = [
-      { name: '实时报警', type: 'default', icon: 'bell', isSel: false, layNum: LayerEnum.Alarm, count: 0 },
-      { name: '温度传感器', type: 'default', icon: 'temperature', isSel: false, layNum: LayerEnum.Temperature, count: 0 },
-      { name: '压力传感器', type: 'default', icon: 'pressure', isSel: false, layNum: LayerEnum.Pressure, count: 0 },
-      { name: '液位传感器', type: 'default', icon: 'water-level', isSel: false, layNum: LayerEnum.WaterLevel, count: 0 },
-      { name: '可燃气体', type: 'default', icon: 'fire', isSel: false, layNum: LayerEnum.FireGas, count: 0 },
-      { name: '有毒气体', type: 'default', icon: 'poison', isSel: false, layNum: LayerEnum.PoisonousGas, count: 0 },
-      { name: '摄像头', type: 'default', icon: 'camera', isSel: false, layNum: LayerEnum.Camera, count: 5 },
     ];
     this.selLayerNumberArray = [];
     this.majorHazardCurrentSelLay = -1;
@@ -397,14 +387,71 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     this.currentRole = window.sessionStorage.getItem(EVENT_KEY.role);
-    //console.log(this.currentRole);
-    /*console.log(this.enterprisePosition);*/
   }
 
   async ngAfterViewInit() {
     this.initMap();
     await this.getEnterpriseInfo();
+    this.identificationBtnObjArray = [
+      {
+        name: '实时报警',
+        type: 'default',
+        icon: 'bell',
+        isSel: false,
+        layNum: LayerEnum.Alarm,
+        count: this.enterpriseInfo.hazardDatas.alarm,
+      },
+      {
+        name: '温度传感器',
+        type: 'default',
+        icon: 'temperature',
+        isSel: false,
+        layNum: LayerEnum.Temperature,
+        count: this.enterpriseInfo.hazardDatas.temp,
+      },
+      {
+        name: '压力传感器',
+        type: 'default',
+        icon: 'pressure',
+        isSel: false,
+        layNum: LayerEnum.Pressure,
+        count: this.enterpriseInfo.hazardDatas.pressure,
+      },
+      {
+        name: '液位传感器',
+        type: 'default',
+        icon: 'water-level',
+        isSel: false,
+        layNum: LayerEnum.WaterLevel,
+        count: this.enterpriseInfo.hazardDatas.liquid,
+      },
+      {
+        name: '可燃气体',
+        type: 'default',
+        icon: 'fire',
+        isSel: false,
+        layNum: LayerEnum.FireGas,
+        count: this.enterpriseInfo.hazardDatas.combustible,
+      },
+      {
+        name: '有毒气体',
+        type: 'default',
+        icon: 'poison',
+        isSel: false,
+        layNum: LayerEnum.PoisonousGas,
+        count: this.enterpriseInfo.hazardDatas.poisonous,
+      },
+      {
+        name: '摄像头',
+        type: 'default',
+        icon: 'camera',
+        isSel: false,
+        layNum: LayerEnum.Camera,
+        count: this.enterpriseInfo.hazardDatas.monitorCameras,
+      },
+    ];
     this.initEnterpriseArea();
+    this.cdr.markForCheck();
   }
 
 }
