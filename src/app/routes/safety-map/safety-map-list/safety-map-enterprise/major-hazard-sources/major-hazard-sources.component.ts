@@ -7,7 +7,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ListPageInfo, PageTypeEnum } from '@core/vo/comm/BusinessEnum';
 import { STColumn, STData } from '@delon/abc';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
@@ -173,7 +173,6 @@ export class MajorHazardSourcesComponent implements OnInit {
         break;
       }
     }
-    //console.log(e.index);
   }
 
   initTable() {
