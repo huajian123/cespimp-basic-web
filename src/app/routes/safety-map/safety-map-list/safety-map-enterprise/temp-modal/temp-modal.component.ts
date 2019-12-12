@@ -2,17 +2,20 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component, EventEmitter,
-  Input,
+  Input, OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
+import { webSocketIp } from '@env/environment';
+import { SafetyMapService, SafetyMapServiceNs } from '@core/biz-services/safety-map/safety-map.service';
+import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
 
 @Component({
   selector: 'temp-modal',
   templateUrl: './temp-modal.component.html',
   styleUrls: ['./temp-modal.component.scss'],
 })
-export class TempModalComponent implements OnInit, AfterViewInit {
+export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
   char: any;
   Option: any;
   dateRange = [];
@@ -24,8 +27,10 @@ export class TempModalComponent implements OnInit, AfterViewInit {
   mercuryColor: any;
   @Input() showModel: boolean;
   @Output() showModelChange = new EventEmitter<boolean>();
+  ws: WebSocket;//定义websocket
 
-  constructor(private cdr: ChangeDetectorRef) {
+
+  constructor(private cdr: ChangeDetectorRef, private safetyMapService: SafetyMapService) {
     this.showModel = false;
     this.value = 40.0;
     this.borderColor = '#fd4d49';
@@ -362,8 +367,49 @@ export class TempModalComponent implements OnInit, AfterViewInit {
     }, 400);
   }
 
+  connectWs() {
+    if (this.ws != null) {
+      this.ws.close();
+    }
+    this.ws = new WebSocket(`ws://${webSocketIp}:8081/websocket/${WebSocketTypeEnum.Temp}`);
+    this.ws.onopen = (e) => {
+      console.log(e);
+      //socket 开启后执行，可以向后端传递信息
+      // this.ws.send('sonmething');
+
+    };
+    this.ws.onmessage = (e) => {
+      //socket 获取后端传递到前端的信息
+      // this.ws.send('sonmething');
+      if (e.data !== '-连接已建立-') {
+        const tempArray = JSON.parse(e.data);
+        console.log(tempArray);
+        this.cdr.markForCheck();
+      }
+    };
+    this.ws.onerror = (e) => {
+      //socket error信息
+      console.log(e);
+
+    };
+    this.ws.onclose = (e) => {
+      //socket 关闭后执行
+      console.log(e);
+    };
+  }
+
+  async openWebSocketFn() {
+    await this.safetyMapService.openWebsocket();
+    this.connectWs();
+  }
+
   ngOnInit() {
     this.initCeShiOption();
+    this.openWebSocketFn();
+  }
+
+  ngOnDestroy(): void {
+    this.ws.close();
   }
 
   ngAfterViewInit(): void {

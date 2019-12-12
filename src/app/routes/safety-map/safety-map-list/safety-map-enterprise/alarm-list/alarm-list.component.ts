@@ -4,6 +4,8 @@ import { AlarmListService, AlarmListServiceNs } from '@core/biz-services/alarm-m
 import RealTimeAlarmModel = AlarmListServiceNs.RealTimeAlarmModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { webSocketIp } from '@env/environment';
+import { SafetyMapServiceNs } from '@core/biz-services/safety-map/safety-map.service';
+import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
 
 
 @Component({
@@ -39,7 +41,7 @@ export class AlarmListComponent implements OnInit,OnDestroy {
   }
 
   async getAlarmList() {
-    this.dataList = await this.alarmListService.getRealTimeAlarm(this.entprId);
+    this.dataList = await this.alarmListService.getRealTimeAlarm();
     this.cdr.markForCheck();
   };
 
@@ -47,7 +49,7 @@ export class AlarmListComponent implements OnInit,OnDestroy {
     if (this.ws != null) {
       this.ws.close();
     }
-    this.ws = new WebSocket(`ws://${webSocketIp}:8081/websocket`);
+    this.ws = new WebSocket(`ws://${webSocketIp}:8081/websocket/${WebSocketTypeEnum.Alarm}`);
     this.ws.onopen = (e) => {
       //socket 开启后执行，可以向后端传递信息
       // this.ws.send('sonmething');
@@ -56,11 +58,13 @@ export class AlarmListComponent implements OnInit,OnDestroy {
     this.ws.onmessage = (e) => {
       //socket 获取后端传递到前端的信息
       // this.ws.send('sonmething');
-      if (e.data !== '连接成功') {
+      if (e.data !== '-连接已建立-') {
+        console.log(e);
         const tempArray = JSON.parse(e.data);
         this.dataList = (tempArray as any[]).filter((item) => {
           return item.entprId === this.entprId;
         });
+        console.log(tempArray);
         this.cdr.markForCheck();
       }
     };
