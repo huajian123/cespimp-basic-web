@@ -1,38 +1,50 @@
 <div class="temp-wrap">
-  <nz-modal [(nzVisible)]="showModel" nzWidth="1100" [nzFooter]="null" (nzOnCancel)="close()">
-    <nz-tabset>
-      <nz-tab nzTitle="基本信息">
+  <nz-modal [(nzVisible)]="showModel" nzWidth="1100"  [nzFooter]="null" (nzOnCancel)="close()">
+    <nz-tabset (nzSelectChange)="SelectChanged($event)">
+      <nz-tab nzTitle="重大危险源信息">
         <form nz-form [formGroup]="validateForm">
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">危险单元名称</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">危险单元级别</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>是否涉及重点监管工艺</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
+          <nz-row >
+            <nz-col>
+              <nz-form-item>
               </nz-form-item>
             </nz-col>
           </nz-row>
           <nz-row nzGutter="24">
             <nz-col [nzSpan]="8">
               <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">是否涉及剧毒品</nz-form-label>
+                <nz-form-label nzFor="roomForm">企业名称</nz-form-label>
+                <nz-form-control nzErrorTip="不为空">
+                  <input nz-input formControlName="roomForm" readonly />
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+            <nz-col [nzSpan]="8">
+              <nz-form-item nzFlex>
+                <nz-form-label nzFor="roomForm">重大危险源名称</nz-form-label>
+                <nz-form-control nzErrorTip="不为空">
+                  <input nz-input formControlName="roomForm" readonly />
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+            <nz-col [nzSpan]="8">
+              <nz-form-item nzFlex>
+                <nz-form-label>重大危险源编号</nz-form-label>
+                <nz-form-control nzErrorTip="不为空">
+                  <input nz-input formControlName="roomForm" readonly/>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+          </nz-row>
+          <nz-row >
+            <nz-col>
+              <nz-form-item>
+              </nz-form-item>
+            </nz-col>
+          </nz-row>
+          <nz-row nzGutter="24">
+            <nz-col [nzSpan]="8">
+              <nz-form-item nzFlex>
+                <nz-form-label nzFor="roomForm">单元类型</nz-form-label>
                 <nz-form-control nzErrorTip="不为空">
                   <input nz-input formControlName="roomForm" readonly/>
                 </nz-form-control>
@@ -48,43 +60,23 @@
             </nz-col>
             <nz-col [nzSpan]="8">
               <nz-form-item nzFlex>
-                <nz-form-label>备案号</nz-form-label>
+                <nz-form-label>R值</nz-form-label>
                 <nz-form-control nzErrorTip="不为空">
                   <input nz-input formControlName="roomForm" readonly/>
                 </nz-form-control>
               </nz-form-item>
             </nz-col>
           </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">负责人姓名</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">联系电话</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>所在市</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
+          <nz-row >
+            <nz-col>
+              <nz-form-item>
               </nz-form-item>
             </nz-col>
           </nz-row>
           <nz-row nzGutter="24">
             <nz-col [nzSpan]="8">
               <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">所在区、县</nz-form-label>
+                <nz-form-label nzFor="roomForm">重大危险源等级</nz-form-label>
                 <nz-form-control nzErrorTip="不为空">
                   <input nz-input formControlName="roomForm" readonly/>
                 </nz-form-control>
@@ -92,7 +84,7 @@
             </nz-col>
             <nz-col [nzSpan]="8">
               <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">所在街道</nz-form-label>
+                <nz-form-label nzFor="roomForm">重大危险源性质</nz-form-label>
                 <nz-form-control nzErrorTip="不为空">
                   <input nz-input formControlName="roomForm" readonly/>
                 </nz-form-control>
@@ -100,43 +92,23 @@
             </nz-col>
             <nz-col [nzSpan]="8">
               <nz-form-item nzFlex>
-                <nz-form-label>具体地址</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">占地面积</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">R值</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>压力容器数量</nz-form-label>
+                <nz-form-label>重大危险源管理员</nz-form-label>
                 <nz-form-control nzErrorTip="不为空">
                   <input nz-input formControlName="roomForm" readonly/>
                 </nz-form-control>
               </nz-form-item>
             </nz-col>
           </nz-row>
+          <nz-row >
+            <nz-col>
+              <nz-form-item>
+              </nz-form-item>
+            </nz-col>
+          </nz-row>
           <nz-row nzGutter="24">
             <nz-col [nzSpan]="8">
               <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">三类压力容器数量</nz-form-label>
+                <nz-form-label nzFor="roomForm">管理员联系电话</nz-form-label>
                 <nz-form-control nzErrorTip="不为空">
                   <input nz-input formControlName="roomForm" readonly/>
                 </nz-form-control>
@@ -144,662 +116,44 @@
             </nz-col>
             <nz-col [nzSpan]="8">
               <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">经度</nz-form-label>
+                <nz-form-label nzFor="roomForm">在厂区位置</nz-form-label>
                 <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
+                  <input nz-input formControlName="roomForm" readonly />
                 </nz-form-control>
               </nz-form-item>
             </nz-col>
             <nz-col [nzSpan]="8">
               <nz-form-item nzFlex>
-                <nz-form-label>纬度</nz-form-label>
+                <nz-form-label>重大危险源描述</nz-form-label>
                 <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
+                  <input nz-input formControlName="roomForm" readonly />
                 </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+          </nz-row>
+          <nz-row >
+            <nz-col>
+              <nz-form-item>
               </nz-form-item>
             </nz-col>
           </nz-row>
         </form>
       </nz-tab>
       <nz-tab nzTitle="单元信息">
-        <form nz-form [formGroup]="validateForm">
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">危险单元名称</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">危险单元级别</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>是否涉及重点监管工艺</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">是否涉及剧毒品</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">投用时间</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>备案号</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">负责人姓名</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">联系电话</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>所在市</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">所在区、县</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">所在街道</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>具体地址</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">占地面积</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">R值</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>压力容器数量</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">三类压力容器数量</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">经度</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>纬度</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-        </form>
+        <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '1100px'}"
+            [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>
       </nz-tab>
       <nz-tab nzTitle="危险物质">
-        <form nz-form [formGroup]="validateForm">
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">危险单元名称</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">危险单元级别</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>是否涉及重点监管工艺</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">是否涉及剧毒品</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">投用时间</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>备案号</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">负责人姓名</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">联系电话</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>所在市</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">所在区、县</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">所在街道</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>具体地址</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">占地面积</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">R值</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>压力容器数量</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">三类压力容器数量</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">经度</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>纬度</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-        </form>
+        <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '1100px'}"
+            [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>
       </nz-tab>
       <nz-tab nzTitle="传感器监测">
-        <form nz-form [formGroup]="validateForm">
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">危险单元名称</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">危险单元级别</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>是否涉及重点监管工艺</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">是否涉及剧毒品</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">投用时间</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>备案号</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">负责人姓名</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">联系电话</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>所在市</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">所在区、县</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">所在街道</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>具体地址</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">占地面积</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">R值</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>压力容器数量</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">三类压力容器数量</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">经度</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>纬度</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-        </form>
+        <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '1100px'}"
+            [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>
       </nz-tab>
       <nz-tab nzTitle="视频监控">
-        <form nz-form [formGroup]="validateForm">
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">危险单元名称</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">危险单元级别</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>是否涉及重点监管工艺</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">是否涉及剧毒品</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">投用时间</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>备案号</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">负责人姓名</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">联系电话</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>所在市</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">所在区、县</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">所在街道</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>具体地址</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">占地面积</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">R值</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>压力容器数量</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">三类压力容器数量</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="roomForm">经度</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>纬度</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="roomForm" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-        </form>
+        <st #st [page]="{showSize:true}" [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true" [scroll]="{x: '1100px'}"
+            [widthMode]="{ type: 'strict' }" [data]="dataList" [columns]="columns" class="mt-sm"></st>
       </nz-tab>
     </nz-tabset>
   </nz-modal>
