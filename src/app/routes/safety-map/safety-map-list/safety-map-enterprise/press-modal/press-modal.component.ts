@@ -1,4 +1,13 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { SafetyMapService, SafetyMapServiceNs } from '@core/biz-services/safety-map/safety-map.service';
 import SensorInfoWebSocketModel = SafetyMapServiceNs.SensorInfoWebSocketModel;
 import { webSocketIp } from '@env/environment';
@@ -10,7 +19,7 @@ import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
   templateUrl: './press-modal.component.html',
   styleUrls: ['./press-modal.component.scss'],
 })
-export class PressModalComponent implements OnInit {
+export class PressModalComponent implements OnInit , OnDestroy {
   char: any;
   Option: any;
   historyOption: any;
@@ -294,6 +303,10 @@ export class PressModalComponent implements OnInit {
     this.initCeShiOption();
     this.openWebSocketFn();
     this.cdr.markForCheck();
+  }
+
+  ngOnDestroy(): void {
+    this.ws.close();
   }
 
 }

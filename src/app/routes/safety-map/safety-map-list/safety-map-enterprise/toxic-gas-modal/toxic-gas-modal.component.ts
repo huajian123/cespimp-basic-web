@@ -1,4 +1,18 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { SafetyMapService, SafetyMapServiceNs } from '@core/biz-services/safety-map/safety-map.service';
+import SensorInfoWebSocketModel = SafetyMapServiceNs.SensorInfoWebSocketModel;
+import { webSocketIp } from '@env/environment';
+import { MapPipe } from '@shared/directives/pipe/map.pipe';
+import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
 
 @Component({
   selector: 'toxic-gas-modal',
@@ -8,7 +22,7 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } fro
     '[class.d-block]': 'true',
   },
 })
-export class ToxicGasModalComponent implements OnInit {
+export class ToxicGasModalComponent implements OnInit, OnDestroy {
 
   char: any;
   Option: any;
@@ -21,14 +35,33 @@ export class ToxicGasModalComponent implements OnInit {
   @Input() showModel: boolean;
   @Output() showModelChange = new EventEmitter<boolean>();
   dateRange = [];
-
-  constructor(private cdr: ChangeDetectorRef) {
+  ws: WebSocket;//定义websocket
+  currentDataInfo: SensorInfoWebSocketModel;
+  historyLineValue: {
+    time: string[],
+    value: number[]
+  };
+  constructor(private cdr: ChangeDetectorRef,private safetyMapService: SafetyMapService) {
     this.showModel = false;
     this.value = 40.0;
     this.borderColor = '#fd4d49';
     this.mercuryColor = '#fd4d49';
     this.kd = [];
+    this.historyLineValue = {
+      time: [],
+      value: [],
+    };
 
+    this.currentDataInfo = {
+      sensorName: '',
+      sensorNo: '',
+      locFactory: '',
+      firstAlarmThreshold: 0,
+      secondAlarmThreshold: 0,
+      status: 0,
+      currentValue: 0,
+      historyData: [],
+    };
   }
 
   close() {
@@ -99,7 +132,7 @@ export class ToxicGasModalComponent implements OnInit {
           show: false,
           alignWithLabel: true,
         },
-        data: ['0', '14:18', '15:28', '16:41', '17:32', '18:11', '19:22', '19:04', '20:01', '21:30'],
+        data: this.historyLineValue.time,
       },
       yAxis: {
         axisLine: {
@@ -208,7 +241,7 @@ export class ToxicGasModalComponent implements OnInit {
             },
           },
         },
-        data: [150, 152, 252, 252, 152, 358, 252, 355, 344, 352],
+        data: this.historyLineValue.value,
       }],
     };
   }
@@ -224,9 +257,57 @@ export class ToxicGasModalComponent implements OnInit {
     this.initCeShiOption();
   }
 
-  ngAfterViewInit(): void {
-    this.initCeShiOption();
-    this.cdr.markForCheck();
+  connectWs() {
+    if (this.ws != null) {
+      this.ws.close();
+    }
+    this.ws = new WebSocket(`ws://${webSocketIp}:8081/websocket/${WebSocketTypeEnum.PoisonGas}`);
+    this.ws.onopen = (e) => {
+      console.log(e);
+      //socket 开启后执行，可以向后端传递信息
+      // this.ws.send('sonmething');
+
+    };
+    this.ws.onmessage = (e) => {
+      //socket 获取后端传递到前端的信息
+      // this.ws.send('sonmething');
+      if (e.data !== '-连接已建立-') {
+        this.currentDataInfo = JSON.parse(e.data);
+        console.log(this.currentDataInfo);
+        this.historyLineValue.value = [];
+        this.historyLineValue.time = [];
+        this.currentDataInfo.historyData.forEach(({ reportTime, sensorValue }) => {
+          this.historyLineValue.time.push(new MapPipe().transform(reportTime, 'date:HH:mm:ss'));
+          this.historyLineValue.value.push(sensorValue)
+        });
+        this.initCeShiOption();
+        this.char.resize();
+        console.log(this.historyLineValue);
+        this.cdr.markForCheck();
+      }
+    };
+    this.ws.onerror = (e) => {
+      //socket error信息
+      console.log(e);
+
+    };
+    this.ws.onclose = (e) => {
+      //socket 关闭后执行
+      console.log(e);
+    };
   }
 
+  async openWebSocketFn() {
+    await this.safetyMapService.openWebsocket();
+    this.connectWs();
+  }
+
+  ngAfterViewInit(): void {
+    this.initCeShiOption();
+    this.openWebSocketFn();
+    this.cdr.markForCheck();
+  }
+  ngOnDestroy(): void {
+    this.ws.close();
+  }
 }
