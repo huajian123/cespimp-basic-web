@@ -35,8 +35,8 @@ export namespace AlarmListServiceNs {
       return this.http.get('data/major/hazard/alarms', param).toPromise();
     }
 
-    public getRealTimeAlarm(entprId: number): Promise<RealTimeAlarmModel[]> {
-      return this.http.get('/data/major/hazard/realTimeAlarm/' + entprId).toPromise();
+    public getRealTimeAlarm(): Promise<RealTimeAlarmModel[]> {
+      return this.http.get('data/major/hazard/realTimeAlarm').toPromise();
     }
   }
 }

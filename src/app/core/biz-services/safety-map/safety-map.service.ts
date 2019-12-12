@@ -3,6 +3,11 @@ import { HttpUtilService } from '@core/net/http-util.service';
 
 
 export namespace SafetyMapServiceNs {
+  export enum WebSocketTypeEnum {
+    Alarm=1,
+    Temp,
+  }
+
   export interface VideoCameraModel {
     id?: number;
     entprId?: number;
@@ -113,6 +118,10 @@ export namespace SafetyMapServiceNs {
 
     public getCameraInfoDetail(id: number): Promise<VideoCameraModel> {
       return this.http.get('data/major/hazard/realTimeCamera/' + id).toPromise();
+    }
+
+    public openWebsocket(): Promise<any> {
+      return this.http.get('data/major/hazard/realTimeSensor').toPromise();
     }
 
   }
