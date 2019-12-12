@@ -6,6 +6,10 @@ export namespace SafetyMapServiceNs {
   export enum WebSocketTypeEnum {
     Alarm = 1,
     Temp,
+    Press,
+    WaterLevel,
+    FireGas,
+    PoisonGas
   }
 
   export interface VideoCameraModel {
