@@ -3,16 +3,16 @@
     <nz-tabset>
       <nz-tab nzTitle="实时温度">
         <div class="item-flex">
-          <div>传感器名称：<span>甲苯温度传感器</span></div>
-          <div>传感器编号：<span>JK-244</span></div>
-          <div>位置：<span>1号库房东北角</span></div>
+          <div>传感器名称：<span>{{currentDataInfo.sensorName}}</span></div>
+          <div>传感器编号：<span>{{currentDataInfo.sensorNo}}</span></div>
+          <div>位置：<span>{{currentDataInfo.locFactory}}</span></div>
         </div>
         <div class="parent">
           <div class="chart-wrap">
             <div echarts (chartInit)="onChartInit($event)" [options]="Option"></div>
             <dl class="temper">
-              <dt>温度值：40℃</dt>
-              <dd style="text-indent: 14px">状态：<i class="point"></i> <span> 正常</span></dd>
+              <dt>温度值：{{currentDataInfo.currentValue}}℃</dt>
+              <dd style="text-indent: 14px">状态：<i class="point"></i> <span> {{currentDataInfo.status|map:'sensorInfoStatus'}}</span></dd>
             </dl>
           </div>
 
@@ -20,11 +20,11 @@
           <table class="item-table">
             <tr>
               <td>一级阈值（℃）</td>
-              <td>100</td>
+              <td>{{currentDataInfo.firstAlarmThreshold}}</td>
             </tr>
             <tr>
               <td>二级阈值（℃）</td>
-              <td>300</td>
+              <td>{{currentDataInfo.secondAlarmThreshold}}</td>
             </tr>
           </table>
         </div>

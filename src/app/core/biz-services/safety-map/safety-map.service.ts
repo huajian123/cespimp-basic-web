@@ -4,7 +4,7 @@ import { HttpUtilService } from '@core/net/http-util.service';
 
 export namespace SafetyMapServiceNs {
   export enum WebSocketTypeEnum {
-    Alarm=1,
+    Alarm = 1,
     Temp,
   }
 
@@ -104,6 +104,17 @@ export namespace SafetyMapServiceNs {
     'sensorValue': number,
     'sensorType': number,
     'reportTime': number,
+  }
+
+  export interface SensorInfoWebSocketModel {
+    sensorName: string;
+    sensorNo: string;
+    locFactory: string;
+    firstAlarmThreshold: number;
+    secondAlarmThreshold: number;
+    status: number;
+    currentValue: number;
+    historyData: { reportTime: number, sensorValue: number }[];
   }
 
   export class SafetyMapServiceClass {

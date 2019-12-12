@@ -9,6 +9,8 @@ import {
 import { webSocketIp } from '@env/environment';
 import { SafetyMapService, SafetyMapServiceNs } from '@core/biz-services/safety-map/safety-map.service';
 import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
+import SensorInfoWebSocketModel = SafetyMapServiceNs.SensorInfoWebSocketModel;
+import { MapPipe } from '@shared/directives/pipe/map.pipe';
 
 @Component({
   selector: 'temp-modal',
@@ -28,6 +30,11 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() showModel: boolean;
   @Output() showModelChange = new EventEmitter<boolean>();
   ws: WebSocket;//定义websocket
+  currentDataInfo: SensorInfoWebSocketModel;
+  historyLineValue: {
+    time: string[],
+    value: number[]
+  };
 
 
   constructor(private cdr: ChangeDetectorRef, private safetyMapService: SafetyMapService) {
@@ -36,7 +43,21 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.borderColor = '#fd4d49';
     this.mercuryColor = '#fd4d49';
     this.kd = [];
+    this.historyLineValue = {
+      time: [],
+      value: [],
+    };
 
+    this.currentDataInfo = {
+      sensorName: '',
+      sensorNo: '',
+      locFactory: '',
+      firstAlarmThreshold: 0,
+      secondAlarmThreshold: 0,
+      status: 0,
+      currentValue: 0,
+      historyData: [],
+    };
   }
 
   close() {
@@ -99,9 +120,9 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
           normal: {
             show: true,
             position: 'top',
-            formatter: function(param) {
+            formatter: () => {
               // 因为柱状初始化为0，温度存在负值，所以，原本的0-100，改为0-130，0-30用于表示负值
-              return param.value - 30 + '°C';
+              return '';
             },
             textStyle: {
               color: '#ccc',
@@ -246,7 +267,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
           show: false,
           alignWithLabel: true,
         },
-        data: ['0', '14:18', '15:28', '16:41', '17:32', '18:11', '19:22', '19:04', '20:01', '21:30'],
+        data: this.historyLineValue.time,
       },
       yAxis: {
         axisLine: {
@@ -355,7 +376,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
             },
           },
         },
-        data: [150, 152, 252, 252, 152, 358, 252, 355, 344, 352],
+        data: this.historyLineValue.value,
       }],
     };
   }
@@ -364,7 +385,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.char = chart;
     setTimeout(() => {
       this.char.resize();
-    }, 400);
+    }, 0);
   }
 
   connectWs() {
@@ -382,8 +403,17 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
       //socket 获取后端传递到前端的信息
       // this.ws.send('sonmething');
       if (e.data !== '-连接已建立-') {
-        const tempArray = JSON.parse(e.data);
-        console.log(tempArray);
+        this.currentDataInfo = JSON.parse(e.data);
+        console.log(this.currentDataInfo);
+        this.historyLineValue.value = [];
+        this.historyLineValue.time = [];
+        this.currentDataInfo.historyData.forEach(({ reportTime, sensorValue }) => {
+          this.historyLineValue.time.push(new MapPipe().transform(reportTime, 'date:HH:mm:ss'));
+          this.historyLineValue.value.push(sensorValue)
+        });
+        this.initCeShiOption();
+        this.char.resize();
+        console.log(this.historyLineValue);
         this.cdr.markForCheck();
       }
     };
@@ -413,8 +443,8 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.initCeShiOption();
-    this.cdr.markForCheck();
+    // this.initCeShiOption();
+    // this.cdr.markForCheck();
   }
 
 }

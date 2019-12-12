@@ -395,6 +395,15 @@ export const MapSet = {
     5: '重度污染',
     6: '严重污染',
   },
+
+  // 传感器状态值
+  sensorInfoStatus: {
+    0: '正常',
+    1: '一级',
+    2: '二级',
+    3: '三级',
+    4: '四级',
+  },
 };
 
 export interface MapItem {
