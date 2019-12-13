@@ -20,6 +20,7 @@ import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
   styleUrls: ['./press-modal.component.scss'],
 })
 export class PressModalComponent implements OnInit , OnDestroy {
+  @Input() id;
   char: any;
   Option: any;
   historyOption: any;
@@ -269,8 +270,10 @@ export class PressModalComponent implements OnInit , OnDestroy {
       //socket 获取后端传递到前端的信息
       // this.ws.send('sonmething');
       if (e.data !== '-连接已建立-') {
-        this.currentDataInfo = JSON.parse(e.data);
-        console.log(this.currentDataInfo);
+        const tempArray = JSON.parse(e.data);
+        this.currentDataInfo = tempArray.filter(({id}) => {
+          return id === this.id;
+        })[0];
         this.historyLineValue.value = [];
         this.historyLineValue.time = [];
         this.currentDataInfo.historyData.forEach(({ reportTime, sensorValue }) => {

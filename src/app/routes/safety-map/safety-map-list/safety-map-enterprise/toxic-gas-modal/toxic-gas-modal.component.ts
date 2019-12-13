@@ -23,7 +23,7 @@ import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
   },
 })
 export class ToxicGasModalComponent implements OnInit, OnDestroy {
-
+  @Input() id;
   char: any;
   Option: any;
   historyOption: any;
@@ -272,7 +272,10 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
       //socket 获取后端传递到前端的信息
       // this.ws.send('sonmething');
       if (e.data !== '-连接已建立-') {
-        this.currentDataInfo = JSON.parse(e.data);
+        const tempArray = JSON.parse(e.data);
+        this.currentDataInfo = tempArray.filter(({id}) => {
+          return id === this.id;
+        })[0];
         console.log(this.currentDataInfo);
         this.historyLineValue.value = [];
         this.historyLineValue.time = [];

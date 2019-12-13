@@ -1,15 +1,20 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { SafetyMapService, SafetyMapServiceNs } from '@core/biz-services/safety-map/safety-map.service';
+import SensorInfoWebSocketModel = SafetyMapServiceNs.SensorInfoWebSocketModel;
+import { webSocketIp } from '@env/environment';
+import { MapPipe } from '@shared/directives/pipe/map.pipe';
+import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
 
 @Component({
   selector: 'water-level-modal',
   templateUrl: './water-level-modal.component.html',
   styleUrls: ['./water-level-modal.component.scss'],
   host: {
-    '[class.d-block]': 'true'
-  }
+    '[class.d-block]': 'true',
+  },
 })
-export class WaterLevelModalComponent implements OnInit {
-
+export class WaterLevelModalComponent implements OnInit, OnDestroy {
+  @Input() id;
   char: any;
   Option: any;
   historyOption: any;
@@ -21,14 +26,36 @@ export class WaterLevelModalComponent implements OnInit {
   @Input() showModel: boolean;
   @Output() showModelChange = new EventEmitter<boolean>();
   dateRange = [];
+  ws: WebSocket;//定义websocket
+  currentDataInfo: SensorInfoWebSocketModel;
+  historyLineValue: {
+    time: string[],
+    value: number[]
+  };
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(private cdr: ChangeDetectorRef, private safetyMapService: SafetyMapService) {
     this.showModel = false;
     this.value = 40.0;
     this.borderColor = '#fd4d49';
     this.mercuryColor = '#fd4d49';
     this.kd = [];
+    this.historyLineValue = {
+      time: [],
+      value: [],
+    };
 
+    this.currentDataInfo = {
+      sensorName: '',
+      sensorNo: '',
+      locFactory: '',
+      firstAlarmThreshold: 0,
+      secondAlarmThreshold: 0,
+      thirdAlarmThreshold: 0,
+      fourthAlarmThreshold: 0,
+      status: 0,
+      currentValue: 0,
+      historyData: [],
+    };
   }
 
   close() {
@@ -70,7 +97,7 @@ export class WaterLevelModalComponent implements OnInit {
           show: false,
           alignWithLabel: true,
         },
-        data: ['0', '14:18', '15:28', '16:41', '17:32', '18:11', '19:22', '19:04', '20:01', '21:30'],
+        data: this.historyLineValue.time,
       },
       yAxis: {
         axisLine: {
@@ -179,7 +206,7 @@ export class WaterLevelModalComponent implements OnInit {
             },
           },
         },
-        data: [150, 152, 252, 252, 152, 358, 252, 355, 344, 352],
+        data: this.historyLineValue.value,
       }],
     };
   }
@@ -195,9 +222,63 @@ export class WaterLevelModalComponent implements OnInit {
     this.initCeShiOption();
   }
 
+
+  connectWs() {
+    if (this.ws != null) {
+      this.ws.close();
+    }
+    this.ws = new WebSocket(`ws://${webSocketIp}:8081/websocket/${WebSocketTypeEnum.WaterLevel}`);
+    this.ws.onopen = (e) => {
+      //socket 开启后执行，可以向后端传递信息
+      // this.ws.send('sonmething');
+
+    };
+    this.ws.onmessage = (e) => {
+      //socket 获取后端传递到前端的信息
+      // this.ws.send('sonmething');
+      if (e.data !== '-连接已建立-') {
+        const tempArray = JSON.parse(e.data);
+        console.log(tempArray);
+        this.currentDataInfo = tempArray.filter(({id}) => {
+          return id === this.id;
+        })[0];
+        console.log(this.currentDataInfo);
+        this.historyLineValue.value = [];
+        this.historyLineValue.time = [];
+        this.currentDataInfo.historyData.forEach(({ reportTime, sensorValue }) => {
+          this.historyLineValue.time.push(new MapPipe().transform(reportTime, 'date:HH:mm:ss'));
+          this.historyLineValue.value.push(sensorValue);
+        });
+        this.initCeShiOption();
+        this.char.resize();
+        console.log(this.historyLineValue);
+        this.cdr.markForCheck();
+      }
+    };
+    this.ws.onerror = (e) => {
+      //socket error信息
+      console.log(e);
+
+    };
+    this.ws.onclose = (e) => {
+      //socket 关闭后执行
+      console.log(e);
+    };
+  }
+
+  async openWebSocketFn() {
+    await this.safetyMapService.openWebsocket();
+    this.connectWs();
+  }
+
   ngAfterViewInit(): void {
     this.initCeShiOption();
+    this.openWebSocketFn();
     this.cdr.markForCheck();
+  }
+
+  ngOnDestroy(): void {
+    this.ws.close();
   }
 
 }

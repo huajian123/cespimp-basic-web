@@ -32,23 +32,23 @@
   </div>
 
   <div class="temp-wrap" *ngIf="modelIsShow.temp">
-    <temp-modal [(showModel)]="modelIsShow.temp"></temp-modal>
+    <temp-modal [id]="selectTempId" [(showModel)]="modelIsShow.temp"></temp-modal>
   </div>
 
   <div class="temp-wrap" *ngIf="modelIsShow.press">
-    <press-modal [(showModel)]="modelIsShow.press"></press-modal>
+    <press-modal [id]="selectPressId" [(showModel)]="modelIsShow.press"></press-modal>
   </div>
 
   <div class="temp-wrap" *ngIf="modelIsShow.waterLevel">
-    <water-level-modal [(showModel)]="modelIsShow.waterLevel"></water-level-modal>
+    <water-level-modal [id]="selectWaterLevelId" [(showModel)]="modelIsShow.waterLevel"></water-level-modal>
   </div>
 
   <div class="temp-wrap" *ngIf="modelIsShow.fireGas">
-    <combustible-gas-modal [(showModel)]="modelIsShow.fireGas"></combustible-gas-modal>
+    <combustible-gas-modal [id]="selectFireGasId" [(showModel)]="modelIsShow.fireGas"></combustible-gas-modal>
   </div>
 
   <div class="temp-wrap" *ngIf="modelIsShow.poisonousGas">
-    <toxic-gas-modal [(showModel)]="modelIsShow.poisonousGas"></toxic-gas-modal>
+    <toxic-gas-modal [id]="selectPoisonId" [(showModel)]="modelIsShow.poisonousGas"></toxic-gas-modal>
   </div>
 
   <!--危险源-->

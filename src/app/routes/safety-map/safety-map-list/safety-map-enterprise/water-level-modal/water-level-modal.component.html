@@ -3,9 +3,9 @@
     <nz-tabset>
       <nz-tab nzTitle="实时液位">
         <div class="item-flex">
-          <div>传感器名称：<span>盐酸液位传感器</span></div>
-          <div>传感器编号：<span>JK-244</span></div>
-          <div>位置：<span>1号库房东北角</span></div>
+          <div>传感器名称：<span>{{currentDataInfo.sensorName}}</span></div>
+          <div>传感器编号：<span>{{currentDataInfo.sensorNo}}</span></div>
+          <div>位置：<span>{{currentDataInfo.locFactory}}</span></div>
         </div>
         <div class="parent">
 
@@ -13,25 +13,25 @@
             <g2-water-wave title="实时液位" [percent]="34" [height]="161"></g2-water-wave>
           </div>
           <dl class="temper">
-            <dt>液位值：120cm</dt>
-            <dd style="text-indent: 14px">状态：<i class="point"></i> <span> 正常</span></dd>
+            <dt>液位值：{{currentDataInfo.currentValue}}cm</dt>
+            <dd style="text-indent: 14px">状态：<i class="point"></i> <span> {{currentDataInfo.status|map:'sensorInfoStatus'}}</span></dd>
           </dl>
           <table class="item-table">
             <tr>
               <td>上上限阈值（cm）</td>
-              <td>300</td>
+              <td>{{currentDataInfo.fourthAlarmThreshold}}</td>
             </tr>
             <tr>
               <td>上限阈值（cm）</td>
-              <td>300</td>
+              <td>{{currentDataInfo.thirdAlarmThreshold}}</td>
             </tr>
             <tr>
               <td>下限阈值（cm）</td>
-              <td>300</td>
+              <td>{{currentDataInfo.secondAlarmThreshold}}</td>
             </tr>
             <tr>
               <td>下下限阈值（cm）</td>
-              <td>300</td>
+              <td>{{currentDataInfo.firstAlarmThreshold}}</td>
             </tr>
           </table>
 
@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="parent">
-          <div class="history-item" echarts [options]="historyOption"></div>
+          <div class="history-item" (chartInit)="onChartInit($event)"  echarts [options]="historyOption"></div>
         </div>
       </nz-tab>
     </nz-tabset>

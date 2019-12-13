@@ -18,6 +18,7 @@ import { MapPipe } from '@shared/directives/pipe/map.pipe';
   styleUrls: ['./temp-modal.component.scss'],
 })
 export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
+  @Input() id;
   char: any;
   Option: any;
   dateRange = [];
@@ -403,7 +404,10 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
       //socket 获取后端传递到前端的信息
       // this.ws.send('sonmething');
       if (e.data !== '-连接已建立-') {
-        this.currentDataInfo = JSON.parse(e.data);
+        const tempArray = JSON.parse(e.data);
+        this.currentDataInfo = tempArray.filter(({id}) => {
+          return id === this.id;
+        })[0];
         console.log(this.currentDataInfo);
         this.historyLineValue.value = [];
         this.historyLineValue.time = [];
@@ -434,6 +438,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log(this.id);
     this.initCeShiOption();
     this.openWebSocketFn();
   }
