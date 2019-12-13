@@ -1,6 +1,7 @@
 .item-flex {
-  padding: 35px 0;
+  padding-bottom: 16px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   align-content: center;
   font-size: 16px;
@@ -8,7 +9,7 @@
 }
 
 .item-flex span {
-  font-weight: bold;
+
 }
 
 .history-item {
@@ -31,7 +32,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 60px;
+ // padding: 0 60px;
   .chart-wrap{
   }
 }

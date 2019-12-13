@@ -20,8 +20,10 @@ import { MapPipe } from '@shared/directives/pipe/map.pipe';
 export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() id;
   char: any;
+  realTimeChart: any;
   Option: any;
   dateRange = [];
+  realTimeOptions: any;
   historyOption: any;
   value: any;
   kd: any;
@@ -37,6 +39,24 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     value: number[]
   };
 
+  /*实时表格*/
+  legendData = ['实时温度'];
+  time = 0;
+  zoomStart = 0;
+  zoomEnd = 100;
+  xAxisData = [];
+  seriesData = [
+    {
+      name: '实时温度',
+      type: 'line',
+      lineStyle: {
+        width: 1,
+      },
+      showSymbol: false,
+      smooth: true, //是否平滑显示折现
+      data: [],
+    },
+  ];
 
   constructor(private cdr: ChangeDetectorRef, private safetyMapService: SafetyMapService) {
     this.showModel = false;
@@ -380,13 +400,159 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
         data: this.historyLineValue.value,
       }],
     };
+
+    this.realTimeOptions = {
+      color: ['#327bfa'],
+      title: {
+        show: false,
+        text: '实时温度',
+        x: '50%',
+        y: '5%',
+        textAlign: 'center',
+        textStyle: {
+          color: '#bac7e5',
+          fontSize: '30',
+          fontWeight: 'normal',
+        },
+
+      },
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: '#282d3b',
+        textStyle: {
+          color: '#bac7e5',
+        },
+      },
+      legend: {
+        bottom: '0',
+        data: this.legendData,
+        textStyle: {
+          color: '#bac7e5',
+        },
+        icon: 'rect',
+        itemWidth: 12,
+        itemHeight: 12,
+      },
+      grid: {
+        top: '10%',
+        left: '5%',
+        right: '5%',
+        bottom: '35%',
+        containLabel: true,
+      },
+      toolbox: {
+        show: false,
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        axisTick: {
+          show: true,
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#7c88a7',
+          },
+        },
+        splitLine: {
+          show: false,
+        },
+        axisLabel: {
+          color: '#bac7e5',
+        },
+        data: this.xAxisData,
+      },
+      dataZoom: [{
+        type: 'slider',
+        /*类型*/
+        xAxisIndex: 0,
+        /*对应的轴*/
+        bottom: '23%',
+        /*位置，定位*/
+        start: 0,
+        /*开始*/
+        end: 100,
+        /*结束*/
+        handleIcon: 'M0,0 v9.7h5 v-9.7h-5 Z',
+        handleStyle: {
+          /*手柄的样式*/
+          color: '#00b0ff',
+          borderColor: '#00b0ff',
+        },
+        backgroundColor: '#233239',
+        borderColor: '#233239',
+        /*背景 */
+        dataBackground: {
+          /*数据背景*/
+          lineStyle: {
+            color: '#000000',
+          },
+          areaStyle: {
+            color: '#ddd',
+          },
+        },
+        fillerColor: 'rgba(31,178,251,0.2)',
+        /*被start和end遮住的背景*/
+        labelFormatter: function(value, params) {
+          /*拖动时两端的文字提示*/
+          var str = '';
+          if (params.length > 5) {
+            str = params.substring(0, 5) + '…';
+          } else {
+            str = params;
+          }
+          return str;
+        },
+        textStyle: {
+          color: '#bac7e5',
+        },
+      }],
+      yAxis: {
+        type: 'value',
+        name: '℃',
+        nameTextStyle: {
+          color: '#bac7e5',
+        },
+        max: 120,
+        axisTick: {
+          show: true,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#7c88a7',
+          },
+        },
+        axisLabel: {
+          color: '#bac7e5',
+        },
+      },
+      backgroundColor: '#233239',
+      series: this.seriesData,
+    };
   }
 
+  onRealTimeChartInit(chart: any) {
+    this.realTimeChart = chart;
+    // chart.on('dataZoom', (event) => {
+    //   this.realTimeChart.resize();
+    // });
+    // this.char = chart;
+    // setTimeout(() => {
+    //   this.char.resize();
+    // }, 0);
+  }
+
+
   onChartInit(chart: any) {
-    this.char = chart;
-    setTimeout(() => {
-      this.char.resize();
-    }, 0);
+    chart.on('dataZoom', (event) => {
+    });
+    // this.char = chart;
+    // setTimeout(() => {
+    //   this.char.resize();
+    // }, 0);
   }
 
   connectWs() {
@@ -395,7 +561,6 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.ws = new WebSocket(`ws://${webSocketIp}:8081/websocket/${WebSocketTypeEnum.Temp}`);
     this.ws.onopen = (e) => {
-      console.log(e);
       //socket 开启后执行，可以向后端传递信息
       // this.ws.send('sonmething');
 
@@ -405,19 +570,17 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
       // this.ws.send('sonmething');
       if (e.data !== '-连接已建立-') {
         const tempArray = JSON.parse(e.data);
-        this.currentDataInfo = tempArray.filter(({id}) => {
+        this.currentDataInfo = tempArray.filter(({ id }) => {
           return id === this.id;
         })[0];
-        console.log(this.currentDataInfo);
         this.historyLineValue.value = [];
         this.historyLineValue.time = [];
         this.currentDataInfo.historyData.forEach(({ reportTime, sensorValue }) => {
           this.historyLineValue.time.push(new MapPipe().transform(reportTime, 'date:HH:mm:ss'));
-          this.historyLineValue.value.push(sensorValue)
+          this.historyLineValue.value.push(sensorValue);
         });
-        this.initCeShiOption();
-        this.char.resize();
-        console.log(this.historyLineValue);
+        console.log(this.currentDataInfo);
+        this.setPercent(this.currentDataInfo.currentValue);
         this.cdr.markForCheck();
       }
     };
@@ -433,12 +596,43 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async openWebSocketFn() {
-    await this.safetyMapService.openWebsocket();
     this.connectWs();
+    await this.safetyMapService.openWebsocket();
+
+  }
+
+  /*实时数据*/
+  timef() {
+    let str;
+    this.time+=3;
+    let m = Math.round(this.time / 60);
+    str = m < 10 ? '0' + m : m;
+    str += ':';
+    let s = this.time % 60;
+    str += s < 10 ? '0' + s : s;
+    return str;
+  }
+
+  random() {
+    let value = (Math.random() * 100).toFixed(2);
+    return +value > 30 && +value < 50 ? value : this.random();
+  }
+
+  setPercent(p) {
+    this.realTimeOptions.xAxis.data.push(this.timef());
+    this.realTimeOptions.series[0].data.push(p);
+    this.realTimeOptions.dataZoom[0].start = this.zoomStart;
+    this.realTimeOptions.dataZoom[0].end = this.zoomEnd;
+    this.realTimeChart.setOption(this.realTimeOptions);
+    this.cdr.markForCheck();
+  }
+
+  dataZoomChange(event) {
+    this.zoomStart = event.start;
+    this.zoomEnd = event.end;
   }
 
   ngOnInit() {
-    console.log(this.id);
     this.initCeShiOption();
     this.openWebSocketFn();
   }
@@ -448,8 +642,10 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    // this.initCeShiOption();
-    // this.cdr.markForCheck();
+   /* setInterval(() => {
+      let value = Math.random() * 100;
+      this.setPercent(+value);
+    //  this.realTimeChart.resize();
+    }, 1000);*/
   }
-
 }
