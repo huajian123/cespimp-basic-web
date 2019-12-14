@@ -532,11 +532,11 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     this.historyLineValue.value = [];
     this.historyLineValue.time = [];
-/*    const data = await this.safetyMapService.getSensorHistory(params);
+    const data = await this.safetyMapService.getSensorHistory(params);
     data.forEach(({ reportTime, sensorValue }) => {
       this.historySetPercent(sensorValue, new MapPipe().transform(reportTime, 'date:MM-dd HH:mm:ss'));
     });
-    this.historyChart.setOption(this.historyOption);*/
+    this.historyChart.setOption(this.historyOption);
   }
 
   dataZoomChange(event) {
