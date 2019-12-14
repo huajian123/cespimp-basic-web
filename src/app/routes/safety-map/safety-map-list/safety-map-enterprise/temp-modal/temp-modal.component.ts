@@ -6,7 +6,7 @@ import { SafetyMapService, SafetyMapServiceNs } from '@core/biz-services/safety-
 import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
 import SensorInfoWebSocketModel = SafetyMapServiceNs.SensorInfoWebSocketModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
-import { subDays } from 'date-fns';
+import { subDays, differenceInCalendarDays } from 'date-fns';
 
 @Component({
   selector: 'temp-modal',
@@ -52,9 +52,10 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
         data: [
           {
             name: '阈值300',
-            yAxis: 300,
+            yAxis: 20,
             label: {
               show: 'true',
+              formatter:"一级阈值"
             },
             lineStyle: {
               normal: {
@@ -69,6 +70,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
             yAxis: 100,
             label: {
               show: 'true',
+              formatter:"二级阈值"
             },
             lineStyle: {
               normal: {
@@ -77,6 +79,9 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
               },
             },
           }],
+        label:{
+
+        }
       },
     },
   ];
@@ -489,6 +494,20 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     return +value > 30 && +value < 50 ? value : this.random();
   }
 
+
+  disabledDate = (current: Date): boolean => {
+    // Can not select days before today and today
+    return differenceInCalendarDays(current, new Date()) > 3;
+  };
+
+  changeDateRange(e){
+    return this.disabledDate(e);
+  }
+
+  selDateRange(e){
+    console.log(e);
+  }
+
   // 实时数据塞值
   setPercent(p) {
     this.realTimeOptions.xAxis.data.push(this.timef());
@@ -513,11 +532,11 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     this.historyLineValue.value = [];
     this.historyLineValue.time = [];
-    const data = await this.safetyMapService.getSensorHistory(params);
+/*    const data = await this.safetyMapService.getSensorHistory(params);
     data.forEach(({ reportTime, sensorValue }) => {
       this.historySetPercent(sensorValue, new MapPipe().transform(reportTime, 'date:MM-dd HH:mm:ss'));
     });
-    this.historyChart.setOption(this.historyOption);
+    this.historyChart.setOption(this.historyOption);*/
   }
 
   dataZoomChange(event) {

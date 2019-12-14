@@ -18,7 +18,7 @@
       <nz-tab nzTitle="历史温度" (nzSelect)="selHistoryTab()">
         <div class="item-flex">
           <div>
-            <nz-range-picker  nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss" [(ngModel)]="dateRange"></nz-range-picker>
+            <nz-range-picker (nzOnCalendarChange)="selDateRange($event)" [nzDisabledDate]="disabledDate.bind(this)"  nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss" [(ngModel)]="dateRange"></nz-range-picker>
           </div>
           <div>
             <button nz-button  [nzType]="'primary'" (click)="searchHistroyByTimeRange()">查询</button>

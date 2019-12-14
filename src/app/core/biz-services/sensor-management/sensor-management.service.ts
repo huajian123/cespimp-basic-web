@@ -17,8 +17,8 @@ export namespace SensorManagementListServiceNs {
     locFactory?: string;
     firstAlarmThreshold: number;
     secondAlarmThreshold: number;
-    thirdAlarmThreshold: number;
-    fourthAlarmThreshold: number;
+    thirdAlarmThreshold?: number;
+    fourthAlarmThreshold?: number;
   }
 
   export interface SensorSearchModel {

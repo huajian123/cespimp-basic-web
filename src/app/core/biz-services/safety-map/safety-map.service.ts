@@ -139,6 +139,8 @@ export namespace SafetyMapServiceNs {
     locFactory: string;
     firstAlarmThreshold?: number;
     secondAlarmThreshold?: number;
+    thirdAlarmThreshold?: number;
+    fourthAlarmThreshold?: number;
     status?: number;
     currentValue?: number;
     historyData?: { reportTime: number, sensorValue: number }[];
