@@ -141,6 +141,10 @@ export namespace SafetyMapServiceNs {
       return this.http.get('data/major/hazard/realTimeSensor').toPromise();
     }
 
+    public getSensorHistory(params: { id: number, beginTime: Date, endTime: Date }): Promise<any> {
+      return this.http.get('data/major/hazard/searchSensorRecord/' + params.id, params).toPromise();
+    }
+
   }
 }
 
