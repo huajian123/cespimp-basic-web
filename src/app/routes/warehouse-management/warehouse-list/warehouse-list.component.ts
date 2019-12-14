@@ -123,6 +123,12 @@ export class WarehouseListComponent implements OnInit {
         width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
+      {
+        title: '投用时间',
+        index: 'productionDate',
+        width: 140,
+        type: 'date',
+      },
       { title: '经度', index: 'longitude', width: 100 },
       { title: '纬度', index: 'latitude', width: 100 },
       { title: '在厂区的位置', index: 'locFactory', width: 100 },

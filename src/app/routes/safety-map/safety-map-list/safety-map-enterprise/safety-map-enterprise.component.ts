@@ -60,12 +60,8 @@ interface LayerBtnInterface {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
+  hazardId: number;
   selectCameraId: number;
-  selectTempId: number;
-  selectPressId: number;
-  selectWaterLevelId: number;
-  selectFireGasId: number;
-  selectPoisonId: number;
   currentRole: string;
   roleEnum = RoleEnum;
   @Input() enterpriseId: number;
@@ -103,11 +99,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
 
   constructor(private cdr: ChangeDetectorRef, private safetyMapService: SafetyMapService, private enterpriseBasicInfoService: EnterpriseBasicInfoService) {
     this.selectCameraId = -1;
-    this.selectTempId = -1;
-    this.selectPressId = -1;
-    this.selectWaterLevelId = -1;
-    this.selectFireGasId = -1;
-    this.selectPoisonId = -1;
+    this.hazardId = -1;
     this.currentRole = RoleEnum[RoleEnum.ParkManage];
     const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
       'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
@@ -167,7 +159,6 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           // 温度
           case 'temp':
             const tempMarker = this.createMarkers(IdentificationUrlEnum.TempNormal, item.longitude, item.latitude, item.id);
-
             this.temperatureMarkerArray.push(tempMarker);
             this.map.addOverLay(tempMarker);
             break;
@@ -208,7 +199,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
             item.majorScope.forEach(({ lat, lng }) => {
               polygonPoints.push(new T.LngLat(lng, lat));
             });
-            this.hazardSourcesMarkerArray.push(this.painPolygon(polygonPoints));
+            this.hazardSourcesMarkerArray.push(this.painPolygon(polygonPoints, item.id));
             break;
         }
       });
@@ -233,6 +224,8 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           this.currentSelLayerBtnIndex = this.layerEnum.HazardSources;
           this.initModelStatus();
           this.modelIsShow.hazardSource = true;
+          this.hazardId = item.setOptions.id;
+          //console.log(this.hazardId);
           this.cdr.markForCheck();
         }, 0);
       });
@@ -244,7 +237,6 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           this.currentSelLayerBtnIndex = this.layerEnum.Temperature;
           this.initModelStatus();
           this.modelIsShow.temp = true;
-          this.selectTempId = item.setOptions.id;
           this.cdr.markForCheck();
         }, 0);
       });
@@ -256,10 +248,6 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           this.currentSelLayerBtnIndex = this.layerEnum.Pressure;
           this.initModelStatus();
           this.modelIsShow.press = true;
-          this.selectPressId = item.setOptions.id;
-
-
-
           this.cdr.markForCheck();
         }, 0);
       });
@@ -271,7 +259,6 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           this.currentSelLayerBtnIndex = this.layerEnum.WaterLevel;
           this.initModelStatus();
           this.modelIsShow.waterLevel = true;
-          this.selectWaterLevelId = item.setOptions.id;
           this.cdr.markForCheck();
         }, 0);
       });
@@ -283,7 +270,6 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           this.currentSelLayerBtnIndex = this.layerEnum.FireGas;
           this.initModelStatus();
           this.modelIsShow.fireGas = true;
-          this.selectFireGasId = item.setOptions.id;
           this.cdr.markForCheck();
         }, 0);
       });
@@ -295,7 +281,6 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           this.currentSelLayerBtnIndex = this.layerEnum.PoisonousGas;
           this.initModelStatus();
           this.modelIsShow.poisonousGas = true;
-          this.selectPoisonId = item.setOptions.id;
           this.cdr.markForCheck();
         }, 0);
       });
@@ -308,7 +293,6 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           this.initModelStatus();
           this.modelIsShow.camera = true;
           this.selectCameraId = item.setOptions.id;
-          //console.log(this.selectCameraId);
           this.cdr.markForCheck();
         }, 0);
       });
@@ -326,7 +310,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   }
 
   // 绘制多边形
-  painPolygon(list) {
+  painPolygon(list, id) {
     const polygon = new T.Polygon(list, {
       color: 'red',
       weight: 3,
@@ -334,6 +318,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       fillColor: '#FFFFFF',
       fillOpacity: 0.5,
     });
+    polygon.setOptions = { id: id };
     this.map.addOverLay(polygon);
     return polygon;
   }

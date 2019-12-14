@@ -68,6 +68,7 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
       longitude: [null, [Validators.required]],
       latitude: [null, [Validators.required]],
       locFactory: [null, []],
+      productionDate: [null, [Validators.required]],
       majorHazardMaterialInsertDTOS: this.fb.array([]) as FormArray,
     });
   }

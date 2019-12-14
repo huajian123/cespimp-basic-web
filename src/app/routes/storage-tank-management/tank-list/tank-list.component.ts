@@ -136,7 +136,7 @@ export class TankListComponent implements OnInit {
       },
       { title: '储罐容量', index: 'tankCapacity', width: 100 },
       {
-        title: '投产时间',
+        title: '投用时间',
         index: 'productionDate',
         width: 140,
         type: 'date',

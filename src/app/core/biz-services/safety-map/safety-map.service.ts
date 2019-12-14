@@ -36,19 +36,19 @@ export namespace SafetyMapServiceNs {
   }
 
   export interface CameraModel {
-    'id': number,
-    'entprId': number,
+    'id'?: number,
+    'entprId'?: number,
     'cameraNo': string,
     'cameraName': string,
-    'majorHazardId': number,
-    'partType': number,
-    'partId': number,
-    'longitude': number,
-    'latitude': number,
+    'majorHazardId'?: number,
+    'partType'?: number,
+    'partId'?: number,
+    'longitude'?: number,
+    'latitude'?: number,
     'locFactory': string,
-    'entprName': string,
-    'majorHazardName': string,
-    'partName': string,
+    'entprName'?: string,
+    'majorHazardName'?: string,
+    'partName'?: string,
   }
 
   export interface LatitudeLongitudeModel {
@@ -56,23 +56,45 @@ export namespace SafetyMapServiceNs {
     lat: number,
   }
 
+  export interface UintsModel {
+    'id'?: number,
+    'partType': number,
+    'partId'?: number,
+    'partName': string,
+    'partNo': string,
+    'productionDate': Date,
+    'locFactory': string,
+  }
+
   export interface MajorHazardModel {
-    'id': number,
+    'id'?: number,
     'entprId': number,
-    'entprName': string,
+    'entprName'?: string,
     'majorHazardNo': string,
     'majorHazardName': string,
+    'rvalue': number,
     'unitType': number,
-    'useDate': number,
+    'useDate': Date,
     'locFactory': string,
     'majorHazardLevel': number,
     'majorHazardNature': number,
     'manager': string,
     'managerMobile': string,
     'description': string,
-    majorScope: LatitudeLongitudeModel[];
+    majorScope?: LatitudeLongitudeModel[];
+    majorHazardUnits?: UintsModel[];
+    majorHazardSenSores?: SensorInfoWebSocketModel[];
+    majorHazardCameras?: CameraModel[];
+    majorHazardMaterials?: HazardMaterialsModel[];
   }
 
+  export interface HazardMaterialsModel {
+    'id'?: number,
+    'casNo': string,
+    'criticalMass': number,
+    'maximumReserves': string,
+    'productName': string,
+  }
 
   export interface AlarmModel {
     'id': number,
@@ -113,14 +135,13 @@ export namespace SafetyMapServiceNs {
   export interface SensorInfoWebSocketModel {
     sensorName: string;
     sensorNo: string;
+    sensorType?: number;
     locFactory: string;
-    firstAlarmThreshold: number;
-    secondAlarmThreshold: number;
-    thirdAlarmThreshold?: number;
-    fourthAlarmThreshold?: number;
-    status: number;
-    currentValue: number;
-    historyData: { reportTime: number, sensorValue: number }[];
+    firstAlarmThreshold?: number;
+    secondAlarmThreshold?: number;
+    status?: number;
+    currentValue?: number;
+    historyData?: { reportTime: number, sensorValue: number }[];
   }
 
   export class SafetyMapServiceClass {
@@ -137,12 +158,13 @@ export namespace SafetyMapServiceNs {
       return this.http.get('data/major/hazard/realTimeCamera/' + id).toPromise();
     }
 
-    public openWebsocket(): Promise<any> {
-      return this.http.get('data/major/hazard/realTimeSensor').toPromise();
+    /*重大危险源*/
+    public getHazardSourceDetail(id: number): Promise<MajorHazardModel> {
+      return this.http.get('data/major/hazard/' + id).toPromise();
     }
 
-    public getSensorHistory(params: { id: number, beginTime: Date, endTime: Date }): Promise<any> {
-      return this.http.get('data/major/hazard/searchSensorRecord/' + params.id, params).toPromise();
+    public openWebsocket(): Promise<any> {
+      return this.http.get('data/major/hazard/realTimeSensor').toPromise();
     }
 
   }

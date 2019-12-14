@@ -15,6 +15,7 @@ export namespace WarehouseListServiceNs {
     longitude: number; // 经度
     latitude: number; // 纬度
     locFactory?: string;
+    productionDate?: Date;
     majorHazardMaterials: FormGroup[];
     majorHazardMaterialInsertDTOS: FormGroup[];
   }

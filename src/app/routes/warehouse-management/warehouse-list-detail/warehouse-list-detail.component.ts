@@ -45,6 +45,7 @@ export class WarehouseManagementWarehouseListDetailComponent implements OnInit {
       latitude: -1,
       fireLevel: -1,
       locFactory: '',
+      productionDate: new Date(),
       majorHazardMaterials: [],
       majorHazardMaterialInsertDTOS: [],
     };

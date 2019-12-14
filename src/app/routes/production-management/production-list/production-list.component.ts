@@ -108,7 +108,7 @@ export class ProductionListComponent implements OnInit {
       { title: '生产场所编号', index: 'placeNo', width: 120 },
       { title: '生产场所名称', index: 'placeName', width: 100 },
       { title: '生产场所面积', index: 'placeArea', width: 120 },
-      { title: '投产时间', index: 'productionDate', width: 100, type: 'date' },
+      { title: '投用时间', index: 'productionDate', width: 100, type: 'date' },
       { title: '经度', index: 'longitude', width: 100 },
       { title: '纬度', index: 'latitude', width: 100 },
       { title: '在厂区的位置', index: 'locFactory', width: 100 },
