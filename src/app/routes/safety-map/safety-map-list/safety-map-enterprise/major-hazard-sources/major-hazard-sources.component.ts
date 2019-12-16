@@ -141,13 +141,13 @@ export class MajorHazardSourcesComponent implements OnInit {
     this.sensorColumns = [
       { title: '传感器名称', index: 'sensorName', width: 120 },
       { title: '传感器编号', index: 'sensorNo', width: 100 },
-      { title: '传感器类型', index: 'sensorType', width: 120 },
       {
-        title: '在厂区位置',
-        index: 'locFactory',
-        width: 100,
+        title: '传感器类型',
+        index: 'sensorType',
+        width: 120 ,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
+      { title: '在厂区位置', index: 'locFactory', width: 100, },
       {
         title: '操作',
         fixed: 'right',
