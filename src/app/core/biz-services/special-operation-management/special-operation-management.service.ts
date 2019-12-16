@@ -38,17 +38,17 @@ export namespace SpecialOperationManagementServiceNs {
     }
 
     /*新增接口*/
-   /* public addWarehouse(param: SpecialOperationInfoModel): Promise<void> {
+   /* public addSpecialOperation(param: SpecialOperationInfoModel): Promise<void> {
       return this.http.post('data/basic/enterprise/rooms', param, { needSuccessInfo: true }).toPromise();
     }*/
 
     /*修改接口*/
-  /*  public editWarehouse(param: SpecialOperationInfoModel): Promise<void> {
+  /*  public editSpecialOperation(param: SpecialOperationInfoModel): Promise<void> {
       return this.http.put('data/basic/enterprise/rooms', param, { needSuccessInfo: true }).toPromise();
     }*/
 
     /*库房详情*/
-  /*  public getWarehouseInfoDetail(id: number): Promise<SpecialOperationInfoModel> {
+  /*  public getSpecialOperationInfoDetail(id: number): Promise<SpecialOperationInfoModel> {
       return this.http.get('data/basic/enterprise/rooms/' + id).toPromise();
     }*/
 
@@ -58,7 +58,7 @@ export namespace SpecialOperationManagementServiceNs {
     }
 
     /*删除接口*/
-  /*  public delWarehouseInfo(id: number): Promise<SpecialOperationInfoModel> {
+  /*  public delSpecialOperationInfo(id: number): Promise<SpecialOperationInfoModel> {
       return this.http.del('data/basic/enterprise/rooms/' + id).toPromise();
     }*/
   }
