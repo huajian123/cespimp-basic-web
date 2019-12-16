@@ -7,29 +7,37 @@
       </nz-form-control>
     </se>
     <se label="作业名称">
-      <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入作业名称">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
         <input nz-input formControlName="operationName" placeholder="作业名称"/>
+        <nz-form-explain *ngIf="validateForm.get('operationName').dirty && validateForm.get('operationName').errors">请输入作业名称
+        </nz-form-explain>
       </nz-form-control>
     </se>
     <se label="作业人">
-      <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入作业人">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
         <input nz-input formControlName="operationPerson" placeholder="作业人"/>
+        <nz-form-explain *ngIf="validateForm.get('operationPerson').dirty && validateForm.get('operationPerson').errors">请输入作业人
+        </nz-form-explain>
       </nz-form-control>
     </se>
     <se label="作业地点">
-      <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入作业地点">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
         <input nz-input formControlName="operationPlace" placeholder="作业地点"/>
+        <nz-form-explain *ngIf="validateForm.get('operationPlace').dirty && validateForm.get('operationPlace').errors">请输入作业地点
+        </nz-form-explain>
       </nz-form-control>
     </se>
     <se label="作业内容">
-      <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入作业内容">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
         <input nz-input formControlName="operationContent" placeholder="作业内容"/>
+        <nz-form-explain *ngIf="validateForm.get('operationContent').dirty && validateForm.get('operationContent').errors">请输入作业内容
+        </nz-form-explain>
       </nz-form-control>
     </se>
       <se label="作业证附件">
-        <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="上传作业证附件">
-         <!-- <nz-upload
-            (nzChange)="uploadFn($event,'businessLicencesAccessory')"
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <!--  <nz-upload
+            (nzChange)="uploadFn($event,'operationCertificate')"
             [nzRemove]="handleRemove"
             [nzLimit]="1"
             [nzAction]="uploadUrl"
@@ -45,33 +53,63 @@
         </nz-form-control>
       </se>
       <se label="申请人">
-        <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入申请人">
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24">
           <input nz-input formControlName="applicationName" placeholder="申请人"/>
+          <nz-form-explain *ngIf="validateForm.get('applicationName').dirty && validateForm.get('applicationName').errors">请输入申请人
+          </nz-form-explain>
         </nz-form-control>
       </se>
     <se label="申请时间">
-      <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入">
-        <input nz-input formControlName="applicationTime" placeholder="作业内容"/>
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24" >
+        <nz-date-picker
+          nzShowTime
+          [nzStyle]="{ width: '100%' }"
+          nzFormat="yyyy-MM-dd HH:mm:ss"
+          nzPlaceHolder="请选择投用时间"
+          formControlName="applicationTime"
+        ></nz-date-picker>
+        <nz-form-explain *ngIf="validateForm.get('applicationTime').dirty && validateForm.get('applicationTime').errors">请输入申请人
+        </nz-form-explain>
       </nz-form-control>
     </se>
       <se label="监护人">
-        <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入">
-          <input nz-input formControlName="guardianName" placeholder="作业内容"/>
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24" >
+          <input nz-input formControlName="guardianName" placeholder="监护人"/>
+          <nz-form-explain *ngIf="validateForm.get('guardianName').dirty && validateForm.get('guardianName').errors">请输入监护人
+          </nz-form-explain>
         </nz-form-control>
       </se>
       <se label="负责人">
-        <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入">
-          <input nz-input formControlName="leadingName" placeholder="作业内容"/>
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24" >
+          <input nz-input formControlName="leadingName" placeholder="负责人"/>
+          <nz-form-explain *ngIf="validateForm.get('leadingName').dirty && validateForm.get('leadingName').errors">请输入负责人
+          </nz-form-explain>
         </nz-form-control>
       </se>
         <se label="开始时间">
-          <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入">
-            <input nz-input formControlName="operationStartTime" placeholder="作业开始时间"/>
+          <nz-form-control nzLg="8" nzMd="12" nzSm="24" >
+            <nz-date-picker
+              nzShowTime
+              [nzStyle]="{ width: '100%' }"
+              nzFormat="yyyy-MM-dd HH:mm:ss"
+              nzPlaceHolder="请选择投用时间"
+              formControlName="operationStartTime"
+            ></nz-date-picker>
+            <nz-form-explain *ngIf="validateForm.get('operationStartTime').dirty && validateForm.get('operationStartTime').errors">请选择开始时间
+            </nz-form-explain>
           </nz-form-control>
         </se>
           <se label="结束时间">
-            <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入">
-              <input nz-input formControlName="operationEndTime" placeholder="作业结束时间"/>
+            <nz-form-control nzLg="8" nzMd="12" nzSm="24" >
+              <nz-date-picker
+                nzShowTime
+                [nzStyle]="{ width: '100%' }"
+                nzFormat="yyyy-MM-dd HH:mm:ss"
+                nzPlaceHolder="请选择投用时间"
+                formControlName="operationEndTime"
+              ></nz-date-picker>
+              <nz-form-explain *ngIf="validateForm.get('operationEndTime').dirty && validateForm.get('operationEndTime').errors">请选择作业结束时间
+              </nz-form-explain>
             </nz-form-control>
           </se>
       <se>
@@ -80,5 +118,14 @@
       </se>
   </form>
 </nz-card>
-
+<!--<nz-modal
+  [nzVisible]="previewVisible"
+  [nzContent]="modalContent"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-template #modalContent>
+    <img [src]="previewImage" [ngStyle]="{ width: '100%' }"/>
+  </ng-template>
+</nz-modal>-->
 

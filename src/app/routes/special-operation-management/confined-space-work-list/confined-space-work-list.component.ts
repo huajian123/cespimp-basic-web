@@ -17,7 +17,9 @@ interface OptionsInterface {
   value: string;
   label: string;
 }
-
+enum statusEnum {
+  check = 1//待审核
+}
 @Component({
   selector: 'app-special-operation-management-confined-space-work-list',
   templateUrl: './confined-space-work-list.component.html',
@@ -40,7 +42,7 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
   searchParam: SpecialOperationSearchModel;
   loginInfo: LoginInfoModel;
 
-  constructor(private dataService: SpecialOperationInfoService, private cdr: ChangeDetectorRef, private fb: FormBuilder,) {
+  constructor(private dataService: SpecialOperationInfoService, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -92,7 +94,13 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
   format(toBeFormat, arg) {
     return new MapPipe().transform(toBeFormat, arg);
   }
-
+  goJudge(record) {
+    if (record.reviewStatus == statusEnum.check) {
+      return true;
+    }else{
+      return false;
+    }
+  }
   private initTable(): void {
     this.columns = [
       { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
@@ -124,6 +132,8 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
             icon: 'edit',
             click: this.goExamine.bind(this),
             acl: this.roleEnum[this.roleEnum.Enterprise],
+            iif: this.goJudge.bind(this),
+            iifBehavior: 'hide',
           },
           {
             text: '查看',
@@ -141,6 +151,7 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
   }
 
   goExamine(item) {
+    this.itemId = item.id;
     this.isVisible = true;
     this.validateForm.reset();
 
@@ -155,10 +166,13 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
 
     if (this.validateForm.invalid) return;
     const param = this.validateForm.getRawValue();
-    param.id = this.loginInfo.id;
+    param.id = this.itemId;
     param.reviewName = this.loginInfo.realName;
+    param.reviewTime = this.loginInfo.updateTime;
     await this.dataService.examineSpecialOperation(param);
     this.isVisible = false;
+    this.getDataList();
+    this.cdr.markForCheck();
   }
 
   /*取消审核*/
@@ -183,12 +197,14 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
       await this.getDataList(e.pageNo);
     }
   }
+
   initForm() {
     this.validateForm = this.fb.group({
       reviewStatus: [null, [Validators.required]],
       reviewExplain: [null, [Validators.required]],
     });
   }
+
   ngOnInit() {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.statusOptions = [...MapPipe.transformMapToArray(MapSet.reviewStatus)];
@@ -197,8 +213,9 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
     this.getDataList();
     this.initForm();
   }
+
   _onReuseInit() {
-    this.ngOnInit()
+    this.ngOnInit();
   }
 
 }

@@ -13,10 +13,6 @@ import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import { EVENT_KEY } from '@env/staticVariable';
 import { SpecialOperationInfoService } from '@core/biz-services/special-operation-management/special-operation-management.service';
 
-interface OptionsInterface {
-  value: string;
-  label: string;
-}
 
 @Component({
   selector: 'app-special-operation-management-confined-space-work-edit-add',
@@ -30,7 +26,6 @@ export class SpecialOperationManagementConfinedSpaceWorkEditAddComponent impleme
   @Input() currentPageNum: number;
   @Output() returnBack: EventEmitter<any>;
   loginInfo: LoginInfoModel;
-  operationOptions: OptionsInterface[];
 
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef, private dataService: SpecialOperationInfoService) {
     this.returnBack = new EventEmitter<any>();
@@ -79,7 +74,7 @@ export class SpecialOperationManagementConfinedSpaceWorkEditAddComponent impleme
     params.entprId = this.loginInfo.entprId;
     let submitHandel = null;
     if (!this.id) {
-       submitHandel = this.dataService.addSpecialOperation(params);
+      submitHandel = this.dataService.addSpecialOperation(params);
     } else {
       params.id = this.id;
       submitHandel = this.dataService.editSpecialOperation(params);

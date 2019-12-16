@@ -1,26 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { NzModalRef, NzMessageService } from 'ng-zorro-antd';
-import { _HttpClient } from '@delon/theme';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+
 
 @Component({
   selector: 'app-special-operation-management-confined-space-work-detail',
   templateUrl: './confined-space-work-detail.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpecialOperationManagementConfinedSpaceWorkDetailComponent implements OnInit {
-  record: any = {};
-  i: any;
+  validateForm: FormGroup;
+  @Output() returnBack: EventEmitter<any>;
+  @Input() id: number;
+  @Input() currentPageNum: number;
 
   constructor(
-    private modal: NzModalRef,
-    public msgSrv: NzMessageService,
-    public http: _HttpClient
+
   ) { }
 
   ngOnInit(): void {
-    this.http.get(`/user/${this.record.id}`).subscribe(res => this.i = res);
+
   }
 
-  close() {
-    this.modal.destroy();
-  }
+
 }

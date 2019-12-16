@@ -195,7 +195,6 @@ export class BasicInfoCertificateInfoComponent implements OnInit {
     await this.getIdCardInfo();
     if (this.dataInfo !== null) {
       this.isAdd = false;
-      // console.log(this.dataInfo);
       this.validateForm.patchValue(this.dataInfo);
       this.businessFileList = [{
         name: FileImgEnum.BusinessLicenseImg,

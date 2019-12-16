@@ -91,6 +91,7 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
     param.reviewTime = this.loginInfo.updateTime;
     await this.dataService.getIdCardInfoDetail(param);
     this.isVisible = false;
+    this.getDataList();
     this.cdr.markForCheck();
   }
 
