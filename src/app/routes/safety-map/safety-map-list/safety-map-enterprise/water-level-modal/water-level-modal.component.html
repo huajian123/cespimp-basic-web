@@ -1,54 +1,57 @@
 <div class="temp-wrap">
-  <nz-modal [nzVisible]="true" nzWidth="800" [nzFooter]="null" (nzOnCancel)="close()">
+  <nz-modal [(nzVisible)]="showModel" nzWidth="800" [nzFooter]="null" (nzOnCancel)="close()">
     <nz-tabset>
       <nz-tab nzTitle="实时液位">
-        <div class="item-flex">
-          <div>传感器名称：<span>{{currentDataInfo.sensorName}}</span></div>
-          <div>传感器编号：<span>{{currentDataInfo.sensorNo}}</span></div>
-          <div>位置：<span>{{currentDataInfo.locFactory}}</span></div>
-        </div>
+        <page-header title="" [autoBreadcrumb]="false">
+          <sv-container size="large" col="3">
+            <sv label="传感器名称">{{currentDataInfo.sensorName}}</sv>
+            <sv label="上上限阈值">{{currentDataInfo.fourthAlarmThreshold}}（cm）</sv>
+            <sv label="上限阈值">{{currentDataInfo.thirdAlarmThreshold}}（cm）</sv>
+            <sv label="下限阈值">{{currentDataInfo.secondAlarmThreshold}}（cm）</sv>
+            <sv label="下下限阈值">{{currentDataInfo.firstAlarmThreshold}}（cm）</sv>
+            <sv label="传感器编号">{{currentDataInfo.sensorNo}}</sv>
+            <sv label="位置">{{currentDataInfo.locFactory}}</sv>
+          </sv-container>
+        </page-header>
         <div class="parent">
-
-          <div class="item-ceshi">
-            <g2-water-wave title="实时液位" [percent]="34" [height]="161"></g2-water-wave>
-          </div>
-          <dl class="temper">
-            <dt>液位值：{{currentDataInfo.currentValue}}cm</dt>
-            <dd style="text-indent: 14px">状态：<i class="point"></i> <span> {{currentDataInfo.status|map:'sensorInfoStatus'}}</span></dd>
-          </dl>
-          <table class="item-table">
-            <tr>
-              <td>上上限阈值（cm）</td>
-              <td>{{currentDataInfo.fourthAlarmThreshold}}</td>
-            </tr>
-            <tr>
-              <td>上限阈值（cm）</td>
-              <td>{{currentDataInfo.thirdAlarmThreshold}}</td>
-            </tr>
-            <tr>
-              <td>下限阈值（cm）</td>
-              <td>{{currentDataInfo.secondAlarmThreshold}}</td>
-            </tr>
-            <tr>
-              <td>下下限阈值（cm）</td>
-              <td>{{currentDataInfo.firstAlarmThreshold}}</td>
-            </tr>
-          </table>
-
+          <div echarts style="width: 100%" (chartDataZoom)="dataZoomChange($event)"
+               (chartInit)="onRealTimeChartInit($event)" [options]="realTimeOptions"></div>
         </div>
       </nz-tab>
-      <nz-tab nzTitle="历史液位">
-        <div class="item-flex">
-          <div>
-            <nz-range-picker [(ngModel)]="dateRange"></nz-range-picker>
+      <nz-tab nzTitle="历史浓度" (nzSelect)="selHistoryTab()">
+        <form nz-form [nzLayout]="'inline'" class="search__form">
+          <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+            <div nz-col nzMd="9" nzSm="24">
+              <nz-form-item>
+                <nz-form-label nzFor="no">开始时间</nz-form-label>
+                <nz-form-control>
+                  <nz-date-picker nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss"
+                                  (ngModelChange)="changeStartSearchDate($event)" placeholder="请输入开始时间"
+                                  [(ngModel)]="dateRange[0]" [ngModelOptions]="{standalone: true}"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzMd="9" nzSm="24">
+              <nz-form-item>
+                <nz-form-label nzFor="status">结束时间</nz-form-label>
+                <nz-form-control>
+                  <nz-date-picker nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss" [nzDisabledDate]="disabledDate.bind(this)"
+                                  placeholder="请输入结束时间" [disabled]="!dateRange[0]" [(ngModel)]="dateRange[1]"
+                                  [ngModelOptions]="{standalone: true}"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="expandForm ? 24 : 6" [class.text-right]="expandForm">
+              <button nz-button [disabled]="!dateRange[0]||!dateRange[1]" (click)="searchHistroyByTimeRange()"
+                      [nzType]="'primary'">查询
+              </button>
+              <button nz-button class="mx-sm" (click)="resetSearch()">重置</button>
+            </div>
           </div>
-          <div>
-            <button nz-button  [nzType]="'primary'">查询</button>
-            <button nz-button class="mx-sm">重置</button>
-          </div>
-        </div>
-        <div class="parent">
-          <div class="history-item" (chartInit)="onChartInit($event)"  echarts [options]="historyOption"></div>
+        </form>
+
+        <div class="history-parent">
+          <div class="history-item" (chartInit)="onHistoryChartInit($event)" echarts [options]="historyOption"></div>
         </div>
       </nz-tab>
     </nz-tabset>

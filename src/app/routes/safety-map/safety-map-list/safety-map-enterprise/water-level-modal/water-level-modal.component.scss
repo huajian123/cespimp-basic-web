@@ -1,6 +1,7 @@
 .item-flex {
-  padding: 35px 0;
+  padding-bottom: 16px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   align-content: center;
   font-size: 16px;
@@ -8,15 +9,7 @@
 }
 
 .item-flex span {
-  font-weight: bold;
-}
 
-.item-ceshi {
-  display: flex;
-  width: 300px;
-  height: 300px;
-  justify-content: center;
-  align-items: center;
 }
 
 .history-item {
@@ -25,20 +18,31 @@
   height: 300px;
 }
 
+.history-parent{
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .chart-wrap{
+  }
+}
+
 .parent {
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  // padding: 0 60px;
+  .chart-wrap{
+  }
 }
 
-.item-table {
-  position: absolute;
-  right: 10%;
-  top: 28%;
-}
+
 
 .item-table tr td {
-  width: 150px;
+  width: 250px;
   height: 30px;
-  border-bottom: 1px solid #E6E6E6;
+  border: 1px solid #000;
   text-align: center;
 }
 
@@ -46,22 +50,12 @@ table tr td:last-child {
   background-color: #eee;
 }
 
-.temper {
-  position: absolute;
-  top: 78%;
-  left: 13%;
-  width: 150px;
 
-}
 
 .point {
   display: inline-block;
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: #0ACD5E;
-}
-
-.g2-water-wave{
-  transform: scale(1)!important;
+  background-color:#0ACD5E;
 }
