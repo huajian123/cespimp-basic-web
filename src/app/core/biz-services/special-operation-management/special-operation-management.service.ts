@@ -21,6 +21,7 @@ export namespace SpecialOperationManagementServiceNs {
     reviewExplain?: number;
     reviewStatus: number;
   }
+
   export enum SpecialInfoEnum {
     HotWork = 1, // 动火作业
     ConfinedSpaceWork, // 受限空间作业
@@ -33,34 +34,38 @@ export namespace SpecialOperationManagementServiceNs {
     EarthMoving,// 动土作业
   }
 
+  export interface SpecialOperationSearchModel {
+    entprName?: string;
+  }
+
   export class SpecialOperationInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
 
     /*新增接口*/
-   /* public addSpecialOperation(param: SpecialOperationInfoModel): Promise<void> {
-      return this.http.post('data/basic/enterprise/rooms', param, { needSuccessInfo: true }).toPromise();
-    }*/
+    public addSpecialOperation(param: SpecialOperationInfoModel): Promise<void> {
+      return this.http.post('data/basic/enterprise/special', param, { needSuccessInfo: true }).toPromise();
+    }
 
     /*修改接口*/
-  /*  public editSpecialOperation(param: SpecialOperationInfoModel): Promise<void> {
-      return this.http.put('data/basic/enterprise/rooms', param, { needSuccessInfo: true }).toPromise();
-    }*/
+    public editSpecialOperation(param: SpecialOperationInfoModel): Promise<void> {
+      return this.http.put('data/basic/enterprise/special', param, { needSuccessInfo: true }).toPromise();
+    }
 
-    /*库房详情*/
-  /*  public getSpecialOperationInfoDetail(id: number): Promise<SpecialOperationInfoModel> {
-      return this.http.get('data/basic/enterprise/rooms/' + id).toPromise();
-    }*/
+    /*详情*/
+    public getSpecialOperationInfoDetail(id: number): Promise<SpecialOperationInfoModel> {
+      return this.http.get('data/basic/enterprise/special/' + id).toPromise();
+    }
 
     /*特种作业列表*/
-    public getSpecialOperationList(param: SearchCommonVO): Promise<PageInfo<SpecialOperationInfoModel>> {
+    public getSpecialOperationList(param: SearchCommonVO & SpecialOperationSearchModel): Promise<PageInfo<SpecialOperationInfoModel>> {
       return this.http.get('data/basic/enterprise/specials', param).toPromise();
     }
 
-    /*删除接口*/
-  /*  public delSpecialOperationInfo(id: number): Promise<SpecialOperationInfoModel> {
-      return this.http.del('data/basic/enterprise/rooms/' + id).toPromise();
-    }*/
+    /*审核接口*/
+    public examineSpecialOperation(id: number): Promise<SpecialOperationInfoModel> {
+      return this.http.put('data/basic/enterprise/dealSpecialOperationExamine/' + id).toPromise();
+    }
   }
 }
 

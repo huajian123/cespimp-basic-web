@@ -8,6 +8,8 @@ import {
 import SpecialOperationInfoModel = SpecialOperationManagementServiceNs.SpecialOperationInfoModel;
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
+import SpecialInfoEnum = SpecialOperationManagementServiceNs.SpecialInfoEnum;
+import SpecialOperationSearchModel = SpecialOperationManagementServiceNs.SpecialOperationSearchModel;
 
 @Component({
   selector: 'app-special-operation-management-equipment-overhaul-list',
@@ -23,6 +25,7 @@ export class SpecialOperationManagementEquipmentOverhaulListComponent implements
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
+  searchParam: SpecialOperationSearchModel;
 
   constructor(private dataService: SpecialOperationInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
     this.expandForm = false;
@@ -35,13 +38,15 @@ export class SpecialOperationManagementEquipmentOverhaulListComponent implements
     };
     this.dataList = [];
     this.itemId = -1;
+    this.searchParam = {};
   }
 
-  async getDataList(currentType = 6) {
+  async getDataList(currentType = SpecialInfoEnum.EquipmentOverhaul) {
     const params = {
       operationType: currentType,
       pageNum: this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      ...this.searchParam,
     };
     const { total, list, pageNum } = await this.dataService.getSpecialOperationList(params);
     this.listPageInfo.total = total;
@@ -124,15 +129,8 @@ export class SpecialOperationManagementEquipmentOverhaulListComponent implements
     this.currentPage = this.pageTypeEnum.AddOrEdit;
   }
 
-  goDeletePage(item, modal) {
-    const modalCtrl = this.messageService.showAlertMessage('', '您确定要删除吗？', MessageType.Confirm);
-    modalCtrl.afterClose.subscribe((type: string) => {
-      if (type !== 'onOk') {
-        return;
-      }
-      this.itemId = item.id;
-      // this.dataService.delWarehouseInfo(this.itemId).then(() => this.getDataList(1));
-    });
+  reset() {
+    this.searchParam = {};
   }
 
   ngOnInit() {
