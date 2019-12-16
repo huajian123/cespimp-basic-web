@@ -6,7 +6,7 @@ import { SafetyMapService, SafetyMapServiceNs } from '@core/biz-services/safety-
 import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
 import SensorInfoWebSocketModel = SafetyMapServiceNs.SensorInfoWebSocketModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
-import { subDays, differenceInCalendarDays } from 'date-fns';
+import { subDays, addDays } from 'date-fns';
 
 @Component({
   selector: 'temp-modal',
@@ -20,19 +20,12 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
   dateRange = [subDays(new Date(), 1), new Date()];
   realTimeOptions: any;
   historyOption: any;
-  value: any;
-  borderColor: any;
-  mercuryColor: any;
+  expandForm: boolean;
   @Input() showModel: boolean;
   @Output() showModelChange = new EventEmitter<boolean>();
   ws: WebSocket;//定义websocket
   currentDataInfo: SensorInfoWebSocketModel;
-  historyLineValue: {
-    time: string[],
-    value: number[]
-  };
-
-  /*实时数据*/
+  /*实时数据相关*/
   legendData = ['实时温度'];
   time = 0;
   zoomStart = 0;
@@ -55,7 +48,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
             yAxis: 20,
             label: {
               show: 'true',
-              formatter:"一级阈值"
+              formatter: '一级阈值',
             },
             lineStyle: {
               normal: {
@@ -70,7 +63,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
             yAxis: 100,
             label: {
               show: 'true',
-              formatter:"二级阈值"
+              formatter: '二级阈值',
             },
             lineStyle: {
               normal: {
@@ -79,14 +72,12 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
               },
             },
           }],
-        label:{
-
-        }
+        label: {},
       },
     },
   ];
 
-  /*历史数据*/
+  /*历史数据相关*/
   historyLegendData = ['历史温度'];
   historyZoomStart = 0;
   historyZoomEnd = 100;
@@ -136,14 +127,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private cdr: ChangeDetectorRef, private safetyMapService: SafetyMapService) {
     this.showModel = false;
-    this.value = 40.0;
-    this.borderColor = '#fd4d49';
-    this.mercuryColor = '#fd4d49';
-    this.historyLineValue = {
-      time: [],
-      value: [],
-    };
-
+    this.expandForm = false;
     this.currentDataInfo = {
       sensorName: '',
       sensorNo: '',
@@ -446,7 +430,6 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ws.onopen = (e) => {
       //socket 开启后执行，可以向后端传递信息
       // this.ws.send('sonmething');
-
     };
     this.ws.onmessage = (e) => {
       //socket 获取后端传递到前端的信息
@@ -456,19 +439,19 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
         this.currentDataInfo = tempArray.filter(({ id }) => {
           return id === this.id;
         })[0];
-        this.setPercent(this.currentDataInfo.currentValue);
 
-        // this.initHistoryOption();
+        this.setPercent(this.currentDataInfo.currentValue, {
+          first: this.currentDataInfo.firstAlarmThreshold,
+          second: this.currentDataInfo.secondAlarmThreshold,
+        });
         this.cdr.markForCheck();
       }
     };
     this.ws.onerror = (e) => {
       //socket error信息
-      console.log(e);
     };
     this.ws.onclose = (e) => {
       //socket 关闭后执行
-      console.log(e);
     };
   }
 
@@ -489,31 +472,14 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     return str;
   }
 
-  random() {
-    let value = (Math.random() * 100).toFixed(2);
-    return +value > 30 && +value < 50 ? value : this.random();
-  }
-
-
-  disabledDate = (current: Date): boolean => {
-    // Can not select days before today and today
-    return differenceInCalendarDays(current, new Date()) > 3;
-  };
-
-  changeDateRange(e){
-    return this.disabledDate(e);
-  }
-
-  selDateRange(e){
-    console.log(e);
-  }
-
   // 实时数据塞值
-  setPercent(p) {
+  setPercent(p, alarmThresold) {
     this.realTimeOptions.xAxis.data.push(this.timef());
     this.realTimeOptions.series[0].data.push(p);
     this.realTimeOptions.dataZoom[0].start = this.zoomStart;
     this.realTimeOptions.dataZoom[0].end = this.zoomEnd;
+    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.first;
+    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.second;
     this.realTimeChart.setOption(this.realTimeOptions);
   }
 
@@ -530,8 +496,8 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     const params = {
       id: this.id, beginTime: this.dateRange[0], endTime: this.dateRange[1],
     };
-    this.historyLineValue.value = [];
-    this.historyLineValue.time = [];
+    this.historyOption.xAxis.data = [];
+    this.historyOption.series[0].data = [];
     const data = await this.safetyMapService.getSensorHistory(params);
     data.forEach(({ reportTime, sensorValue }) => {
       this.historySetPercent(sensorValue, new MapPipe().transform(reportTime, 'date:MM-dd HH:mm:ss'));
@@ -544,9 +510,18 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.zoomEnd = event.end;
   }
 
+  disabledDate(current: Date) {
+    return current.getTime()<this.dateRange[0].getTime()||current.getTime() >= (addDays(this.dateRange[0], 4).getTime());
+  }
+
   // 选择历史数据tab
   selHistoryTab() {
     this.getHistoryData();
+  }
+
+  // 历史数据改变第一个搜索条件
+  changeStartSearchDate(e) {
+    this.dateRange[1] = null;
   }
 
   // 选择时间
@@ -557,8 +532,6 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
   resetSearch() {
     this.historyOption.xAxis.data = [];
     this.historyOption.series[0].data = [];
-    this.historyLineValue.value = [];
-    this.historyLineValue.time = [];
     this.dateRange = [subDays(new Date(), 1), new Date()];
     this.getHistoryData();
   }

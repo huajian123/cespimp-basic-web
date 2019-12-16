@@ -6,8 +6,8 @@
           <sv-container size="large" col="3">
             <sv label="传感器名称">{{currentDataInfo.sensorName}}</sv>
             <sv label="传感器编号">{{currentDataInfo.sensorNo}}</sv>
-            <sv label="一级阈值">{{currentDataInfo.locFactory}}</sv>
-            <sv label="二级阈值">{{currentDataInfo.locFactory}}</sv>
+            <sv label="一级阈值">{{currentDataInfo.firstAlarmThreshold}}℃</sv>
+            <sv label="二级阈值">{{currentDataInfo.secondAlarmThreshold}}℃</sv>
             <sv label="位置">{{currentDataInfo.locFactory}}</sv>
           </sv-container>
         </page-header>
@@ -16,15 +16,41 @@
         </div>
       </nz-tab>
       <nz-tab nzTitle="历史温度" (nzSelect)="selHistoryTab()">
-        <div class="item-flex">
+        <!--<div class="item-flex">
           <div>
-            <nz-range-picker (nzOnCalendarChange)="selDateRange($event)" [nzDisabledDate]="disabledDate.bind(this)"  nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss" [(ngModel)]="dateRange"></nz-range-picker>
+
+            <nz-range-picker [nzDisabledDate] nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss" [(ngModel)]="dateRange"></nz-range-picker>
           </div>
           <div>
             <button nz-button  [nzType]="'primary'" (click)="searchHistroyByTimeRange()">查询</button>
             <button nz-button class="mx-sm" (click)="resetSearch()">重置</button>
           </div>
-        </div>
+        </div>-->
+        <form nz-form [nzLayout]="'inline'"  class="search__form">
+          <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+            <div nz-col nzMd="9" nzSm="24">
+              <nz-form-item>
+                <nz-form-label nzFor="no">开始时间</nz-form-label>
+                <nz-form-control>
+                  <nz-date-picker nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss" (ngModelChange)="changeStartSearchDate($event)" placeholder="请输入开始时间"  [(ngModel)]="dateRange[0]" [ngModelOptions]="{standalone: true}"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzMd="9" nzSm="24">
+              <nz-form-item>
+                <nz-form-label nzFor="status">结束时间</nz-form-label>
+                <nz-form-control>
+                  <nz-date-picker nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss" [nzDisabledDate]="disabledDate.bind(this)"  placeholder="请输入结束时间" [disabled]="!dateRange[0]"  [(ngModel)]="dateRange[1]" [ngModelOptions]="{standalone: true}"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="expandForm ? 24 : 6" [class.text-right]="expandForm">
+              <button nz-button [disabled]="!dateRange[0]||!dateRange[1]" (click)="searchHistroyByTimeRange()" [nzType]="'primary'">查询</button>
+              <button nz-button  class="mx-sm" (click)="resetSearch()">重置</button>
+            </div>
+          </div>
+        </form>
+
         <div class="history-parent">
           <div class="history-item" (chartInit)="onHistoryChartInit($event)"  echarts [options]="historyOption"></div>
         </div>
