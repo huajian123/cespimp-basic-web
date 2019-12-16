@@ -185,6 +185,10 @@ export class BasicInfoCertificateInfoComponent implements OnInit {
     }
   }
 
+  _onReuseInit() {
+    this.ngOnInit()
+  }
+
   async ngOnInit() {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.initForm();

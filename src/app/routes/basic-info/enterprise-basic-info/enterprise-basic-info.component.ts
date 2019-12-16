@@ -187,6 +187,10 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
     });
   }
 
+  _onReuseInit() {
+    this.ngOnInit()
+  }
+
   ngOnInit() {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.operatingOptions = [...MapPipe.transformMapToArray(MapSet.operatingStatus)];

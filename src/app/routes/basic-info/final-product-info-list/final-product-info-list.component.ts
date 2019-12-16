@@ -141,4 +141,8 @@ export class BasicInfoFinalProductInfoListComponent implements OnInit {
     this.initTable();
     this.getDataList();
   }
+
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 }

@@ -130,5 +130,7 @@ export class SpecialOperationManagementEquipmentOverhaulListComponent implements
     this.initTable();
     this.getDataList();
   }
-
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 }

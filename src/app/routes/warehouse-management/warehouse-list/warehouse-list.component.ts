@@ -168,7 +168,7 @@ export class WarehouseListComponent implements OnInit {
   }
 
   _onReuseInit() {
-    this.routeInit();
+    this.ngOnInit()
   }
   ngOnInit() {
     this.initTable();

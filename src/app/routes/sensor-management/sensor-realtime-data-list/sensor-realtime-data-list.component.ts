@@ -41,5 +41,7 @@ export class SensorManagementSensorRealtimeDataListComponent implements OnInit {
     //   .createStatic(FormEditComponent, { i: { id: 0 } })
     //   .subscribe(() => this.st.reload());
   }
-
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 }

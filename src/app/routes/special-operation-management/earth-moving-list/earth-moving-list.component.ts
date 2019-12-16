@@ -130,4 +130,8 @@ export class SpecialOperationManagementEarthMovingListComponent implements OnIni
     this.initTable();
     this.getDataList();
   }
+
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 }

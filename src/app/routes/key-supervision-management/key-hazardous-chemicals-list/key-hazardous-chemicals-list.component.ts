@@ -133,4 +133,8 @@ export class KeySupervisionManagementKeyHazardousChemicalsListComponent implemen
     this.initTable();
     this.getDataList();
   }
+
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 }

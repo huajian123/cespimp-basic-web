@@ -143,6 +143,8 @@ export class BasicInfoProductionMaterialsInfoListComponent implements OnInit {
     this.getDataList();
   }
 
-
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 
 }

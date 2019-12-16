@@ -148,7 +148,7 @@ export class ProductionListComponent implements OnInit {
   }
 
   _onReuseInit() {
-    this.routeInit();
+    this.ngOnInit()
   }
   ngOnInit() {
     this.initTable();

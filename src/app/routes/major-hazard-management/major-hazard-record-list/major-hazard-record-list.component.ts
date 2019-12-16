@@ -178,6 +178,9 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
     this.statusOptions.shift();
     this.initTable();
     this.getDataList();
+  }
 
+  _onReuseInit() {
+    this.ngOnInit()
   }
 }

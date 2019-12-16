@@ -132,6 +132,8 @@ export class SpecialOperationManagementHotWorkListComponent implements OnInit {
     this.initTable();
     this.getDataList();
   }
-
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 
 }

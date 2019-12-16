@@ -132,5 +132,7 @@ export class SpecialOperationManagementElevatedWorkListComponent implements OnIn
     this.getDataList();
   }
 
-
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 }

@@ -156,4 +156,8 @@ export class AlarmManagementHistoricalAlarmListComponent implements OnInit {
     this.initTable();
     this.getDataList();
   }
+
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 }

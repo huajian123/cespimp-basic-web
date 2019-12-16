@@ -42,4 +42,8 @@ export class SensorManagementSensorHistoryDataListComponent implements OnInit {
     //   .subscribe(() => this.st.reload());
   }
 
+  _onReuseInit() {
+    this.ngOnInit()
+  }
+
 }

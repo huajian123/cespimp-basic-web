@@ -233,4 +233,8 @@ export class BasicInfoBasicInfoStatisticsComponent implements OnInit {
     this.initCake();
   }
 
+  _onReuseInit() {
+    this.ngOnInit()
+  }
+
 }

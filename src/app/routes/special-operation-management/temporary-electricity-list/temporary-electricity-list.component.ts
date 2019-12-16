@@ -131,5 +131,7 @@ export class SpecialOperationManagementTemporaryElectricityListComponent impleme
     this.initTable();
     this.getDataList();
   }
-
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 }

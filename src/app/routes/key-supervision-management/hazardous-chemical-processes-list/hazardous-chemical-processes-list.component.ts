@@ -133,4 +133,8 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
     this.getDataList();
   }
 
+  _onReuseInit() {
+    this.ngOnInit()
+  }
+
 }

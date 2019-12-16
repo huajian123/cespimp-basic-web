@@ -149,6 +149,8 @@ export class BasicInfoEnterpriseSurroundingInfoListComponent implements OnInit {
     this.initTable();
     this.getDataList();
   }
-
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 
 }

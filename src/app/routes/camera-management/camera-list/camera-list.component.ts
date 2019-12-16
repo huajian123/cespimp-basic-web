@@ -153,4 +153,8 @@ export class CameraManagementCameraListComponent implements OnInit {
     this.initTable();
     this.getDataList();
   }
+
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 }

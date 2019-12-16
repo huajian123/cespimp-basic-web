@@ -251,7 +251,6 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
 
     await this.getBusinessList();
     this.createEnterpriseMarker();
-
   }
 
   ngAfterViewInit(): void {

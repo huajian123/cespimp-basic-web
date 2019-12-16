@@ -197,6 +197,8 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
     this.getDataList();
     this.initForm();
   }
-
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 
 }

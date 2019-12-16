@@ -130,7 +130,9 @@ export class SpecialOperationManagementOpenCircuitListComponent implements OnIni
     this.initTable();
     this.getDataList();
   }
-
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 }
 
 

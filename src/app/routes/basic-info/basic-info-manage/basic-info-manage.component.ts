@@ -128,4 +128,8 @@ export class BasicInfoManageComponent implements OnInit {
     this.initTable();
     this.getDataList();
   }
+
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 }

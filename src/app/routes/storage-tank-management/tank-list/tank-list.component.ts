@@ -182,8 +182,7 @@ export class TankListComponent implements OnInit {
   }
 
   _onReuseInit() {
-    console.log(222);
-    this.routeInit();
+    this.ngOnInit()
   }
 
   ngOnInit() {

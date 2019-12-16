@@ -191,4 +191,8 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
     this.getDataList();
     this.initForm();
   }
+
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 }

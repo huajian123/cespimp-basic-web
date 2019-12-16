@@ -133,4 +133,8 @@ initRing(){
     this.initRing();
   }
 
+  _onReuseInit() {
+    this.ngOnInit()
+  }
+
 }

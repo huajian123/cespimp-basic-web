@@ -130,6 +130,8 @@ export class SpecialOperationManagementHoistingOperationListComponent implements
     this.initTable();
     this.getDataList();
   }
-
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 
 }

@@ -125,4 +125,8 @@ export class BasicInfoProductionDeviceInfoListComponent implements OnInit {
     this.initTable();
     this.getDataList();
   }
+
+  _onReuseInit() {
+    this.ngOnInit()
+  }
 }
