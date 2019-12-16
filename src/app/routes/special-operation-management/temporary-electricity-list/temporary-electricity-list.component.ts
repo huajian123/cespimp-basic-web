@@ -8,6 +8,7 @@ import {
 import SpecialOperationInfoModel = SpecialOperationManagementServiceNs.SpecialOperationInfoModel;
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
+import SpecialInfoEnum = SpecialOperationManagementServiceNs.SpecialInfoEnum;
 
 @Component({
   selector: 'app-special-operation-management-temporary-electricity-list',
@@ -36,7 +37,7 @@ export class SpecialOperationManagementTemporaryElectricityListComponent impleme
     this.dataList = [];
     this.itemId = -1;
   }
-  async getDataList(currentType = 5) {
+  async getDataList(currentType = SpecialInfoEnum.TemporaryElectricity) {
     const params = {
       operationType: currentType,
       pageNum:  this.listPageInfo.pi,

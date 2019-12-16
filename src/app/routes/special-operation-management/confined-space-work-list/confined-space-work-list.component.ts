@@ -8,6 +8,7 @@ import {
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import SpecialOperationInfoModel = SpecialOperationManagementServiceNs.SpecialOperationInfoModel;
+import SpecialInfoEnum = SpecialOperationManagementServiceNs.SpecialInfoEnum;
 
 @Component({
   selector: 'app-special-operation-management-confined-space-work-list',
@@ -38,7 +39,7 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
   }
 
 
-  async getDataList(currentType = 2) {
+  async getDataList(currentType = SpecialInfoEnum.ConfinedSpaceWork) {
     const params = {
       operationType: currentType,
       pageNum:  this.listPageInfo.pi,

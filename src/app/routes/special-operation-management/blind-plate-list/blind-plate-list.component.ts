@@ -8,6 +8,7 @@ import { MessageType, ShowMessageService } from '../../../widget/show-message/sh
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import SpecialOperationInfoModel = SpecialOperationManagementServiceNs.SpecialOperationInfoModel;
+import SpecialInfoEnum = SpecialOperationManagementServiceNs.SpecialInfoEnum;
 
 @Component({
   selector: 'app-special-operation-management-blind-plate-list',
@@ -37,7 +38,7 @@ export class SpecialOperationManagementBlindPlateListComponent implements OnInit
     this.itemId = -1;
   }
 
-  async getDataList(currentType = 7) {
+  async getDataList(currentType = SpecialInfoEnum.BlindPlate) {
     const params = {
       operationType: currentType,
       pageNum: this.listPageInfo.pi,

@@ -8,6 +8,7 @@ import {
 import SpecialOperationInfoModel = SpecialOperationManagementServiceNs.SpecialOperationInfoModel;
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
+import SpecialInfoEnum = SpecialOperationManagementServiceNs.SpecialInfoEnum;
 
 @Component({
   selector: 'app-special-operation-management-hoisting-operation-list',
@@ -37,7 +38,7 @@ export class SpecialOperationManagementHoistingOperationListComponent implements
     this.itemId = -1;
   }
 
-  async getDataList(currentType = 4) {
+  async getDataList(currentType = SpecialInfoEnum.HoistingOperation) {
     const params = {
       operationType: currentType,
       pageNum:  this.listPageInfo.pi,
