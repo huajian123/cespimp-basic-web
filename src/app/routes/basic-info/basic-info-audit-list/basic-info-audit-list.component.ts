@@ -15,6 +15,10 @@ interface OptionsInterface {
   label: string;
 }
 
+enum statusEnum {
+  check = 1//待审核
+}
+
 @Component({
   selector: 'app-basic-info-basic-info-audit-list',
   templateUrl: './basic-info-audit-list.component.html',
@@ -27,12 +31,12 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
   expandForm: boolean;
-  dataList: any;
+  dataList: BasicInfoAuditModel[];
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
   statusOptions: OptionsInterface[];
-  seacher: BasicInfoAuditModel;
+  /* seacher: BasicInfoAuditModel;*/
   loginInfo: LoginInfoModel;
   filters: FiltersInfoModel;
 
@@ -55,7 +59,7 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
       updateTime: new Date(),
       userName: '',
     };
-    this.seacher = {
+    /*this.seacher = {
       id: null,
       applicationName: '',
       applicationTime: new Date(),
@@ -63,7 +67,7 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
       reviewTime: new Date(),
       reviewExplain: '',
       reviewStatus: null,
-    };
+    };*/
     this.listPageInfo = {
       total: 0,
       ps: 10,// 每页数量
@@ -84,8 +88,10 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
     const param = this.validateForm.getRawValue();
     param.id = this.itemId;
     param.reviewName = this.loginInfo.realName;
+    param.reviewTime = this.loginInfo.updateTime;
     await this.dataService.getIdCardInfoDetail(param);
     this.isVisible = false;
+    this.cdr.markForCheck();
   }
 
   /*取消审核*/
@@ -109,6 +115,14 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
     this.isVisible = true;
     this.validateForm.reset();
 
+  }
+
+  goJudge(record) {
+    if (record.reviewStatus == statusEnum.check) {
+      return true;
+    }else{
+      return false;
+    }
   }
 
   private initTable(): void {
@@ -135,6 +149,8 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
             icon: 'edit',
             click: this.goExamine.bind(this),
             acl: this.roleEnum[this.roleEnum.ParkManage],
+            iif: this.goJudge.bind(this),
+            iifBehavior: 'hide',
           },
           {
             text: '详情',
@@ -193,6 +209,6 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
   }
 
   _onReuseInit() {
-    this.ngOnInit()
+    this.ngOnInit();
   }
 }
