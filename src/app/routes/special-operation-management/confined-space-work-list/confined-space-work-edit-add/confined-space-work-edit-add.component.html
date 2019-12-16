@@ -1,0 +1,84 @@
+<page-header [autoBreadcrumb]="false" [autoBreadcrumb]="false" [title]="'受限空间作业列表'"></page-header>
+<nz-card [nzBordered]="true">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
+    <se label="受限空间作业" [hidden]="true">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="operationType" value="2"/>
+      </nz-form-control>
+    </se>
+    <se label="作业名称">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入作业名称">
+        <input nz-input formControlName="operationName" placeholder="作业名称"/>
+      </nz-form-control>
+    </se>
+    <se label="作业人">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入作业人">
+        <input nz-input formControlName="operationPerson" placeholder="作业人"/>
+      </nz-form-control>
+    </se>
+    <se label="作业地点">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入作业地点">
+        <input nz-input formControlName="operationPlace" placeholder="作业地点"/>
+      </nz-form-control>
+    </se>
+    <se label="作业内容">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入作业内容">
+        <input nz-input formControlName="operationContent" placeholder="作业内容"/>
+      </nz-form-control>
+    </se>
+      <se label="作业证附件">
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="上传作业证附件">
+         <!-- <nz-upload
+            (nzChange)="uploadFn($event,'businessLicencesAccessory')"
+            [nzRemove]="handleRemove"
+            [nzLimit]="1"
+            [nzAction]="uploadUrl"
+            nzListType="picture-card"
+            [(nzFileList)]="businessFileList"
+            [nzShowButton]="businessFileList.length < 1"
+            [nzShowUploadList]="showUploadList"
+            [nzPreview]="handlePreview">
+            <i nz-icon nzType="plus"></i>
+            <div class="ant-upload-text">上传</div>
+          </nz-upload>-->
+          <input nz-input formControlName="operationCertificate" placeholder="作业内容" [hidden]="true"/>
+        </nz-form-control>
+      </se>
+      <se label="申请人">
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入申请人">
+          <input nz-input formControlName="applicationName" placeholder="申请人"/>
+        </nz-form-control>
+      </se>
+    <se label="申请时间">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入">
+        <input nz-input formControlName="applicationTime" placeholder="作业内容"/>
+      </nz-form-control>
+    </se>
+      <se label="监护人">
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入">
+          <input nz-input formControlName="guardianName" placeholder="作业内容"/>
+        </nz-form-control>
+      </se>
+      <se label="负责人">
+        <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入">
+          <input nz-input formControlName="leadingName" placeholder="作业内容"/>
+        </nz-form-control>
+      </se>
+        <se label="开始时间">
+          <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入">
+            <input nz-input formControlName="operationStartTime" placeholder="作业开始时间"/>
+          </nz-form-control>
+        </se>
+          <se label="结束时间">
+            <nz-form-control nzLg="8" nzMd="12" nzSm="24" nzErrorTip="输入">
+              <input nz-input formControlName="operationEndTime" placeholder="作业结束时间"/>
+            </nz-form-control>
+          </se>
+      <se>
+        <button nz-button nzType="primary" type="submit">提交</button>
+        <button nz-button class="ml-sm" (click)="returnToList()">返回</button>
+      </se>
+  </form>
+</nz-card>
+
+

@@ -10,6 +10,8 @@ import { SpecialOperationManagementEquipmentOverhaulListComponent } from './equi
 import { SpecialOperationManagementBlindPlateListComponent } from './blind-plate-list/blind-plate-list.component';
 import { SpecialOperationManagementOpenCircuitListComponent } from './open-circuit-list/open-circuit-list.component';
 import { SpecialOperationManagementEarthMovingListComponent } from './earth-moving-list/earth-moving-list.component';
+import { SpecialOperationManagementConfinedSpaceWorkDetailComponent } from './confined-space-work-list/confined-space-work-detail/confined-space-work-detail.component';
+import { SpecialOperationManagementConfinedSpaceWorkEditAddComponent } from './confined-space-work-list/confined-space-work-edit-add/confined-space-work-edit-add.component';
 
 const COMPONENTS = [
   SpecialOperationManagementHotWorkListComponent,
@@ -21,7 +23,9 @@ const COMPONENTS = [
   SpecialOperationManagementBlindPlateListComponent,
   SpecialOperationManagementOpenCircuitListComponent,
   SpecialOperationManagementEarthMovingListComponent];
-const COMPONENTS_NOROUNT = [];
+const COMPONENTS_NOROUNT = [
+  SpecialOperationManagementConfinedSpaceWorkDetailComponent,
+  SpecialOperationManagementConfinedSpaceWorkEditAddComponent];
 
 @NgModule({
   imports: [

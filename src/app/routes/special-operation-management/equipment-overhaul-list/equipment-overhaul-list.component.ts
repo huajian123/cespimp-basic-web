@@ -73,16 +73,9 @@ export class SpecialOperationManagementEquipmentOverhaulListComponent implements
   private initTable(): void {
     this.columns = [
       { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
-      {
-        title: '特种作业类型',
-        index: 'operationType',
-        width: 120,
-        format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
-      },
       { title: '作业名称', index: 'operationName', width: 100 },
       { title: '作业地点', index: 'operationPlace', width: 120 },
       { title: '作业内容', index: 'operationContent', width: 100 },
-      { title: '作业证附件', index: 'operationCertificate', width: 100 },
       { title: '申请人', index: 'applicationName', width: 100 },
       { title: '申请时间', index: 'operationStartTime', width: 100, type: 'date' },
       { title: '监护人', index: 'operationEndTime', width: 100 },

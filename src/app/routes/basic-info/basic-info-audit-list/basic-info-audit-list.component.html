@@ -7,7 +7,7 @@
           <nz-form-item>
             <nz-form-label nzFor="no">企业编号</nz-form-label>
             <nz-form-control>
-              <input nz-input  placeholder="请输入企业名称" [(ngModel)]="filters.entprName" [ngModelOptions]="{standalone: true}"/>
+              <input nz-input placeholder="请输入企业名称" [(ngModel)]="filters.entprName" name="no"/>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -15,22 +15,23 @@
           <nz-form-item>
             <nz-form-label nzFor="status">审核状态</nz-form-label>
             <nz-form-control>
-              <nz-select  nzPlaceHolder="下拉选择" nzAllowClear [(ngModel)]="filters.reviewStatus" [ngModelOptions]="{standalone: true}">
+              <nz-select nzPlaceHolder="下拉选择" nzAllowClear [(ngModel)]="filters.reviewStatus" name="no">
                 <nz-option *ngFor="let i of statusOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
               </nz-select>
             </nz-form-control>
           </nz-form-item>
         </div>
         <div nz-col [nzSpan]="expandForm ? 24 : 8" [class.text-right]="expandForm">
-          <button nz-button  type="submit" [nzType]="'primary'">查询</button>
-          <button nz-button  class="mx-sm" (click)="resetSearchParam()">重置</button>
+          <button nz-button type="submit" [nzType]="'primary'">查询</button>
+          <button nz-button class="mx-sm" (click)="resetSearchParam()">重置</button>
         </div>
       </div>
     </form>
     <st #st [page]="{showSize:true, front: false}"
         [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true"
         [scroll]="{x: '2400px'}"
-        [widthMode]="{ type: 'strict' }" [data]="dataList"  (change)="changePage($event)" [columns]="columns" class="mt-sm"></st>
+        [widthMode]="{ type: 'strict' }" [data]="dataList" (change)="changePage($event)" [columns]="columns"
+        class="mt-sm"></st>
   </nz-card>
 </ng-container>
 <nz-modal [(nzVisible)]="isVisible" [nzWidth]="500" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
@@ -38,21 +39,22 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="4" nzFor="reviewStatus">审核结果</nz-form-label>
       <nz-form-control [nzSpan]="16" nzErrorTip="审核结果">
-        <nz-select  nzPlaceHolder="下拉选择" formControlName="reviewStatus">
+        <nz-select nzPlaceHolder="下拉选择" formControlName="reviewStatus">
           <nz-option *ngFor="let i of statusOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
         </nz-select>
       </nz-form-control>
-    </nz-form-item >
+    </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSpan]="4" nzFor="reviewExplain">审核意见</nz-form-label>
       <nz-form-control [nzSpan]="16" nzErrorTip="审核意见">
-        <textarea rows="4" nz-input   formControlName="reviewExplain"></textarea>
+        <textarea rows="4" nz-input formControlName="reviewExplain"></textarea>
       </nz-form-control>
-    </nz-form-item >
+    </nz-form-item>
   </form>
 </nz-modal>
 <ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
-  <app-basic-info-basic-info-audit-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-basic-info-basic-info-audit-detail>
+  <app-basic-info-basic-info-audit-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps"
+                                          (returnBack)="returnToList($event)"></app-basic-info-basic-info-audit-detail>
 </ng-container>
 
 

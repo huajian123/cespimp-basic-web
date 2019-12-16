@@ -9,9 +9,11 @@ export namespace SpecialOperationManagementServiceNs {
     operationType: SpecialInfoEnum;
     operationName: string;
     operationPlace: string;
+    operationPerson: string;
     operationContent: string;
     operationCertificate: string;
     applicationName: string;
+    applicationTime: Date;
     guardianName: string;
     leadingName: string;
     operationStartTime: Date;
@@ -36,6 +38,7 @@ export namespace SpecialOperationManagementServiceNs {
 
   export interface SpecialOperationSearchModel {
     entprName?: string;
+    reviewStatus?: number;
   }
 
   export class SpecialOperationInfoServiceClass {
