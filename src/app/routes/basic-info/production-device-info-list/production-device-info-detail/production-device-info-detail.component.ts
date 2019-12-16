@@ -12,6 +12,7 @@ import {
   ProductionDeviceListInfoService,
 } from '@core/biz-services/basic-info/production-device-info.service';
 import ProductionDeviceListInfoModel = ProductionDeviceInfoListServiceNs.ProductionDeviceListInfoModel;
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-basic-info-production-device-info-detail',
@@ -19,33 +20,37 @@ import ProductionDeviceListInfoModel = ProductionDeviceInfoListServiceNs.Product
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicInfoProductionDeviceInfoDetailComponent implements OnInit {
+  validateForm: FormGroup;
   @Output() returnBack: EventEmitter<any>;
   @Input() id: number;
   @Input() currentPageNum: number;
-  dataInfo: ProductionDeviceListInfoModel;
-  constructor(private dataService: ProductionDeviceListInfoService, private cdr: ChangeDetectorRef) {
-    this.dataInfo = {
-      id: null,
-      deviceNo: '',
-      deviceName: '',
-      deviceModel: '',
-      deviceFunction: '',
-    };
+
+  constructor(private dataService: ProductionDeviceListInfoService, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
     this.returnBack = new EventEmitter<any>();
   }
 
-  async getDetailInfo(){
-    this.dataInfo = await this.dataService.getProductionDeviceInfoDetail(this.id);
+  async getDetailInfo() {
+    const dataInfo = await this.dataService.getProductionDeviceInfoDetail(this.id);
+    this.validateForm.patchValue(dataInfo);
     this.cdr.markForCheck();
   }
 
+  initForm() {
+    this.validateForm = this.fb.group({
+      deviceNo: [null, []],
+      deviceName: [null, []],
+      deviceModel: [null, []],
+      deviceFunction: [null, []],
+    });
+  }
 
   returnBackToList() {
-    this.returnBack.emit({refesh: false, pageNo: this.currentPageNum});
+    this.returnBack.emit({ refesh: false, pageNo: this.currentPageNum });
   }
 
   ngOnInit() {
-    this.getDetailInfo()
+    this.initForm();
+    this.getDetailInfo();
   }
 
 }

@@ -1,30 +1,28 @@
 <page-header [autoBreadcrumb]="false" [title]="'生产装置详情'"></page-header>
 <nz-card [nzBordered]="true">
-  <form nz-form   se-container="1" labelWidth="200">
+  <form nz-form [formGroup]="validateForm" se-container="1" labelWidth="200">
     <se label="装置编号">
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.deviceNo}}
-      </nz-col>
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="deviceNo" readonly />
+      </nz-form-control>
     </se>
-    <se label="生产装置名称" >
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.deviceName}}
-      </nz-col>
+    <se label="生产装置名称">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="deviceName" readonly />
+      </nz-form-control>
     </se>
-    <se label="生产装置型号" >
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.deviceModel}}
-      </nz-col>
+    <se label="生产装置型号">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="deviceModel" readonly />
+      </nz-form-control>
     </se>
-    <se label="生产装置功能" >
-      <nz-col nzLg="8" nzMd="12" nzSm="24">
-        {{dataInfo.deviceFunction}}
-      </nz-col>
+    <se label="生产装置功能">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="deviceFunction" readonly />
+      </nz-form-control>
     </se>
     <se>
-      <div class="detail-modal-footer">
-        <button nz-button type="button" (click)="returnBackToList()" nzType="primary">返回</button>
-      </div>
+      <button nz-button type="primary" (click)="returnBackToList()" nzType="primary">返回</button>
     </se>
   </form>
 </nz-card>
