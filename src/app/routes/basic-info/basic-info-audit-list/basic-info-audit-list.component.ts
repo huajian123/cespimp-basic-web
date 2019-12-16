@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { STColumn, STData } from '@delon/abc';
 import { ListPageInfo, LoginInfoModel, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
@@ -82,7 +82,7 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
 
     if (this.validateForm.invalid) return;
     const param = this.validateForm.getRawValue();
-    param.id = this.loginInfo.id;
+    param.id = this.itemId;
     param.reviewName = this.loginInfo.realName;
     await this.dataService.getIdCardInfoDetail(param);
     this.isVisible = false;
@@ -105,6 +105,7 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
   }
 
   goExamine(item) {
+    this.itemId = item.id;
     this.isVisible = true;
     this.validateForm.reset();
 

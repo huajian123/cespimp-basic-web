@@ -1,36 +1,63 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { STColumn, STComponent, STData } from '@delon/abc';
-import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
+import { STColumn, STData } from '@delon/abc';
+import { ListPageInfo, LoginInfoModel, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import {
   SpecialOperationInfoService,
   SpecialOperationManagementServiceNs,
 } from '@core/biz-services/special-operation-management/special-operation-management.service';
-import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
-import { MapPipe } from '@shared/directives/pipe/map.pipe';
+import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
 import SpecialOperationInfoModel = SpecialOperationManagementServiceNs.SpecialOperationInfoModel;
 import SpecialInfoEnum = SpecialOperationManagementServiceNs.SpecialInfoEnum;
 import SpecialOperationSearchModel = SpecialOperationManagementServiceNs.SpecialOperationSearchModel;
+import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EVENT_KEY } from '@env/staticVariable';
+
+interface OptionsInterface {
+  value: string;
+  label: string;
+}
 
 @Component({
   selector: 'app-special-operation-management-confined-space-work-list',
   templateUrl: './confined-space-work-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
+
 export class SpecialOperationManagementConfinedSpaceWorkListComponent implements OnInit {
   roleEnum = RoleEnum;
+  isVisible = false;
+  validateForm: FormGroup;
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
   expandForm: boolean;
   dataList: SpecialOperationInfoModel[];
+  statusOptions: OptionsInterface[];
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
   searchParam: SpecialOperationSearchModel;
+  loginInfo: LoginInfoModel;
 
-  constructor(private dataService: SpecialOperationInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
+  constructor(private dataService: SpecialOperationInfoService, private cdr: ChangeDetectorRef, private fb: FormBuilder,) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
+    this.loginInfo = {
+      createBy: '',
+      createTime: new Date(),
+      delFlag: null,
+      entprId: null,
+      id: null,
+      mobileTel: '',
+      password: '',
+      realName: '',
+      role: null,
+      updateBy: '',
+      updateTime: new Date(),
+      userName: '',
+    };
     this.listPageInfo = {
       total: 0,
       ps: 10,// 每页数量
@@ -69,16 +96,9 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
   private initTable(): void {
     this.columns = [
       { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
-      {
-        title: '特种作业类型',
-        index: 'operationType',
-        width: 120,
-        format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
-      },
       { title: '作业名称', index: 'operationName', width: 100 },
       { title: '作业地点', index: 'operationPlace', width: 120 },
       { title: '作业内容', index: 'operationContent', width: 100 },
-      { title: '作业证附件', index: 'operationCertificate', width: 100 },
       { title: '申请人', index: 'applicationName', width: 100 },
       { title: '申请时间', index: 'operationStartTime', width: 100, type: 'date' },
       { title: '监护人', index: 'operationEndTime', width: 100 },
@@ -102,7 +122,7 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
           {
             text: '审核',
             icon: 'edit',
-            click: this.goEditAddPage.bind(this),
+            click: this.goExamine.bind(this),
             acl: this.roleEnum[this.roleEnum.Enterprise],
           },
           {
@@ -120,10 +140,32 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
 
-  goEditAddPage(item, modal) {
-    this.itemId = item.id;
-    this.currentPage = this.pageTypeEnum.AddOrEdit;
+  goExamine(item) {
+    this.isVisible = true;
+    this.validateForm.reset();
+
   }
+
+  /*确认审核*/
+  async handleOk() {
+    Object.keys(this.validateForm.controls).forEach(key => {
+      this.validateForm.controls[key].markAsDirty();
+      this.validateForm.controls[key].updateValueAndValidity();
+    });
+
+    if (this.validateForm.invalid) return;
+    const param = this.validateForm.getRawValue();
+    param.id = this.loginInfo.id;
+    param.reviewName = this.loginInfo.realName;
+    await this.dataService.examineSpecialOperation(param);
+    this.isVisible = false;
+  }
+
+  /*取消审核*/
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
 
   reset() {
     this.searchParam = {};
@@ -134,9 +176,26 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
     this.currentPage = this.pageTypeEnum.AddOrEdit;
   }
 
+  async returnToList(e?: GoBackParam) {
+    this.currentPage = this.pageTypeEnum.List;
+    if (!!e && e.refesh) {
+      this.listPageInfo.pi = e.pageNo;
+      await this.getDataList(e.pageNo);
+    }
+  }
+  initForm() {
+    this.validateForm = this.fb.group({
+      reviewStatus: [null, [Validators.required]],
+      reviewExplain: [null, [Validators.required]],
+    });
+  }
   ngOnInit() {
+    this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+    this.statusOptions = [...MapPipe.transformMapToArray(MapSet.reviewStatus)];
+    this.statusOptions.shift();
     this.initTable();
     this.getDataList();
+    this.initForm();
   }
 
 

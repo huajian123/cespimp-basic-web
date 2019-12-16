@@ -23,7 +23,16 @@ export namespace SpecialOperationManagementServiceNs {
     reviewExplain?: number;
     reviewStatus: number;
   }
-
+  export interface BasicInfoAuditModel {
+    id?: number;
+    entprName?:string;
+    applicationName?: string;
+    applicationTime?: Date;
+    reviewName: string;
+    reviewTime?: Date;
+    reviewExplain: string;
+    reviewStatus: number;
+  }
   export enum SpecialInfoEnum {
     HotWork = 1, // 动火作业
     ConfinedSpaceWork, // 受限空间作业
@@ -66,8 +75,8 @@ export namespace SpecialOperationManagementServiceNs {
     }
 
     /*审核接口*/
-    public examineSpecialOperation(id: number): Promise<SpecialOperationInfoModel> {
-      return this.http.put('data/basic/enterprise/dealSpecialOperationExamine/' + id).toPromise();
+    public examineSpecialOperation(param: BasicInfoAuditModel): Promise<BasicInfoAuditModel> {
+      return this.http.put('data/basic/enterprise/dealSpecialOperationExamine/'+ param.id, param).toPromise();
     }
   }
 }
