@@ -9,6 +9,8 @@ import { SpecialOperationManagementEquipmentOverhaulListComponent } from './equi
 import { SpecialOperationManagementBlindPlateListComponent } from './blind-plate-list/blind-plate-list.component';
 import { SpecialOperationManagementOpenCircuitListComponent } from './open-circuit-list/open-circuit-list.component';
 import { SpecialOperationManagementEarthMovingListComponent } from './earth-moving-list/earth-moving-list.component';
+import { SpecialOperationManagementHotWorkEditAddComponent } from './hot-work-list/hot-work-edit-add/hot-work-edit-add.component';
+import { SpecialOperationManagementElevatedWorkEditAddComponent } from './elevated-work-list/elevated-work-edit-add/elevated-work-edit-add.component';
 
 const routes: Routes = [
 
@@ -20,7 +22,9 @@ const routes: Routes = [
   { path: 'equipment-overhaul-list', component: SpecialOperationManagementEquipmentOverhaulListComponent },
   { path: 'blind-plate-list', component: SpecialOperationManagementBlindPlateListComponent },
   { path: 'open-circuit-list', component: SpecialOperationManagementOpenCircuitListComponent },
-  { path: 'earth-moving-list', component: SpecialOperationManagementEarthMovingListComponent }];
+  { path: 'earth-moving-list', component: SpecialOperationManagementEarthMovingListComponent },
+  { path: 'hot-work-edit-add', component: SpecialOperationManagementHotWorkEditAddComponent },
+  { path: 'elevated-work-edit-add', component: SpecialOperationManagementElevatedWorkEditAddComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -9,17 +9,16 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SpecialOperationInfoService } from '@core/biz-services/special-operation-management/special-operation-management.service';
-import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { environment, getwayKey } from '@env/environment';
+import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { UploadFile } from 'ng-zorro-antd';
 
-
 @Component({
-  selector: 'app-special-operation-management-confined-space-work-detail',
-  templateUrl: './confined-space-work-detail.component.html',
+  selector: 'app-special-operation-management-hot-work-detail',
+  templateUrl: './hot-work-detail.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SpecialOperationManagementConfinedSpaceWorkDetailComponent implements OnInit {
+export class SpecialOperationManagementHotWorkDetailComponent implements OnInit {
   validateForm: FormGroup;
   uploadUrl: string;
   @Output() returnBack: EventEmitter<any>;

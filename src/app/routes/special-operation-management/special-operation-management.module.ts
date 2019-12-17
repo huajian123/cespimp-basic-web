@@ -12,6 +12,10 @@ import { SpecialOperationManagementOpenCircuitListComponent } from './open-circu
 import { SpecialOperationManagementEarthMovingListComponent } from './earth-moving-list/earth-moving-list.component';
 import { SpecialOperationManagementConfinedSpaceWorkDetailComponent } from './confined-space-work-list/confined-space-work-detail/confined-space-work-detail.component';
 import { SpecialOperationManagementConfinedSpaceWorkEditAddComponent } from './confined-space-work-list/confined-space-work-edit-add/confined-space-work-edit-add.component';
+import { SpecialOperationManagementHotWorkEditAddComponent } from './hot-work-list/hot-work-edit-add/hot-work-edit-add.component';
+import { SpecialOperationManagementHotWorkDetailComponent } from './hot-work-list/hot-work-detail/hot-work-detail.component';
+import { SpecialOperationManagementElevatedWorkEditAddComponent } from './elevated-work-list/elevated-work-edit-add/elevated-work-edit-add.component';
+import { SpecialOperationManagementElevatedWorkDetailComponent } from './elevated-work-list/elevated-work-detail/elevated-work-detail.component';
 
 const COMPONENTS = [
   SpecialOperationManagementHotWorkListComponent,
@@ -22,10 +26,14 @@ const COMPONENTS = [
   SpecialOperationManagementEquipmentOverhaulListComponent,
   SpecialOperationManagementBlindPlateListComponent,
   SpecialOperationManagementOpenCircuitListComponent,
-  SpecialOperationManagementEarthMovingListComponent];
+  SpecialOperationManagementEarthMovingListComponent,
+  SpecialOperationManagementHotWorkEditAddComponent,
+  SpecialOperationManagementElevatedWorkEditAddComponent];
 const COMPONENTS_NOROUNT = [
   SpecialOperationManagementConfinedSpaceWorkDetailComponent,
-  SpecialOperationManagementConfinedSpaceWorkEditAddComponent];
+  SpecialOperationManagementConfinedSpaceWorkEditAddComponent,
+  SpecialOperationManagementHotWorkDetailComponent,
+  SpecialOperationManagementElevatedWorkDetailComponent];
 
 @NgModule({
   imports: [

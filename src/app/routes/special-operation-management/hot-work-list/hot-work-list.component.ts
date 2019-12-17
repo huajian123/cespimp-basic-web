@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
+import { ListPageInfo, LoginInfoModel, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import { STColumn, STData } from '@delon/abc';
-import { MapPipe } from '@shared/directives/pipe/map.pipe';
+import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
 import {
   SpecialOperationInfoService,
   SpecialOperationManagementServiceNs,
@@ -10,6 +10,19 @@ import SpecialOperationInfoModel = SpecialOperationManagementServiceNs.SpecialOp
 import { ShowMessageService } from '../../../widget/show-message/show-message';
 import SpecialOperationSearchModel = SpecialOperationManagementServiceNs.SpecialOperationSearchModel;
 import SpecialInfoEnum = SpecialOperationManagementServiceNs.SpecialInfoEnum;
+import SpecialOperationEnumModel = SpecialOperationManagementServiceNs.SpecialOperationEnumModel;
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
+import { EVENT_KEY } from '@env/staticVariable';
+
+interface OptionsInterface {
+  value: string;
+  label: string;
+}
+
+enum statusEnum {
+  check = 1//待审核
+}
 
 @Component({
   selector: 'app-special-operation-management-hot-work-list',
@@ -18,19 +31,37 @@ import SpecialInfoEnum = SpecialOperationManagementServiceNs.SpecialInfoEnum;
 })
 export class SpecialOperationManagementHotWorkListComponent implements OnInit {
   roleEnum = RoleEnum;
+  isVisible = false;
+  validateForm: FormGroup;
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
   expandForm: boolean;
   dataList: SpecialOperationInfoModel[];
+  statusOptions: OptionsInterface[];
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
   searchParam: SpecialOperationSearchModel;
+  loginInfo: LoginInfoModel;
 
-  constructor(private dataService: SpecialOperationInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
+  constructor(private dataService: SpecialOperationInfoService, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
+    this.loginInfo = {
+      createBy: '',
+      createTime: new Date(),
+      delFlag: null,
+      entprId: null,
+      id: null,
+      mobileTel: '',
+      password: '',
+      realName: '',
+      role: null,
+      updateBy: '',
+      updateTime: new Date(),
+      userName: '',
+    };
     this.listPageInfo = {
       total: 0,
       ps: 10,// 每页数量
@@ -42,10 +73,10 @@ export class SpecialOperationManagementHotWorkListComponent implements OnInit {
   }
 
 
-  async getDataList(currentType = SpecialInfoEnum.HotWork) {
-    const params = {
-      operationType: currentType,
-      pageNum: this.listPageInfo.pi,
+  async getDataList(pageNumber?: number) {
+    const params: SpecialOperationEnumModel = {
+      operationType: SpecialInfoEnum.HotWork,
+      pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
       ...this.searchParam,
     };
@@ -68,6 +99,14 @@ export class SpecialOperationManagementHotWorkListComponent implements OnInit {
 
   reset() {
     this.searchParam = {};
+  }
+
+  goJudge(record) {
+    if (record.reviewStatus == statusEnum.check) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   private initTable(): void {
@@ -99,8 +138,10 @@ export class SpecialOperationManagementHotWorkListComponent implements OnInit {
           {
             text: '审核',
             icon: 'edit',
-            click: this.goEditAddPage.bind(this),
+            click: this.goExamine.bind(this),
             acl: this.roleEnum[this.roleEnum.Enterprise],
+            iif: this.goJudge.bind(this),
+            iifBehavior: 'hide',
           },
           {
             text: '查看',
@@ -117,23 +158,67 @@ export class SpecialOperationManagementHotWorkListComponent implements OnInit {
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
 
-  goEditAddPage(item, modal) {
+  goExamine(item) {
     this.itemId = item.id;
-    this.currentPage = this.pageTypeEnum.AddOrEdit;
-  }
+    this.isVisible = true;
+    this.validateForm.reset();
 
+  }
 
   add() {
     this.itemId = null;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
   }
 
+  /*确认审核*/
+  async handleOk() {
+    Object.keys(this.validateForm.controls).forEach(key => {
+      this.validateForm.controls[key].markAsDirty();
+      this.validateForm.controls[key].updateValueAndValidity();
+    });
+
+    if (this.validateForm.invalid) return;
+    const param = this.validateForm.getRawValue();
+    param.id = this.itemId;
+    param.reviewName = this.loginInfo.realName;
+    param.reviewTime = this.loginInfo.updateTime;
+    await this.dataService.examineSpecialOperation(param);
+    this.isVisible = false;
+    this.getDataList();
+    this.cdr.markForCheck();
+  }
+
+  /*取消审核*/
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
+  async returnToList(e?: GoBackParam) {
+    this.currentPage = this.pageTypeEnum.List;
+    if (!!e && e.refesh) {
+      this.listPageInfo.pi = e.pageNo;
+      await this.getDataList(e.pageNo);
+    }
+  }
+
+  initForm() {
+    this.validateForm = this.fb.group({
+      reviewStatus: [null, [Validators.required]],
+      reviewExplain: [null, [Validators.required]],
+    });
+  }
+
   ngOnInit() {
+    this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+    this.statusOptions = [...MapPipe.transformMapToArray(MapSet.reviewStatus)];
+    this.statusOptions.shift();
     this.initTable();
     this.getDataList();
+    this.initForm();
   }
+
   _onReuseInit() {
-    this.ngOnInit()
+    this.ngOnInit();
   }
 
 }

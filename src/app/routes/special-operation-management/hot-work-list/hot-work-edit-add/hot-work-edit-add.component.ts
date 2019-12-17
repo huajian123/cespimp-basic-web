@@ -7,24 +7,23 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { NzMessageService, UploadFile } from 'ng-zorro-antd';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
-import { EVENT_KEY } from '@env/staticVariable';
+import { NzMessageService, UploadFile } from 'ng-zorro-antd';
 import {
   SpecialOperationInfoService,
   SpecialOperationManagementServiceNs,
 } from '@core/biz-services/special-operation-management/special-operation-management.service';
 import { environment, getwayKey } from '@env/environment';
+import { EVENT_KEY } from '@env/staticVariable';
 import SpecialInfoEnum = SpecialOperationManagementServiceNs.SpecialInfoEnum;
 
-
 @Component({
-  selector: 'app-special-operation-management-confined-space-work-edit-add',
-  templateUrl: './confined-space-work-edit-add.component.html',
+  selector: 'app-special-operation-management-hot-work-edit-add',
+  templateUrl: './hot-work-edit-add.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SpecialOperationManagementConfinedSpaceWorkEditAddComponent implements OnInit {
+export class SpecialOperationManagementHotWorkEditAddComponent implements OnInit {
   uploadUrl: string;
   showUploadList = {
     showPreviewIcon: true,
@@ -91,7 +90,7 @@ export class SpecialOperationManagementConfinedSpaceWorkEditAddComponent impleme
     const params = this.validateForm.getRawValue();
     params.entprId = this.loginInfo.entprId;
     let submitHandel = null;
-    params.operationType = SpecialInfoEnum.ConfinedSpaceWork;
+    params.operationType = SpecialInfoEnum.HotWork;
     submitHandel = this.dataService.addSpecialOperation(params);
     await submitHandel;
     this.returnBack.emit({ refesh: true, pageNo: this.currentPageNum });
@@ -133,4 +132,5 @@ export class SpecialOperationManagementConfinedSpaceWorkEditAddComponent impleme
       this.getDetail();
     }
   }
+
 }
