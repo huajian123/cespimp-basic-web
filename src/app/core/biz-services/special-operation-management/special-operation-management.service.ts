@@ -23,9 +23,10 @@ export namespace SpecialOperationManagementServiceNs {
     reviewExplain?: number;
     reviewStatus: number;
   }
+
   export interface BasicInfoAuditModel {
     id?: number;
-    entprName?:string;
+    entprName?: string;
     applicationName?: string;
     applicationTime?: Date;
     reviewName: string;
@@ -33,6 +34,7 @@ export namespace SpecialOperationManagementServiceNs {
     reviewExplain: string;
     reviewStatus: number;
   }
+
   export enum SpecialInfoEnum {
     HotWork = 1, // 动火作业
     ConfinedSpaceWork, // 受限空间作业
@@ -50,6 +52,14 @@ export namespace SpecialOperationManagementServiceNs {
     reviewStatus?: number;
   }
 
+  export interface EntprIdModel extends SearchCommonVO {
+    entprId?: number;
+  }
+
+  export interface SpecialOperationEnumModel extends EntprIdModel {
+    operationType: SpecialInfoEnum;
+  }
+
   export class SpecialOperationInfoServiceClass {
     constructor(private http: HttpUtilService) {
     }
@@ -60,9 +70,9 @@ export namespace SpecialOperationManagementServiceNs {
     }
 
     /*修改接口*/
-    public editSpecialOperation(param: SpecialOperationInfoModel): Promise<void> {
-      return this.http.put('data/basic/enterprise/special', param, { needSuccessInfo: true }).toPromise();
-    }
+    /* public editSpecialOperation(param: SpecialOperationInfoModel): Promise<void> {
+       return this.http.put('data/basic/enterprise/special', param, { needSuccessInfo: true }).toPromise();
+     }*/
 
     /*详情*/
     public getSpecialOperationInfoDetail(id: number): Promise<SpecialOperationInfoModel> {
@@ -76,7 +86,7 @@ export namespace SpecialOperationManagementServiceNs {
 
     /*审核接口*/
     public examineSpecialOperation(param: BasicInfoAuditModel): Promise<BasicInfoAuditModel> {
-      return this.http.put('data/basic/enterprise/dealSpecialOperationExamine/'+ param.id, param).toPromise();
+      return this.http.put('data/basic/enterprise/dealSpecialOperationExamine/' + param.id, param).toPromise();
     }
   }
 }

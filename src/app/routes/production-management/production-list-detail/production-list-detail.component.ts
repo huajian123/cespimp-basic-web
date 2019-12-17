@@ -15,7 +15,6 @@ import ProductionListInfoModel = ProductionListServiceNs.ProductionListInfoModel
 import { STColumn } from '@delon/abc';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd';
-import { PositionPickerService } from '../../../widget/position-picker/position-picker.service';
 
 
 @Component({

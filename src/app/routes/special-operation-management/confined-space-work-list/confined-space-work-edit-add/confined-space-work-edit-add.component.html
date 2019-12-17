@@ -3,7 +3,7 @@
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
     <se label="受限空间作业" [hidden]="true">
       <nz-form-control nzLg="8" nzMd="12" nzSm="24">
-        <input nz-input formControlName="operationType" value="2"/>
+        <input nz-input formControlName="operationType"/>
       </nz-form-control>
     </se>
     <se label="作业名称">
@@ -36,19 +36,19 @@
     </se>
       <se label="作业证附件">
         <nz-form-control nzLg="8" nzMd="12" nzSm="24">
-        <!--  <nz-upload
+          <nz-upload
             (nzChange)="uploadFn($event,'operationCertificate')"
             [nzRemove]="handleRemove"
             [nzLimit]="1"
             [nzAction]="uploadUrl"
             nzListType="picture-card"
-            [(nzFileList)]="businessFileList"
-            [nzShowButton]="businessFileList.length < 1"
+            [(nzFileList)]="certificateFileList"
+            [nzShowButton]="certificateFileList.length < 1"
             [nzShowUploadList]="showUploadList"
             [nzPreview]="handlePreview">
             <i nz-icon nzType="plus"></i>
             <div class="ant-upload-text">上传</div>
-          </nz-upload>-->
+          </nz-upload>
           <input nz-input formControlName="operationCertificate" placeholder="作业内容" [hidden]="true"/>
         </nz-form-control>
       </se>
@@ -118,7 +118,7 @@
       </se>
   </form>
 </nz-card>
-<!--<nz-modal
+<nz-modal
   [nzVisible]="previewVisible"
   [nzContent]="modalContent"
   [nzFooter]="null"
@@ -127,5 +127,5 @@
   <ng-template #modalContent>
     <img [src]="previewImage" [ngStyle]="{ width: '100%' }"/>
   </ng-template>
-</nz-modal>-->
+</nz-modal>
 

@@ -7,11 +7,16 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, UploadFile } from 'ng-zorro-antd';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import { EVENT_KEY } from '@env/staticVariable';
-import { SpecialOperationInfoService } from '@core/biz-services/special-operation-management/special-operation-management.service';
+import {
+  SpecialOperationInfoService,
+  SpecialOperationManagementServiceNs,
+} from '@core/biz-services/special-operation-management/special-operation-management.service';
+import { environment, getwayKey } from '@env/environment';
+import SpecialInfoEnum = SpecialOperationManagementServiceNs.SpecialInfoEnum;
 
 
 @Component({
@@ -20,6 +25,15 @@ import { SpecialOperationInfoService } from '@core/biz-services/special-operatio
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpecialOperationManagementConfinedSpaceWorkEditAddComponent implements OnInit {
+  uploadUrl: string;
+  showUploadList = {
+    showPreviewIcon: true,
+    showRemoveIcon: true,
+    hidePreviewIconInNonImage: true,
+  };
+  certificateFileList: any[];
+  previewImage: string | undefined = '';
+  previewVisible = false;
   validateForm: FormGroup;
   form: FormGroup;
   @Input() id: number;
@@ -29,6 +43,10 @@ export class SpecialOperationManagementConfinedSpaceWorkEditAddComponent impleme
 
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef, private dataService: SpecialOperationInfoService) {
     this.returnBack = new EventEmitter<any>();
+    this.previewVisible = false;
+    this.previewImage = '';
+    this.certificateFileList = [];
+    this.uploadUrl = environment.baseUrl[getwayKey.Bs] + 'upload?_allow_anonymous=true';
     this.loginInfo = {
       createBy: '',
       createTime: new Date(),
@@ -47,7 +65,7 @@ export class SpecialOperationManagementConfinedSpaceWorkEditAddComponent impleme
 
   initForm() {
     this.validateForm = this.fb.group({
-      operationType: [null, [Validators.required]],
+      operationType: [null, []],
       operationName: [null, [Validators.required]],
       operationPlace: [null, [Validators.required]],
       operationPerson: [null, [Validators.required]],
@@ -73,12 +91,10 @@ export class SpecialOperationManagementConfinedSpaceWorkEditAddComponent impleme
     const params = this.validateForm.getRawValue();
     params.entprId = this.loginInfo.entprId;
     let submitHandel = null;
-    if (!this.id) {
-      submitHandel = this.dataService.addSpecialOperation(params);
-    } else {
-      params.id = this.id;
-      submitHandel = this.dataService.editSpecialOperation(params);
-    }
+    params.operationType = SpecialInfoEnum.ConfinedSpaceWork;
+    console.log(params);
+    debugger
+    submitHandel = this.dataService.addSpecialOperation(params);
     await submitHandel;
     this.returnBack.emit({ refesh: true, pageNo: this.currentPageNum });
   }
@@ -92,6 +108,24 @@ export class SpecialOperationManagementConfinedSpaceWorkEditAddComponent impleme
     this.validateForm.patchValue(dataInfo);
     this.cdr.markForCheck();
   }
+
+  uploadFn(e, formControlName: string) {
+    if (e.type === 'success') {
+      if (e.file.response.code === 0) {
+        this.validateForm.get(formControlName).setValue(e.file.response.data);
+      }
+    }
+  }
+
+  handlePreview = (file: UploadFile) => {
+    this.previewImage = file.url || file.thumbUrl;
+    this.previewVisible = true;
+  };
+  handleRemove = (file: UploadFile): boolean => {
+    this.validateForm.get('operationCertificate').setValue(null);
+    this.validateForm.updateValueAndValidity();
+    return true;
+  };
 
   ngOnInit(): void {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));

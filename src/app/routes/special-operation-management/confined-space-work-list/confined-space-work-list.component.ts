@@ -12,14 +12,17 @@ import SpecialOperationSearchModel = SpecialOperationManagementServiceNs.Special
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EVENT_KEY } from '@env/staticVariable';
+import SpecialOperationEnumModel = SpecialOperationManagementServiceNs.SpecialOperationEnumModel;
 
 interface OptionsInterface {
   value: string;
   label: string;
 }
+
 enum statusEnum {
   check = 1//待审核
 }
+
 @Component({
   selector: 'app-special-operation-management-confined-space-work-list',
   templateUrl: './confined-space-work-list.component.html',
@@ -71,10 +74,10 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
   }
 
 
-  async getDataList(currentType = SpecialInfoEnum.ConfinedSpaceWork) {
-    const params = {
-      operationType: currentType,
-      pageNum: this.listPageInfo.pi,
+  async getDataList(pageNumber?: number) {
+    const params: SpecialOperationEnumModel = {
+      operationType: SpecialInfoEnum.ConfinedSpaceWork,
+      pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
       ...this.searchParam,
     };
@@ -94,13 +97,15 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
   format(toBeFormat, arg) {
     return new MapPipe().transform(toBeFormat, arg);
   }
+
   goJudge(record) {
     if (record.reviewStatus == statusEnum.check) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
+
   private initTable(): void {
     this.columns = [
       { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
@@ -108,8 +113,8 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
       { title: '作业地点', index: 'operationPlace', width: 120 },
       { title: '作业内容', index: 'operationContent', width: 100 },
       { title: '申请人', index: 'applicationName', width: 100 },
-      { title: '申请时间', index: 'operationStartTime', width: 100, type: 'date' },
-      { title: '监护人', index: 'operationEndTime', width: 100 },
+      { title: '申请时间', index: 'applicationTime', width: 100, type: 'date' },
+      { title: '监护人', index: 'guardianName', width: 100 },
       { title: '负责人', index: 'leadingName', width: 100 },
       { title: '作业开始时间', index: 'operationStartTime', width: 100, type: 'date' },
       { title: '作业结束时间', index: 'operationEndTime', width: 100, type: 'date' },
