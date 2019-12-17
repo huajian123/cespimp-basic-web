@@ -1,7 +1,7 @@
 <page-header [autoBreadcrumb]="false"  [title]="'中间产品新增编辑页'"></page-header>
 <nz-card [nzBordered]="true">
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
-    <se label="产品类型" style="display: none;">
+    <se label="产品类型" [hidden]="true">
       <nz-form-control nzLg="8" nzMd="12" nzSm="24">
         <input nz-input formControlName="productType" placeholder="品名">
       </nz-form-control>

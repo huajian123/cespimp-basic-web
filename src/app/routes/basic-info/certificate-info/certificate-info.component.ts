@@ -61,7 +61,6 @@ export class BasicInfoCertificateInfoComponent implements OnInit {
     this.dischargePermitFileList = [];
     this.environmentReportFileList = [];
     this.uploadUrl = environment.baseUrl[getwayKey.Bs] + 'upload?_allow_anonymous=true';
-    // console.log(this.uploadUrl);
     this.isAdd = true;
 
     this.loginInfo = {
