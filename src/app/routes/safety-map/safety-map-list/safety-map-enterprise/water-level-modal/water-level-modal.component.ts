@@ -49,7 +49,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
             yAxis: 20,
             label: {
               show: 'true',
-              formatter: '一级阈值',
+              formatter: '上上限阈值',
             },
             lineStyle: {
               normal: {
@@ -64,7 +64,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
             yAxis: 100,
             label: {
               show: 'true',
-              formatter: '二级阈值',
+              formatter: '上限阈值',
             },
             lineStyle: {
               normal: {
@@ -72,20 +72,50 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
                 color: '#FF5D1D',
               },
             },
-          }],
+          },
+          {
+            name: '阈值300',
+            yAxis: 20,
+            label: {
+              show: 'true',
+              formatter: '下限阈值',
+            },
+            lineStyle: {
+              normal: {
+                width: 2,
+                color: '#FF5D1D',
+              },
+            },
+
+          },
+          {
+            name: '阈值100',
+            yAxis: 100,
+            label: {
+              show: 'true',
+              formatter: '下下限阈值',
+            },
+            lineStyle: {
+              normal: {
+                width: 2,
+                color: '#FF5D1D',
+              },
+            },
+          }
+          ],
         label: {},
       },
     },
   ];
 
   /*历史数据相关*/
-  historyLegendData = ['历史压力'];
+  historyLegendData = ['历史液位'];
   historyZoomStart = 0;
   historyZoomEnd = 100;
   historyXAxisData = [];
   historySeriesData = [
     {
-      name: '历史压力',
+      name: '历史液位',
       type: 'line',
       lineStyle: {
         width: 1,
@@ -100,6 +130,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
             yAxis: 300,
             label: {
               show: 'true',
+              formatter: '上上限阈值',
             },
             lineStyle: {
               normal: {
@@ -114,6 +145,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
             yAxis: 100,
             label: {
               show: 'true',
+              formatter: '上限阈值',
             },
             lineStyle: {
               normal: {
@@ -121,7 +153,37 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
                 color: '#FF5D1D',
               },
             },
-          }],
+          },
+          {
+            name: '阈值300',
+            yAxis: 300,
+            label: {
+              show: 'true',
+              formatter: '下限阈值',
+            },
+            lineStyle: {
+              normal: {
+                width: 2,
+                color: '#FF5D1D',
+              },
+            },
+
+          },
+          {
+            name: '阈值100',
+            yAxis: 100,
+            label: {
+              show: 'true',
+              formatter: '下下限阈值',
+            },
+            lineStyle: {
+              normal: {
+                width: 2,
+                color: '#FF5D1D',
+              },
+            },
+          },
+          ],
       },
     },
   ];
@@ -151,7 +213,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
       color: ['#327bfa'],
       title: {
         show: false,
-        text: '实时压力',
+        text: '实时液位',
         x: '50%',
         y: '5%',
         textAlign: 'center',
@@ -182,8 +244,8 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
       grid: {
         top: '10%',
         left: '5%',
-        right: '5%',
-        bottom: '35%',
+        right: '8%',
+        bottom: '15%',
         containLabel: true,
       },
       toolbox: {
@@ -213,7 +275,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
         /*类型*/
         xAxisIndex: 0,
         /*对应的轴*/
-        bottom: '23%',
+        bottom: '7%',
         /*位置，定位*/
         start: 0,
         /*开始*/
@@ -255,7 +317,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
       }],
       yAxis: {
         type: 'value',
-        name: '℃',
+        name: 'cm',
         nameTextStyle: {
           color: '#bac7e5',
         },
@@ -286,7 +348,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
       color: ['#327bfa'],
       title: {
         show: false,
-        text: '实时压力',
+        text: '实时液位',
         x: '50%',
         y: '5%',
         textAlign: 'center',
@@ -318,7 +380,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
         top: '10%',
         left: '5%',
         right: '5%',
-        bottom: '35%',
+        bottom: '15%',
         containLabel: true,
       },
       toolbox: {
@@ -348,7 +410,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
         /*类型*/
         xAxisIndex: 0,
         /*对应的轴*/
-        bottom: '23%',
+        bottom: '7%',
         /*位置，定位*/
         start: 0,
         /*开始*/
@@ -390,7 +452,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
       }],
       yAxis: {
         type: 'value',
-        name: '℃',
+        name: 'cm',
         nameTextStyle: {
           color: '#bac7e5',
         },
@@ -444,6 +506,8 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
         this.setPercent(this.currentDataInfo.currentValue, {
           first: this.currentDataInfo.firstAlarmThreshold,
           second: this.currentDataInfo.secondAlarmThreshold,
+          third:this.currentDataInfo.thirdAlarmThreshold,
+          fourth:this.currentDataInfo.fourthAlarmThreshold
         });
         this.cdr.markForCheck();
       }
@@ -479,8 +543,10 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
     this.realTimeOptions.series[0].data.push(p);
     this.realTimeOptions.dataZoom[0].start = this.zoomStart;
     this.realTimeOptions.dataZoom[0].end = this.zoomEnd;
-    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.first;
-    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.second;
+    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.fourth;
+    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.third;
+    this.seriesData[0].markLine.data[2].yAxis = alarmThresold.second;
+    this.seriesData[0].markLine.data[3].yAxis = alarmThresold.first;
     this.realTimeChart.setOption(this.realTimeOptions);
   }
 

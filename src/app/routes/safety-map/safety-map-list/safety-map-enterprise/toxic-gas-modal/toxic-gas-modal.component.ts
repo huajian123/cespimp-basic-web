@@ -36,14 +36,14 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
   ws: WebSocket;//定义websocket
   currentDataInfo: SensorInfoWebSocketModel;
   /*实时数据相关*/
-  legendData = ['实时压力'];
+  legendData = ['实时浓度'];
   time = 0;
   zoomStart = 0;
   zoomEnd = 100;
   xAxisData = [];
   seriesData = [
     {
-      name: '实时压力',
+      name: '实时浓度',
       type: 'line',
       lineStyle: {
         width: 1,
@@ -88,13 +88,13 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
   ];
 
   /*历史数据相关*/
-  historyLegendData = ['历史压力'];
+  historyLegendData = ['历史浓度'];
   historyZoomStart = 0;
   historyZoomEnd = 100;
   historyXAxisData = [];
   historySeriesData = [
     {
-      name: '历史压力',
+      name: '历史浓度',
       type: 'line',
       lineStyle: {
         width: 1,
@@ -160,7 +160,7 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
       color: ['#327bfa'],
       title: {
         show: false,
-        text: '实时压力',
+        text: '实时浓度',
         x: '50%',
         y: '5%',
         textAlign: 'center',
@@ -191,8 +191,8 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
       grid: {
         top: '10%',
         left: '5%',
-        right: '5%',
-        bottom: '35%',
+        right: '8%',
+        bottom: '15%',
         containLabel: true,
       },
       toolbox: {
@@ -222,7 +222,7 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
         /*类型*/
         xAxisIndex: 0,
         /*对应的轴*/
-        bottom: '23%',
+        bottom: '7%',
         /*位置，定位*/
         start: 0,
         /*开始*/
@@ -264,7 +264,7 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
       }],
       yAxis: {
         type: 'value',
-        name: '℃',
+        name: 'mg/m³',
         nameTextStyle: {
           color: '#bac7e5',
         },
@@ -295,7 +295,7 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
       color: ['#327bfa'],
       title: {
         show: false,
-        text: '实时压力',
+        text: '实时浓度',
         x: '50%',
         y: '5%',
         textAlign: 'center',
@@ -327,7 +327,7 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
         top: '10%',
         left: '5%',
         right: '5%',
-        bottom: '35%',
+        bottom: '15%',
         containLabel: true,
       },
       toolbox: {
@@ -357,7 +357,7 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
         /*类型*/
         xAxisIndex: 0,
         /*对应的轴*/
-        bottom: '23%',
+        bottom: '7%',
         /*位置，定位*/
         start: 0,
         /*开始*/
@@ -399,7 +399,7 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
       }],
       yAxis: {
         type: 'value',
-        name: '℃',
+        name: 'mg/m³',
         nameTextStyle: {
           color: '#bac7e5',
         },
@@ -521,7 +521,7 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
   }
 
   disabledDate(current: Date) {
-    return current.getTime()<this.dateRange[0].getTime()||current.getTime() >= (addDays(this.dateRange[0], 4).getTime());
+    return current.getTime() < this.dateRange[0].getTime() || current.getTime() >= (addDays(this.dateRange[0], 4).getTime());
   }
 
   // 选择历史数据tab

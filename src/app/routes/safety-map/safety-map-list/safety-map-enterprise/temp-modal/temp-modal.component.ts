@@ -181,8 +181,8 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
       grid: {
         top: '10%',
         left: '5%',
-        right: '5%',
-        bottom: '35%',
+        right: '8%',
+        bottom: '15%',
         containLabel: true,
       },
       toolbox: {
@@ -212,7 +212,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
         /*类型*/
         xAxisIndex: 0,
         /*对应的轴*/
-        bottom: '23%',
+        bottom: '7%',
         /*位置，定位*/
         start: 0,
         /*开始*/
@@ -316,8 +316,8 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
       grid: {
         top: '10%',
         left: '5%',
-        right: '5%',
-        bottom: '35%',
+        right: '8%',
+        bottom: '15%',
         containLabel: true,
       },
       toolbox: {
@@ -347,7 +347,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
         /*类型*/
         xAxisIndex: 0,
         /*对应的轴*/
-        bottom: '23%',
+        bottom: '7%',
         /*位置，定位*/
         start: 0,
         /*开始*/
