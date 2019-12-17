@@ -379,7 +379,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
       grid: {
         top: '10%',
         left: '5%',
-        right: '5%',
+        right: '10%',
         bottom: '15%',
         containLabel: true,
       },
@@ -551,11 +551,15 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
   }
 
   // 历史数据塞值
-  historySetPercent(p, t) {
+  historySetPercent(p, t,alarmThresold) {
     this.historyOption.xAxis.data.push(t);
     this.historyOption.series[0].data.push(p);
     this.historyOption.dataZoom[0].start = this.historyZoomStart;
     this.historyOption.dataZoom[0].end = this.historyZoomEnd;
+    this.historySeriesData[0].markLine.data[0].yAxis = alarmThresold.fourth;
+    this.historySeriesData[0].markLine.data[1].yAxis = alarmThresold.third;
+    this.historySeriesData[0].markLine.data[2].yAxis = alarmThresold.second;
+    this.historySeriesData[0].markLine.data[3].yAxis = alarmThresold.first;
   }
 
   // 获取历史数据
@@ -567,7 +571,13 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
     this.historyOption.series[0].data = [];
     const data = await this.safetyMapService.getSensorHistory(params);
     data.forEach(({ reportTime, sensorValue }) => {
-      this.historySetPercent(sensorValue, new MapPipe().transform(reportTime, 'date:MM-dd HH:mm:ss'));
+      const t=new MapPipe().transform(reportTime, 'date:MM-dd HH:mm:ss');
+      this.historySetPercent(sensorValue, t,{
+        first: this.currentDataInfo.firstAlarmThreshold,
+        second: this.currentDataInfo.secondAlarmThreshold,
+        third: this.currentDataInfo.thirdAlarmThreshold,
+        fourth: this.currentDataInfo.fourthAlarmThreshold,
+      });
     });
     this.historyChart.setOption(this.historyOption);
   }

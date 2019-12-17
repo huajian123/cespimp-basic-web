@@ -109,6 +109,7 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
             yAxis: 300,
             label: {
               show: 'true',
+              formatter: '一级阈值',
             },
             lineStyle: {
               normal: {
@@ -123,6 +124,7 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
             yAxis: 100,
             label: {
               show: 'true',
+              formatter: '二级阈值',
             },
             lineStyle: {
               normal: {
@@ -326,7 +328,7 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
       grid: {
         top: '10%',
         left: '5%',
-        right: '5%',
+        right: '10%',
         bottom: '15%',
         containLabel: true,
       },
@@ -494,11 +496,13 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
   }
 
   // 历史数据塞值
-  historySetPercent(p, t) {
+  historySetPercent(p, t,alarmThresold) {
     this.historyOption.xAxis.data.push(t);
     this.historyOption.series[0].data.push(p);
     this.historyOption.dataZoom[0].start = this.historyZoomStart;
     this.historyOption.dataZoom[0].end = this.historyZoomEnd;
+    this.historySeriesData[0].markLine.data[0].yAxis = alarmThresold.first;
+    this.historySeriesData[0].markLine.data[1].yAxis = alarmThresold.second;
   }
 
   // 获取历史数据
@@ -510,7 +514,11 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
     this.historyOption.series[0].data = [];
     const data = await this.safetyMapService.getSensorHistory(params);
     data.forEach(({ reportTime, sensorValue }) => {
-      this.historySetPercent(sensorValue, new MapPipe().transform(reportTime, 'date:MM-dd HH:mm:ss'));
+      const t=new MapPipe().transform(reportTime, 'date:MM-dd HH:mm:ss');
+      this.historySetPercent(sensorValue, t,{
+        first: this.currentDataInfo.firstAlarmThreshold,
+        second: this.currentDataInfo.secondAlarmThreshold,
+      });
     });
     this.historyChart.setOption(this.historyOption);
   }
