@@ -1,9 +1,131 @@
-<page-header [action]="phActionTpl">
-  <ng-template #phActionTpl>
-    <button (click)="add()" nz-button nzType="primary">新建</button>
-  </ng-template>
-</page-header>
-<nz-card>
-  <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
-  <st #st [data]="url" [columns]="columns"></st>
+<page-header [autoBreadcrumb]="false" [autoBreadcrumb]="false" [title]="'临时用电列表'"></page-header>
+<nz-card [nzBordered]="true">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submit()" se-container="1" labelWidth="200">
+    <se label="临时用电" [hidden]="true">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="operationType"/>
+      </nz-form-control>
+    </se>
+    <se label="作业名称">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="operationName" placeholder="作业名称"/>
+        <nz-form-explain *ngIf="validateForm.get('operationName').dirty && validateForm.get('operationName').errors">请输入作业名称
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="作业人">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="operationPerson" placeholder="作业人"/>
+        <nz-form-explain *ngIf="validateForm.get('operationPerson').dirty && validateForm.get('operationPerson').errors">请输入作业人
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="作业地点">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="operationPlace" placeholder="作业地点"/>
+        <nz-form-explain *ngIf="validateForm.get('operationPlace').dirty && validateForm.get('operationPlace').errors">请输入作业地点
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="作业内容">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="operationContent" placeholder="作业内容"/>
+        <nz-form-explain *ngIf="validateForm.get('operationContent').dirty && validateForm.get('operationContent').errors">请输入作业内容
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="作业证附件">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <nz-upload
+          (nzChange)="uploadFn($event,'operationCertificate')"
+          [nzRemove]="handleRemove"
+          [nzLimit]="1"
+          [nzAction]="uploadUrl"
+          nzListType="picture-card"
+          [(nzFileList)]="certificateFileList"
+          [nzShowButton]="certificateFileList.length < 1"
+          [nzShowUploadList]="showUploadList"
+          [nzPreview]="handlePreview">
+          <i nz-icon nzType="plus"></i>
+          <div class="ant-upload-text">上传</div>
+        </nz-upload>
+        <input nz-input formControlName="operationCertificate" placeholder="作业内容" [hidden]="true"/>
+      </nz-form-control>
+    </se>
+    <se label="申请人">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="applicationName" placeholder="申请人"/>
+        <nz-form-explain *ngIf="validateForm.get('applicationName').dirty && validateForm.get('applicationName').errors">请输入申请人
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="申请时间">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24" >
+        <nz-date-picker
+          nzShowTime
+          [nzStyle]="{ width: '100%' }"
+          nzFormat="yyyy-MM-dd HH:mm:ss"
+          nzPlaceHolder="请选择投用时间"
+          formControlName="applicationTime"
+        ></nz-date-picker>
+        <nz-form-explain *ngIf="validateForm.get('applicationTime').dirty && validateForm.get('applicationTime').errors">请输入申请人
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="监护人">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24" >
+        <input nz-input formControlName="guardianName" placeholder="监护人"/>
+        <nz-form-explain *ngIf="validateForm.get('guardianName').dirty && validateForm.get('guardianName').errors">请输入监护人
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="负责人">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24" >
+        <input nz-input formControlName="leadingName" placeholder="负责人"/>
+        <nz-form-explain *ngIf="validateForm.get('leadingName').dirty && validateForm.get('leadingName').errors">请输入负责人
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="开始时间">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24" >
+        <nz-date-picker
+          nzShowTime
+          [nzStyle]="{ width: '100%' }"
+          nzFormat="yyyy-MM-dd HH:mm:ss"
+          nzPlaceHolder="请选择投用时间"
+          formControlName="operationStartTime"
+        ></nz-date-picker>
+        <nz-form-explain *ngIf="validateForm.get('operationStartTime').dirty && validateForm.get('operationStartTime').errors">请选择开始时间
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se label="结束时间">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24" >
+        <nz-date-picker
+          nzShowTime
+          [nzStyle]="{ width: '100%' }"
+          nzFormat="yyyy-MM-dd HH:mm:ss"
+          nzPlaceHolder="请选择投用时间"
+          formControlName="operationEndTime"
+        ></nz-date-picker>
+        <nz-form-explain *ngIf="validateForm.get('operationEndTime').dirty && validateForm.get('operationEndTime').errors">请选择作业结束时间
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+    <se>
+      <button nz-button nzType="primary" type="submit">提交</button>
+      <button nz-button class="ml-sm" (click)="returnToList()">返回</button>
+    </se>
+  </form>
 </nz-card>
+<nz-modal
+  [nzVisible]="previewVisible"
+  [nzContent]="modalContent"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-template #modalContent>
+    <img [src]="previewImage" [ngStyle]="{ width: '100%' }"/>
+  </ng-template>
+</nz-modal>
+

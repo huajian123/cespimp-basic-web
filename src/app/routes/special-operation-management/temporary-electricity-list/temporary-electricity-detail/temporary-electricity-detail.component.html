@@ -1,14 +1,102 @@
-<div class="modal-header">
-  <div class="modal-title">查看 {{ record.id }} 信息</div>
-</div>
-<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
-<div sv-container *ngIf="i">
-  <sv label="姓名">{{ i.owner }}</sv>
-  <sv label="会员卡号">32943898021309809423</sv>
-  <sv label="身份证">3321944288191034921</sv>
-  <sv label="联系方式">18112345678</sv>
-  <sv label="联系地址">曲丽丽 18100000000 浙江省杭州市西湖区黄姑山路工专路交叉路口</sv>
-</div>
-<div class="modal-footer">
-  <button nz-button type="button" (click)="close()">关闭</button>
-</div>
+<page-header [autoBreadcrumb]="false" [title]="'临时用电详情'"></page-header>
+<nz-card [nzBordered]="true">
+  <form nz-form [formGroup]="validateForm" se-container="1" labelWidth="200">
+    <se label="作业名称">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="operationName" readonly/>
+      </nz-form-control>
+    </se>
+    <se label="作业地点">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="operationPlace" readonly/>
+      </nz-form-control>
+    </se>
+    <se label="作业内容">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="operationContent" readonly/>
+      </nz-form-control>
+    </se>
+    <se label="申请人">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="applicationName" readonly/>
+      </nz-form-control>
+    </se>
+    <se label="申请时间">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="applicationTime" readonly/>
+      </nz-form-control>
+    </se>
+    <se label="监护人">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="guardianName" readonly/>
+      </nz-form-control>
+    </se>
+    <se label="负责人">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="leadingName" readonly/>
+      </nz-form-control>
+    </se>
+    <se label="作业开始时间">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="operationStartTime" readonly/>
+      </nz-form-control>
+    </se>
+    <se label="作业结束时间">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="operationEndTime" readonly/>
+      </nz-form-control>
+    </se>
+    <se label="作业附件">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <nz-upload
+          (nzChange)="uploadFn($event,'operationCertificate')"
+          [nzLimit]="1"
+          [nzAction]="uploadUrl"
+          [nzRemove]="false"
+          [nzPreview]="handlePreview"
+          nzListType="picture-card"
+          [(nzFileList)]="certificateFileList"
+          [nzShowButton]="false"
+          [nzShowUploadList]="showUploadList"
+        >
+          <i nz-icon nzType="plus"></i>
+          <div class="ant-upload-text">上传</div>
+        </nz-upload>
+        <input nz-input formControlName="operationCertificate" [hidden]="true">
+      </nz-form-control>
+    </se>
+    <se label="审核人">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="reviewName" readonly/>
+      </nz-form-control>
+    </se>
+    <se label="审核时间">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="reviewTime" readonly/>
+      </nz-form-control>
+    </se>
+    <se label="审核意见">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="reviewExplain" readonly/>
+      </nz-form-control>
+    </se>
+    <se label="审核状态">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="reviewStatus" readonly/>
+      </nz-form-control>
+    </se>
+    <se>
+      <button nz-button type="button" (click)="returnBackToList()" nzType="primary">返回</button>
+    </se>
+  </form>
+</nz-card>
+<nz-modal
+  [nzVisible]="previewVisible"
+  [nzContent]="modalContent"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-template #modalContent>
+    <img [src]="previewImage" [ngStyle]="{ width: '100%' }"/>
+  </ng-template>
+</nz-modal>
