@@ -11,6 +11,12 @@ import { SpecialOperationManagementOpenCircuitListComponent } from './open-circu
 import { SpecialOperationManagementEarthMovingListComponent } from './earth-moving-list/earth-moving-list.component';
 import { SpecialOperationManagementHotWorkEditAddComponent } from './hot-work-list/hot-work-edit-add/hot-work-edit-add.component';
 import { SpecialOperationManagementElevatedWorkEditAddComponent } from './elevated-work-list/elevated-work-edit-add/elevated-work-edit-add.component';
+import { SpecialOperationManagementHoistingOperationEditAddComponent } from './hoisting-operation-list/hoisting-operation-edit-add/hoisting-operation-edit-add.component';
+import { SpecialOperationManagementBlindPlateEditAddComponent } from './blind-plate-list/blind-plate-edit-add/blind-plate-edit-add.component';
+import { SpecialOperationManagementEarthMovingEditAddComponent } from './earth-moving-list/earth-moving-edit-add/earth-moving-edit-add.component';
+import { SpecialOperationManagementEquipmentOverhaulEditAddComponent } from './equipment-overhaul-list/equipment-overhaul-edit-add/equipment-overhaul-edit-add.component';
+import { SpecialOperationManagementOpenCircuitEditAddComponent } from './open-circuit-list/open-circuit-edit-add/open-circuit-edit-add.component';
+import { SpecialOperationManagementTemporaryElectricityEditAddComponent } from './temporary-electricity-list/temporary-electricity-edit-add/temporary-electricity-edit-add.component';
 
 const routes: Routes = [
 
@@ -24,7 +30,13 @@ const routes: Routes = [
   { path: 'open-circuit-list', component: SpecialOperationManagementOpenCircuitListComponent },
   { path: 'earth-moving-list', component: SpecialOperationManagementEarthMovingListComponent },
   { path: 'hot-work-edit-add', component: SpecialOperationManagementHotWorkEditAddComponent },
-  { path: 'elevated-work-edit-add', component: SpecialOperationManagementElevatedWorkEditAddComponent }];
+  { path: 'elevated-work-edit-add', component: SpecialOperationManagementElevatedWorkEditAddComponent },
+  { path: 'hoisting-operation-edit-add', component: SpecialOperationManagementHoistingOperationEditAddComponent },
+  { path: 'blind-plate-edit-add', component: SpecialOperationManagementBlindPlateEditAddComponent },
+  { path: 'earth-moving-edit-add', component: SpecialOperationManagementEarthMovingEditAddComponent },
+  { path: 'equipment-overhaul-edit-add', component: SpecialOperationManagementEquipmentOverhaulEditAddComponent },
+  { path: 'open-circuit-edit-add', component: SpecialOperationManagementOpenCircuitEditAddComponent },
+  { path: 'temporary-electricity-edit-add', component: SpecialOperationManagementTemporaryElectricityEditAddComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

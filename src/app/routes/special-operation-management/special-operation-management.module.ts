@@ -16,6 +16,18 @@ import { SpecialOperationManagementHotWorkEditAddComponent } from './hot-work-li
 import { SpecialOperationManagementHotWorkDetailComponent } from './hot-work-list/hot-work-detail/hot-work-detail.component';
 import { SpecialOperationManagementElevatedWorkEditAddComponent } from './elevated-work-list/elevated-work-edit-add/elevated-work-edit-add.component';
 import { SpecialOperationManagementElevatedWorkDetailComponent } from './elevated-work-list/elevated-work-detail/elevated-work-detail.component';
+import { SpecialOperationManagementHoistingOperationEditAddComponent } from './hoisting-operation-list/hoisting-operation-edit-add/hoisting-operation-edit-add.component';
+import { SpecialOperationManagementHoistingOperationDetailComponent } from './hoisting-operation-list/hoisting-operation-detail/hoisting-operation-detail.component';
+import { SpecialOperationManagementBlindPlateEditAddComponent } from './blind-plate-list/blind-plate-edit-add/blind-plate-edit-add.component';
+import { SpecialOperationManagementBlindPlateDetailComponent } from './blind-plate-list/blind-plate-detail/blind-plate-detail.component';
+import { SpecialOperationManagementEarthMovingEditAddComponent } from './earth-moving-list/earth-moving-edit-add/earth-moving-edit-add.component';
+import { SpecialOperationManagementEarthMovingDetailComponent } from './earth-moving-list/earth-moving-detail/earth-moving-detail.component';
+import { SpecialOperationManagementEquipmentOverhaulEditAddComponent } from './equipment-overhaul-list/equipment-overhaul-edit-add/equipment-overhaul-edit-add.component';
+import { SpecialOperationManagementEquipmentOverhaulDetailComponent } from './equipment-overhaul-list/equipment-overhaul-detail/equipment-overhaul-detail.component';
+import { SpecialOperationManagementOpenCircuitEditAddComponent } from './open-circuit-list/open-circuit-edit-add/open-circuit-edit-add.component';
+import { SpecialOperationManagementOpenCircuitDetailComponent } from './open-circuit-list/open-circuit-detail/open-circuit-detail.component';
+import { SpecialOperationManagementTemporaryElectricityEditAddComponent } from './temporary-electricity-list/temporary-electricity-edit-add/temporary-electricity-edit-add.component';
+import { SpecialOperationManagementTemporaryElectricityDetailComponent } from './temporary-electricity-list/temporary-electricity-detail/temporary-electricity-detail.component';
 
 const COMPONENTS = [
   SpecialOperationManagementHotWorkListComponent,
@@ -28,12 +40,24 @@ const COMPONENTS = [
   SpecialOperationManagementOpenCircuitListComponent,
   SpecialOperationManagementEarthMovingListComponent,
   SpecialOperationManagementHotWorkEditAddComponent,
-  SpecialOperationManagementElevatedWorkEditAddComponent];
+  SpecialOperationManagementElevatedWorkEditAddComponent,
+  SpecialOperationManagementHoistingOperationEditAddComponent,
+  SpecialOperationManagementBlindPlateEditAddComponent,
+  SpecialOperationManagementEarthMovingEditAddComponent,
+  SpecialOperationManagementEquipmentOverhaulEditAddComponent,
+  SpecialOperationManagementOpenCircuitEditAddComponent,
+  SpecialOperationManagementTemporaryElectricityEditAddComponent];
 const COMPONENTS_NOROUNT = [
   SpecialOperationManagementConfinedSpaceWorkDetailComponent,
   SpecialOperationManagementConfinedSpaceWorkEditAddComponent,
   SpecialOperationManagementHotWorkDetailComponent,
-  SpecialOperationManagementElevatedWorkDetailComponent];
+  SpecialOperationManagementElevatedWorkDetailComponent,
+  SpecialOperationManagementHoistingOperationDetailComponent,
+  SpecialOperationManagementBlindPlateDetailComponent,
+  SpecialOperationManagementEarthMovingDetailComponent,
+  SpecialOperationManagementEquipmentOverhaulDetailComponent,
+  SpecialOperationManagementOpenCircuitDetailComponent,
+  SpecialOperationManagementTemporaryElectricityDetailComponent];
 
 @NgModule({
   imports: [
