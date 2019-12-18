@@ -4,12 +4,24 @@ import {
   SpecialOperationInfoService,
   SpecialOperationManagementServiceNs,
 } from '@core/biz-services/special-operation-management/special-operation-management.service';
-import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
-import { MapPipe } from '@shared/directives/pipe/map.pipe';
-import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
+import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
+import { ListPageInfo, LoginInfoModel, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import SpecialOperationInfoModel = SpecialOperationManagementServiceNs.SpecialOperationInfoModel;
 import SpecialInfoEnum = SpecialOperationManagementServiceNs.SpecialInfoEnum;
 import SpecialOperationSearchModel = SpecialOperationManagementServiceNs.SpecialOperationSearchModel;
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
+import { EVENT_KEY } from '@env/staticVariable';
+import SpecialOperationEnumModel = SpecialOperationManagementServiceNs.SpecialOperationEnumModel;
+
+interface OptionsInterface {
+  value: string;
+  label: string;
+}
+
+enum statusEnum {
+  check = 1//待审核
+}
 
 @Component({
   selector: 'app-special-operation-management-earth-moving-list',
@@ -18,16 +30,20 @@ import SpecialOperationSearchModel = SpecialOperationManagementServiceNs.Special
 })
 export class SpecialOperationManagementEarthMovingListComponent implements OnInit {
   roleEnum = RoleEnum;
+  isVisible = false;
+  validateForm: FormGroup;
   pageTypeEnum = PageTypeEnum;
   currentPage: number;
   expandForm: boolean;
   dataList: SpecialOperationInfoModel[];
+  statusOptions: OptionsInterface[];
   columns: STColumn[];
   listPageInfo: ListPageInfo;
   itemId: number;
   searchParam: SpecialOperationSearchModel;
+  loginInfo: LoginInfoModel;
 
-  constructor(private dataService: SpecialOperationInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
+  constructor(private dataService: SpecialOperationInfoService, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -41,10 +57,10 @@ export class SpecialOperationManagementEarthMovingListComponent implements OnIni
     this.searchParam = {};
   }
 
-  async getDataList(currentType = SpecialInfoEnum.EarthMoving) {
-    const params = {
-      operationType: currentType,
-      pageNum: this.listPageInfo.pi,
+  async getDataList(pageNumber?: number) {
+    const params: SpecialOperationEnumModel = {
+      operationType: SpecialInfoEnum.EarthMoving,
+      pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
       ...this.searchParam,
     };
@@ -68,6 +84,14 @@ export class SpecialOperationManagementEarthMovingListComponent implements OnIni
 
   format(toBeFormat, arg) {
     return new MapPipe().transform(toBeFormat, arg);
+  }
+
+  goJudge(record) {
+    if (record.reviewStatus == statusEnum.check) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   private initTable(): void {
@@ -99,8 +123,10 @@ export class SpecialOperationManagementEarthMovingListComponent implements OnIni
           {
             text: '审核',
             icon: 'edit',
-            click: this.goEditAddPage.bind(this),
+            click: this.goExamine.bind(this),
             acl: this.roleEnum[this.roleEnum.Enterprise],
+            iif: this.goJudge.bind(this),
+            iifBehavior: 'hide',
           },
           {
             text: '查看',
@@ -117,21 +143,65 @@ export class SpecialOperationManagementEarthMovingListComponent implements OnIni
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
 
-  goEditAddPage(item, modal) {
+  goExamine(item) {
     this.itemId = item.id;
-    this.currentPage = this.pageTypeEnum.AddOrEdit;
+    this.isVisible = true;
+    this.validateForm.reset();
+
   }
 
   reset() {
     this.searchParam = {};
   }
 
+  /*确认审核*/
+  async handleOk() {
+    Object.keys(this.validateForm.controls).forEach(key => {
+      this.validateForm.controls[key].markAsDirty();
+      this.validateForm.controls[key].updateValueAndValidity();
+    });
+
+    if (this.validateForm.invalid) return;
+    const param = this.validateForm.getRawValue();
+    param.id = this.itemId;
+    param.reviewName = this.loginInfo.realName;
+    param.reviewTime = this.loginInfo.updateTime;
+    await this.dataService.examineSpecialOperation(param);
+    this.isVisible = false;
+    this.getDataList();
+    this.cdr.markForCheck();
+  }
+
+  /*取消审核*/
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
+  async returnToList(e?: GoBackParam) {
+    this.currentPage = this.pageTypeEnum.List;
+    if (!!e && e.refesh) {
+      this.listPageInfo.pi = e.pageNo;
+      await this.getDataList(e.pageNo);
+    }
+  }
+
+  initForm() {
+    this.validateForm = this.fb.group({
+      reviewStatus: [null, [Validators.required]],
+      reviewExplain: [null, [Validators.required]],
+    });
+  }
+
   ngOnInit() {
+    this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+    this.statusOptions = [...MapPipe.transformMapToArray(MapSet.reviewStatus)];
+    this.statusOptions.shift();
     this.initTable();
     this.getDataList();
+    this.initForm();
   }
 
   _onReuseInit() {
-    this.ngOnInit()
+    this.ngOnInit();
   }
 }
