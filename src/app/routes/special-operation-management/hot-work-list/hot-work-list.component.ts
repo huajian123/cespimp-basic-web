@@ -100,7 +100,7 @@ export class SpecialOperationManagementHotWorkListComponent implements OnInit {
     this.searchParam = {};
   }
 
-  goJudge(record) {
+  canJudge(record) {
     if (record.reviewStatus == statusEnum.check) {
       return true;
     } else {
@@ -139,7 +139,7 @@ export class SpecialOperationManagementHotWorkListComponent implements OnInit {
             icon: 'edit',
             click: this.goExamine.bind(this),
             acl: this.roleEnum[this.roleEnum.Enterprise],
-            iif: this.goJudge.bind(this),
+            iif: this.canJudge.bind(this),
             iifBehavior: 'hide',
           },
           {

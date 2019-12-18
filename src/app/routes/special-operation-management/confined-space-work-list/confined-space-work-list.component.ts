@@ -98,7 +98,7 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
     return new MapPipe().transform(toBeFormat, arg);
   }
 
-  goJudge(record) {
+  canJudge(record) {
     if (record.reviewStatus == statusEnum.check) {
       return true;
     } else {
@@ -137,7 +137,7 @@ export class SpecialOperationManagementConfinedSpaceWorkListComponent implements
             icon: 'edit',
             click: this.goExamine.bind(this),
             acl: this.roleEnum[this.roleEnum.Enterprise],
-            iif: this.goJudge.bind(this),
+            iif: this.canJudge.bind(this),
             iifBehavior: 'hide',
           },
           {
