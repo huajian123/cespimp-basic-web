@@ -36,7 +36,6 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
   listPageInfo: ListPageInfo;
   itemId: number;
   statusOptions: OptionsInterface[];
-  /* seacher: BasicInfoAuditModel;*/
   loginInfo: LoginInfoModel;
   filters: FiltersInfoModel;
 
@@ -59,15 +58,6 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
       updateTime: new Date(),
       userName: '',
     };
-    /*this.seacher = {
-      id: null,
-      applicationName: '',
-      applicationTime: new Date(),
-      reviewName: '',
-      reviewTime: new Date(),
-      reviewExplain: '',
-      reviewStatus: null,
-    };*/
     this.listPageInfo = {
       total: 0,
       ps: 10,// 每页数量
@@ -121,7 +111,7 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
   canJudge(record) {
     if (record.reviewStatus == statusEnum.check) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
