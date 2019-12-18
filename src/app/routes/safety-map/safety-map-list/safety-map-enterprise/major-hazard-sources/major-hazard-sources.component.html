@@ -1,6 +1,6 @@
 <div class="temp-wrap">
   <nz-modal [(nzVisible)]="showModel" nzWidth="1100" [nzFooter]="null" (nzOnCancel)="close()">
-    <nz-tabset (nzSelectChange)="SelectChanged($event)">
+    <nz-tabset (nzSelectChange)="selectChanged($event)">
       <nz-tab nzTitle="重大危险源信息">
         <form nz-form [formGroup]="validateForm">
           <nz-row>

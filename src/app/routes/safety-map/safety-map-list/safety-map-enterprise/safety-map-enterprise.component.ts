@@ -60,13 +60,13 @@ interface LayerBtnInterface {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
-  hazardId: number;
-  selectCameraId: number;
-  selectTempId: number;
-  selectPressId: number;
-  selectWaterLevelId: number;
-  selectFireGasId: number;
-  selectPoisonId: number;
+  hazardedId: number;
+  selectedCameraId: number;
+  selectedTempId: number;
+  selectedPressId: number;
+  selectedWaterLevelId: number;
+  selectedFireGasId: number;
+  selectedPoisonId: number;
   currentRole: string;
   roleEnum = RoleEnum;
   @Input() enterpriseId: number;
@@ -103,13 +103,13 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
 
 
   constructor(private cdr: ChangeDetectorRef, private safetyMapService: SafetyMapService, private enterpriseBasicInfoService: EnterpriseBasicInfoService) {
-    this.selectCameraId = -1;
-    this.hazardId = -1;
-    this.selectTempId = -1;
-    this.selectPressId = -1;
-    this.selectWaterLevelId = -1;
-    this.selectFireGasId = -1;
-    this.selectPoisonId = -1;
+    this.selectedCameraId = -1;
+    this.hazardedId = -1;
+    this.selectedTempId = -1;
+    this.selectedPressId = -1;
+    this.selectedWaterLevelId = -1;
+    this.selectedFireGasId = -1;
+    this.selectedPoisonId = -1;
     this.currentRole = RoleEnum[RoleEnum.ParkManage];
     const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
       'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
@@ -234,7 +234,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           this.currentSelLayerBtnIndex = this.layerEnum.HazardSources;
           this.initModelStatus();
           this.modelIsShow.hazardSource = true;
-          this.hazardId = item.setOptions.id;
+          this.hazardedId = item.setOptions.id;
           //console.log(this.hazardId);
           this.cdr.markForCheck();
         }, 0);
@@ -247,7 +247,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           this.currentSelLayerBtnIndex = this.layerEnum.Temperature;
           this.initModelStatus();
           this.modelIsShow.temp = true;
-          this.selectTempId = item.setOptions.id;
+          this.selectedTempId = item.setOptions.id;
           this.cdr.markForCheck();
         }, 0);
       });
@@ -259,7 +259,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           this.currentSelLayerBtnIndex = this.layerEnum.Pressure;
           this.initModelStatus();
           this.modelIsShow.press = true;
-          this.selectPressId = item.setOptions.id;
+          this.selectedPressId = item.setOptions.id;
           this.cdr.markForCheck();
         }, 0);
       });
@@ -271,7 +271,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           this.currentSelLayerBtnIndex = this.layerEnum.WaterLevel;
           this.initModelStatus();
           this.modelIsShow.waterLevel = true;
-          this.selectWaterLevelId = item.setOptions.id;
+          this.selectedWaterLevelId = item.setOptions.id;
           this.cdr.markForCheck();
         }, 0);
       });
@@ -283,7 +283,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           this.currentSelLayerBtnIndex = this.layerEnum.FireGas;
           this.initModelStatus();
           this.modelIsShow.fireGas = true;
-          this.selectFireGasId = item.setOptions.id;
+          this.selectedFireGasId = item.setOptions.id;
           this.cdr.markForCheck();
         }, 0);
       });
@@ -295,7 +295,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           this.currentSelLayerBtnIndex = this.layerEnum.PoisonousGas;
           this.initModelStatus();
           this.modelIsShow.poisonousGas = true;
-          this.selectPoisonId = item.setOptions.id;
+          this.selectedPoisonId = item.setOptions.id;
           this.cdr.markForCheck();
         }, 0);
       });
@@ -307,7 +307,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
           this.currentSelLayerBtnIndex = this.layerEnum.Camera;
           this.initModelStatus();
           this.modelIsShow.camera = true;
-          this.selectCameraId = item.setOptions.id;
+          this.selectedCameraId = item.setOptions.id;
           this.cdr.markForCheck();
         }, 0);
       });

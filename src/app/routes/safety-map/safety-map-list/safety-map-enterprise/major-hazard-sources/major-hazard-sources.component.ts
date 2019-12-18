@@ -180,7 +180,7 @@ export class MajorHazardSourcesComponent implements OnInit {
     ];
   }
 
-  SelectChanged(e): void {
+  selectChanged(e): void {
     switch (e.index) {
       case TabChangeEnum.Unit: {
         this.dataUintsList = [];
