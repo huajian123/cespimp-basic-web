@@ -118,7 +118,7 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
 
   }
 
-  goJudge(record) {
+  canJudge(record) {
     if (record.reviewStatus == statusEnum.check) {
       return true;
     }else{
@@ -150,7 +150,7 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
             icon: 'edit',
             click: this.goExamine.bind(this),
             acl: this.roleEnum[this.roleEnum.ParkManage],
-            iif: this.goJudge.bind(this),
+            iif: this.canJudge.bind(this),
             iifBehavior: 'hide',
           },
           {
