@@ -1,4 +1,3 @@
-<!--
 <page-header [autoBreadcrumb]="false" [title]="'摄像头列表'"></page-header>
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submit()" [nzLayout]="'vertical'">
   <nz-card [nzBordered]="true" nzTitle="摄像头信息">
@@ -7,7 +6,7 @@
         <nz-form-item>
           <nz-form-label nzFor="name">摄像头编号</nz-form-label>
           <nz-form-control nzErrorTip="请输入摄像头编号">
-            <input nz-input formControlName="sensorNo" placeholder="请输入摄像头编号"/>
+            <input nz-input formControlName="cameraNo" placeholder="请输入摄像头编号"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -15,71 +14,7 @@
         <nz-form-item>
           <nz-form-label nzFor="name">摄像头名称</nz-form-label>
           <nz-form-control nzErrorTip="请输入摄像头名称">
-            <input nz-input formControlName="sensorName" placeholder="请输入摄像头名称"/>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
-        <nz-form-item>
-          <nz-form-label>摄像头类型</nz-form-label>
-          <nz-form-control nzErrorTip="请选择摄像头类型">
-            <nz-select (ngModelChange)="changeSensorType($event)" formControlName="sensorType" [nzPlaceHolder]="'请选择火灾危险性类型'" [nzShowSearch]="true">
-              <nz-option *ngFor="let i of sensorTypeOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-    </nz-row>
-    <nz-row nzGutter="16" *ngIf="showTrue">
-      <nz-col nzLg="6" nzMd="12" nzSm="24">
-        <nz-form-item>
-          <nz-form-label nzFor="name">一级报警阈值</nz-form-label>
-          <nz-form-control nzErrorTip="请输入一级报警阈值">
-            <input nz-input formControlName="firstAlarmThreshold" placeholder="请输入一级报警阈值"/>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
-        <nz-form-item>
-          <nz-form-label nzFor="name">二级报警阈值</nz-form-label>
-          <nz-form-control nzErrorTip="请输入二级报警阈值">
-            <input nz-input formControlName="secondAlarmThreshold" placeholder="请输入二级报警阈值"/>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-    </nz-row>
-    <nz-row nzGutter="16" *ngIf="!showTrue">
-      <nz-col nzLg="6" nzMd="12" nzSm="24">
-        <nz-form-item>
-          <nz-form-label nzFor="name">低低位限报警阈值</nz-form-label>
-          <nz-form-control nzErrorTip="请输入低低位限报警阈值">
-            <input nz-input formControlName="firstAlarmThreshold" placeholder="请输入低低位限报警阈值"/>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
-        <nz-form-item>
-          <nz-form-label nzFor="name">低位限报警阈值</nz-form-label>
-          <nz-form-control nzErrorTip="请输入低位限报警阈值">
-            <input nz-input formControlName="secondAlarmThreshold" placeholder="请输入低位限报警阈值"/>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
-        <nz-form-item>
-          <nz-form-label>高位限报警阈值</nz-form-label>
-          <nz-form-control nzErrorTip="高位限报警阈值">
-            <input nz-input formControlName="thirdAlarmThreshold" placeholder="请输入高位限报警阈值"/>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-    </nz-row>
-    <nz-row nzGutter="16" *ngIf="!showTrue">
-      <nz-col nzLg="6" nzMd="12" nzSm="24">
-        <nz-form-item>
-          <nz-form-label nzFor="name">高高位限报警阈值</nz-form-label>
-          <nz-form-control nzErrorTip="请输入高高位限报警阈值">
-            <input nz-input formControlName="fourthAlarmThreshold" placeholder="请输入高高位限报警阈值"/>
+            <input nz-input formControlName="cameraName" placeholder="请输入摄像头名称"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -89,12 +24,17 @@
     <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
-          <nz-form-label>摄像头区域</nz-form-label>
-          <nz-form-control>
-            <span class="operate-text cursor-pointer" (click)="showPolygonMap()">查看</span>
-            <input nz-input [hidden]="true" formControlName="majorScope" placeholder="请输入经纬度" />
-            <nz-form-explain *ngIf="validateForm.get('majorScope').dirty && validateForm.get('majorScope').errors">请点击查看并绘制区域
-            </nz-form-explain>
+          <nz-form-label>经度</nz-form-label>
+          <nz-form-control nzErrorTip="请输入经度">
+            <input nz-input  class="cursor-pointer" readonly (click)="showMap()" formControlName="longitude" placeholder="请输入经度" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>纬度</nz-form-label>
+          <nz-form-control nzErrorTip="请输入纬度">
+            <input nz-input  class="cursor-pointer" readonly (click)="showMap()" formControlName="latitude" placeholder="请输入纬度" />
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -144,7 +84,3 @@
   </footer-toolbar>
 </form>
 
-
-
-
--->
