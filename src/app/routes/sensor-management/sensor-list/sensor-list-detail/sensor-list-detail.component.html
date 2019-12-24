@@ -4,7 +4,7 @@
     <sv label="传感器编号">{{dataInfo.sensorNo}}</sv>
     <sv label="传感器名称">{{dataInfo.sensorName}}</sv>
     <sv label="所属重大危险源ID">{{dataInfo.majorHazardId}}</sv>
-    <sv label="重大危险源组成类型">{{dataInfo.partType}}</sv>
+    <sv label="重大危险源组成类型">{{dataInfo.partType|map:'partType'}}</sv>
     <sv label="组成部分ID">{{dataInfo.partId}}</sv>
     <div *ngIf="sensorTrue">
       <sv label="一级阈值">{{dataInfo.firstAlarmThreshold}}</sv>

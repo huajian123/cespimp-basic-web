@@ -53,7 +53,6 @@ export class SensorManagementSensorListDetailComponent implements OnInit {
 
   async getDetailInfo() {
     this.dataInfo = await this.dataService.getSensorInfoDetail(this.id);
-    //console.log(this.dataInfo);
     if (this.dataInfo.sensorType == '' + 3) {
       this.sensorTrue = false;
     }

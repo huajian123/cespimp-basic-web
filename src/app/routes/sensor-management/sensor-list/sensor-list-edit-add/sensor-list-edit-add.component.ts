@@ -23,6 +23,16 @@ interface OptionsInterface {
   partType?: number;
 }
 
+interface MajorHazardPartModel {
+  partType: number;
+  partNo: string;
+  partName: string;
+  partId: number;
+}
+
+enum sensorTypeNum {
+  number = 3
+}
 
 @Component({
   selector: 'app-sensor-management-sensor-list-edit-add',
@@ -32,6 +42,7 @@ interface OptionsInterface {
 export class SensorManagementSensorListEditAddComponent implements OnInit {
   validateForm: FormGroup;
   @Input() id: number;
+  @Input() entprId: number;
   @Input() currentPageNum: number;
   @Output() returnBack: EventEmitter<any>;
   loginInfo: LoginInfoModel;
@@ -39,6 +50,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
   sensorTypeOptions: OptionsInterface[];
   HazardNatureOptions: OptionsInterface[];
   majorList: OptionsInterface[];
+  majorAllNo: MajorHazardPartModel[];
   selMajorNoArray: OptionsInterface[];
   currentPolygonList: any[];
   showTrue: boolean;
@@ -79,7 +91,8 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
       sensorNo: [null, [Validators.required]],
       sensorName: [null, [Validators.required]],
       sensorType: [null, [Validators.required]],
-      majorScope: [null, [Validators.required]],
+      longitude: [null, [Validators.required]],
+      latitude: [null, [Validators.required]],
       locFactory: [null, []],
       majorHazardId: [null, []],
       partId: [null, []],
@@ -134,14 +147,32 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
     }).catch(e => null);
   }
 
+  async getMajorList() {
+    this.entprId = this.loginInfo.entprId;
+    const data = await this.dataService.getMajorList(this.entprId);
+    /*  data.majorHazardPartDTOS.forEach(item => {
+        this.majorAllNo.push({
+          partType: item.partType,
+          partNo: item.partNo,
+          partName: item.partName,
+          partId: item.partId,
+        });
+      });*/
+  }
 
   returnToList() {
     this.returnBack.emit();
   }
 
+  async getDetail() {
+    const dataInfo = await this.dataService.getSensorInfoDetail(this.id);
+    this.validateForm.patchValue(dataInfo);
+    this.cdr.markForCheck();
+  }
+
   changeSensorType(e) {
     switch (e) {
-      case 3:
+      case sensorTypeNum.number:
         this.showTrue = false;
         break;
       default:
@@ -150,10 +181,25 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
     }
   }
 
+  showMap() {
+    this.positionPickerService.show({
+      isRemoteImage: true,
+      longitude: enterpriseInfo.longitude,
+      latitude: enterpriseInfo.latitude,
+    }).then(res => {
+      this.validateForm.get('longitude').setValue(res.longitude);
+      this.validateForm.get('latitude').setValue(res.latitude);
+    }).catch(e => null);
+  }
+
   ngOnInit(): void {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.sensorTypeOptions = [...MapPipe.transformMapToArray(MapSet.sensorType)];
+    this.getMajorList();
     this.initForm();
+    if (this.id) {
+      this.getDetail();
+    }
   }
 
 

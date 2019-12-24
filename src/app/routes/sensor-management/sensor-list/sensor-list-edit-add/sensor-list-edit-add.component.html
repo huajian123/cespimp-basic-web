@@ -88,12 +88,17 @@
     <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
-          <nz-form-label>传感器区域</nz-form-label>
-          <nz-form-control>
-            <span class="operate-text cursor-pointer" (click)="showPolygonMap()">查看</span>
-            <input nz-input [hidden]="true" formControlName="majorScope" placeholder="请输入经纬度" />
-            <nz-form-explain *ngIf="validateForm.get('majorScope').dirty && validateForm.get('majorScope').errors">请点击查看并绘制区域
-            </nz-form-explain>
+          <nz-form-label>经度</nz-form-label>
+          <nz-form-control nzErrorTip="请输入经度">
+            <input nz-input  class="cursor-pointer" readonly (click)="showMap()" formControlName="longitude" placeholder="请输入经度" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <nz-form-label>纬度</nz-form-label>
+          <nz-form-control nzErrorTip="请输入纬度">
+            <input nz-input  class="cursor-pointer" readonly (click)="showMap()" formControlName="latitude" placeholder="请输入纬度" />
           </nz-form-control>
         </nz-form-item>
       </nz-col>

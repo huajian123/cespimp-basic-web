@@ -1,14 +1,22 @@
-<div class="modal-header">
-  <div class="modal-title">查看 {{ record.id }} 信息</div>
-</div>
-<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
-<div sv-container *ngIf="i">
-  <sv label="姓名">{{ i.owner }}</sv>
-  <sv label="会员卡号">32943898021309809423</sv>
-  <sv label="身份证">3321944288191034921</sv>
-  <sv label="联系方式">18112345678</sv>
-  <sv label="联系地址">曲丽丽 18100000000 浙江省杭州市西湖区黄姑山路工专路交叉路口</sv>
-</div>
-<div class="modal-footer">
-  <button nz-button type="button" (click)="close()">关闭</button>
-</div>
+<page-header [autoBreadcrumb]="false" [title]="'摄像头详情'"></page-header>
+<nz-card [nzHoverable]="true" [nzBordered]="false">
+  <sv-container size="large" title="基本信息">
+    <sv label="摄像头编号">{{dataInfo.cameraNo}}</sv>
+    <sv label="摄像头名称">{{dataInfo.cameraName}}</sv>
+  </sv-container>
+  <nz-divider></nz-divider>
+  <sv-container size="large" title="位置信息">
+    <sv label="经度">{{dataInfo.longitude}}</sv>
+    <sv label="纬度">{{dataInfo.latitude}}</sv>
+    <sv label="在厂区的位置">{{dataInfo.locFactory}}</sv>
+  </sv-container>
+  <nz-divider></nz-divider>
+  <sv-container size="large" title="重大危险源信息">
+    <sv label="重大危险源名称">{{dataInfo.majorHazardId}}</sv>
+    <sv label="重大危险源类型">{{dataInfo.partType|map:'partType'}}</sv>
+    <sv label="重大危险源组成部分名称">{{dataInfo.partId}}</sv>
+  </sv-container>
+</nz-card>
+<footer-toolbar errorCollect>
+  <button nz-button type="primary" (click)="returnToList()" nzType="default">返回</button>
+</footer-toolbar>

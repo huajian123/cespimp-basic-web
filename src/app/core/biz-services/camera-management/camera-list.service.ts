@@ -3,6 +3,7 @@ import { HttpUtilService } from '@core/net/http-util.service';
 import { SearchCommonVO } from '@core/vo/comm/BusinessEnum';
 import { PageInfo } from '@core/vo/comm/PageInfo';
 
+
 export namespace CameraManagementListServiceNs {
   export interface CameraManagementListInfoModel {
     id: number;
@@ -19,6 +20,26 @@ export namespace CameraManagementListServiceNs {
   export interface CameraSearchModel {
     entprName?: string;
     cameraNo?: string;
+  }
+
+  export interface majorHazardData {
+    majorHazardPartDTOS: MajorHazardUnitList[],
+    majorHazardInfoNeedListDTOS: MajorHazardInfoNeedList[];
+  }
+
+  export interface MajorHazardUnitList {
+    id?: number;
+    entprId?: number;
+    majorHazardId: number;
+    partType: number;
+    partId: number;
+    partNo: string;
+    partName?: string;
+  }
+
+  export interface MajorHazardInfoNeedList {
+    id?: number;
+    majorHazardName: string;
   }
 
   export class CameraManagementListInfoServiceClass {
@@ -45,10 +66,15 @@ export namespace CameraManagementListServiceNs {
       return this.http.get('data/major/hazard/cameras', param).toPromise();
     }
 
-     /*删除接口*/
-     public delCameraInfo(id: number): Promise<CameraManagementListInfoModel> {
-       return this.http.del('data/major/hazard/camera/'+ id).toPromise();
-     }
+    /*删除接口*/
+    public delCameraInfo(id: number): Promise<CameraManagementListInfoModel> {
+      return this.http.del('data/major/hazard/camera/' + id).toPromise();
+    }
+
+    /*重大危险源组成信息下拉列表*/
+    public getMajorList(entprId: number): Promise<majorHazardData> {
+      return this.http.get('data/major/hazard/need', { entprId: entprId }).toPromise();
+    }
   }
 }
 

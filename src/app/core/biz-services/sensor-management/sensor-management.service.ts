@@ -3,6 +3,7 @@ import { HttpUtilService } from '@core/net/http-util.service';
 import { SearchCommonVO } from '@core/vo/comm/BusinessEnum';
 import { PageInfo } from '@core/vo/comm/PageInfo';
 
+
 export namespace SensorManagementListServiceNs {
   export interface SensorManagementListInfoModel {
     id: number;
@@ -19,6 +20,26 @@ export namespace SensorManagementListServiceNs {
     secondAlarmThreshold: number;
     thirdAlarmThreshold?: number;
     fourthAlarmThreshold?: number;
+  }
+
+  export interface majorHazardData {
+    majorHazardPartDTOS: MajorHazardUnitList[],
+    majorHazardInfoNeedListDTOS: MajorHazardInfoNeedList[];
+  }
+
+  export interface MajorHazardUnitList {
+    id?: number;
+    entprId?: number;
+    majorHazardId: number;
+    partType: number;
+    partId: number;
+    partNo: string;
+    partName?: string;
+  }
+
+  export interface MajorHazardInfoNeedList {
+    id?: number;
+    majorHazardName: string;
   }
 
   export interface SensorSearchModel {
@@ -53,6 +74,11 @@ export namespace SensorManagementListServiceNs {
     /*删除接口*/
     public delSensorInfo(id: number): Promise<SensorManagementListInfoModel> {
       return this.http.del('data/major/hazard/sensor/' + id).toPromise();
+    }
+
+    /*重大危险源组成信息下拉列表*/
+    public getMajorList(entprId: number): Promise<majorHazardData> {
+      return this.http.get('data/major/hazard/need', { entprId: entprId }).toPromise();
     }
   }
 }
