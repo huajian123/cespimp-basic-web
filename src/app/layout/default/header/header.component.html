@@ -19,16 +19,24 @@
   <ul class="alain-default__nav">
     <!-- Notify -->
     <li>
-      <header-notify></header-notify>
+      <notice-icon
+        (click)="goRealTimeAlarmList()"
+        [count]="5"
+        btnClass="alain-default__nav-item"
+        btnIconClass="alain-default__nav-item-icon"
+      ></notice-icon>
     </li>
+<!--    <li>-->
+<!--      <header-notify></header-notify>-->
+<!--    </li>-->
     <!-- Task -->
     <!--<li class="hidden-mobile">
       <header-task></header-task>
     </li>-->
     <!-- App Icons -->
-    <li class="hidden-mobile">
+<!--    <li class="hidden-mobile">
       <header-icon></header-icon>
-    </li>
+    </li>-->
     <!-- Settings -->
     <li class="hidden-mobile">
       <div class="alain-default__nav-item" nz-dropdown [nzDropdownMenu]="settingsMenu" nzTrigger="click" nzPlacement="bottomRight">
