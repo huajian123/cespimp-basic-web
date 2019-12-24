@@ -1,11 +1,11 @@
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
+  Component, ElementRef,
   EventEmitter,
   Input,
   OnInit,
-  Output,
+  Output, ViewChild,
 } from '@angular/core';
 import {
   MajorHazardListInfoService,
@@ -18,6 +18,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { Router } from '@angular/router';
 import { EVENT_KEY } from '@env/staticVariable';
+import { enterpriseInfo } from '@env/environment';
+import { PositionPickerPolygonService } from '../../../../widget/position-picker-polygon/position-picker-polygon.service';
 
 enum PartTypeEnum {
   Tank = 1,
@@ -31,11 +33,14 @@ enum PartTypeEnum {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
+  @ViewChild('mapDivModal', { static: true }) mapElement: ElementRef;
+  map;
   @Output() returnBack: EventEmitter<any>;
   @Input() id: number;
   @Input() currentPageNum: number;
   dataInfo: MajorHazardListInfoModel;
   columns: STColumn[];
+  currentPolygonList: any[];
 
   constructor(private http: _HttpClient, private msg: NzMessageService,
               private dataService: MajorHazardListInfoService, private cdr: ChangeDetectorRef,
@@ -100,9 +105,36 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
     return new MapPipe().transform(toBeFormat, arg);
   }
 
+// 显示多边形地图
+  initMap(currentPolygonList) {
+    setTimeout(() => {
+      const polygonPoints = [];
+      currentPolygonList.forEach(({ lng, lat }) => {
+        polygonPoints.push(new T.LngLat(lng, lat));
+      });
+      const zoom = 18;
+      this.map = new T.Map(this.mapElement.nativeElement);
+      // 设置显示地图的中心点和级别
+      this.map.centerAndZoom(new T.LngLat(enterpriseInfo.longitude, enterpriseInfo.latitude), zoom);
+      const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
+        'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
+        '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=0a65163e2ebdf5a37abb7f49274b85df';
+      const tilePhoto = new T.TileLayer(imageURL, { minZoom: 1, maxZoom: 18 });
+      this.map.addLayer(tilePhoto);
+      const polygon = new T.Polygon(polygonPoints, {
+        color: 'blue',
+        weight: 3,
+        opacity: 0.5,
+        fillColor: '#FFFFFF',
+        fillOpacity: 0.5,
+      });
+      this.map.addLayer(polygon);
+    });
+  }
 
   async getDetailInfo(id?) {
     this.dataInfo = await this.dataService.getMajorHazardInfoDetail(id ? id : this.id);
+    this.initMap(this.dataInfo.majorScope);
     this.cdr.markForCheck();
   }
 
