@@ -115,7 +115,11 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
       const zoom = 18;
       this.map = new T.Map(this.mapElement.nativeElement);
       // 设置显示地图的中心点和级别
-      this.map.centerAndZoom(new T.LngLat(enterpriseInfo.longitude, enterpriseInfo.latitude), zoom);
+      if(polygonPoints.length != 0){
+        this.map.centerAndZoom(new T.LngLat(polygonPoints[0].lng, polygonPoints[0].lat), zoom);
+      }else{
+        this.map.centerAndZoom(new T.LngLat(enterpriseInfo.longitude, enterpriseInfo.latitude), zoom);
+      }
       const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
         'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
         '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=0a65163e2ebdf5a37abb7f49274b85df';
