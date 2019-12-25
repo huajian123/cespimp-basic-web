@@ -4,6 +4,19 @@ import { PageInfo } from '@core/vo/comm/PageInfo';
 
 
 export namespace EnterpriseBasicInfoServiceNs {
+
+  export interface HazardDatas {
+    temp:number;
+    liquid:number;
+    camera:number;
+    alarm:number;
+    pressure:number;
+    poisonous:number;
+    hazardInfo:number;
+    combustible:number;
+    major:number;
+  }
+
   export interface EnterpriseInfoModel {
     id: number;
     entprName: string;

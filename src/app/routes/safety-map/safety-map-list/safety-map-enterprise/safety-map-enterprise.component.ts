@@ -19,6 +19,7 @@ import {
 import EnterpriseInfoModel = EnterpriseBasicInfoServiceNs.EnterpriseInfoModel;
 import { webSocketIp } from '@env/environment';
 import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
+import HazardDatas = EnterpriseBasicInfoServiceNs.HazardDatas;
 
 enum IdentificationUrlEnum {
   FireNormal = '../../../../../assets/imgs/safeOnePage/fire.png',
@@ -75,6 +76,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   @Input() enterprisePosition: LatitudeLongitudeModel;
   @Output() returnBackBtn: EventEmitter<any>;
   enterpriseInfo: EnterpriseInfoModel;
+  hazardDataNums: HazardDatas; // 存储所有标识数量的数组
   map;
   layerEnum = LayerEnum;
   tilePhoto: Object; // 倾斜摄影对象
@@ -134,6 +136,17 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     // 初始化标注数组
     this.initIdentificationArray();
     this.returnBackBtn = new EventEmitter<any>();
+    this.hazardDataNums = {
+      temp: 0,
+      liquid: 0,
+      camera: 0,
+      alarm: 0,
+      pressure: 0,
+      poisonous: 0,
+      hazardInfo: 0,
+      combustible: 0,
+      major: 0,
+    };
   }
 
   // 选择标识
@@ -402,6 +415,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
     this.enterpriseInfo = await this.enterpriseBasicInfoService.getEnterpriseInfoDetail({ entprId: this.enterpriseId });
   }
 
+  // 开启websocket
   connectWs() {
     if (this.ws != null) {
       this.ws.close();
@@ -416,12 +430,78 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       //socket 获取后端传递到前端的信息
       // this.ws.send('sonmething');
       if (e.data !== '-连接已建立-') {
-        console.log(e);
         const tempArray = JSON.parse(e.data);
-        // this.dataList = (tempArray as any[]).filter((item) => {
-        //   return item.entprId === this.entprId;
-        // });
-        console.log(tempArray);
+        this.hazardDataNums = (tempArray as any[]).filter((item) => {
+          return item.entprId === this.enterpriseId;
+        })[0];
+        this.identificationBtnObjArray = [
+          {
+            name: '实时报警',
+            type: 'default',
+            icon: 'bell',
+            isSel: false,
+            layNum: LayerEnum.Alarm,
+            count: this.hazardDataNums.alarm
+          },
+          {
+            name: '温度传感器',
+            type: 'default',
+            icon: 'temperature',
+            isSel: false,
+            layNum: LayerEnum.Temperature,
+            count: this.hazardDataNums.temp
+          },
+          {
+            name: '压力传感器',
+            type: 'default',
+            icon: 'pressure',
+            isSel: false,
+            layNum: LayerEnum.Pressure,
+            count: this.hazardDataNums.pressure
+          },
+          {
+            name: '液位传感器',
+            type: 'default',
+            icon: 'water-level',
+            isSel: false,
+            layNum: LayerEnum.WaterLevel,
+            count: this.hazardDataNums.liquid
+          },
+          {
+            name: '可燃气体',
+            type: 'default',
+            icon: 'fire',
+            isSel: false,
+            layNum: LayerEnum.FireGas,
+            count: this.hazardDataNums.combustible,
+          },
+          {
+            name: '有毒气体',
+            type: 'default',
+            icon: 'poison',
+            isSel: false,
+            layNum: LayerEnum.PoisonousGas,
+            count: this.hazardDataNums.poisonous,
+          },
+          {
+            name: '摄像头',
+            type: 'default',
+            icon: 'camera',
+            isSel: false,
+            layNum: LayerEnum.Camera,
+            count: this.hazardDataNums.camera
+          },
+        ];
+        this.layerObjArray = [
+          {
+            name: '重大危险源',
+            type: 'default',
+            icon: 'warning',
+            isSel: false,
+            layNum: LayerEnum.HazardSources,
+            count: this.hazardDataNums.major
+          },
+        ];
         this.cdr.markForCheck();
       }
     };
@@ -443,79 +523,11 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   async ngAfterViewInit() {
     this.initMap();
     await this.getEnterpriseInfo();
-    // this.enterpriseInfo.hazardDatas.alarm,
-    this.identificationBtnObjArray = [
-      {
-        name: '实时报警',
-        type: 'default',
-        icon: 'bell',
-        isSel: false,
-        layNum: LayerEnum.Alarm,
-        count: 1
-      },
-      {
-        name: '温度传感器',
-        type: 'default',
-        icon: 'temperature',
-        isSel: false,
-        layNum: LayerEnum.Temperature,
-        count: 1
-      },
-      {
-        name: '压力传感器',
-        type: 'default',
-        icon: 'pressure',
-        isSel: false,
-        layNum: LayerEnum.Pressure,
-        count: 1
-      },
-      {
-        name: '液位传感器',
-        type: 'default',
-        icon: 'water-level',
-        isSel: false,
-        layNum: LayerEnum.WaterLevel,
-        count: 1
-      },
-      {
-        name: '可燃气体',
-        type: 'default',
-        icon: 'fire',
-        isSel: false,
-        layNum: LayerEnum.FireGas,
-        count: 1
-      },
-      {
-        name: '有毒气体',
-        type: 'default',
-        icon: 'poison',
-        isSel: false,
-        layNum: LayerEnum.PoisonousGas,
-        count: 1
-      },
-      {
-        name: '摄像头',
-        type: 'default',
-        icon: 'camera',
-        isSel: false,
-        layNum: LayerEnum.Camera,
-        count: 1
-      },
-    ];
-    this.layerObjArray = [
-      {
-        name: '重大危险源',
-        type: 'default',
-        icon: 'warning',
-        isSel: false,
-        layNum: LayerEnum.HazardSources,
-        count: 1
-      },
-    ];
+    this.connectWs();
     // 初始化企业范围
     this.initEnterpriseArea();
 
-    this.connectWs();
+
     this.cdr.markForCheck();
   }
 
