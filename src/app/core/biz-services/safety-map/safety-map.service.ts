@@ -4,7 +4,8 @@ import { HttpUtilService } from '@core/net/http-util.service';
 
 export namespace SafetyMapServiceNs {
   export enum WebSocketTypeEnum {
-    Alarm = 1,
+    NormaL,
+    Alarm ,
     Temp,
     Press,
     WaterLevel,
