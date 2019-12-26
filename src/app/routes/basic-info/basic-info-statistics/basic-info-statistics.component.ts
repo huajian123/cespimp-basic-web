@@ -1,5 +1,40 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { _HttpClient, ModalHelper } from '@delon/theme';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  EnterpStatisticsInfoService,
+  EnterpStatisticsInfoServiceNs,
+} from '@core/biz-services/basic-info/basic-info-statistics.service';
+import EnterpStatisticsModel = EnterpStatisticsInfoServiceNs.EnterpStatisticsModel;
+import EntprScaleDTOS = EnterpStatisticsInfoServiceNs.EntprScaleDTOS;
+import EntprStandLevelDTOS = EnterpStatisticsInfoServiceNs.EntprStandLevelDTOS;
+import EntprEcoDTOS = EnterpStatisticsInfoServiceNs.EntprEcoDTOS;
+import EntprScaleModel = EnterpStatisticsInfoServiceNs.EntprScaleModel;
+import EntprStandLevelModel = EnterpStatisticsInfoServiceNs.EntprStandLevelModel;
+import EntprEcoModel = EnterpStatisticsInfoServiceNs.EntprEcoModel;
+
+
+interface ScaleNumberModel {
+  scaleSm: number;
+  scaleXm: number;
+  scaleLm: number;
+}
+
+interface StandLevelModel {
+  standLevelLm: number;
+  standLevelXm: number;
+  standLevelSm: number;
+}
+
+interface EnterpEcoModel {
+  shareHold: number,
+  foreign: number,
+  entprEco: number,
+  private: number,
+  collective: number,
+  individual: number,
+  stateOwned: number,
+  jointVenture: number,
+  other: number;
+}
 
 @Component({
   selector: 'app-basic-info-basic-info-statistics',
@@ -10,11 +45,131 @@ import { _HttpClient, ModalHelper } from '@delon/theme';
 export class BasicInfoBasicInfoStatisticsComponent implements OnInit {
   ColumnarOption: any;
   CakeOption: any;
+  dataInfo: EnterpStatisticsModel;
+  EntprScaleArray: EntprScaleDTOS[];
+  EntprStandLevelArray: EntprStandLevelDTOS[];
+  EntprEcoArray: EntprEcoDTOS[];
+  entprStandLevelNumber: StandLevelModel;
+  entprScaleNumber: ScaleNumberModel;
+  entprEcoNumber: EnterpEcoModel;
 
-  constructor(private http: _HttpClient, private modal: ModalHelper) {
+
+  constructor(private cdr: ChangeDetectorRef, private dataService: EnterpStatisticsInfoService) {
+    this.EntprScaleArray = [];
+    this.EntprStandLevelArray = [];
+    this.EntprEcoArray = [];
+    this.entprScaleNumber = {
+      scaleSm: 0,
+      scaleXm: 0,
+      scaleLm: 0,
+    };
+    this.entprEcoNumber = {
+      shareHold: 0,
+      foreign: 0,
+      entprEco: 0,
+      private: 0,
+      collective: 0,
+      individual: 0,
+      stateOwned: 0,
+      jointVenture: 0,
+      other: 0,
+    }
+    ;
+    this.entprStandLevelNumber = {
+      standLevelLm: 0,
+      standLevelXm: 0,
+      standLevelSm: 0,
+    };
 
   }
-/*饼状图*/
+
+  async getDetail() {
+    this.dataInfo = await this.dataService.getEnterpStatisticsInfoDetail();
+    this.dataInfo.statisticsEntprScaleDTOS.forEach((item, index) => {
+      const ScaleObject = {
+        entprScale: item.entprScale,
+        entprNum: item.entprNum,
+      };
+      this.EntprScaleArray.push(ScaleObject);
+      switch (item.entprScale) {
+        case EntprScaleModel.entprScaleLm:
+          this.entprScaleNumber.scaleLm = this.EntprScaleArray[index].entprNum;
+          break;
+        case EntprScaleModel.entprScaleXm:
+          this.entprScaleNumber.scaleXm = this.EntprScaleArray[index].entprNum;
+          break;
+        case EntprScaleModel.entprScaleSm:
+          this.entprScaleNumber.scaleSm = this.EntprScaleArray[index].entprNum;
+          break;
+        default:
+          return;
+      }
+    });
+    this.dataInfo.statisticsEntprStandLevelDTOS.forEach((item, index) => {
+      const LevelObjects = {
+        standLevel: item.standLevel,
+        entprNum: item.entprNum,
+      };
+      this.EntprStandLevelArray.push(LevelObjects);
+      switch (item.standLevel) {
+        case EntprStandLevelModel.entprStandLevelLm:
+          this.entprStandLevelNumber.standLevelLm = this.EntprStandLevelArray[index].entprNum;
+          break;
+        case EntprStandLevelModel.entprStandLevelXm:
+          this.entprStandLevelNumber.standLevelXm = this.EntprStandLevelArray[index].entprNum;
+          break;
+        case EntprStandLevelModel.entprStandLevelSm:
+          this.entprStandLevelNumber.standLevelSm = this.EntprStandLevelArray[index].entprNum;
+          break;
+        default:
+          return;
+      }
+    });
+    this.dataInfo.statisticsEntprEcoDTOS.forEach((item, index) => {
+      const EcoObject = {
+        entprEcoType: item.entprEcoType,
+        entprEcoRatio: item.entprEcoRatio,
+      };
+      this.EntprEcoArray.push(EcoObject);
+      switch (item.entprEcoType) {
+        case EntprEcoModel.ShareHoldingSystem:
+          this.entprEcoNumber.shareHold = this.EntprEcoArray[index].entprEcoRatio;
+          break;
+          case EntprEcoModel.ForeignInvestment:
+            this.entprEcoNumber.foreign = this.EntprEcoArray[index].entprEcoRatio;
+            break;
+          case EntprEcoModel.EntprEcoInvestment:
+            this.entprEcoNumber.entprEco = this.EntprEcoArray[index].entprEcoRatio;
+            break;
+          case EntprEcoModel.PrivateEconomy:
+            this.entprEcoNumber.private = this.EntprEcoArray[index].entprEcoRatio;
+            break;
+          case EntprEcoModel.CollectiveEconomy:
+            this.entprEcoNumber.collective = this.EntprEcoArray[index].entprEcoRatio;
+            break;
+          case EntprEcoModel.IndividualEconomy:
+            this.entprEcoNumber.individual = this.EntprEcoArray[index].entprEcoRatio;
+            break;
+          case EntprEcoModel.StateOwnedEconomy:
+            this.entprEcoNumber.stateOwned = this.EntprEcoArray[index].entprEcoRatio;
+            break;
+          case EntprEcoModel.JointVentureEconomy:
+            this.entprEcoNumber.jointVenture = this.EntprEcoArray[index].entprEcoRatio;
+            break;
+          case EntprEcoModel.Other:
+            this.entprEcoNumber.other = this.EntprEcoArray[index].entprEcoRatio;
+            break;
+        default:
+          return;
+      }
+    });
+    //console.log(this.EntprStandLevelArray);
+    this.initColumnar();
+    this.initCake();
+    this.cdr.markForCheck();
+  }
+
+  /*饼状图*/
   initCake() {
     this.CakeOption = {
       backgroundColor: 'rgba(255,255,255,1)',
@@ -50,7 +205,7 @@ export class BasicInfoBasicInfoStatisticsComponent implements OnInit {
           normal: {
             show: false,
             position: 'center',
-            formatter: '{text|{b}}\n{c} ({d}%)',
+            formatter: '{text|{b}}\n {d}%',
             rich: {
               text: {
                 color: '#666',
@@ -76,45 +231,46 @@ export class BasicInfoBasicInfoStatisticsComponent implements OnInit {
         },
         data: [{
           name: '股份制',
-          value: 18,
+          value: this.entprEcoNumber.shareHold,
         },
           {
             name: '外商投资',
-            value: 16,
+            value: this.entprEcoNumber.foreign,
           },
           {
             name: '港澳台投资',
-            value: 15,
+            value: this.entprEcoNumber.entprEco,
           },
           {
             name: '私营经济',
-            value: 14,
+            value: this.entprEcoNumber.private,
           },
           {
             name: '集体经济',
-            value: 10,
+            value: this.entprEcoNumber.collective,
           },
           {
             name: '个体经济',
-            value: 7.9,
+            value: this.entprEcoNumber.individual,
           },
           {
             name: '国有经济',
-            value: 6.7,
+            value: this.entprEcoNumber.stateOwned,
           },
           {
             name: '联营经济',
-            value: 6,
+            value: this.entprEcoNumber.jointVenture,
           },
           {
             name: '其他',
-            value: 4.5,
+            value: this.entprEcoNumber.other,
           },
         ],
       }],
     };
   }
-/*柱状图*/
+
+  /*柱状图*/
   initColumnar() {
     this.ColumnarOption = {
       title: {
@@ -122,37 +278,37 @@ export class BasicInfoBasicInfoStatisticsComponent implements OnInit {
         bottom: 10,
         left: 'center',
         textStyle: {
-          fontSize: 14
-        }
+          fontSize: 14,
+        },
       },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
-          type: 'shadow'
-        }
+          type: 'shadow',
+        },
       },
       grid: {
         left: '3%',
         right: '4%',
         bottom: '5%',
-        containLabel: true
+        containLabel: true,
       },
       xAxis: [{
         type: 'category',
         axisTick: {
           show: false,
-          color: '#707070'
+          color: '#707070',
         },
         axisLabel: {
           textStyle: {
             fontSize: 14,
-            color: '#4D4D4D'
-          }
+            color: '#4D4D4D',
+          },
         },
         axisLine: {
           lineStyle: {
-            color: '#707070'
-          }
+            color: '#707070',
+          },
         },
         data: ['大型企业', '中型企业', '小型企业', '标准化一级', '标准化二级', '标准化三级'],
       }],
@@ -161,19 +317,19 @@ export class BasicInfoBasicInfoStatisticsComponent implements OnInit {
         name: '企业数量',
         nameTextStyle: {
           fontSize: 14,
-          color: '#4D4D4D'
+          color: '#4D4D4D',
         },
         axisLabel: {
           textStyle: {
             fontSize: 12,
-            color: '#4D4D4D'
-          }
+            color: '#4D4D4D',
+          },
         },
         axisLine: {
           lineStyle: {
-            color: '#707070'
-          }
-        }
+            color: '#707070',
+          },
+        },
       },
       series: [{
         name: '企业数量（个）',
@@ -181,60 +337,58 @@ export class BasicInfoBasicInfoStatisticsComponent implements OnInit {
         barWidth: '40%',
         data: [
           {
-          name: '大型企业',
-          value: '9',
-          itemStyle: {
-            color: '#1F78B4'
-          }
-        },
+            name: '大型企业',
+            value: this.entprScaleNumber.scaleLm,
+            itemStyle: {
+              color: '#1F78B4',
+            },
+          },
           {
             name: '中型企业',
-            value: '35',
+            value: this.entprScaleNumber.scaleXm,
             itemStyle: {
-              color: '#A6CEE3'
-            }
+              color: '#A6CEE3',
+            },
           },
           {
             name: '小型企业',
-            value: '20',
+            value: this.entprScaleNumber.scaleSm,
             itemStyle: {
-              color: '#B2DF8A'
-            }
+              color: '#B2DF8A',
+            },
           },
           {
             name: '标准化一级',
-            value: '18',
+            value: this.entprStandLevelNumber.standLevelLm,
             itemStyle: {
-              color: '#33A02C'
-            }
+              color: '#33A02C',
+            },
           },
           {
             name: '标准化二级',
-            value: '15',
+            value: this.entprStandLevelNumber.standLevelXm,
             itemStyle: {
-              color: '#FB9A99'
-            }
+              color: '#FB9A99',
+            },
           },
           {
             name: '标准化三级',
-            value: '5',
+            value: this.entprStandLevelNumber.standLevelSm,
             itemStyle: {
-              color: '#E31A1C'
-            }
-          }
-        ]
-      }]
+              color: '#E31A1C',
+            },
+          },
+        ],
+      }],
     };
   }
 
-/*  this.cdr.markForCheck();*/
   ngOnInit() {
-    this.initColumnar();
-    this.initCake();
+    this.getDetail();
   }
 
   _onReuseInit() {
-    this.ngOnInit()
+    this.ngOnInit();
   }
 
 }

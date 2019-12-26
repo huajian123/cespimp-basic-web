@@ -81,7 +81,6 @@ export class BasicInfoProductionDeviceInfoEditAddComponent implements OnInit {
     } else {
       params.id = this.id;
       params.updateBy = this.loginInfo.realName;
-      console.log(params.updateBy);
       submitHandel = this.dataService.editProductionDevice(params);
     }
     await submitHandel;

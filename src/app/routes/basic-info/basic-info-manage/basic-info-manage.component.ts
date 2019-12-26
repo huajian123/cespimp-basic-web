@@ -5,7 +5,7 @@ import { STColumn, STData } from '@delon/abc';
 import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import FactoryInfoModel = BasicInfoServiceNs.FactoryInfoModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
-import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
+import { ShowMessageService } from '../../../widget/show-message/show-message';
 import BasicInfoEntprSearchModel = BasicInfoServiceNs.BasicInfoEntprSearchModel;
 
 @Component({
