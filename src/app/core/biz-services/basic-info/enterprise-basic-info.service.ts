@@ -43,15 +43,15 @@ export namespace EnterpriseBasicInfoServiceNs {
     standLevel?: number;
     safetySupervisionLevel?: number;
     localSafetyAdmin?: number;
-    hazardDatas?:{
-      temp:number;
-      liquid:number;
-      monitorCameras:number;
+    safeOneMapDataNumDTO?:{
+      major:number;
       alarm:number;
+      temp:number;
       pressure:number;
+      liquid:number;
       poisonous:number;
-      hazardInfo:number;
       combustible:number;
+      camera:number;
 
     }
   }
