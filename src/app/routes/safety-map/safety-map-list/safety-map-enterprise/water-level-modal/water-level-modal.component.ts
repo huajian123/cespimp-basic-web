@@ -10,9 +10,6 @@ import { subDays, addDays } from 'date-fns';
   selector: 'water-level-modal',
   templateUrl: './water-level-modal.component.html',
   styleUrls: ['./water-level-modal.component.scss'],
-  host: {
-    '[class.d-block]': 'true',
-  },
 })
 export class WaterLevelModalComponent implements OnInit, OnDestroy {
   @Input() id;
@@ -197,6 +194,8 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
       locFactory: '',
       firstAlarmThreshold: 0,
       secondAlarmThreshold: 0,
+      thirdAlarmThreshold: 0,
+      fourthAlarmThreshold: 0,
       status: 0,
       currentValue: 0,
       historyData: [],
@@ -502,7 +501,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
         this.currentDataInfo = tempArray.filter(({ id }) => {
           return id === this.id;
         })[0];
-
+        console.log(this.currentDataInfo);
         this.setPercent(this.currentDataInfo.currentValue, {
           first: this.currentDataInfo.firstAlarmThreshold,
           second: this.currentDataInfo.secondAlarmThreshold,

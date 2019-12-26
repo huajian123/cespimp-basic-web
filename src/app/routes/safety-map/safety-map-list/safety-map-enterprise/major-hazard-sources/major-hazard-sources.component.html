@@ -157,5 +157,25 @@
       </nz-tab>
     </nz-tabset>
   </nz-modal>
+
+  <div class="temp-wrap" *ngIf="modelIsShow.temp">
+    <temp-modal [id]="selectedSensorId" [(showModel)]="modelIsShow.temp"></temp-modal>
+  </div>
+
+  <div class="temp-wrap" *ngIf="modelIsShow.press">
+    <press-modal [id]="selectedSensorId" [(showModel)]="modelIsShow.press"></press-modal>
+  </div>
+
+  <div class="temp-wrap" *ngIf="modelIsShow.waterLevel">
+    <water-level-modal [id]="selectedSensorId" [(showModel)]="modelIsShow.waterLevel"></water-level-modal>
+  </div>
+
+  <div class="temp-wrap" *ngIf="modelIsShow.fireGas">
+    <combustible-gas-modal [id]="selectedSensorId" [(showModel)]="modelIsShow.fireGas"></combustible-gas-modal>
+  </div>
+
+  <div class="temp-wrap" *ngIf="modelIsShow.poisonousGas">
+    <toxic-gas-modal [id]="selectedSensorId" [(showModel)]="modelIsShow.poisonousGas"></toxic-gas-modal>
+  </div>
 </div>
 

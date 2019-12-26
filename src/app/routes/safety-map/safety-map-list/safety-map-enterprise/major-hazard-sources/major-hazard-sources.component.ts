@@ -23,6 +23,7 @@ import SensorInfoWebSocketModel = SafetyMapServiceNs.SensorInfoWebSocketModel;
 import { EVENT_KEY } from '@env/staticVariable';
 import { Router } from '@angular/router';
 
+
 enum PartTypeEnum {
   Tank = 1,
   Warehouse,
@@ -34,6 +35,14 @@ enum TabChangeEnum {
   Danger,
   Sensor,
   Camera
+}
+
+enum SensorType {
+  Temp = 1,
+  Press,
+  WaterLevel,
+  PoisonousGas,
+  FireGas
 }
 
 @Component({
@@ -64,7 +73,18 @@ export class MajorHazardSourcesComponent implements OnInit {
   @ViewChild('sensorSt', { static: false }) sensorSt: STComponent;
   @ViewChild('cameraSt', { static: false }) cameraSt: STComponent;
 
-  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef, private dataService: SafetyMapService,private router: Router) {
+  modelIsShow: {
+    temp: boolean,
+    press: boolean,
+    waterLevel: boolean,
+    fireGas: boolean,
+    poisonousGas: boolean,
+    camera: boolean,
+    hazardSource: boolean,
+  };
+  selectedSensorId: number; // 模态框中选中的传感器id
+
+  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef, private dataService: SafetyMapService, private router: Router) {
     this.dataUintsList = [];
     this.dataHazardList = [];
     this.dataCameraList = [];
@@ -86,6 +106,16 @@ export class MajorHazardSourcesComponent implements OnInit {
       managerMobile: '',
       description: '',
     };
+    this.modelIsShow = {
+      temp: false,
+      press: false,
+      waterLevel: false,
+      fireGas: false,
+      poisonousGas: false,
+      camera: false,
+      hazardSource: false,
+    };
+    this.selectedSensorId = -1;
   }
 
   initForm() {
@@ -108,7 +138,7 @@ export class MajorHazardSourcesComponent implements OnInit {
   // 跳转单元信息的页面
   goUintsDetailPage(item, modal) {
     this.close();
-    setTimeout(()=>{
+    setTimeout(() => {
       if (item.partType === PartTypeEnum.Tank) {
         this.router.navigate(['/hazard/storage-tank-management/tank-list']);
         window.sessionStorage.setItem(EVENT_KEY.tankNo, item.partNo);
@@ -121,9 +151,34 @@ export class MajorHazardSourcesComponent implements OnInit {
         this.router.navigate(['/hazard/warehouse-management/warehouse-list']);
         window.sessionStorage.setItem(EVENT_KEY.roomNo, item.partNo);
       }
-    })
+    });
 
   }
+
+  // 传感器监测
+  goSensorPage(item, modal) {
+    console.log(item);
+    this.selectedSensorId = item.id;
+    switch (item.sensorType) {
+      case SensorType.Temp:
+        this.modelIsShow.temp = true;
+        break;
+      case SensorType.Press:
+        this.modelIsShow.press = true;
+        break;
+      case SensorType.WaterLevel:
+        this.modelIsShow.waterLevel = true;
+        break;
+      case SensorType.FireGas:
+        this.modelIsShow.fireGas = true;
+        break;
+      case SensorType.PoisonousGas:
+        this.modelIsShow.poisonousGas = true;
+        break;
+    }
+
+  }
+
 
   goDetailPage(item, modal) {
     console.log(item);
@@ -172,10 +227,10 @@ export class MajorHazardSourcesComponent implements OnInit {
       {
         title: '传感器类型',
         index: 'sensorType',
-        width: 120 ,
+        width: 120,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '在厂区位置', index: 'locFactory', width: 100, },
+      { title: '在厂区位置', index: 'locFactory', width: 100 },
       {
         title: '操作',
         fixed: 'right',
@@ -184,7 +239,7 @@ export class MajorHazardSourcesComponent implements OnInit {
           {
             text: '查看',
             icon: 'eye',
-            click: this.goDetailPage.bind(this),
+            click: this.goSensorPage.bind(this),
           },
         ],
       },
@@ -209,6 +264,7 @@ export class MajorHazardSourcesComponent implements OnInit {
   }
 
   selectChanged(e): void {
+    console.log(e);
     switch (e.index) {
       case TabChangeEnum.Unit: {
         this.dataUintsList = [];
@@ -247,6 +303,7 @@ export class MajorHazardSourcesComponent implements OnInit {
             sensorNo: item.sensorNo,
             sensorType: item.sensorType,
             locFactory: item.locFactory,
+            id: item.id,
           };
           this.dataSensorList.push(sensorObject);
         });
@@ -255,6 +312,7 @@ export class MajorHazardSourcesComponent implements OnInit {
       }
       case TabChangeEnum.Camera: {
         this.dataCameraList = [];
+        console.log(this.dataInfo.majorHazardCameras);
         this.dataInfo.majorHazardCameras.forEach(item => {
           const cameraObject = {
             cameraName: item.cameraName,

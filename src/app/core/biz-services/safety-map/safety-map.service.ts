@@ -134,6 +134,7 @@ export namespace SafetyMapServiceNs {
   }
 
   export interface SensorInfoWebSocketModel {
+    id?:number;
     sensorName: string;
     sensorNo: string;
     sensorType?: number;
