@@ -442,7 +442,6 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
         this.hazardDataNums = (tempArray as any[]).filter((item) => {
           return item.entprId === this.enterpriseId;
         })[0];
-        this.initIdentificationObj();
         this.cdr.markForCheck();
       }
     };

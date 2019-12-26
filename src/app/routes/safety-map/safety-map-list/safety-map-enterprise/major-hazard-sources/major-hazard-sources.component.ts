@@ -20,7 +20,14 @@ import UintsModel = SafetyMapServiceNs.UintsModel;
 import HazardMaterialsModel = SafetyMapServiceNs.HazardMaterialsModel;
 import CameraModel = SafetyMapServiceNs.CameraModel;
 import SensorInfoWebSocketModel = SafetyMapServiceNs.SensorInfoWebSocketModel;
+import { EVENT_KEY } from '@env/staticVariable';
+import { Router } from '@angular/router';
 
+enum PartTypeEnum {
+  Tank = 1,
+  Warehouse,
+  ProductionPlace
+}
 
 enum TabChangeEnum {
   Unit = 1,
@@ -57,7 +64,7 @@ export class MajorHazardSourcesComponent implements OnInit {
   @ViewChild('sensorSt', { static: false }) sensorSt: STComponent;
   @ViewChild('cameraSt', { static: false }) cameraSt: STComponent;
 
-  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef, private dataService: SafetyMapService) {
+  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef, private dataService: SafetyMapService,private router: Router) {
     this.dataUintsList = [];
     this.dataHazardList = [];
     this.dataCameraList = [];
@@ -98,7 +105,28 @@ export class MajorHazardSourcesComponent implements OnInit {
     });
   }
 
+  // 跳转单元信息的页面
+  goUintsDetailPage(item, modal) {
+    this.close();
+    setTimeout(()=>{
+      if (item.partType === PartTypeEnum.Tank) {
+        this.router.navigate(['/hazard/storage-tank-management/tank-list']);
+        window.sessionStorage.setItem(EVENT_KEY.tankNo, item.partNo);
+      }
+      if (item.partType === PartTypeEnum.ProductionPlace) {
+        this.router.navigate(['/hazard/production-management/production-list']);
+        window.sessionStorage.setItem(EVENT_KEY.placeNo, item.partNo);
+      }
+      if (item.partType === PartTypeEnum.Warehouse) {
+        this.router.navigate(['/hazard/warehouse-management/warehouse-list']);
+        window.sessionStorage.setItem(EVENT_KEY.roomNo, item.partNo);
+      }
+    })
+
+  }
+
   goDetailPage(item, modal) {
+    console.log(item);
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
@@ -127,7 +155,7 @@ export class MajorHazardSourcesComponent implements OnInit {
           {
             text: '查看',
             icon: 'eye',
-            click: this.goDetailPage.bind(this),
+            click: this.goUintsDetailPage.bind(this),
           },
         ],
       },
