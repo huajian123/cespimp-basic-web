@@ -29,8 +29,7 @@ export namespace SensorManagementListServiceNs {
 
   export interface MajorHazardUnitList {
     id?: number;
-    entprId?: number;
-    majorHazardId: number;
+    entprId: number;
     partType: number;
     partId: number;
     partNo: string;

@@ -10,12 +10,13 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd';
 import { PositionPickerService } from '../../../../widget/position-picker/position-picker.service';
-import { PositionPickerPolygonService } from '../../../../widget/position-picker-polygon/position-picker-polygon.service';
 import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import { enterpriseInfo } from '@env/environment';
 import { EVENT_KEY } from '@env/staticVariable';
 import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
-import { SensorManagementListInfoService } from '@core/biz-services/sensor-management/sensor-management.service';
+import {
+  SensorManagementListInfoService,
+} from '@core/biz-services/sensor-management/sensor-management.service';
 
 interface OptionsInterface {
   value: string | number;
@@ -51,18 +52,20 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
   HazardNatureOptions: OptionsInterface[];
   majorList: OptionsInterface[];
   majorAllNo: MajorHazardPartModel[];
+  majorHazardInfoNeed: OptionsInterface[];
   selMajorNoArray: OptionsInterface[];
   currentPolygonList: any[];
   showTrue: boolean;
 
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
-              private dataService: SensorManagementListInfoService, private positionPickerService: PositionPickerService,
-              private positionPickerPolygonService: PositionPickerPolygonService) {
+              private dataService: SensorManagementListInfoService, private positionPickerService: PositionPickerService) {
     this.returnBack = new EventEmitter<any>();
     this.showTrue = true;
     this.unitTypeOptions = [];
     this.sensorTypeOptions = [];
     this.HazardNatureOptions = [];
+    this.majorHazardInfoNeed = [];
+    this.majorAllNo = [];
     this.majorList = [
       { value: '1', label: '储罐' },
       { value: '2', label: '库房' },
@@ -94,8 +97,8 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
       longitude: [null, [Validators.required]],
       latitude: [null, [Validators.required]],
       locFactory: [null, []],
-      majorHazardId: [null, []],
-      partId: [null, []],
+      majorHazardName: [null, []],
+      partName: [null, []],
       partType: [null, []],
       firstAlarmThreshold: [null, []],
       secondAlarmThreshold: [null, []],
@@ -128,37 +131,41 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
     this.returnBack.emit({ refesh: true, pageNo: this.currentPageNum });
   }
 
-  showPolygonMap() {
-    this.positionPickerPolygonService.show({
-      isRemoteImage: true,
-      longitude: enterpriseInfo.longitude,
-      latitude: enterpriseInfo.latitude,
-      currentPolygonList: this.currentPolygonList,
-    }).then((res: ({ lat: number, lng: number }[])) => {
-      const tempArray = [];
-      if (res) {
-        res.forEach(({ lat, lng }) => {
-          const obj = { lat, lng };
-          tempArray.push(obj);
-        });
-        this.currentPolygonList = [...tempArray];
-        this.validateForm.get('majorScope').setValue(tempArray);
-      }
-    }).catch(e => null);
+  getPartNameOptions(type) {
+    const tempArray = this.majorAllNo.filter(item => { // type为当前选中的重大危险源type
+      return '' + item.partType === '' + type;
+    });
+    this.selMajorNoArray = [];//先初始化一个类型下面的list菜单内容
+    tempArray.forEach(item => {
+      const obj = { value: item.partId, label: item.partName, partType: item.partType };
+      this.selMajorNoArray.push(obj);//循环插入当前类型下面的list下拉内容菜单需传递的参数（partId，partName，partType）；
+    });
+  }
+
+// 重大危险源type类型选取改变
+  changeMajorType(type) {
+    this.getPartNameOptions(type);
+    this.validateForm.get('partName').reset();
   }
 
   async getMajorList() {
     this.entprId = this.loginInfo.entprId;
     const data = await this.dataService.getMajorList(this.entprId);
-    /*  data.majorHazardPartDTOS.forEach(item => {
-        this.majorAllNo.push({
-          partType: item.partType,
-          partNo: item.partNo,
-          partName: item.partName,
-          partId: item.partId,
-        });
-      });*/
+    data.majorHazardPartDTOS.forEach(item => {
+      const HazardPartObject = {
+        partType: item.partType,
+        partNo: item.partNo,
+        partName: item.partName,
+        partId: item.partId,
+      };
+      this.majorAllNo.push(HazardPartObject);
+    });
+    data.majorHazardInfoNeedListDTOS.forEach(({ id, majorHazardName }) => {
+      this.majorHazardInfoNeed.push({ label: majorHazardName, value: id });
+    });
+    this.cdr.markForCheck();
   }
+
 
   returnToList() {
     this.returnBack.emit();
