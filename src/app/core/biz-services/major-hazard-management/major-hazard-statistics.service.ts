@@ -3,13 +3,37 @@ import { HttpUtilService } from '@core/net/http-util.service';
 
 export namespace MajorHazardStatisticsInfoServiceNs {
   export interface EnterpHazardStatisticsModel {
-    majorHazardLevel?: number;
-    majorHazardRatio?: string;
-    majorHazardNum?: string;
+    level: EnterpHazardModel[];
+    gas: EnterpGasModel[];
+  }
+
+  export interface EnterpHazardModel {
+    majorHazardLevel: number;
+    majorHazardRatio: number;
+    majorHazardNum: number;
+  }
+
+  export interface EnterpGasModel {
+    gas: number,
+    entprNum: number,
+    gasRatio: number,
   }
 
   export interface EntprSearch {
     entprId: number;
+  }
+
+  export enum MajorHazarderModel {
+    HazardlevelSm = 1,
+    HazardlevelXm,
+    HazardlevelLm,
+    HazardlevelGm = 4
+  }
+
+  export enum MajorHazarderGasModel {
+    HazardGaslevelSm = 1,
+    HazardGaslevelXm,
+    HazardGaslevelLm,
   }
 
   export class EnterpriseHazardStatisticsServiceClass {
@@ -21,10 +45,6 @@ export namespace MajorHazardStatisticsInfoServiceNs {
       return this.http.get('data/major/hazard/statistics', param, { needSuccessInfo: true }).toPromise();
     }
 
-    /*修改详情接口*/
-    /*  public editIdCardInfoDetail(param:IdCardTabModel): Promise<IdCardTabModel> {
-        return this.http.put('data/basic/document/',param).toPromise();
-      }*/
   }
 }
 

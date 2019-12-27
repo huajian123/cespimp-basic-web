@@ -135,35 +135,34 @@ export class BasicInfoBasicInfoStatisticsComponent implements OnInit {
         case EntprEcoModel.ShareHoldingSystem:
           this.entprEcoNumber.shareHold = this.EntprEcoArray[index].entprEcoRatio;
           break;
-          case EntprEcoModel.ForeignInvestment:
-            this.entprEcoNumber.foreign = this.EntprEcoArray[index].entprEcoRatio;
-            break;
-          case EntprEcoModel.EntprEcoInvestment:
-            this.entprEcoNumber.entprEco = this.EntprEcoArray[index].entprEcoRatio;
-            break;
-          case EntprEcoModel.PrivateEconomy:
-            this.entprEcoNumber.private = this.EntprEcoArray[index].entprEcoRatio;
-            break;
-          case EntprEcoModel.CollectiveEconomy:
-            this.entprEcoNumber.collective = this.EntprEcoArray[index].entprEcoRatio;
-            break;
-          case EntprEcoModel.IndividualEconomy:
-            this.entprEcoNumber.individual = this.EntprEcoArray[index].entprEcoRatio;
-            break;
-          case EntprEcoModel.StateOwnedEconomy:
-            this.entprEcoNumber.stateOwned = this.EntprEcoArray[index].entprEcoRatio;
-            break;
-          case EntprEcoModel.JointVentureEconomy:
-            this.entprEcoNumber.jointVenture = this.EntprEcoArray[index].entprEcoRatio;
-            break;
-          case EntprEcoModel.Other:
-            this.entprEcoNumber.other = this.EntprEcoArray[index].entprEcoRatio;
-            break;
+        case EntprEcoModel.ForeignInvestment:
+          this.entprEcoNumber.foreign = this.EntprEcoArray[index].entprEcoRatio;
+          break;
+        case EntprEcoModel.EntprEcoInvestment:
+          this.entprEcoNumber.entprEco = this.EntprEcoArray[index].entprEcoRatio;
+          break;
+        case EntprEcoModel.PrivateEconomy:
+          this.entprEcoNumber.private = this.EntprEcoArray[index].entprEcoRatio;
+          break;
+        case EntprEcoModel.CollectiveEconomy:
+          this.entprEcoNumber.collective = this.EntprEcoArray[index].entprEcoRatio;
+          break;
+        case EntprEcoModel.IndividualEconomy:
+          this.entprEcoNumber.individual = this.EntprEcoArray[index].entprEcoRatio;
+          break;
+        case EntprEcoModel.StateOwnedEconomy:
+          this.entprEcoNumber.stateOwned = this.EntprEcoArray[index].entprEcoRatio;
+          break;
+        case EntprEcoModel.JointVentureEconomy:
+          this.entprEcoNumber.jointVenture = this.EntprEcoArray[index].entprEcoRatio;
+          break;
+        case EntprEcoModel.Other:
+          this.entprEcoNumber.other = this.EntprEcoArray[index].entprEcoRatio;
+          break;
         default:
           return;
       }
     });
-    //console.log(this.EntprStandLevelArray);
     this.initColumnar();
     this.initCake();
     this.cdr.markForCheck();
@@ -191,7 +190,7 @@ export class BasicInfoBasicInfoStatisticsComponent implements OnInit {
       series: [{
         type: 'pie',
         clockwise: false, // 饼图的扇区是否是顺时针排布
-        minAngle: 2, // 最小的扇区角度（0 ~ 360）
+       /* minAngle: 2,*/ // 最小的扇区角度（0 ~ 360）
         radius: ['40%', '70%'],
         center: ['30%', '50%'],
         avoidLabelOverlap: false,
