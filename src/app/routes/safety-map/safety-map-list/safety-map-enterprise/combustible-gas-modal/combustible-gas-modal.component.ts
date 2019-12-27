@@ -11,10 +11,10 @@ import { subDays, addDays } from 'date-fns';
   templateUrl: './combustible-gas-modal.component.html',
   styleUrls: ['./combustible-gas-modal.component.scss'],
   host: {
-    '[class.d-block]': 'true'
-  }
+    '[class.d-block]': 'true',
+  },
 })
-export class CombustibleGasModalComponent implements OnInit , OnDestroy {
+export class CombustibleGasModalComponent implements OnInit, OnDestroy {
   @Input() id;
   realTimeChart: any;
   historyChart: any;
@@ -26,6 +26,13 @@ export class CombustibleGasModalComponent implements OnInit , OnDestroy {
   @Output() showModelChange = new EventEmitter<boolean>();
   ws: WebSocket;//定义websocket
   currentDataInfo: SensorInfoWebSocketModel;
+  // 历史数据和实时数据y轴数据范围
+  dataRange: {
+    historyMax: number,
+    historyMin: number,
+    realTimeMax: number,
+    realTimeMin: number
+  };
   /*实时数据相关*/
   legendData = ['实时浓度'];
   time = 0;
@@ -140,6 +147,12 @@ export class CombustibleGasModalComponent implements OnInit , OnDestroy {
       status: 0,
       currentValue: 0,
       historyData: [],
+    };
+    this.dataRange = {
+      historyMax: 0,
+      historyMin: 0,
+      realTimeMax: 0,
+      realTimeMin: 0,
     };
   }
 
@@ -261,7 +274,8 @@ export class CombustibleGasModalComponent implements OnInit , OnDestroy {
         nameTextStyle: {
           color: '#bac7e5',
         },
-        max: 120,
+        max: this.dataRange.realTimeMax,
+        min: this.dataRange.realTimeMin,
         axisTick: {
           show: true,
         },
@@ -396,7 +410,8 @@ export class CombustibleGasModalComponent implements OnInit , OnDestroy {
         nameTextStyle: {
           color: '#bac7e5',
         },
-        max: 120,
+        max: this.dataRange.historyMax,
+        min: this.dataRange.historyMin,
         axisTick: {
           show: true,
         },
@@ -439,9 +454,18 @@ export class CombustibleGasModalComponent implements OnInit , OnDestroy {
       // this.ws.send('sonmething');
       if (e.data !== '-连接已建立-') {
         const tempArray = JSON.parse(e.data);
+        if (tempArray.length === 0) {
+          return;
+        }
         this.currentDataInfo = tempArray.filter(({ id }) => {
           return id === this.id;
         })[0];
+        if (this.currentDataInfo.currentValue > this.dataRange.realTimeMax) {
+          this.dataRange.realTimeMax = Math.ceil(this.currentDataInfo.currentValue * 1.1);
+        }
+        if (this.currentDataInfo.currentValue < this.dataRange.realTimeMin) {
+          this.dataRange.realTimeMin = Math.ceil(this.currentDataInfo.currentValue * 0.9);
+        }
 
         this.setPercent(this.currentDataInfo.currentValue, {
           first: this.currentDataInfo.firstAlarmThreshold,
@@ -481,13 +505,15 @@ export class CombustibleGasModalComponent implements OnInit , OnDestroy {
     this.realTimeOptions.series[0].data.push(p);
     this.realTimeOptions.dataZoom[0].start = this.zoomStart;
     this.realTimeOptions.dataZoom[0].end = this.zoomEnd;
+    this.realTimeOptions.yAxis.max = this.dataRange.realTimeMax;
+    this.realTimeOptions.yAxis.min = this.dataRange.realTimeMin;
     this.seriesData[0].markLine.data[0].yAxis = alarmThresold.first;
     this.seriesData[0].markLine.data[1].yAxis = alarmThresold.second;
     this.realTimeChart.setOption(this.realTimeOptions);
   }
 
   // 历史数据塞值
-  historySetPercent(p, t,alarmThresold) {
+  historySetPercent(p, t, alarmThresold) {
     this.historyOption.xAxis.data.push(t);
     this.historyOption.series[0].data.push(p);
     this.historyOption.dataZoom[0].start = this.historyZoomStart;
@@ -505,12 +531,20 @@ export class CombustibleGasModalComponent implements OnInit , OnDestroy {
     this.historyOption.series[0].data = [];
     const data = await this.safetyMapService.getSensorHistory(params);
     data.forEach(({ reportTime, sensorValue }) => {
-      const t=new MapPipe().transform(reportTime, 'date:MM-dd HH:mm:ss');
-      this.historySetPercent(sensorValue, t,{
+      if (sensorValue > this.dataRange.historyMax) {
+        this.dataRange.historyMax = Math.ceil(sensorValue * 1.1);
+      }
+      if (sensorValue < this.dataRange.historyMin) {
+        this.dataRange.historyMin = Math.ceil(sensorValue * 1.1);
+      }
+      const t = new MapPipe().transform(reportTime, 'date:MM-dd HH:mm:ss');
+      this.historySetPercent(sensorValue, t, {
         first: this.currentDataInfo.firstAlarmThreshold,
         second: this.currentDataInfo.secondAlarmThreshold,
       });
     });
+    this.historyOption.yAxis.max = this.dataRange.historyMax;
+    this.historyOption.yAxis.min = this.dataRange.historyMin;
     this.historyChart.setOption(this.historyOption);
   }
 
@@ -520,7 +554,7 @@ export class CombustibleGasModalComponent implements OnInit , OnDestroy {
   }
 
   disabledDate(current: Date) {
-    return current.getTime()<this.dateRange[0].getTime()||current.getTime() >= (addDays(this.dateRange[0], 4).getTime());
+    return current.getTime() < this.dateRange[0].getTime() || current.getTime() >= (addDays(this.dateRange[0], 4).getTime());
   }
 
   // 选择历史数据tab

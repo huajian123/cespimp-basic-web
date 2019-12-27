@@ -23,6 +23,12 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
   @Output() showModelChange = new EventEmitter<boolean>();
   ws: WebSocket;//定义websocket
   currentDataInfo: SensorInfoWebSocketModel;
+  dataRange: {
+    historyMax: number,
+    historyMin: number,
+    realTimeMax: number,
+    realTimeMin: number
+  };
   /*实时数据相关*/
   legendData = ['实时压力'];
   time = 0;
@@ -98,8 +104,8 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
                 color: '#FF5D1D',
               },
             },
-          }
-          ],
+          },
+        ],
         label: {},
       },
     },
@@ -180,7 +186,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
               },
             },
           },
-          ],
+        ],
       },
     },
   ];
@@ -199,6 +205,12 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
       status: 0,
       currentValue: 0,
       historyData: [],
+    };
+    this.dataRange = {
+      historyMax: 0,
+      historyMin: 0,
+      realTimeMax: 0,
+      realTimeMin: 0,
     };
   }
 
@@ -320,7 +332,8 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
         nameTextStyle: {
           color: '#bac7e5',
         },
-        max: 120,
+        max: this.dataRange.realTimeMax,
+        min: this.dataRange.realTimeMin,
         axisTick: {
           show: true,
         },
@@ -450,12 +463,14 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
         },
       }],
       yAxis: {
+
         type: 'value',
         name: 'cm',
         nameTextStyle: {
           color: '#bac7e5',
         },
-        max: 120,
+        max: this.dataRange.historyMax,
+        min: this.dataRange.historyMin,
         axisTick: {
           show: true,
         },
@@ -498,15 +513,25 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
       // this.ws.send('sonmething');
       if (e.data !== '-连接已建立-') {
         const tempArray = JSON.parse(e.data);
+        if (tempArray.length === 0) {
+          return;
+        }
         this.currentDataInfo = tempArray.filter(({ id }) => {
           return id === this.id;
         })[0];
         console.log(this.currentDataInfo);
+        if (this.currentDataInfo.currentValue > this.dataRange.realTimeMax) {
+          this.dataRange.realTimeMax = Math.ceil(this.currentDataInfo.currentValue * 1.1);
+        }
+        if (this.currentDataInfo.currentValue < this.dataRange.realTimeMin) {
+          this.dataRange.realTimeMin = Math.ceil(this.currentDataInfo.currentValue * 0.9);
+        }
+
         this.setPercent(this.currentDataInfo.currentValue, {
           first: this.currentDataInfo.firstAlarmThreshold,
           second: this.currentDataInfo.secondAlarmThreshold,
-          third:this.currentDataInfo.thirdAlarmThreshold,
-          fourth:this.currentDataInfo.fourthAlarmThreshold
+          third: this.currentDataInfo.thirdAlarmThreshold,
+          fourth: this.currentDataInfo.fourthAlarmThreshold,
         });
         this.cdr.markForCheck();
       }
@@ -542,6 +567,8 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
     this.realTimeOptions.series[0].data.push(p);
     this.realTimeOptions.dataZoom[0].start = this.zoomStart;
     this.realTimeOptions.dataZoom[0].end = this.zoomEnd;
+    this.realTimeOptions.yAxis.max = this.dataRange.realTimeMax;
+    this.realTimeOptions.yAxis.min = this.dataRange.realTimeMin;
     this.seriesData[0].markLine.data[0].yAxis = alarmThresold.fourth;
     this.seriesData[0].markLine.data[1].yAxis = alarmThresold.third;
     this.seriesData[0].markLine.data[2].yAxis = alarmThresold.second;
@@ -550,7 +577,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
   }
 
   // 历史数据塞值
-  historySetPercent(p, t,alarmThresold) {
+  historySetPercent(p, t, alarmThresold) {
     this.historyOption.xAxis.data.push(t);
     this.historyOption.series[0].data.push(p);
     this.historyOption.dataZoom[0].start = this.historyZoomStart;
@@ -570,14 +597,22 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
     this.historyOption.series[0].data = [];
     const data = await this.safetyMapService.getSensorHistory(params);
     data.forEach(({ reportTime, sensorValue }) => {
-      const t=new MapPipe().transform(reportTime, 'date:MM-dd HH:mm:ss');
-      this.historySetPercent(sensorValue, t,{
+      if (sensorValue > this.dataRange.historyMax) {
+        this.dataRange.historyMax = Math.ceil(sensorValue * 1.1);
+      }
+      if (sensorValue < this.dataRange.historyMin) {
+        this.dataRange.historyMin = Math.ceil(sensorValue * 1.1);
+      }
+      const t = new MapPipe().transform(reportTime, 'date:MM-dd HH:mm:ss');
+      this.historySetPercent(sensorValue, t, {
         first: this.currentDataInfo.firstAlarmThreshold,
         second: this.currentDataInfo.secondAlarmThreshold,
         third: this.currentDataInfo.thirdAlarmThreshold,
         fourth: this.currentDataInfo.fourthAlarmThreshold,
       });
     });
+    this.historyOption.yAxis.max = this.dataRange.historyMax;
+    this.historyOption.yAxis.min = this.dataRange.historyMin;
     this.historyChart.setOption(this.historyOption);
   }
 
@@ -587,7 +622,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
   }
 
   disabledDate(current: Date) {
-    return current.getTime()<this.dateRange[0].getTime()||current.getTime() >= (addDays(this.dateRange[0], 4).getTime());
+    return current.getTime() < this.dateRange[0].getTime() || current.getTime() >= (addDays(this.dateRange[0], 4).getTime());
   }
 
   // 选择历史数据tab

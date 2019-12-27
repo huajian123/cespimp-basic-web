@@ -439,6 +439,9 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       // this.ws.send('sonmething');
       if (e.data !== '-连接已建立-') {
         const tempArray = JSON.parse(e.data);
+        if (tempArray.length === 0) {
+          return;
+        }
         this.hazardDataNums = (tempArray as any[]).filter((item) => {
           return item.entprId === this.enterpriseId;
         })[0];

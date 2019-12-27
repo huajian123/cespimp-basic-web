@@ -61,6 +61,9 @@ export class AlarmListComponent implements OnInit,OnDestroy {
       if (e.data !== '-连接已建立-') {
         console.log(e);
         const tempArray = JSON.parse(e.data);
+        if (tempArray.length === 0) {
+          return;
+        }
         this.dataList = (tempArray as any[]).filter((item) => {
           return item.entprId === this.entprId;
         });
