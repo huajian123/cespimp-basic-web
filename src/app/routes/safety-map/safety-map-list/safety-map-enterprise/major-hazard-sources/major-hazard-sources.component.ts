@@ -155,9 +155,14 @@ export class MajorHazardSourcesComponent implements OnInit {
 
   }
 
+  // 去摄像头的模态框
+  goCameraModal(item, modal) {
+    this.selectedSensorId = item.id;
+    this.modelIsShow.camera = true;
+  }
+
   // 传感器监测
   goSensorPage(item, modal) {
-    console.log(item);
     this.selectedSensorId = item.id;
     switch (item.sensorType) {
       case SensorType.Temp:
@@ -256,7 +261,7 @@ export class MajorHazardSourcesComponent implements OnInit {
           {
             text: '查看',
             icon: 'eye',
-            click: this.goDetailPage.bind(this),
+            click: this.goCameraModal.bind(this),
           },
         ],
       },
@@ -312,12 +317,12 @@ export class MajorHazardSourcesComponent implements OnInit {
       }
       case TabChangeEnum.Camera: {
         this.dataCameraList = [];
-        console.log(this.dataInfo.majorHazardCameras);
         this.dataInfo.majorHazardCameras.forEach(item => {
           const cameraObject = {
             cameraName: item.cameraName,
             cameraNo: item.cameraNo,
             locFactory: item.locFactory,
+            id: item.id,
           };
           this.dataCameraList.push(cameraObject);
         });
