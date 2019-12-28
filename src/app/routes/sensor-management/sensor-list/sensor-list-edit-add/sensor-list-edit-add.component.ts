@@ -17,6 +17,7 @@ import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
 import {
   SensorManagementListInfoService,
 } from '@core/biz-services/sensor-management/sensor-management.service';
+import { transform } from 'd3';
 
 interface OptionsInterface {
   value: string | number;
@@ -97,8 +98,8 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
       longitude: [null, [Validators.required]],
       latitude: [null, [Validators.required]],
       locFactory: [null, []],
-      majorHazardName: [null, []],
-      partName: [null, []],
+      majorHazardId: [null, []],
+      partId: [null, []],
       partType: [null, []],
       firstAlarmThreshold: [null, []],
       secondAlarmThreshold: [null, []],
@@ -132,21 +133,23 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
   }
 
   getPartNameOptions(type) {
+    //console.log(type);
     const tempArray = this.majorAllNo.filter(item => { // type为当前选中的重大危险源type
       return '' + item.partType === '' + type;
     });
     this.selMajorNoArray = [];//先初始化一个类型下面的list菜单内容
     tempArray.forEach(item => {
-      const obj = { value: item.partId, label: item.partName, partType: item.partType };
-      this.selMajorNoArray.push(obj);//循环插入当前类型下面的list下拉内容菜单需传递的参数（partId，partName，partType）；
+      const objArray = { value: item.partId, label: item.partName, partType: item.partType };
+      this.selMajorNoArray.push(objArray);//循环插入当前类型下面的list下拉内容菜单需传递的参数（partId，partName，partType）；
     });
   }
 
 // 重大危险源type类型选取改变
   changeMajorType(type) {
     this.getPartNameOptions(type);
-    this.validateForm.get('partName').reset();
+    this.validateForm.get('partId').reset();
   }
+
 
   async getMajorList() {
     this.entprId = this.loginInfo.entprId;
@@ -160,8 +163,8 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
       };
       this.majorAllNo.push(HazardPartObject);
     });
-    data.majorHazardInfoNeedListDTOS.forEach(({ id, majorHazardName }) => {
-      this.majorHazardInfoNeed.push({ label: majorHazardName, value: id });
+    data.majorHazardInfoNeedListDTOS.forEach(({ majorHazardId, majorHazardName }) => {
+      this.majorHazardInfoNeed.push({ label: majorHazardName, value: majorHazardId });
     });
     this.cdr.markForCheck();
   }
@@ -173,6 +176,15 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
 
   async getDetail() {
     const dataInfo = await this.dataService.getSensorInfoDetail(this.id);
+    //console.log(dataInfo);
+    this.getPartNameOptions(dataInfo.partType);
+    const selObject = this.selMajorNoArray.find(item => {
+      return item.label;
+    });
+    //console.log(selObject);
+    //this.validateForm.get('partType').setValue(selObject.partType);
+    this.validateForm.get('partId').setValue(selObject.label);
+    //dataInfo.partType = new MapPipe().transform(dataInfo.partType, 'partType');
     this.validateForm.patchValue(dataInfo);
     this.cdr.markForCheck();
   }

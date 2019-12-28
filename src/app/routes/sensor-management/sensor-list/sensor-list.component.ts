@@ -154,6 +154,6 @@ export class SensorManagementSensorListComponent implements OnInit {
   }
 
   _onReuseInit() {
-    this.ngOnInit()
+    this.ngOnInit();
   }
 }

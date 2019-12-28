@@ -11,6 +11,7 @@ export namespace SensorManagementListServiceNs {
     sensorNo: string;
     sensorName: string;
     majorHazardId?: number;
+    majorHazardName: string;
     partType?: number;
     partId?: number;
     longitude: number; // 经度
@@ -37,7 +38,7 @@ export namespace SensorManagementListServiceNs {
   }
 
   export interface MajorHazardInfoNeedList {
-    id?: number;
+    majorHazardId: number;
     majorHazardName: string;
   }
 
