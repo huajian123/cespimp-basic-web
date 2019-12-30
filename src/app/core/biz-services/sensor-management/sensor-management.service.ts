@@ -11,7 +11,6 @@ export namespace SensorManagementListServiceNs {
     sensorNo: string;
     sensorName: string;
     majorHazardId?: number;
-    majorHazardName: string;
     partType?: number;
     partId?: number;
     longitude: number; // 经度
