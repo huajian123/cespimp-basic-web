@@ -530,7 +530,10 @@ export class CombustibleGasModalComponent implements OnInit, OnDestroy {
     this.historyOption.xAxis.data = [];
     this.historyOption.series[0].data = [];
     const data = await this.safetyMapService.getSensorHistory(params);
-    data.forEach(({ reportTime, sensorValue }) => {
+    if(!data.sensorData){
+      return;
+    }
+    data.sensorData.forEach(({ reportTime, sensorValue }) => {
       if (sensorValue > this.dataRange.historyMax) {
         this.dataRange.historyMax = Math.ceil(sensorValue * 1.1);
       }
