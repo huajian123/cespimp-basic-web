@@ -1,159 +1,171 @@
 <div class="temp-wrap">
-  <nz-modal [(nzVisible)]="showModel" nzWidth="1100" [nzFooter]="null" (nzOnCancel)="close()">
+  <nz-modal [(nzVisible)]="showModel" [nzStyle]="{'height':'200px'}" nzWidth="1100" [nzFooter]="null"
+            (nzOnCancel)="close()">
     <nz-tabset (nzSelectChange)="selectChanged($event)">
       <nz-tab nzTitle="重大危险源信息">
-        <form nz-form [formGroup]="validateForm">
-          <nz-row>
-            <nz-col>
-              <nz-form-item>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="entprName">企业名称</nz-form-label>
-                <nz-form-control nzErrorTip="企业名称不为空">
-                  <input nz-input formControlName="entprName" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="majorHazardName">重大危险源名称</nz-form-label>
-                <nz-form-control nzErrorTip="重大危险源名称不为空">
-                  <input nz-input formControlName="majorHazardName" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="majorHazardNo">重大危险源编号</nz-form-label>
-                <nz-form-control nzErrorTip="重大危险源编号不为空">
-                  <input nz-input formControlName="majorHazardNo" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row>
-            <nz-col>
-              <nz-form-item>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="unitType">单元类型</nz-form-label>
-                <nz-form-control nzErrorTip="单元类型不为空">
-                  <input nz-input formControlName="unitType" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="useDate">投用时间</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="useDate" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="rvalue">R值</nz-form-label>
-                <nz-form-control nzErrorTip="R值不为空">
-                  <input nz-input formControlName="rvalue" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row>
-            <nz-col>
-              <nz-form-item>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="majorHazardLevel">重大危险源等级</nz-form-label>
-                <nz-form-control nzErrorTip="重大危险源等级不为空">
-                  <input nz-input formControlName="majorHazardLevel" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="majorHazardNature">重大危险源性质</nz-form-label>
-                <nz-form-control nzErrorTip="重大危险源性质不为空">
-                  <input nz-input formControlName="majorHazardNature" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label>重大危险源管理员</nz-form-label>
-                <nz-form-control nzErrorTip="重大危险源管理员不为空">
-                  <input nz-input formControlName="manager" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row>
-            <nz-col>
-              <nz-form-item>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row nzGutter="24">
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="managerMobile">管理员联系电话</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="managerMobile" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="locFactory">在厂区位置</nz-form-label>
-                <nz-form-control nzErrorTip="在厂区位置不为空">
-                  <input nz-input formControlName="locFactory" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <nz-form-item nzFlex>
-                <nz-form-label nzFor="description">重大危险源描述</nz-form-label>
-                <nz-form-control nzErrorTip="不为空">
-                  <input nz-input formControlName="description" readonly/>
-                </nz-form-control>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-          <nz-row>
-            <nz-col>
-              <nz-form-item>
-              </nz-form-item>
-            </nz-col>
-          </nz-row>
-        </form>
+        <div class="modal-content">
+          <form nz-form [formGroup]="validateForm">
+            <nz-row>
+              <nz-col>
+                <nz-form-item>
+                </nz-form-item>
+              </nz-col>
+            </nz-row>
+            <nz-row nzGutter="24">
+              <nz-col [nzSpan]="8">
+                <nz-form-item nzFlex>
+                  <nz-form-label nzFor="entprName">企业名称</nz-form-label>
+                  <nz-form-control nzErrorTip="企业名称不为空">
+                    <input nz-input formControlName="entprName" readonly/>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+              <nz-col [nzSpan]="8">
+                <nz-form-item nzFlex>
+                  <nz-form-label nzFor="majorHazardName">重大危险源名称</nz-form-label>
+                  <nz-form-control nzErrorTip="重大危险源名称不为空">
+                    <input nz-input formControlName="majorHazardName" readonly/>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+              <nz-col [nzSpan]="8">
+                <nz-form-item nzFlex>
+                  <nz-form-label nzFor="majorHazardNo">重大危险源编号</nz-form-label>
+                  <nz-form-control nzErrorTip="重大危险源编号不为空">
+                    <input nz-input formControlName="majorHazardNo" readonly/>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+            </nz-row>
+            <nz-row>
+              <nz-col>
+                <nz-form-item>
+                </nz-form-item>
+              </nz-col>
+            </nz-row>
+            <nz-row nzGutter="24">
+              <nz-col [nzSpan]="8">
+                <nz-form-item nzFlex>
+                  <nz-form-label nzFor="unitType">单元类型</nz-form-label>
+                  <nz-form-control nzErrorTip="单元类型不为空">
+                    <input nz-input formControlName="unitType" readonly/>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+              <nz-col [nzSpan]="8">
+                <nz-form-item nzFlex>
+                  <nz-form-label nzFor="useDate">投用时间</nz-form-label>
+                  <nz-form-control nzErrorTip="不为空">
+                    <input nz-input formControlName="useDate" readonly/>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+              <nz-col [nzSpan]="8">
+                <nz-form-item nzFlex>
+                  <nz-form-label nzFor="rvalue">R值</nz-form-label>
+                  <nz-form-control nzErrorTip="R值不为空">
+                    <input nz-input formControlName="rvalue" readonly/>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+            </nz-row>
+            <nz-row>
+              <nz-col>
+                <nz-form-item>
+                </nz-form-item>
+              </nz-col>
+            </nz-row>
+            <nz-row nzGutter="24">
+              <nz-col [nzSpan]="8">
+                <nz-form-item nzFlex>
+                  <nz-form-label nzFor="majorHazardLevel">重大危险源等级</nz-form-label>
+                  <nz-form-control nzErrorTip="重大危险源等级不为空">
+                    <input nz-input formControlName="majorHazardLevel" readonly/>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+              <nz-col [nzSpan]="8">
+                <nz-form-item nzFlex>
+                  <nz-form-label nzFor="majorHazardNature">重大危险源性质</nz-form-label>
+                  <nz-form-control nzErrorTip="重大危险源性质不为空">
+                    <input nz-input formControlName="majorHazardNature" readonly/>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+              <nz-col [nzSpan]="8">
+                <nz-form-item nzFlex>
+                  <nz-form-label>重大危险源管理员</nz-form-label>
+                  <nz-form-control nzErrorTip="重大危险源管理员不为空">
+                    <input nz-input formControlName="manager" readonly/>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+            </nz-row>
+            <nz-row>
+              <nz-col>
+                <nz-form-item>
+                </nz-form-item>
+              </nz-col>
+            </nz-row>
+            <nz-row nzGutter="24">
+              <nz-col [nzSpan]="8">
+                <nz-form-item nzFlex>
+                  <nz-form-label nzFor="managerMobile">管理员联系电话</nz-form-label>
+                  <nz-form-control nzErrorTip="不为空">
+                    <input nz-input formControlName="managerMobile" readonly/>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+              <nz-col [nzSpan]="8">
+                <nz-form-item nzFlex>
+                  <nz-form-label nzFor="locFactory">在厂区位置</nz-form-label>
+                  <nz-form-control nzErrorTip="在厂区位置不为空">
+                    <input nz-input formControlName="locFactory" readonly/>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+              <nz-col [nzSpan]="8">
+                <nz-form-item nzFlex>
+                  <nz-form-label nzFor="description">重大危险源描述</nz-form-label>
+                  <nz-form-control nzErrorTip="不为空">
+                    <input nz-input formControlName="description" readonly/>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+            </nz-row>
+            <nz-row>
+              <nz-col>
+                <nz-form-item>
+                </nz-form-item>
+              </nz-col>
+            </nz-row>
+          </form>
+        </div>
       </nz-tab>
       <nz-tab nzTitle="单元信息">
-        <st #uintsSt [page]="{showSize:false, front: false}" [bordered]="true" [scroll]="{x: '1100px'}"
-            [widthMode]="{ type: 'strict' }" [data]="dataUintsList" [columns]="uintsColumns" class="mt-sm"></st>
+        <div class="modal-content">
+          <st #uintsSt [page]="{showSize:false, front: false}" [bordered]="true" [scroll]="{x: '1100px'}"
+              [widthMode]="{ type: 'strict' }" [data]="dataUintsList" [columns]="uintsColumns" class="mt-sm"></st>
+        </div>
+
       </nz-tab>
       <nz-tab nzTitle="危险物质">
-        <st #hazardSt [page]="{showSize:false, front: false}" [bordered]="true" [scroll]="{x: '1000px'}"
-            [widthMode]="{ type: 'strict' }" [data]="dataHazardList" [columns]="hazardColumns" class="mt-sm"></st>
+        <div class="modal-content">
+          <st #hazardSt [page]="{showSize:false, front: false}" [bordered]="true" [scroll]="{x: '1000px'}"
+              [widthMode]="{ type: 'strict' }" [data]="dataHazardList" [columns]="hazardColumns" class="mt-sm"></st>
+        </div>
       </nz-tab>
       <nz-tab nzTitle="传感器监测">
-        <st #sensorSt [page]="{showSize:false, front: false}" [bordered]="true" [scroll]="{x: '1100px'}"
-            [widthMode]="{ type: 'strict' }" [data]="dataSensorList" [columns]="sensorColumns" class="mt-sm"></st>
+        <div class="modal-content">
+          <st #sensorSt [page]="{showSize:false, front: false}" [bordered]="true" [scroll]="{x: '1100px'}"
+              [widthMode]="{ type: 'strict' }" [data]="dataSensorList" [columns]="sensorColumns" class="mt-sm"></st>
+        </div>
       </nz-tab>
       <nz-tab nzTitle="视频监控">
-        <st #cameraSt [page]="{showSize:false, front: false}" [bordered]="true" [scroll]="{x: '1100px'}"
-            [widthMode]="{ type: 'strict' }" [data]="dataCameraList" [columns]="cameraColumns" class="mt-sm"></st>
+        <div class="modal-content">
+          <st #cameraSt [page]="{showSize:false, front: false}" [bordered]="true" [scroll]="{x: '1100px'}"
+              [widthMode]="{ type: 'strict' }" [data]="dataCameraList" [columns]="cameraColumns" class="mt-sm"></st>
+        </div>
       </nz-tab>
     </nz-tabset>
   </nz-modal>
