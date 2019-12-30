@@ -10,8 +10,10 @@ export namespace CameraManagementListServiceNs {
     cameraNo: string;
     cameraName: string;
     majorHazardId?: number;
+    majorHazardName?:string;
     partType?: number;
     partId?: number;
+    partName?:string;
     longitude: number; // 经度
     latitude: number; // 纬度
     locFactory?: string;
@@ -30,7 +32,6 @@ export namespace CameraManagementListServiceNs {
   export interface MajorHazardUnitList {
     id?: number;
     entprId?: number;
-    majorHazardId: number;
     partType: number;
     partId: number;
     partNo: string;
@@ -38,7 +39,7 @@ export namespace CameraManagementListServiceNs {
   }
 
   export interface MajorHazardInfoNeedList {
-    id?: number;
+    majorHazardId: number;
     majorHazardName: string;
   }
 

@@ -118,8 +118,8 @@
         <nz-form-item>
           <nz-form-label nzFor="name">重大危险源名称</nz-form-label>
             <nz-form-control nzErrorTip="请选择重大危险源名称">
-              <nz-select  formControlName="majorHazardId" [nzShowSearch]="true" [nzPlaceHolder]="'请选择重大危险源名称'">
-                <nz-option *ngFor="let item of majorHazardInfoNeed" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+              <nz-select (ngModelChange)="changeMajorNameList($event)" formControlName="majorHazardId" [nzShowSearch]="true" [nzPlaceHolder]="'请选择重大危险源名称'">
+                <nz-option *ngFor="let item of majorHazardNameList" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
               </nz-select>
             </nz-form-control>
         </nz-form-item>
@@ -128,8 +128,8 @@
         <nz-form-item>
           <nz-form-label nzFor="name">重大危险源类型</nz-form-label>
           <nz-form-control nzErrorTip="请选择重大危险源类型">
-            <nz-select  (ngModelChange)="changeMajorType($event)" formControlName="partType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成类型'">
-              <nz-option *ngFor="let item of majorList" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+            <nz-select  (ngModelChange)="changeMajorTypeList($event)" formControlName="partType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成类型'">
+              <nz-option *ngFor="let item of majorHazardTypeList" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -138,10 +138,20 @@
         <nz-form-item>
           <nz-form-label nzFor="name">重大危险源组成部分名称</nz-form-label>
           <nz-form-control nzErrorTip="请选择重大危险源组成部分名称">
-            <nz-select  formControlName="partId" [nzShowSearch]="true" [nzPlaceHolder]="'请选择重大危险源组成部分名称'">
+            <nz-select (ngModelChange)="changeMajorNoList($event)"  formControlName="partId" [nzShowSearch]="true" [nzPlaceHolder]="'请选择重大危险源组成部分名称'">
               <nz-option *ngFor="let item of selMajorNoArray" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
             </nz-select>
           </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+        <nz-form-label nzFor="name">重大危险源组成部分编号</nz-form-label>
+        <nz-form-control nzErrorTip="重大危险源组成部分编号">
+          <input nz-input formControlName="partNo" readonly placeholder="重大危险源组成部分编号">
+        </nz-form-control>
         </nz-form-item>
       </nz-col>
     </nz-row>
