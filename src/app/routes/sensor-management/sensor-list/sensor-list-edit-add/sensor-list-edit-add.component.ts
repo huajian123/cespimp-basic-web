@@ -29,11 +29,11 @@ interface PartNoOptionsInterface extends OptionsInterface {
   partNo: string | number;
 }
 
-interface MajorHazardPartModel {
+/*interface MajorHazardPartModel {
   partId: number;
   partNo: string;
   partName: string;
-}
+}*/
 
 enum sensorTypeNum {
   number = 3
@@ -56,7 +56,6 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
   sensorTypeOptions: OptionsInterface[];
   HazardNatureOptions: OptionsInterface[];
   majorHazardTypeList: OptionsInterface[];
-  majorAllNo: MajorHazardPartModel[];
   majorHazardNameList: OptionsInterface[];
   selMajorNoArray: PartNoOptionsInterface[];
   currentPolygonList: any[];
@@ -72,7 +71,6 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
     this.sensorTypeOptions = [];
     this.HazardNatureOptions = [];
     this.majorHazardNameList = [];
-    /*  this.majorAllNo = [];*/
     this.majorHazardTypeList = [];
     this.selMajorNoArray = [];
     this.loginInfo = {

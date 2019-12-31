@@ -22,11 +22,14 @@ export namespace MajorHazardListServiceNs {
     majorHazardUnits: FormGroup[];
   }
 
+/*
   export interface majorHazardData {
     majorHazardPartDTOS: MajorHazardUnitList[],
     majorHazardInfoNeedListDTOS: any;
   }
+*/
 
+/*
   export interface MajorHazardUnitList {
     id?: number;
     entprId?: number;
@@ -36,6 +39,7 @@ export namespace MajorHazardListServiceNs {
     partNo: string;
     partName?: string;
   }
+*/
 
   export interface EntprSearch {
     entprId: number;
@@ -75,9 +79,9 @@ export namespace MajorHazardListServiceNs {
     }
 
     /*重大危险源组成信息下拉列表*/
-    public getMajorList(entprId: number): Promise<majorHazardData> {
+    /*public getMajorList(entprId: number): Promise<majorHazardData> {
       return this.http.get('data/major/hazard/need', { entprId: entprId }).toPromise();
-    }
+    }*/
   }
 }
 

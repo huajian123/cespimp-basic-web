@@ -55,8 +55,6 @@ export class SensorManagementSensorListDetailComponent implements OnInit {
 
   async getDetailInfo() {
     this.dataInfo = await this.dataService.getSensorInfoDetail(this.id);
-    /* const database = await this.dataService.getMajorList(this.id);
-     console.log(database);*/
     if (this.dataInfo.sensorType == '' + 3) {
       this.sensorTrue = false;
     }

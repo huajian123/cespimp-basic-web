@@ -14,20 +14,22 @@ import { PositionPickerService } from '../../../../widget/position-picker/positi
 import { PositionPickerPolygonService } from '../../../../widget/position-picker-polygon/position-picker-polygon.service';
 import { enterpriseInfo } from '@env/environment';
 import { EVENT_KEY } from '@env/staticVariable';
-import { CameraManagementListInfoService } from '@core/biz-services/camera-management/camera-list.service';
+import {
+  CameraManagementListInfoService,
+  CameraManagementListServiceNs,
+} from '@core/biz-services/camera-management/camera-list.service';
+import MajorHazardUnitList = CameraManagementListServiceNs.MajorHazardUnitList;
+import { MapSet } from '@shared/directives/pipe/map.pipe';
 
 interface OptionsInterface {
   value: string | number;
   label: string;
-  partType?: number;
 }
 
-interface MajorHazardPartModel {
-  partType: number;
-  partNo: string;
-  partName: string;
-  partId: number;
+interface PartNoOptionsInterface extends OptionsInterface {
+  partNo: string | number;
 }
+
 
 @Component({
   selector: 'app-camera-management-camera-list-edit-add',
@@ -41,28 +43,19 @@ export class CameraManagementCameraListEditAddComponent implements OnInit {
   @Input() currentPageNum: number;
   @Output() returnBack: EventEmitter<any>;
   loginInfo: LoginInfoModel;
-  unitTypeOptions: OptionsInterface[];
-  sensorTypeOptions: OptionsInterface[];
-  HazardNatureOptions: OptionsInterface[];
-  majorList: OptionsInterface[];
-  majorAllNo: MajorHazardPartModel[];
-  selMajorNoArray: OptionsInterface[];
+  majorHazardTypeList: OptionsInterface[];
+  majorHazardNameList: OptionsInterface[];
+  selMajorNoArray: PartNoOptionsInterface[];
   currentPolygonList: any[];
-  showTrue: boolean;
+  dataNameList: any;
+  hazardObject: MajorHazardUnitList[];
 
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: CameraManagementListInfoService, private positionPickerService: PositionPickerService,
               private positionPickerPolygonService: PositionPickerPolygonService) {
     this.returnBack = new EventEmitter<any>();
-    this.showTrue = true;
-    this.unitTypeOptions = [];
-    this.sensorTypeOptions = [];
-    this.HazardNatureOptions = [];
-    this.majorList = [
-      { value: '1', label: '储罐' },
-      { value: '2', label: '库房' },
-      { value: '3', label: '生产场所' },
-    ];
+    this.majorHazardNameList = [];
+    this.majorHazardTypeList = [];
     this.selMajorNoArray = [];
     this.loginInfo = {
       createBy: '',
@@ -79,6 +72,7 @@ export class CameraManagementCameraListEditAddComponent implements OnInit {
       userName: '',
     };
     this.currentPolygonList = [];
+    this.hazardObject = [];
   }
 
   initForm() {
@@ -91,6 +85,7 @@ export class CameraManagementCameraListEditAddComponent implements OnInit {
       majorHazardId: [null, []],
       partId: [null, []],
       partType: [null, []],
+      partNo: [null, []],
     });
   }
 
@@ -120,40 +115,63 @@ export class CameraManagementCameraListEditAddComponent implements OnInit {
 
   async getDetail() {
     const dataInfo = await this.dataService.getCameraInfoDetail(this.id);
+    this.validateForm.get('majorHazardId').setValue(dataInfo.majorHazardId);
+    setTimeout(() => {
+      this.validateForm.get('partType').setValue(dataInfo.partType);
+      this.validateForm.get('partId').setValue(dataInfo.partId);
+      this.validateForm.get('partNo').setValue(dataInfo.partNo);
+    }, 300);
+
     this.validateForm.patchValue(dataInfo);
     this.cdr.markForCheck();
   }
 
-  showPolygonMap() {
-    this.positionPickerPolygonService.show({
-      isRemoteImage: true,
-      longitude: enterpriseInfo.longitude,
-      latitude: enterpriseInfo.latitude,
-      currentPolygonList: this.currentPolygonList,
-    }).then((res: ({ lat: number, lng: number }[])) => {
-      const tempArray = [];
-      if (res) {
-        res.forEach(({ lat, lng }) => {
-          const obj = { lat, lng };
-          tempArray.push(obj);
-        });
-        this.currentPolygonList = [...tempArray];
-        this.validateForm.get('majorScope').setValue(tempArray);
-      }
-    }).catch(e => null);
+  // 请选择重大危险源类型
+  changeMajorTypeList(e) {
+    if (e === null) {
+      return;
+    }
+    const selMajorNoArray = this.hazardObject.find((item) => {
+      return item.partType === e;
+    }).partNames;
+    this.selMajorNoArray.length = 0;
+    selMajorNoArray.forEach((item) => {
+      this.selMajorNoArray.push({ value: item.partId, label: item.partName, partNo: item.partNo });
+    });
   }
 
-  async getMajorList() {
+  // 请选择重大危险源组成部分名称
+  changeMajorNoList(e) {
+    if (e === null) {
+      return;
+    }
+    const tempSelMajorNo = this.selMajorNoArray.find((item) => {
+      return item.value === e;
+    });
+    this.validateForm.get('partNo').setValue(tempSelMajorNo.partNo);
+  }
+
+  async changeMajorNameList(event) {
+    this.hazardObject = await this.dataService.getMajorHazardTypeList(event);
+    //构建重大危险源类型下拉数据
+    this.majorHazardTypeList.length = 0;
+    this.hazardObject.forEach((item) => {
+      const tempObj = { value: item.partType, label: MapSet.partType[item.partType] };
+      this.majorHazardTypeList.push(tempObj);
+    });
+    this.validateForm.get('partType').reset();
+    this.validateForm.get('partId').reset();
+    this.validateForm.get('partNo').reset();
+    this.cdr.markForCheck();
+  }
+
+  async getMajorNameList() {
     this.entprId = this.loginInfo.entprId;
-    const data = await this.dataService.getMajorList(this.entprId);
-    /*    data.majorHazardPartDTOS.forEach(item => {
-          this.majorAllNo.push({
-            partType: item.partType,
-            partNo: item.partNo,
-            partName: item.partName,
-            partId: item.partId,
-          });
-        });*/
+    this.dataNameList = await this.dataService.getMajorHazardNameList(this.entprId);
+    this.dataNameList.forEach(({ majorHazardId, majorHazardName }) => {
+      this.majorHazardNameList.push({ label: majorHazardName, value: majorHazardId });
+    });
+    this.cdr.markForCheck();
   }
 
   returnToList() {
@@ -173,7 +191,7 @@ export class CameraManagementCameraListEditAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
-    this.getMajorList();
+    this.getMajorNameList();
     this.initForm();
     if (this.id) {
       this.getDetail();

@@ -161,7 +161,7 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
 
   async getMajorList() {
     this.entprId = this.loginInfo.entprId;
-    const data = await this.dataService.getMajorList(this.entprId);
+   /* const data = await this.dataService.getMajorList(this.entprId);
     data.majorHazardPartDTOS.forEach(item => {
       this.majorAllNo.push({
         partType: item.partType,
@@ -169,7 +169,7 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
         partName: item.partName,
         partId: item.partId,
       });
-    });
+    });*/
   }
 
 // 创建组成单元
