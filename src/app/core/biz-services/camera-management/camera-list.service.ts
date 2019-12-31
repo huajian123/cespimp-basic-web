@@ -3,7 +3,6 @@ import { HttpUtilService } from '@core/net/http-util.service';
 import { SearchCommonVO } from '@core/vo/comm/BusinessEnum';
 import { PageInfo } from '@core/vo/comm/PageInfo';
 
-
 export namespace CameraManagementListServiceNs {
   export interface CameraManagementListInfoModel {
     id: number;
@@ -14,6 +13,7 @@ export namespace CameraManagementListServiceNs {
     partType?: number;
     partId?: number;
     partName?:string;
+    partNo?: string;
     longitude: number; // 经度
     latitude: number; // 纬度
     locFactory?: string;
@@ -24,24 +24,22 @@ export namespace CameraManagementListServiceNs {
     cameraNo?: string;
   }
 
-  export interface majorHazardData {
-    majorHazardPartDTOS: MajorHazardUnitList[],
-    majorHazardInfoNeedListDTOS: MajorHazardInfoNeedList[];
-  }
-
   export interface MajorHazardUnitList {
-    id?: number;
-    entprId?: number;
     partType: number;
-    partId: number;
-    partNo: string;
-    partName?: string;
+    partNames: MajorHazardType[];
   }
 
-  export interface MajorHazardInfoNeedList {
+  export interface MajorHazardNameList {
     majorHazardId: number;
     majorHazardName: string;
   }
+
+  export interface MajorHazardType {
+    partId: number;
+    partName: string;
+    partNo: string;
+  }
+
 
   export class CameraManagementListInfoServiceClass {
     constructor(private http: HttpUtilService) {
@@ -72,9 +70,14 @@ export namespace CameraManagementListServiceNs {
       return this.http.del('data/major/hazard/camera/' + id).toPromise();
     }
 
-    /*重大危险源组成信息下拉列表*/
-    public getMajorList(entprId: number): Promise<majorHazardData> {
-      return this.http.get('data/major/hazard/need', { entprId: entprId }).toPromise();
+    /*重大危险源名称*/
+    public getMajorHazardNameList(entprId: number): Promise<MajorHazardNameList> {
+      return this.http.get('data/major/hazard/MajorHazardName', { entprId: entprId }).toPromise();
+    }
+
+    /*重大危险源类型*/
+    public getMajorHazardTypeList(majorHazardId: number): Promise<MajorHazardUnitList[]> {
+      return this.http.get('data/major/hazard/MajorHazardType', { majorHazardId: majorHazardId }).toPromise();
     }
   }
 }
