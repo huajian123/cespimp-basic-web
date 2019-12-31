@@ -228,7 +228,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
             if (polygonPoints.length > 0) {
               const infoWinPosition = { lat: polygonPoints[0].lat, lng: polygonPoints[0].lng };
               const infoWin = new T.InfoWindow();
-              infoWin.setLngLat(new T.LngLat(infoWinPosition.lat, infoWinPosition.lng));
+              infoWin.setLngLat(new T.LngLat(infoWinPosition.lng, infoWinPosition.lat));
               infoWin.setContent("重大危险源");
               this.map.addOverLay(infoWin);
             }

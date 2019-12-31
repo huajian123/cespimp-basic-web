@@ -1,5 +1,16 @@
-#mapDiv{
+#mapDiv {
   z-index: 0;
+}
+
+::ng-deep .tdt-infowindow-content-wrapper, .tdt-infowindow-tip {
+  background: rgba(255,0,0,0.35) !important;
+  color: white;
+  border-radius: 4px;
+}
+
+::ng-deep .tdt-infowindow-tip-container .tdt-infowindow-tip {
+  background: rgba(255,0,0,0.35) !important;
+  color: white;
 }
 
 .wraper {
@@ -8,13 +19,14 @@
   z-index: 0;
 }
 
-.layer-wrap{
+.layer-wrap {
   position: absolute;
   top: 10px;
   left: 10px;
   background: #ffffff;
   z-index: 400;
-  .layer-item{
+
+  .layer-item {
     user-select: none;
     height: 40px;
     width: 150px;
@@ -27,7 +39,7 @@
     cursor: pointer;
   }
 
-  .back-btn{
+  .back-btn {
     margin-top: 25px;
     position: absolute;
     background: #1890ff;
@@ -59,6 +71,7 @@
   }
 
   flex-wrap: wrap;
+
   .identification {
     user-select: none;
     height: 40px;
@@ -70,9 +83,11 @@
     position: relative;
     color: #CDCDCD;
     cursor: pointer;
-    &:hover{
+
+    &:hover {
       color: #409eff;
     }
+
     &:not(:last-child):after {
       content: "";
       position: absolute;
@@ -88,26 +103,27 @@
 }
 
 .active {
-  color: #409eff!important;
+  color: #409eff !important;
 }
 
 .unActive {
-  color: #CDCDCD!important;
+  color: #CDCDCD !important;
 }
 
 
-.alarm-list{
+.alarm-list {
   position: absolute;
   z-index: 400;
   top: 100px;
   right: 10px;
-  .list-wrap{
+
+  .list-wrap {
     width: 100%;
     height: 300px;
   }
 }
 
-.temp-wrap{
+.temp-wrap {
   position: absolute;
   z-index: 400;
   top: 100px;
