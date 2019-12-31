@@ -186,7 +186,6 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
       return item.value === e;
     });
     this.validateForm.get('partNo').setValue(tempSelMajorNo.partNo);
-    console.log(tempSelMajorNo);
   }
 
 
@@ -196,7 +195,8 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
 
   async getDetail() {
     const dataInfo = await this.dataService.getSensorInfoDetail(this.id);
-    /*  dataInfo.partType = new MapPipe().transform(dataInfo.partType, 'partType');*/
+    dataInfo.partType = new MapPipe().transform(dataInfo.partType, 'partType');
+    //console.log(dataInfo.partType);
     this.validateForm.patchValue(dataInfo);
     this.cdr.markForCheck();
   }

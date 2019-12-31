@@ -31,6 +31,8 @@ export class CameraManagementCameraListDetailComponent implements OnInit {
       cameraNo: '',
       cameraName: '',
       majorHazardId: null,
+      majorHazardName: '',
+      partName: '',
       partType: null,
       partId: null,
       longitude: null,

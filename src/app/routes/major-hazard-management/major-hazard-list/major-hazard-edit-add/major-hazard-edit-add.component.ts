@@ -252,7 +252,6 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       params.updateBy = this.loginInfo.userName;
       submitHandel = this.dataService.editMajorHazard(params);
     }
-
     await submitHandel;
     this.returnBack.emit({ refesh: true, pageNo: this.currentPageNum });
   }

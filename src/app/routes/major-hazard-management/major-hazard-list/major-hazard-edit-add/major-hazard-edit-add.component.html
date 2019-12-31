@@ -131,6 +131,7 @@
       <thead>
       <tr>
         <th>重大危险源组成类型</th>
+        <th>组成部分名称</th>
         <th>组成部分编号</th>
         <th>操作</th>
       </tr>
@@ -144,6 +145,14 @@
           <span *ngIf="editIndex !== i">{{ mediumArray.value[i].partType|map:'partType'}}</span>
           <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入组成类型">
              <nz-select (ngModelChange)="changeMajorType($event,i)" formControlName="partType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成类型'">
+              <nz-option *ngFor="let item of majorList" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+            </nz-select>
+          </span>
+        </td>
+        <td>
+          <span *ngIf="editIndex !== i">{{ mediumArray.value[i].partName}}</span>
+          <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入组成名称">
+             <nz-select formControlName="partName" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成类型'">
               <nz-option *ngFor="let item of majorList" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
             </nz-select>
           </span>
