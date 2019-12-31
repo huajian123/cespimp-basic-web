@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { STColumn,STData } from '@delon/abc';
+import { STColumn, STData } from '@delon/abc';
 import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import {
   EnterpriseSurroundingInfoService,
@@ -9,6 +9,7 @@ import EnterpriseSurroundingModel = EnterpriseSurroundingInfoServiceNs.Enterpris
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
+import { EVENT_KEY } from '@env/staticVariable';
 
 @Component({
   selector: 'app-basic-info-enterprise-surrounding-info-list',
@@ -41,10 +42,18 @@ export class BasicInfoEnterpriseSurroundingInfoListComponent implements OnInit {
   }
 
   async getDataList(pageNumber?: number) {
+    const currentRole = window.sessionStorage.getItem('role');
+    let entprId = null;
+    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
+      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+      entprId = loginInfo.entprId;
+    }
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      entprId: entprId,
     };
+
     const { total, list, pageNum } = await this.dataService.getEnterpriseSurroundingList(params);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
@@ -66,10 +75,12 @@ export class BasicInfoEnterpriseSurroundingInfoListComponent implements OnInit {
   format(toBeFormat, arg) {
     return new MapPipe().transform(toBeFormat, arg);
   }
+
   goEditAddPage(item, modal) {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.AddOrEdit;
   }
+
   async returnToList(e?: GoBackParam) {
     this.currentPage = this.pageTypeEnum.List;
     if (!!e && e.refesh) {
@@ -77,6 +88,7 @@ export class BasicInfoEnterpriseSurroundingInfoListComponent implements OnInit {
       await this.getDataList(e.pageNo);
     }
   }
+
   goDetailPage(item, modal) {
     this.itemId = item.id;
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
@@ -92,6 +104,7 @@ export class BasicInfoEnterpriseSurroundingInfoListComponent implements OnInit {
       this.dataService.delEnterpriseSurrounding(this.itemId).then(() => this.getDataList(1));
     });
   }
+
   private initTable(): void {
     this.columns = [
       {
@@ -149,8 +162,9 @@ export class BasicInfoEnterpriseSurroundingInfoListComponent implements OnInit {
     this.initTable();
     this.getDataList();
   }
+
   _onReuseInit() {
-    this.ngOnInit()
+    this.ngOnInit();
   }
 
 }

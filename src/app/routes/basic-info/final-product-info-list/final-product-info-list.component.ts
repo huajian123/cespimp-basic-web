@@ -46,6 +46,13 @@ export class BasicInfoFinalProductInfoListComponent implements OnInit {
 
   // 生产原料信息，中间产品信息，最终产品信息
   async getDataList(pageNumber?: number) {
+    const currentRole = window.sessionStorage.getItem('role');
+    let entprId = null;
+    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
+      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+      entprId = loginInfo.entprId;
+    }
+
     const param: EntprProductSearchModel = {
       productType: ProductEnum.FinalPro,
       entprId: this.loginInfo.entprId,
@@ -143,6 +150,6 @@ export class BasicInfoFinalProductInfoListComponent implements OnInit {
   }
 
   _onReuseInit() {
-    this.ngOnInit()
+    this.ngOnInit();
   }
 }

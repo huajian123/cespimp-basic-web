@@ -9,6 +9,7 @@ import {
 import HazardousChemicalProcessesInfoModel = HazardousChemicalProcessesListServiceNs.HazardousChemicalProcessesInfoModel;
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 import HazardousChemicalProcessesSearchModel = HazardousChemicalProcessesListServiceNs.HazardousChemicalProcessesSearchModel;
+import { EVENT_KEY } from '@env/staticVariable';
 
 @Component({
   selector: 'app-key-supervision-management-hazardous-chemical-processes-list',
@@ -51,10 +52,17 @@ export class KeySupervisionManagementHazardousChemicalProcessesListComponent imp
   }
 
   async getDataList(pageNumber?: number) {
+    const currentRole = window.sessionStorage.getItem('role');
+    let entprId = null;
+    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
+      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+      entprId = loginInfo.entprId;
+    }
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
       ...this.searchParam,
+      entprId
     };
     const { total, list, pageNum } = await this.dataService.getHazardousChemicalProcessesList(params);
     this.listPageInfo.total = total;
