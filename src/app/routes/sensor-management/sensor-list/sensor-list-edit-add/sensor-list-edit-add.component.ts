@@ -146,11 +146,8 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  async changeMajorNameList(e) {
-    this.validateForm.get('partId').reset();
-    this.validateForm.get('partNo').reset();
-    const hazardId = this.validateForm.get('majorHazardId').value;
-    this.hazardObject = await this.dataService.getMajorHazardTypeList(hazardId);
+  async changeMajorNameList(event) {
+    this.hazardObject = await this.dataService.getMajorHazardTypeList(event);
     //构建重大危险源类型下拉数据
     this.majorHazardTypeList.length = 0;
     this.hazardObject.forEach((item) => {
@@ -158,19 +155,19 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
       this.majorHazardTypeList.push(tempObj);
     });
     this.validateForm.get('partType').reset();
+    this.validateForm.get('partId').reset();
+    this.validateForm.get('partNo').reset();
     this.cdr.markForCheck();
   }
 
   // 请选择重大危险源类型
-  async changeMajorTypeList(e) {
+  changeMajorTypeList(e) {
     if (e === null) {
       return;
     }
-    this.validateForm.get('partId').reset();
-    this.validateForm.get('partNo').reset();
-    const selMajorNoArray = this.hazardObject.filter((item) => {
+    const selMajorNoArray = this.hazardObject.find((item) => {
       return item.partType === e;
-    })[0].partNames;
+    }).partNames;
     this.selMajorNoArray.length = 0;
     selMajorNoArray.forEach((item) => {
       this.selMajorNoArray.push({ value: item.partId, label: item.partName, partNo: item.partNo });
@@ -178,7 +175,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
   }
 
   // 请选择重大危险源组成部分名称
-  async changeMajorNoList(e) {
+  changeMajorNoList(e) {
     if (e === null) {
       return;
     }
@@ -195,8 +192,13 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
 
   async getDetail() {
     const dataInfo = await this.dataService.getSensorInfoDetail(this.id);
-    dataInfo.partType = new MapPipe().transform(dataInfo.partType, 'partType');
-    //console.log(dataInfo.partType);
+    this.validateForm.get('majorHazardId').setValue(dataInfo.majorHazardId);
+    setTimeout(() => {
+      this.validateForm.get('partType').setValue(dataInfo.partType);
+      this.validateForm.get('partId').setValue(dataInfo.partId);
+      this.validateForm.get('partNo').setValue(dataInfo.partNo);
+    }, 300);
+
     this.validateForm.patchValue(dataInfo);
     this.cdr.markForCheck();
   }
