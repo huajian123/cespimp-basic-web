@@ -8,6 +8,7 @@ import {
   ProductionDeviceListInfoService,
 } from '@core/biz-services/basic-info/production-device-info.service';
 import ProductionDeviceListInfoModel = ProductionDeviceInfoListServiceNs.ProductionDeviceListInfoModel;
+import { EVENT_KEY } from '@env/staticVariable';
 
 @Component({
   selector: 'app-basic-info-production-device-info-list',
@@ -43,9 +44,17 @@ export class BasicInfoProductionDeviceInfoListComponent implements OnInit {
   }
 
   async getDataList(pageNumber?: number) {
+    const currentRole = window.sessionStorage.getItem('role');
+    let entprId = null;
+    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
+      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+      entprId = loginInfo.entprId;
+    }
+
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      entprId
     };
     const { total, list, pageNum } = await this.dataService.getProductionDeviceList(params);
     this.listPageInfo.total = total;

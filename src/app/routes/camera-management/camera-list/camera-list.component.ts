@@ -10,6 +10,7 @@ import {
 } from '@core/biz-services/camera-management/camera-list.service';
 import CameraManagementListInfoModel = CameraManagementListServiceNs.CameraManagementListInfoModel;
 import CameraSearchModel = CameraManagementListServiceNs.CameraSearchModel;
+import { EVENT_KEY } from '@env/staticVariable';
 
 @Component({
   selector: 'app-camera-management-camera-list',
@@ -48,10 +49,18 @@ export class CameraManagementCameraListComponent implements OnInit {
   }
 
   async getDataList(pageNumber?: number) {
+    const currentRole = window.sessionStorage.getItem('role');
+    let entprId = null;
+    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
+      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+      entprId = loginInfo.entprId;
+    }
+
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
       ...this.searchParam,
+      entprId
     };
     const { total, list, pageNum } = await this.dataService.getCameraManagementList(params);
     this.listPageInfo.total = total;

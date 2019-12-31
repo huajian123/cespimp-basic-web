@@ -65,10 +65,17 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
   }
 
   async getDataList(pageNumber?: number) {
+    const currentRole = window.sessionStorage.getItem('role');
+    let entprId = null;
+    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
+      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+      entprId = loginInfo.entprId;
+    }
     const params: EntprSearch = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
       ...this.filters,
+      entprId
     };
    /* this.filters.reviewStatus ? params.reviewStatus = this.filters.reviewStatus : '';
     this.filters.entprName ? params.entprId = this.filters.entprName : '';*/

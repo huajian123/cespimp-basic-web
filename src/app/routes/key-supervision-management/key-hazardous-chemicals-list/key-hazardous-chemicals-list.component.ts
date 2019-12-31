@@ -9,6 +9,7 @@ import HazardousChemicalInfoModel = HazardousChemicalListServiceNs.HazardousChem
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import { MessageType, ShowMessageService } from '../../../widget/show-message/show-message';
 import HazardousChemicalSearchModel = HazardousChemicalListServiceNs.HazardousChemicalSearchModel;
+import { EVENT_KEY } from '@env/staticVariable';
 
 
 @Component({
@@ -48,10 +49,18 @@ export class KeySupervisionManagementKeyHazardousChemicalsListComponent implemen
   }
 
   async getDataList(pageNumber?: number) {
+    const currentRole = window.sessionStorage.getItem('role');
+    let entprId = null;
+    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
+      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+      entprId = loginInfo.entprId;
+    }
+
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
       ...this.searchParam,
+      entprId
     };
     const { total, list, pageNum } = await this.dataService.getHazardousChemicalList(params);
     this.listPageInfo.total = total;

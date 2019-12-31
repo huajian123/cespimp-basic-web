@@ -8,6 +8,7 @@ import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import { AlarmListService, AlarmListServiceNs } from '@core/biz-services/alarm-management/alarm-list.service';
 import AlarmModel = AlarmListServiceNs.AlarmModel;
+import { EVENT_KEY } from '@env/staticVariable';
 
 @Component({
   selector: 'app-alarm-management-historical-alarm-list',
@@ -141,9 +142,18 @@ export class AlarmManagementHistoricalAlarmListComponent implements OnInit {
   }
 
   async getDataList(pageNumber?: number) {
+    const currentRole = window.sessionStorage.getItem('role');
+    let entprId = null;
+    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
+      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+      entprId = loginInfo.entprId;
+    }
+
+
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      entprId
     };
     const { total, pageNum, list } = await this.dataService.getAlarmList(params);
     this.listPageInfo.total = total;
