@@ -19,6 +19,7 @@ export enum RoleEnum {
 export class SearchCommonVO {
   pageNum: number;
   pageSize: number;
+  entprId?: number;
 }
 
 export interface LoginInfoModel {
