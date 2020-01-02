@@ -3,14 +3,6 @@
   <nz-card [nzBordered]="true">
     <form nz-form [nzLayout]="'inline'" (ngSubmit)="getDataList(1)" class="search__form">
       <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
-      <!--  <div nz-col nzMd="8" nzSm="24" [acl]="roleEnum[roleEnum.ParkManage]">
-          <nz-form-item>
-            <nz-form-label nzFor="no">企业名称</nz-form-label>
-            <nz-form-control>
-              <input nz-input [(ngModel)]="searchParam.entprName" name="no" placeholder="请输入企业名称"/>
-            </nz-form-control>
-          </nz-form-item>
-        </div>-->
         <div nz-col nzMd="8" nzSm="24">
           <nz-form-item>
             <nz-form-label nzFor="status">重大危险源编号</nz-form-label>
@@ -33,15 +25,18 @@
     <st #st [page]="{showSize:true, front: false}"
         [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true"
         [scroll]="{x: '2400px'}"
-        [widthMode]="{ type: 'strict' }" [data]="dataList"  (change)="changePage($event)" [columns]="columns" class="mt-sm"></st>
+        [widthMode]="{ type: 'strict' }" [data]="dataList" (change)="changePage($event)" [columns]="columns"
+        class="mt-sm"></st>
   </nz-card>
 </ng-container>
 
 <ng-container *ngIf="currentPage===pageTypeEnum.DetailOrExamine">
-  <app-major-hazard-management-major-hazard-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps" (returnBack)="returnToList($event)"></app-major-hazard-management-major-hazard-detail>
+  <app-major-hazard-management-major-hazard-detail [id]="this.itemId" [currentPageNum]="listPageInfo.ps"
+                                                   (returnBack)="returnToList($event)"></app-major-hazard-management-major-hazard-detail>
 </ng-container>
 
 <ng-container *ngIf="currentPage===pageTypeEnum.AddOrEdit">
-  <app-major-hazard-management-major-hazard-edit-add [id]="this.itemId" [currentPageNum]="listPageInfo.pi" (returnBack)="returnToList($event)"></app-major-hazard-management-major-hazard-edit-add>
+  <app-major-hazard-management-major-hazard-edit-add [id]="this.itemId" [currentPageNum]="listPageInfo.pi"
+                                                     (returnBack)="returnToList($event)"></app-major-hazard-management-major-hazard-edit-add>
 </ng-container>
 
