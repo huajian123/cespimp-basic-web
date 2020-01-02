@@ -75,10 +75,9 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
       ...this.filters,
-      entprId
+      entprId,
     };
-   /* this.filters.reviewStatus ? params.reviewStatus = this.filters.reviewStatus : '';
-    this.filters.entprName ? params.entprId = this.filters.entprName : '';*/
+
 
     const { total, list, pageNum } = await this.dataService.getMajorHazardRecordList(params);
     this.listPageInfo.total = total;
@@ -188,6 +187,6 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
   }
 
   _onReuseInit() {
-    this.ngOnInit()
+    this.ngOnInit();
   }
 }
