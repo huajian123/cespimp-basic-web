@@ -47,19 +47,19 @@ export class BasicInfoIntermediateProductInfoListComponent implements OnInit {
   // 生产原料信息，中间产品信息，最终产品信息
   async getDataList(pageNumber?: number) {
     const currentRole = window.sessionStorage.getItem('role');
-    let entprId = null;
-    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
-      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
-      entprId = loginInfo.entprId;
-    }
-
-    const param: EntprProductSearchModel = {
-      productType: ProductEnum.MidPro,
-      entprId: this.loginInfo.entprId,
+    const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
+      entprId: null,
+      productType: ProductEnum.MidPro,
     };
-    const { total, pageNum, list } = await this.dataService.getEnterProductList(param);
+    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
+      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+      params.entprId = loginInfo.entprId;
+    } else {
+      delete params.entprId;
+    }
+    const { total, pageNum, list } = await this.dataService.getEnterProductList(params);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
     this.dataList = list || [];

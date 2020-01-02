@@ -47,19 +47,19 @@ export class BasicInfoProductionMaterialsInfoListComponent implements OnInit {
   // 生产原料信息，中间产品信息，最终产品信息
   async getDataList(pageNumber?: number) {
     const currentRole = window.sessionStorage.getItem('role');
-    let entprId = null;
+    const params = {
+      productType: ProductEnum.RawMateriPro,
+      pageNum: pageNumber || this.listPageInfo.pi,
+      pageSize: this.listPageInfo.ps,
+      entprId: null,
+    };
     if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
       let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
-      entprId = loginInfo.entprId;
+      params.entprId = loginInfo.entprId;
+    } else {
+      delete params.entprId;
     }
-
-    const param: EntprProductSearchModel = {
-      productType: ProductEnum.RawMateriPro,
-      entprId: this.loginInfo.entprId,
-      pageNum:  pageNumber || this.listPageInfo.pi,
-      pageSize: this.listPageInfo.ps,
-    };
-    const { total, pageNum, list } = await this.dataService.getEnterProductList(param);
+    const { total, pageNum, list } = await this.dataService.getEnterProductList(params);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
     this.dataList = list || [];

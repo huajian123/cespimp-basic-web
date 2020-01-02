@@ -55,17 +55,18 @@ export class TankListComponent implements OnInit {
 
   async getDataList(pageNumber?: number) {
     const currentRole = window.sessionStorage.getItem('role');
-    let entprId = null;
-    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
-      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
-      entprId = loginInfo.entprId;
-    }
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
       ...this.searchParam,
-      entprId
+      entprId: null,
     };
+    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
+      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+      params.entprId = loginInfo.entprId;
+    } else {
+      delete params.entprId;
+    }
 
     const { total, list, pageNum } = await this.dataService.getTankList(params);
     this.listPageInfo.total = total;

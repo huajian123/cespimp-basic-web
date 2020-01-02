@@ -24,7 +24,7 @@ export namespace EnterpriseOriginalProductServiceNs {
   }
 
   export interface EntprPageSearchModel extends SearchCommonVO {
-    entprId: number;
+    entprId?: number;
   }
 
   export interface EntprProductSearchModel extends EntprPageSearchModel {

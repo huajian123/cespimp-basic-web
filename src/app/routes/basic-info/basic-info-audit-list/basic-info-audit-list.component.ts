@@ -179,18 +179,17 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
 
   async getDataList(pageNumber?: number) {
     const currentRole = window.sessionStorage.getItem('role');
-    let entprId = null;
-    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
-      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
-      entprId = loginInfo.entprId;
-    }
-
-    const params: EntprSearchModel = {
+    const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
-      ...this.filters,
-      entprId
+      entprId: null,
     };
+    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
+      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+      params.entprId = loginInfo.entprId;
+    } else {
+      delete params.entprId;
+    }
     const { total, pageNum, list } = await this.dataService.getFactoryAuditList(params);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;

@@ -73,18 +73,18 @@ export class SpecialOperationManagementBlindPlateListComponent implements OnInit
 
   async getDataList(pageNumber?: number) {
     const currentRole = window.sessionStorage.getItem('role');
-    let entprId = null;
-    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
-      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
-      entprId = loginInfo.entprId;
-    }
-    const params: SpecialOperationEnumModel = {
-      operationType: SpecialInfoEnum.BlindPlate,
+    const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
       ...this.searchParam,
-      entprId
+      entprId: null,
     };
+    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
+      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+      params.entprId = loginInfo.entprId;
+    } else {
+      delete params.entprId;
+    }
     const { total, list, pageNum } = await this.dataService.getSpecialOperationList(params);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
