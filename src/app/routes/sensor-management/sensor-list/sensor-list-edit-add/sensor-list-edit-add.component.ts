@@ -29,11 +29,6 @@ interface PartNoOptionsInterface extends OptionsInterface {
   partNo: string | number;
 }
 
-/*interface MajorHazardPartModel {
-  partId: number;
-  partNo: string;
-  partName: string;
-}*/
 
 enum sensorTypeNum {
   number = 3
@@ -195,6 +190,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
       this.validateForm.get('partType').setValue(dataInfo.partType);
       this.validateForm.get('partId').setValue(dataInfo.partId);
       this.validateForm.get('partNo').setValue(dataInfo.partNo);
+      this.cdr.markForCheck();
     }, 300);
 
     this.validateForm.patchValue(dataInfo);
