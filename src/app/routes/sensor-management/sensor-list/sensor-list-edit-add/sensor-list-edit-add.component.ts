@@ -153,31 +153,6 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  // 请选择重大危险源类型
-  changeMajorTypeList(e) {
-    if (e === null) {
-      return;
-    }
-    const selMajorNoArray = this.hazardObject.find((item) => {
-      return item.partType === e;
-    }).partNames;
-    this.selMajorNoArray.length = 0;
-    selMajorNoArray.forEach((item) => {
-      this.selMajorNoArray.push({ value: item.partId, label: item.partName, partNo: item.partNo });
-    });
-  }
-
-  // 请选择重大危险源组成部分名称
-  changeMajorNoList(e) {
-    if (e === null) {
-      return;
-    }
-    const tempSelMajorNo = this.selMajorNoArray.find((item) => {
-      return item.value === e;
-    });
-    this.validateForm.get('partNo').setValue(tempSelMajorNo.partNo);
-  }
-
 
   returnToList() {
     this.returnBack.emit();
@@ -192,7 +167,6 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
       this.validateForm.get('partNo').setValue(dataInfo.partNo);
       this.cdr.markForCheck();
     }, 300);
-
     this.validateForm.patchValue(dataInfo);
     this.cdr.markForCheck();
   }
@@ -208,6 +182,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
     }
   }
 
+
   showMap() {
     this.positionPickerService.show({
       isRemoteImage: true,
@@ -217,6 +192,41 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
       this.validateForm.get('longitude').setValue(res.longitude);
       this.validateForm.get('latitude').setValue(res.latitude);
     }).catch(e => null);
+
+  }
+
+  // 请选择重大危险源类型
+  changeMajorTypeList(e) {
+    if (e === null) {
+      return;
+    }
+    try {
+      const selMajorNoArray = this.hazardObject.find((item, index) => {
+        return item.partType === e;
+      });
+      this.selMajorNoArray.length = 0;
+      selMajorNoArray.partNames.forEach((item) => {
+        this.selMajorNoArray.push({ value: item.partId, label: item.partName, partNo: item.partNo });
+      });
+    } catch (e) {
+
+    }
+  }
+
+  // 请选择重大危险源组成部分名称
+  changeMajorNoList(e) {
+    if (e === null) {
+      return;
+    }
+    try {
+      const tempSelMajorNo = this.selMajorNoArray.find((item) => {
+        return item.value === e;
+      });
+      this.validateForm.get('partNo').setValue(tempSelMajorNo.partNo);
+    } catch (e) {
+
+    }
+
   }
 
   ngOnInit(): void {
