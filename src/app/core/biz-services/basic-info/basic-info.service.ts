@@ -106,6 +106,19 @@ export namespace BasicInfoServiceNs {
     maximumReserves: number;
   }
 
+  export interface LastExamineInfoModel {
+    id?: number,
+    entprId?: number,
+    applicationName: string,
+    applicationTime: number | string,
+    reviewName: string,
+    reviewTime: number | string,
+    reviewExplain: string,
+    reviewStatus: number | string,
+    entprName: string;
+
+  }
+
   export interface BasicInfoEntprSearchModel {
     entprName?: string;
   }
@@ -164,6 +177,10 @@ export namespace BasicInfoServiceNs {
     // 企业搜索接口
     public getFactoryInfoSearch(param: EntprInfoSearch): Promise<FactoryInfoModel> {
       return this.http.get('data/basic/enterprise/', param).toPromise();
+    }
+
+    public getLastExamineInfo(entprId: number): Promise<LastExamineInfoModel> {
+      return this.http.get('data/basic/enterprise/lastExamine/', { entprId: entprId }).toPromise();
     }
 
     // 删除接口

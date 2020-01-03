@@ -1,28 +1,49 @@
-<page-header [autoBreadcrumb]="false" [title]="dataInfo.entprName" [logo]="logo" [action]="action" [extra]="extra" [tab]="tab">
+<page-header [autoBreadcrumb]="false" [title]="lastExamineInfo.entprName" [logo]="logo" [action]="action" [extra]="extra" [tab]="tab">
   <ng-template #logo>
     <img src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png" alt=""/>
   </ng-template>
   <ng-template #action>
-    <button nz-button [nzType]="'primary'">审核</button>
+    <button *ngIf="lastExamineInfo.reviewStatus===1" (click)="goExamine(lastExamineInfo)" nz-button [nzType]="'primary'">审核</button>
   </ng-template>
+
+
   <ng-template #extra>
     <div nz-row>
       <div nz-col nzXs="24" nzSm="12">
         <p class="text-grey">审批状态</p>
-        <p class="text-lg">待审批</p>
+        <p class="text-lg">{{lastExamineInfo.reviewStatus|map:'reviewStatus'}}</p>
       </div>
     </div>
   </ng-template>
   <sv-container size="small" col="3">
-    <sv label="申请人员">范宝林</sv>
-    <sv label="申请时间">2017-07-07</sv>
-    <sv label="备注">第一次提交申请</sv>
-    <sv label="审核人员">张三</sv>
-    <sv label="审核时间">2017-07-08</sv>
-    <sv label="审核意见">同意</sv>
+    <sv label="申请人员">{{lastExamineInfo.applicationName}}</sv>
+    <sv label="申请时间">{{lastExamineInfo.applicationTime==='--'?'--':lastExamineInfo.applicationTime|map:'date:yyyy-MM-dd HH:mm'}}</sv>
+    <sv label="审核人员">{{lastExamineInfo.reviewName}}</sv>
+    <sv label="审核时间">{{lastExamineInfo.reviewTime==="--"?'--':lastExamineInfo.reviewTime|map:'date:yyyy-MM-dd HH:mm'}}</sv>
+    <sv label="审核意见">{{lastExamineInfo.reviewExplain}}</sv>
 
   </sv-container>
 </page-header>
+
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="500" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <form nz-form [formGroup]="validateForm">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzFor="reviewStatus">审核结果</nz-form-label>
+      <nz-form-control [nzSpan]="16" nzErrorTip="审核结果">
+        <nz-select nzPlaceHolder="下拉选择" formControlName="reviewStatus" nzAllowClear>
+          <nz-option *ngFor="let i of statusOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzFor="reviewExplain">审核意见</nz-form-label>
+      <nz-form-control [nzSpan]="16" nzErrorTip="审核意见">
+        <textarea rows="4" nz-input formControlName="reviewExplain"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>
+
 <ng-template #tab>
   <nz-tabset (nzSelectChange)="change($event)">
     <nz-tab nzTitle="基本信息"></nz-tab>

@@ -79,7 +79,7 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
     param.id = this.itemId;
     param.reviewName = this.loginInfo.realName;
     param.reviewTime = this.loginInfo.updateTime;
-    await this.dataService.getIdCardInfoDetail(param);
+    await this.dataService.doExamine(param);
     this.isVisible = false;
     this.getDataList();
     this.cdr.markForCheck();
