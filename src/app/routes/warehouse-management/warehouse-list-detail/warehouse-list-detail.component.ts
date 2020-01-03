@@ -80,6 +80,7 @@ export class WarehouseManagementWarehouseListDetailComponent implements OnInit {
       const marker = new T.Marker(point); // 创建标注
       this.map.addOverLay(marker);             // 将标注添加到地图中
       marker.enableDragging();
+      this.initEnterpriseArea();
     });
   }
 
@@ -87,6 +88,18 @@ export class WarehouseManagementWarehouseListDetailComponent implements OnInit {
     this.dataInfo = await this.dataService.getWarehouseInfoDetail(this.id);
     this.initMap(this.dataInfo.latitude, this.dataInfo.longitude);
     this.cdr.markForCheck();
+  }
+
+  // 初始化企业范围
+  initEnterpriseArea() {
+    const points = [];
+    this.dataInfo.entprScope.forEach(({ lat, lng }) => {
+      points.push(new T.LngLat(lng, lat));
+    });
+    const polygon = new T.Polygon(points, {
+      color: 'blue', weight: 3, opacity: 0.5, fillColor: '#FFFFFF', fillOpacity: 0,
+    });
+    this.map.addOverLay(polygon);
   }
 
   ngOnInit(): void {

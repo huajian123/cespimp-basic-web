@@ -73,12 +73,13 @@ export class ProductionManagementProductionListDetailComponent implements OnInit
       const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
         'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
         '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=0a65163e2ebdf5a37abb7f49274b85df';
-      const tilePhoto = new T.TileLayer(imageURL, {minZoom: 1, maxZoom: 18});
+      const tilePhoto = new T.TileLayer(imageURL, { minZoom: 1, maxZoom: 18 });
       this.map.addLayer(tilePhoto);
       const point = new T.LngLat(longitude, latitude);
       const marker = new T.Marker(point); // 创建标注
       this.map.addOverLay(marker);             // 将标注添加到地图中
       marker.enableDragging();
+      this.initEnterpriseArea();
     });
   }
 
@@ -86,6 +87,18 @@ export class ProductionManagementProductionListDetailComponent implements OnInit
     this.dataInfo = await this.dataService.getProductionInfoDetail(this.id);
     this.initMap(this.dataInfo.latitude, this.dataInfo.longitude);
     this.cdr.markForCheck();
+  }
+
+  // 初始化企业范围
+  initEnterpriseArea() {
+    const points = [];
+    this.dataInfo.entprScope.forEach(({ lat, lng }) => {
+      points.push(new T.LngLat(lng, lat));
+    });
+    const polygon = new T.Polygon(points, {
+      color: 'blue', weight: 3, opacity: 0.5, fillColor: '#FFFFFF', fillOpacity: 0,
+    });
+    this.map.addOverLay(polygon);
   }
 
   ngOnInit(): void {

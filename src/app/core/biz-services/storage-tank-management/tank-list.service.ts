@@ -14,6 +14,7 @@ export namespace TankListServiceNs {
     tankStructure?: number;
     longitude: number; // 经度
     latitude: number; // 纬度
+    entprScope?: { lng: number, lat: number }[];
     tankMate?: number;
     tankCapacity?: number;
     productionDate?: Date;

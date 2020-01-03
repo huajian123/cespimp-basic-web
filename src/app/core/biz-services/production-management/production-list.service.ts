@@ -13,6 +13,7 @@ export namespace ProductionListServiceNs {
     productionDate?: Date;
     longitude: number; // 经度
     latitude: number; // 纬度
+    entprScope?: { lng: number, lat: number }[];
     locFactory?: string;
     majorHazardMaterials: FormGroup[];
     majorHazardMaterialInsertDTOS: FormGroup[];

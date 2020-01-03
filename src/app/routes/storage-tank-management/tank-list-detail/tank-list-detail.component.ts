@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component, ElementRef,
   EventEmitter,
@@ -7,12 +6,11 @@ import {
   OnInit,
   Output, ViewChild,
 } from '@angular/core';
-import { STColumn, STData } from '@delon/abc';
+import { STColumn } from '@delon/abc';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd';
 import { TankListInfoService, TankListServiceNs } from '@core/biz-services/storage-tank-management/tank-list.service';
 import TankListInfoModel = TankListServiceNs.TankListInfoModel;
-
 
 
 @Component({
@@ -26,13 +24,14 @@ export class StorageTankManagementTankListDetailComponent implements OnInit {
   @Output() returnBack: EventEmitter<any>;
   @Input() id: number;
   @Input() currentPageNum: number;
+  currentRole: string;
   dataInfo: TankListInfoModel;
   columns: STColumn[];
+
 
   constructor(private http: _HttpClient, private msg: NzMessageService,
               private dataService: TankListInfoService, private cdr: ChangeDetectorRef) {
     this.returnBack = new EventEmitter<any>();
-
     this.dataInfo = {
       id: -1,
       tankNo: '',
@@ -74,12 +73,13 @@ export class StorageTankManagementTankListDetailComponent implements OnInit {
       const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
         'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
         '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=0a65163e2ebdf5a37abb7f49274b85df';
-      const tilePhoto = new T.TileLayer(imageURL, {minZoom: 1, maxZoom: 18});
+      const tilePhoto = new T.TileLayer(imageURL, { minZoom: 1, maxZoom: 18 });
       this.map.addLayer(tilePhoto);
       const point = new T.LngLat(longitude, latitude);
       const marker = new T.Marker(point); // 创建标注
       this.map.addOverLay(marker);             // 将标注添加到地图中
       marker.enableDragging();
+      this.initEnterpriseArea();
     });
   }
 
@@ -90,8 +90,22 @@ export class StorageTankManagementTankListDetailComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
+  // 初始化企业范围
+  initEnterpriseArea() {
+    const points = [];
+    this.dataInfo.entprScope.forEach(({ lat, lng }) => {
+      points.push(new T.LngLat(lng, lat));
+    });
+    const polygon = new T.Polygon(points, {
+      color: 'blue', weight: 3, opacity: 0.5, fillColor: '#FFFFFF', fillOpacity: 0,
+    });
+    this.map.addOverLay(polygon);
+  }
+
+
   ngOnInit(): void {
     this.getDetailInfo();
   }
+
 
 }
