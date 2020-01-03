@@ -15,13 +15,17 @@ import EntprSearch = BasicInfoServiceNs.EntprSearch;
 import IdCardTabModel = BasicInfoServiceNs.IdCardTabModel;
 import { STColumn, STData } from '@delon/abc';
 import EnterpriseEnvironModel = BasicInfoServiceNs.EnterpriseEnvironModel;
-import { ListPageInfo } from '@core/vo/comm/BusinessEnum';
+import { ListPageInfo, LoginInfoModel, OptionsInterface } from '@core/vo/comm/BusinessEnum';
 import EntprPageSearchModel = BasicInfoServiceNs.EntprPageSearchModel;
-import { MapPipe } from '@shared/directives/pipe/map.pipe';
+import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
 import ProductEnum = BasicInfoServiceNs.ProductEnum;
 import EntprProductSearchModel = BasicInfoServiceNs.EntprProductSearchModel;
 import EnterpriseProductModel = BasicInfoServiceNs.EnterpriseProductModel;
 import ProductionDeviceListInfoModel = BasicInfoServiceNs.ProductionDeviceListInfoModel;
+import LastExamineInfoModel = BasicInfoServiceNs.LastExamineInfoModel;
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EVENT_KEY } from '@env/staticVariable';
+import { BasicInfoAuditService } from '@core/biz-services/basic-info/basic-info-audit-service';
 
 enum TabEnum {
   BaseInfoTab,
@@ -56,12 +60,26 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
   currentTab: number;
   listPageInfo: ListPageInfo;
   @Input() entprId: number;
+  lastExamineInfo: LastExamineInfoModel;
+  isVisible = false;
+  validateForm: FormGroup;
+  statusOptions: OptionsInterface[];
+  loginInfo: LoginInfoModel;
 
-  constructor(private dataService: BasicInfoService, private cdr: ChangeDetectorRef) {
+  constructor(private dataService: BasicInfoService, private cdr: ChangeDetectorRef, private fb: FormBuilder, private basicInfoAuditService: BasicInfoAuditService) {
     this.returnBack = new EventEmitter<any>();
     this.initData();
     this.currentTab = this.tabEnum.BaseInfoTab;
     this.dataList = [];
+    this.lastExamineInfo = {
+      applicationName: '--',
+      applicationTime: '--',
+      reviewName: '--',
+      reviewTime: '--',
+      reviewExplain: '--',
+      reviewStatus: '--',
+      entprName: '--',
+    };
 
   }
 
@@ -130,6 +148,42 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
 
   format(toBeFormat, arg) {
     return new MapPipe().transform(toBeFormat, arg);
+  }
+
+  /*确认审核*/
+  async handleOk() {
+    Object.keys(this.validateForm.controls).forEach(key => {
+      this.validateForm.controls[key].markAsDirty();
+      this.validateForm.controls[key].updateValueAndValidity();
+    });
+
+    if (this.validateForm.invalid) return;
+    const param = this.validateForm.getRawValue();
+    param.id = this.lastExamineInfo.id;
+    param.reviewName = this.loginInfo.realName;
+    param.reviewTime = this.loginInfo.updateTime;
+    await this.basicInfoAuditService.doExamine(param);
+    this.isVisible = false;
+    this.getLastExamineInfo();
+
+  }
+
+  initForm() {
+    this.validateForm = this.fb.group({
+      reviewStatus: [null, [Validators.required]],
+      reviewExplain: [null, [Validators.required]],
+    });
+  }
+
+
+  /*取消审核*/
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
+  goExamine() {
+    this.isVisible = true;
+    this.validateForm.reset();
   }
 
   changeTap(tab) {
@@ -317,12 +371,11 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
       color: 'blue', weight: 3, opacity: 0.5, fillColor: '#FFFFFF', fillOpacity: 0,
     });
     this.map.addOverLay(polygon);
-    this.addMarkerToMap(this.dataInfo.latitude,this.dataInfo.longitude)
+    this.addMarkerToMap(this.dataInfo.latitude, this.dataInfo.longitude);
   }
 
-  addMarkerToMap(lat,lng){
+  addMarkerToMap(lat, lng) {
     const marker = new T.Marker(new T.LngLat(lat, lng));
-    marker.disableDragging();
     this.map.addOverLay(marker);
   }
 
@@ -350,10 +403,25 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
     this.cdr.markForCheck();
   }
 
+  // 获取最新审核记录信息
+  async getLastExamineInfo() {
+    const tempData = await this.dataService.getLastExamineInfo(this.entprId);
+    console.log(tempData);
+    if (!!tempData) {
+      this.lastExamineInfo = tempData;
+    }
+    this.cdr.markForCheck();
+  }
+
   ngAfterViewInit(): void {
     this.getFactoryInfo();
+    this.getLastExamineInfo();
   }
 
   ngOnInit(): void {
+    this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+    this.initForm();
+    this.statusOptions = [...MapPipe.transformMapToArray(MapSet.reviewStatus)];
+    this.statusOptions.shift();
   }
 }

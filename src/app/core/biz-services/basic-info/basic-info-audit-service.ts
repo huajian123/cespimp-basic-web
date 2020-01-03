@@ -40,7 +40,7 @@ export namespace BasicInfoAuditServiceNs {
     }
 
     /*处理审核接口*/
-    public getIdCardInfoDetail(param: BasicInfoAuditModel): Promise<BasicInfoAuditModel> {
+    public doExamine(param: BasicInfoAuditModel): Promise<BasicInfoAuditModel> {
       return this.http.put('data/basic/enterprise/examination/' + param.id, param).toPromise();
     }
 
