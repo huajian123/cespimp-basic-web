@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import {BaseConfirmModal} from '../base-confirm-modal';
-import {NzModalRef} from 'ng-zorro-antd';
-import {EVENT_KEY} from '../../../environments/staticVariable';
+import { BaseConfirmModal } from '../base-confirm-modal';
+import { NzModalRef } from 'ng-zorro-antd';
+import { EVENT_KEY } from '../../../environments/staticVariable';
 import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import { LoginServiceNs } from '@core/biz-services/login-services/login.service';
 import LoginEntprModel = LoginServiceNs.LoginEntprModel;
@@ -15,18 +15,18 @@ interface PositionModel {
 @Component({
   selector: 'app-position-picker',
   templateUrl: './position-picker.component.html',
-  styleUrls: ['./position-picker.component.scss']
+  styleUrls: ['./position-picker.component.scss'],
 })
 export class PositionPickerComponent extends BaseConfirmModal.BasicConfirmModalComponent<any> implements AfterViewInit, OnInit {
   map;
   marker;
   zoom: number;
   center: PositionModel;
-  @ViewChild('mapDivModal', {static: true}) mapElement: ElementRef;
+  @ViewChild('mapDivModal', { static: true }) mapElement: ElementRef;
   @Input() currentPosition: PositionModel;
-  entprBasicInfo:LoginEntprModel;
+  entprBasicInfo: LoginEntprModel;
   params;
-  loginInfo:LoginInfoModel;
+  loginInfo: LoginInfoModel;
 
   constructor(private modalRef: NzModalRef) {
     super();
@@ -38,12 +38,12 @@ export class PositionPickerComponent extends BaseConfirmModal.BasicConfirmModalC
 
   ngOnInit() {
     this.currentPosition = {
-      longitude:  this.params.longitude||this.entprBasicInfo.longitude,
-      latitude:  this.params.latitude|| this.entprBasicInfo.latitude
+      longitude: this.params.longitude || this.entprBasicInfo.longitude,
+      latitude: this.params.latitude || this.entprBasicInfo.latitude,
     };
     this.center = {
-      longitude:   this.params.longitude||this.entprBasicInfo.longitude,
-      latitude:  this.params.latitude||  this.entprBasicInfo.latitude
+      longitude: this.params.longitude || this.entprBasicInfo.longitude,
+      latitude: this.params.latitude || this.entprBasicInfo.latitude,
     };
   }
 
@@ -55,15 +55,14 @@ export class PositionPickerComponent extends BaseConfirmModal.BasicConfirmModalC
     setTimeout(() => {
       this.map = new T.Map(this.mapElement.nativeElement);
       // 设置显示地图的中心点和级别
-      this.map.centerAndZoom(new T.LngLat(this.center.longitude, this.center.latitude), this.params.zoom|| this.entprBasicInfo.zoom||18);
+      this.map.centerAndZoom(new T.LngLat(this.center.longitude, this.center.latitude), this.params.zoom || this.entprBasicInfo.zoom || 18);
       if (this.params.isRemoteImage) {
         const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
           'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +
           '&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=0a65163e2ebdf5a37abb7f49274b85df';
-        const tilePhoto = new T.TileLayer(imageURL, {minZoom: 1, maxZoom: 18});
+        const tilePhoto = new T.TileLayer(imageURL, { minZoom: 1, maxZoom: 18 });
         this.map.addLayer(tilePhoto);
       }
-
 
       const point = new T.LngLat(this.currentPosition.longitude, this.currentPosition.latitude);
       this.marker = new T.Marker(point); // 创建标注
@@ -73,6 +72,16 @@ export class PositionPickerComponent extends BaseConfirmModal.BasicConfirmModalC
         this.currentPosition.latitude = type.lnglat.lat;
         this.currentPosition.longitude = type.lnglat.lng;
       });
+
+      // 初始化企业范围
+      const points = [];
+      this.params.isEntprScope.forEach(({ lat, lng }) => {
+        points.push(new T.LngLat(lng, lat));
+      });
+      const polygon = new T.Polygon(points, {
+        color: 'blue', weight: 3, opacity: 0.5, fillColor: '#FFFFFF', fillOpacity: 0,
+      });
+      this.map.addOverLay(polygon);
     }, 0);
   }
 }

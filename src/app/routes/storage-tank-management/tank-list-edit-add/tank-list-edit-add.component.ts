@@ -11,9 +11,9 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { PositionPickerService } from '../../../widget/position-picker/position-picker.service';
 import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import { EVENT_KEY } from '@env/staticVariable';
-import { TankListInfoService } from '@core/biz-services/storage-tank-management/tank-list.service';
+import { TankListInfoService, TankListServiceNs } from '@core/biz-services/storage-tank-management/tank-list.service';
 import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
-
+import TankListInfoModel = TankListServiceNs.TankListInfoModel;
 
 interface OptionsInterface {
   value: string;
@@ -26,13 +26,14 @@ interface OptionsInterface {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StorageTankManagementTankListEditAddComponent implements OnInit {
+  map;
   tankFormOptions: OptionsInterface[];
   tankStructureOptions: OptionsInterface[];
   tankMateOptions: OptionsInterface[];
   tankTypeOptions: OptionsInterface[];
   validateForm: FormGroup;
   loginInfo: LoginInfoModel;
-
+  dataInfo: TankListInfoModel;
 
   @Input() id: number;
   @Input() currentPageNum: number;
@@ -40,8 +41,12 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
   editIndex = -1;
   editObj = {};
 
-  constructor(private fb: FormBuilder, private positionPickerService: PositionPickerService, private dataService: TankListInfoService,
-              private cdr: ChangeDetectorRef) {
+  constructor(
+    private fb: FormBuilder,
+    private positionPickerService: PositionPickerService,
+    private dataService: TankListInfoService,
+    private cdr: ChangeDetectorRef,
+  ) {
     this.returnBack = new EventEmitter<any>();
   }
 
@@ -62,20 +67,26 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
     });
   }
 
-
   showMap() {
     const longitude = this.validateForm.get('longitude').value;
     const latitude = this.validateForm.get('latitude').value;
-    this.positionPickerService.show({
-      isRemoteImage: true,
-      longitude: longitude,
-      latitude: latitude,
-      zoom: 18,
-    }).then(res => {
-      this.validateForm.get('longitude').setValue(res.longitude);
-      this.validateForm.get('latitude').setValue(res.latitude);
-    }).catch(e => null);
+    const isEntprScope = this.dataInfo.entprScope;
+    this.positionPickerService
+      .show({
+        isRemoteImage: true,
+        longitude: longitude,
+        latitude: latitude,
+        zoom: 18,
+        isEntprScope: isEntprScope,
+      })
+      .then(res => {
+        this.validateForm.get('longitude').setValue(res.longitude);
+        this.validateForm.get('latitude').setValue(res.latitude);
+      })
+      .catch(e => null);
+
   }
+
 
   initTypeOptions() {
     this.tankTypeOptions = [...MapPipe.transformMapToArray(MapSet.tankType)];
@@ -83,7 +94,6 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
     this.tankStructureOptions = [...MapPipe.transformMapToArray(MapSet.tankStructure)];
     this.tankMateOptions = [...MapPipe.transformMapToArray(MapSet.tankMate)];
   }
-
 
   // 创建介质
   createMedium(): FormGroup {
@@ -152,7 +162,6 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
       return;
     }
 
-
     const params = this.validateForm.getRawValue();
     params.entprId = this.loginInfo.entprId;
     params.updateBy = this.loginInfo.updateBy;
@@ -171,16 +180,17 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
     this.returnBack.emit({ refesh: true, pageNo: this.currentPageNum });
   }
 
-
   returnToList() {
     this.returnBack.emit({ refesh: false, pageNo: this.currentPageNum });
   }
 
-
   async getDetail() {
-    const dataInfo = await this.dataService.getTankInfoDetail(this.id);
-    this.validateForm.patchValue(dataInfo);
-    dataInfo.majorHazardMaterials.forEach(item => {
+    this.dataInfo = await this.dataService.getTankInfoDetail(this.id);
+
+
+    this.validateForm.patchValue(this.dataInfo);
+
+    this.dataInfo.majorHazardMaterials.forEach(item => {
       const field = this.createMedium();
       field.patchValue(item);
       this.mediumArray.push(field);
@@ -196,5 +206,4 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
       this.getDetail();
     }
   }
-
 }

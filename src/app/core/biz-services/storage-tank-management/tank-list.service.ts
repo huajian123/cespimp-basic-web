@@ -4,6 +4,7 @@ import { SearchCommonVO } from '@core/vo/comm/BusinessEnum';
 import { PageInfo } from '@core/vo/comm/PageInfo';
 import { FormGroup } from '@angular/forms';
 
+
 export namespace TankListServiceNs {
   export interface TankListInfoModel {
     id: number;
@@ -14,7 +15,7 @@ export namespace TankListServiceNs {
     tankStructure?: number;
     longitude: number; // 经度
     latitude: number; // 纬度
-    entprScope?: { lng: number, lat: number }[];
+    entprScope?: { lng: number; lat: number }[];
     tankMate?: number;
     tankCapacity?: number;
     productionDate?: Date;
@@ -23,14 +24,13 @@ export namespace TankListServiceNs {
     majorHazardMaterialInsertDTOS: FormGroup[];
   }
 
-  export interface TankListSearchModel{
+  export interface TankListSearchModel {
     entprName?: string;
     tankNo?: string;
   }
 
   export class TankListInfoServiceClass {
-    constructor(private http: HttpUtilService) {
-    }
+    constructor(private http: HttpUtilService) {}
 
     /*新增接口*/
     public addTank(param: TankListInfoModel): Promise<void> {
@@ -60,9 +60,7 @@ export namespace TankListServiceNs {
   providedIn: 'root',
 })
 export class TankListInfoService extends TankListServiceNs.TankListInfoServiceClass {
-
   constructor(http: HttpUtilService) {
     super(http);
   }
-
 }

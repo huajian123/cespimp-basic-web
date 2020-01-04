@@ -9,11 +9,15 @@ import {
 } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { WarehouseListInfoService } from '@core/biz-services/warehouse-management/warehouse-list.service';
+import {
+  WarehouseListInfoService,
+  WarehouseListServiceNs,
+} from '@core/biz-services/warehouse-management/warehouse-list.service';
 import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
 import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import { PositionPickerService } from '../../../widget/position-picker/position-picker.service';
 import { EVENT_KEY } from '@env/staticVariable';
+import WarehouseListInfoModel = WarehouseListServiceNs.WarehouseListInfoModel;
 
 interface OptionsInterface {
   value: string;
@@ -36,6 +40,7 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
   loginInfo: LoginInfoModel;
   editIndex = -1;
   editObj = {};
+  dataInfo: WarehouseListInfoModel;
 
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: WarehouseListInfoService, private positionPickerService: PositionPickerService) {
@@ -74,9 +79,9 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
   }
 
   async getDetail() {
-    const dataInfo = await this.dataService.getWarehouseInfoDetail(this.id);
-    this.validateForm.patchValue(dataInfo);
-    dataInfo.majorHazardMaterials.forEach(item => {
+    this.dataInfo = await this.dataService.getWarehouseInfoDetail(this.id);
+    this.validateForm.patchValue(this.dataInfo);
+    this.dataInfo.majorHazardMaterials.forEach(item => {
       const field = this.createMedium();
       field.patchValue(item);
       this.mediumArray.push(field);
@@ -119,10 +124,13 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
   showMap() {
     const longitude = this.validateForm.get('longitude').value;
     const latitude = this.validateForm.get('latitude').value;
+    const isEntprScope = this.dataInfo.entprScope;
     this.positionPickerService.show({
-      isRemoteImage: true, longitude: longitude,
+      isRemoteImage: true,
+      longitude: longitude,
       latitude: latitude,
       zoom: 18,
+      isEntprScope: isEntprScope,
     }).then(res => {
       this.validateForm.get('longitude').setValue(res.longitude);
       this.validateForm.get('latitude').setValue(res.latitude);

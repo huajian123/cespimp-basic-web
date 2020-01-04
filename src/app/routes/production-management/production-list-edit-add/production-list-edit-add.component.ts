@@ -11,8 +11,12 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PositionPickerService } from '../../../widget/position-picker/position-picker.service';
 import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
-import { ProductionListInfoService } from '@core/biz-services/production-management/production-list.service';
+import {
+  ProductionListInfoService,
+  ProductionListServiceNs,
+} from '@core/biz-services/production-management/production-list.service';
 import { EVENT_KEY } from '@env/staticVariable';
+import ProductionListInfoModel = ProductionListServiceNs.ProductionListInfoModel;
 
 @Component({
   selector: 'app-production-management-production-list-edit-add',
@@ -28,6 +32,7 @@ export class ProductionManagementProductionListEditAddComponent implements OnIni
   loginInfo: LoginInfoModel;
   editIndex = -1;
   editObj = {};
+  dataInfo: ProductionListInfoModel;
 
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: ProductionListInfoService, private positionPickerService: PositionPickerService) {
@@ -62,9 +67,9 @@ export class ProductionManagementProductionListEditAddComponent implements OnIni
   }
 
   async getDetail() {
-    const dataInfo = await this.dataService.getProductionInfoDetail(this.id);
-    this.validateForm.patchValue(dataInfo);
-    dataInfo.majorHazardMaterials.forEach(item => {
+    this.dataInfo = await this.dataService.getProductionInfoDetail(this.id);
+    this.validateForm.patchValue(this.dataInfo);
+    this.dataInfo.majorHazardMaterials.forEach(item => {
       const field = this.createMedium();
       field.patchValue(item);
       this.mediumArray.push(field);
@@ -134,11 +139,13 @@ export class ProductionManagementProductionListEditAddComponent implements OnIni
   showMap() {
     const longitude = this.validateForm.get('longitude').value;
     const latitude = this.validateForm.get('latitude').value;
+    const isEntprScope = this.dataInfo.entprScope;
     this.positionPickerService.show({
       isRemoteImage: true,
       longitude: longitude,
       latitude: latitude,
       zoom: 18,
+      isEntprScope: isEntprScope,
     }).then(res => {
       this.validateForm.get('longitude').setValue(res.longitude);
       this.validateForm.get('latitude').setValue(res.latitude);
