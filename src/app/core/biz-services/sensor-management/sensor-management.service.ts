@@ -19,6 +19,7 @@ export namespace SensorManagementListServiceNs {
     longitude: number; // 经度
     latitude: number; // 纬度
     locFactory?: string;
+    entprScope?: { lng: number, lat: number }[];
     firstAlarmThreshold: number;
     secondAlarmThreshold: number;
     thirdAlarmThreshold?: number;

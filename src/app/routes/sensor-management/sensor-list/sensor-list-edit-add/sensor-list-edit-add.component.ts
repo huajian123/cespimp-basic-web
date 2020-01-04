@@ -18,6 +18,7 @@ import {
   SensorManagementListInfoService, SensorManagementListServiceNs,
 } from '@core/biz-services/sensor-management/sensor-management.service';
 import MajorHazardUnitList = SensorManagementListServiceNs.MajorHazardUnitList;
+import SensorManagementListInfoModel = SensorManagementListServiceNs.SensorManagementListInfoModel;
 
 
 interface OptionsInterface {
@@ -57,6 +58,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
   showTrue: boolean;
   dataNameList: any;
   hazardObject: MajorHazardUnitList[];
+  dataInfo: SensorManagementListInfoModel;
 
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: SensorManagementListInfoService, private positionPickerService: PositionPickerService) {
@@ -159,15 +161,15 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
   }
 
   async getDetail() {
-    const dataInfo = await this.dataService.getSensorInfoDetail(this.id);
-    this.validateForm.get('majorHazardId').setValue(dataInfo.majorHazardId);
+    this.dataInfo = await this.dataService.getSensorInfoDetail(this.id);
+    this.validateForm.get('majorHazardId').setValue(this.dataInfo.majorHazardId);
     setTimeout(() => {
-      this.validateForm.get('partType').setValue(dataInfo.partType);
-      this.validateForm.get('partId').setValue(dataInfo.partId);
-      this.validateForm.get('partNo').setValue(dataInfo.partNo);
+      this.validateForm.get('partType').setValue(this.dataInfo.partType);
+      this.validateForm.get('partId').setValue(this.dataInfo.partId);
+      this.validateForm.get('partNo').setValue(this.dataInfo.partNo);
       this.cdr.markForCheck();
     }, 300);
-    this.validateForm.patchValue(dataInfo);
+    this.validateForm.patchValue(this.dataInfo);
     this.cdr.markForCheck();
   }
 
@@ -184,10 +186,13 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
 
 
   showMap() {
+    const isEntprScope = this.dataInfo.entprScope;
     this.positionPickerService.show({
       isRemoteImage: true,
       longitude: enterpriseInfo.longitude,
       latitude: enterpriseInfo.latitude,
+      zoom: 18,
+      isEntprScope: isEntprScope,
     }).then(res => {
       this.validateForm.get('longitude').setValue(res.longitude);
       this.validateForm.get('latitude').setValue(res.latitude);
