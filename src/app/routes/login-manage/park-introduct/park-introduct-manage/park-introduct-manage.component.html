@@ -1,1 +1,21 @@
-<login-manage-head headName="园区介绍管理" [bg]="currentTopBg"></login-manage-head>
+<ng-container *ngIf="currentPage===pageTypeEnum.List">
+  <login-manage-head headName="园区介绍管理" [bg]="currentTopBg"></login-manage-head>
+  <nz-card [nzBordered]="true">
+    <div class="tab-head">
+      <nz-select style="width: 300px" nzPlaceHolder="请选择" [(ngModel)]="currentNoticeType" (ngModelChange)="changeNoticeType()">
+        <nz-option *ngFor="let item of noticeTypeOptions" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+      </nz-select>
+      <button nz-button nzType="primary" >添加{{currentNoticeTypeStr}}</button>
+    </div>
+
+
+    <st #st [page]="{showSize:true, front: false}"
+        [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true"
+        [scroll]="{x: '1000px'}"
+        [widthMode]="{ type: 'strict' }" [columns]="columns" class="mt-sm"></st>
+  </nz-card>
+</ng-container>
+
+<ng-container  *ngIf="currentPage===pageTypeEnum.Announcement||currentPage===pageTypeEnum.IndustryNews||currentPage===pageTypeEnum.FileNotifi||currentPage===pageTypeEnum.ParkIntroduction">
+  <add-edit-park-introduct></add-edit-park-introduct>
+</ng-container>
