@@ -7,4 +7,36 @@ header {
   font-size: 38px;
   line-height: 96px;
   min-width: 1400px;
+  position: relative;
+  background-size: 100%;
+  .manage-btn{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    color: #00FFFB;
+
+    @media screen and (max-width: 1400px) {
+      top: 28%;
+      left: 2%;
+      font-size: 16px
+    }
+
+    @media screen and (min-width: 1401px)  and (max-width: 1600px){
+      top: 28%;
+      left: 2.5%;
+      font-size: 16px
+    }
+
+    @media screen and (min-width: 1601px)  and (max-width: 1800px){
+      top: 31%;
+      left: 2.5%;
+      font-size: 18px;
+    }
+    @media screen and (min-width: 1801px){
+      position: absolute;
+      top: 32%;
+      left: 2.8%;
+      font-size: 18px;
+    }
+  }
 }
