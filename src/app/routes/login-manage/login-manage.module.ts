@@ -10,6 +10,7 @@ import { IndustryDynamicsDetailComponent } from './park-introduct/industry-dynam
 import { DocumentNotificationListComponent } from './park-introduct/document-notification-list/document-notification-list.component';
 import { ParkIntroductionDetailComponent } from './park-introduct/park-introduction-detail/park-introduction-detail.component';
 import { ParkIntroductManageComponent } from './park-introduct/park-introduct-manage/park-introduct-manage.component';
+import { AddEditParkIntroductComponent } from './park-introduct/park-introduct-manage/add-edit-park-introduct/add-edit-park-introduct.component';
 
 const COMPONENTS = [
   ParkIntroductComponent,
@@ -19,6 +20,7 @@ const COMPONENTS = [
   IndustryDynamicsDetailComponent,
   DocumentNotificationListComponent,
   ParkIntroductionDetailComponent,
+  AddEditParkIntroductComponent
 ];
 const COMPONENTS_NOROUNT = [LoginPlatformComponent, ParkIntroductManageComponent];
 
