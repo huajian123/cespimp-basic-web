@@ -27,24 +27,15 @@ export namespace MajorHazardListServiceNs {
     applicationName: string;
   }
 
-  /*
-    export interface majorHazardData {
-      majorHazardPartDTOS: MajorHazardUnitList[],
-      majorHazardInfoNeedListDTOS: any;
-    }
-  */
+  export interface MajorHazardSelectedModel extends EntprSearch {
+    partType: number;
+  }
 
-  /*
-    export interface MajorHazardUnitList {
-      id?: number;
-      entprId?: number;
-      majorHazardId: number;
-      partType: number;
-      partId: number;
-      partNo: string;
-      partName?: string;
-    }
-  */
+  export interface MajorHazardUnitList {
+    partId: number;
+    partNo: string;
+    partName: string;
+  }
 
   export interface EntprSearch {
     entprId: number;
@@ -84,13 +75,13 @@ export namespace MajorHazardListServiceNs {
     }
 
     /*重大危险源组成信息下拉列表*/
-    /*public getMajorList(entprId: number): Promise<majorHazardData> {
-      return this.http.get('data/major/hazard/need', { entprId: entprId }).toPromise();
-    }*/
+    public getMajorList(param: MajorHazardSelectedModel): Promise<MajorHazardUnitList[]> {
+      return this.http.get('data/major/hazard/partUnit', param).toPromise();
+    }
 
     /*重大危险源备案信息提交*/
-    public getRecordInfo(param:MajorHazardRecordInfoModel): Promise<void> {
-      return this.http.post('data/major/hazard/MajorHazardFiling',param).toPromise();
+    public getRecordInfo(param: MajorHazardRecordInfoModel): Promise<void> {
+      return this.http.post('data/major/hazard/MajorHazardFiling', param).toPromise();
     }
   }
 }

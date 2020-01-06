@@ -19,16 +19,21 @@ import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
 import { PositionPickerService } from '../../../../widget/position-picker/position-picker.service';
 import { enterpriseInfo } from '@env/environment';
 import { PositionPickerPolygonService } from '../../../../widget/position-picker-polygon/position-picker-polygon.service';
-import EntprSearch = MajorHazardListServiceNs.EntprSearch;
+import MajorHazardUnitList = MajorHazardListServiceNs.MajorHazardUnitList;
+
 
 interface OptionsInterface {
   value: string | number;
   label: string;
-  partType?: number;
+
 }
 
-interface MajorHazardPartModel {
+/*interface MajorOptionsInterface extends OptionsInterface {
   partType: number;
+}*/
+
+interface MajorHazardPartModel {
+  /*  partType: number;*/
   partNo: string;
   partName: string;
   partId: number;
@@ -56,6 +61,7 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
   majorAllNo: MajorHazardPartModel[];
   selMajorNoArray: OptionsInterface[];
   currentPolygonList: any[];
+  dataMajorInfo: MajorHazardUnitList[];
 
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: MajorHazardListInfoService, private positionPickerService: PositionPickerService,
@@ -108,21 +114,20 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
 
   getPartNoOptions(type, index) {
     // type为当前选中的重大危险源type
-    const tempArray = this.majorAllNo.filter(item => {
-      return '' + item.partType === '' + type;
-    });//
+    /*  const tempArray = this.majorAllNo.filter(item => {
+        return ;
+      });*/
+    console.log(this.dataMajorInfo);
     this.selMajorNoArray = [];//先初始化一个类型下面的list菜单内容
-    tempArray.forEach(item => {
-      const obj = { value: item.partId, label: item.partNo, partType: item.partType };
-      this.selMajorNoArray.push(obj);//循环插入当前类型下面的list下拉内容菜单需传递的参数（partId，partNo，partType）；
+    this.dataMajorInfo.forEach(item => {
+      const obj = { value: item.partId, label: item.partName, partNo: item.partNo };
+      this.selMajorNoArray.push(obj);//循环插入当前类型下面的list下拉内容菜单需传递的参数（partId，partNo，partNo）；
     });
   }
 
   async getDetail() {
     this.currentPolygonList.length = 0;
-    const param: EntprSearch = {
-      entprId: this.loginInfo.entprId,
-    };
+    /*this.entprId = this.loginInfo.entprId;*/
     const dataInfo = await this.dataService.getMajorHazardInfoDetail(this.id);
     if (dataInfo.majorScope) {
       dataInfo.majorScope.forEach(({ lng, lat }) => {
@@ -143,10 +148,11 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
 
   // 重大危险源type类型选取改变
   changeMajorType(type, index) {
+    this.getMajorList(type, index);
     this.getPartNoOptions(type, index);
-    this.mediumArray.controls[index].get('partTypeLabel').reset();//重置formgroup中的选取显示内容
-    this.mediumArray.controls[index].get('partNo').reset();//重置formgroup中的选取传递内容
-    this.mediumArray.controls[index].get('partId').reset();//重置formgroup中的选取传递内容
+     //this.mediumArray.controls[index].get('partTypeLabel').reset();//重置formgroup中的选取显示内容
+     this.mediumArray.controls[index].get('partNo').reset();//重置formgroup中的选取传递内容
+     this.mediumArray.controls[index].get('partId').reset();//重置formgroup中的选取传递内容
   }
 
   changeMajorNo(partId, index) {
@@ -154,22 +160,18 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       const selObj = this.selMajorNoArray.find(item => {
         return item.value === partId;
       });
-      this.mediumArray.controls[index].get('partTypeLabel').setValue(selObj.label);
+      //this.mediumArray.controls[index].get('partTypeLabel').setValue(selObj.label);
       this.mediumArray.controls[index].get('partNo').setValue(selObj.label);
     }
   }
 
-  async getMajorList() {
-    this.entprId = this.loginInfo.entprId;
-   /* const data = await this.dataService.getMajorList(this.entprId);
-    data.majorHazardPartDTOS.forEach(item => {
-      this.majorAllNo.push({
-        partType: item.partType,
-        partNo: item.partNo,
-        partName: item.partName,
-        partId: item.partId,
-      });
-    });*/
+  async getMajorList(type, index) {
+    const majorParam = {
+      entprId: this.loginInfo.entprId,
+      partType: type,
+    };
+    this.dataMajorInfo = await this.dataService.getMajorList(majorParam);
+    this.cdr.markForCheck();
   }
 
 // 创建组成单元
@@ -292,7 +294,6 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
     this.unitTypeOptions = [...MapPipe.transformMapToArray(MapSet.unitType)];
     this.HazardLevelOptions = [...MapPipe.transformMapToArray(MapSet.majorHazardLevel)];
     this.HazardNatureOptions = [...MapPipe.transformMapToArray(MapSet.majorHazardNature)];
-    this.getMajorList();
     this.initForm();
     if (this.id) {
       this.getDetail();

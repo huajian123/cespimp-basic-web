@@ -22,63 +22,45 @@
         <nz-form-item>
           <nz-form-label>传感器类型</nz-form-label>
           <nz-form-control nzErrorTip="请选择传感器类型">
-            <nz-select (ngModelChange)="changeSensorType($event)" formControlName="sensorType" [nzPlaceHolder]="'请选择火灾危险性类型'" [nzShowSearch]="true">
+            <nz-select  formControlName="sensorType" [nzPlaceHolder]="'请选择火灾危险性类型'" [nzShowSearch]="true">
               <nz-option *ngFor="let i of sensorTypeOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
     </nz-row>
-    <nz-row nzGutter="16" *ngIf="showTrue">
+    <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="name">一级报警阈值</nz-form-label>
-          <nz-form-control nzErrorTip="请输入一级报警阈值">
-            <input nz-input formControlName="firstAlarmThreshold" placeholder="请输入一级报警阈值"/>
+          <nz-form-label nzFor="name">低低报</nz-form-label>
+          <nz-form-control nzErrorTip="请输入低低报">
+            <input nz-input formControlName="firstAlarmThreshold" placeholder="请输入低低报"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="name">二级报警阈值</nz-form-label>
-          <nz-form-control nzErrorTip="请输入二级报警阈值">
-            <input nz-input formControlName="secondAlarmThreshold" placeholder="请输入二级报警阈值"/>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-    </nz-row>
-    <nz-row nzGutter="16" *ngIf="!showTrue">
-      <nz-col nzLg="6" nzMd="12" nzSm="24">
-        <nz-form-item>
-          <nz-form-label nzFor="name">低低位限报警阈值</nz-form-label>
-          <nz-form-control nzErrorTip="请输入低低位限报警阈值">
-            <input nz-input formControlName="firstAlarmThreshold" placeholder="请输入低低位限报警阈值"/>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col>
-      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
-        <nz-form-item>
-          <nz-form-label nzFor="name">低位限报警阈值</nz-form-label>
-          <nz-form-control nzErrorTip="请输入低位限报警阈值">
-            <input nz-input formControlName="secondAlarmThreshold" placeholder="请输入低位限报警阈值"/>
+          <nz-form-label nzFor="name">低报</nz-form-label>
+          <nz-form-control nzErrorTip="请输入低报">
+            <input nz-input formControlName="secondAlarmThreshold" placeholder="请输入低报"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
         <nz-form-item>
-          <nz-form-label>高位限报警阈值</nz-form-label>
-          <nz-form-control nzErrorTip="高位限报警阈值">
-            <input nz-input formControlName="thirdAlarmThreshold" placeholder="请输入高位限报警阈值"/>
+          <nz-form-label>高报</nz-form-label>
+          <nz-form-control nzErrorTip="请输入高报">
+            <input nz-input formControlName="thirdAlarmThreshold" placeholder="请输入高报"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
     </nz-row>
-    <nz-row nzGutter="16" *ngIf="!showTrue">
+    <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="name">高高位限报警阈值</nz-form-label>
-          <nz-form-control nzErrorTip="请输入高高位限报警阈值">
-            <input nz-input formControlName="fourthAlarmThreshold" placeholder="请输入高高位限报警阈值"/>
+          <nz-form-label nzFor="name">高高报</nz-form-label>
+          <nz-form-control nzErrorTip="请输入高高报">
+            <input nz-input formControlName="fourthAlarmThreshold" placeholder="请输入高高报"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>

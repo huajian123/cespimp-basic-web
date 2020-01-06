@@ -31,9 +31,11 @@ interface PartNoOptionsInterface extends OptionsInterface {
 }
 
 
+/*
 enum sensorTypeNum {
   number = 3
 }
+*/
 
 
 @Component({
@@ -55,7 +57,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
   majorHazardNameList: OptionsInterface[];
   selMajorNoArray: PartNoOptionsInterface[];
   currentPolygonList: any[];
-  showTrue: boolean;
+  //showTrue: boolean;
   dataNameList: any;
   hazardObject: MajorHazardUnitList[];
   dataInfo: SensorManagementListInfoModel;
@@ -63,7 +65,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: SensorManagementListInfoService, private positionPickerService: PositionPickerService) {
     this.returnBack = new EventEmitter<any>();
-    this.showTrue = true;
+    //this.showTrue = true;
     this.unitTypeOptions = [];
     this.sensorTypeOptions = [];
     this.HazardNatureOptions = [];
@@ -173,7 +175,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  changeSensorType(e) {
+/*  changeSensorType(e) {
     switch (e) {
       case sensorTypeNum.number:
         this.showTrue = false;
@@ -182,7 +184,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
         this.showTrue = true;
         break;
     }
-  }
+  }*/
 
 
   showMap() {
