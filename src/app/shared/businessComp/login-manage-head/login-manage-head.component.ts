@@ -9,13 +9,21 @@ import { localUrl } from '@env/environment';
 })
 export class LoginManageHeadComponent implements OnInit {
   @Input() headName: string;
-  constructor() { }
 
-  goManagePage(){
+  constructor() {
+  }
+
+  @Input() bg;
+  currentBg = `url(../../../../assets/imgs/login-manage/one-page-header.png) center no-repeat, #000949`;
+
+  goManagePage() {
     window.open(localUrl + '/hazard/login-manage/park-introduction-manage');
   }
 
   ngOnInit() {
+    if (this.bg) {
+      this.currentBg = this.bg;
+    }
   }
 
 }

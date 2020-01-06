@@ -1,3 +1,3 @@
-<header>{{headName}}
-  <button class="manage-btn" nz-button (click)="goManagePage()"  nzType="link">管理界面</button>
+<header [ngStyle]="{background:currentBg}">{{headName}}
+  <button *ngIf="!bg" class="manage-btn" nz-button (click)="goManagePage()" nzType="link">管理界面</button>
 </header>
