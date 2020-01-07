@@ -175,16 +175,16 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-/*  changeSensorType(e) {
-    switch (e) {
-      case sensorTypeNum.number:
-        this.showTrue = false;
-        break;
-      default:
-        this.showTrue = true;
-        break;
-    }
-  }*/
+  /*  changeSensorType(e) {
+      switch (e) {
+        case sensorTypeNum.number:
+          this.showTrue = false;
+          break;
+        default:
+          this.showTrue = true;
+          break;
+      }
+    }*/
 
 
   showMap() {
@@ -218,6 +218,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
     } catch (e) {
 
     }
+
   }
 
   // 请选择重大危险源组成部分名称

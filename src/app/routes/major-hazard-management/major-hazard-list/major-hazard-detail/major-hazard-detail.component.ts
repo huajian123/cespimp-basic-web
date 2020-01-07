@@ -19,7 +19,7 @@ import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { Router } from '@angular/router';
 import { EVENT_KEY } from '@env/staticVariable';
 import { enterpriseInfo } from '@env/environment';
-import { PositionPickerPolygonService } from '../../../../widget/position-picker-polygon/position-picker-polygon.service';
+
 
 enum PartTypeEnum {
   Tank = 1,
@@ -65,8 +65,11 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
 
     this.columns = [
       {
-        title: '重大危险源组成类型', index: 'partType', width: 60,
+        title: '组成部分类型', index: 'partType', width: 60,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
+      },
+      {
+        title: '组成部分名称', index: 'partName', width: 60,
       },
       {
         title: '组成部分编号',
@@ -138,6 +141,7 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
 
   async getDetailInfo(id?) {
     this.dataInfo = await this.dataService.getMajorHazardInfoDetail(id ? id : this.id);
+    console.log(this.dataInfo);
     this.initMap(this.dataInfo.majorScope);
     this.cdr.markForCheck();
   }

@@ -25,15 +25,11 @@ import MajorHazardUnitList = MajorHazardListServiceNs.MajorHazardUnitList;
 interface OptionsInterface {
   value: string | number;
   label: string;
-
+  partNo?: string;
 }
 
-/*interface MajorOptionsInterface extends OptionsInterface {
-  partType: number;
-}*/
 
 interface MajorHazardPartModel {
-  /*  partType: number;*/
   partNo: string;
   partName: string;
   partId: number;
@@ -62,7 +58,6 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
   selMajorNoArray: OptionsInterface[];
   currentPolygonList: any[];
   dataMajorInfo: MajorHazardUnitList[];
-
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: MajorHazardListInfoService, private positionPickerService: PositionPickerService,
               private positionPickerPolygonService: PositionPickerPolygonService) {
@@ -112,22 +107,21 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
     });
   }
 
-  getPartNoOptions(type, index) {
-    // type为当前选中的重大危险源type
-    /*  const tempArray = this.majorAllNo.filter(item => {
-        return ;
-      });*/
-    console.log(this.dataMajorInfo);
-    this.selMajorNoArray = [];//先初始化一个类型下面的list菜单内容
-    this.dataMajorInfo.forEach(item => {
-      const obj = { value: item.partId, label: item.partName, partNo: item.partNo };
-      this.selMajorNoArray.push(obj);//循环插入当前类型下面的list下拉内容菜单需传递的参数（partId，partNo，partNo）；
-    });
-  }
+  async getPartNoOptions(type, index) {
+   /* if (this.id !== null) {//id不为空表示此时是编辑不是新增重新调用接口插值
+      this.changeMajorType(type, index);
+    }*/
+    this.selMajorNoArray = [];//初始化组成类型下拉的菜单内容
+    if (this.dataMajorInfo) {
+      this.dataMajorInfo.forEach(item => {
+        const MajorInfoObject = { value: item.partId, label: item.partName, partNo: item.partNo };
+        this.selMajorNoArray.push(MajorInfoObject);//循环插入当前类型下面的list下拉内容菜单需传递的参数（partId，partNo，partName）；
+      });
+    }
+  };
 
   async getDetail() {
     this.currentPolygonList.length = 0;
-    /*this.entprId = this.loginInfo.entprId;*/
     const dataInfo = await this.dataService.getMajorHazardInfoDetail(this.id);
     if (dataInfo.majorScope) {
       dataInfo.majorScope.forEach(({ lng, lat }) => {
@@ -135,44 +129,39 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       });
     }
     this.validateForm.patchValue(dataInfo);
-
     dataInfo.majorHazardUnits.forEach((item, index) => {
       const field = this.createMedium();
       this.getPartNoOptions((item as any).partType, index);
       field.patchValue(item);
-      field.get('partTypeLabel').setValue((item as any).partNo);
+      field.get('partName').setValue((item as any).partName);
       this.mediumArray.push(field);
     });
     this.cdr.markForCheck();
   }
 
-  // 重大危险源type类型选取改变
-  changeMajorType(type, index) {
-    this.getMajorList(type, index);
-    this.getPartNoOptions(type, index);
-     //this.mediumArray.controls[index].get('partTypeLabel').reset();//重置formgroup中的选取显示内容
-     this.mediumArray.controls[index].get('partNo').reset();//重置formgroup中的选取传递内容
-     this.mediumArray.controls[index].get('partId').reset();//重置formgroup中的选取传递内容
-  }
-
-  changeMajorNo(partId, index) {
-    if (partId) {
-      const selObj = this.selMajorNoArray.find(item => {
-        return item.value === partId;
-      });
-      //this.mediumArray.controls[index].get('partTypeLabel').setValue(selObj.label);
-      this.mediumArray.controls[index].get('partNo').setValue(selObj.label);
-    }
-  }
-
-  async getMajorList(type, index) {
+  // 重大危险源选取改变type类型
+  async changeMajorType(type, index) {
     const majorParam = {
       entprId: this.loginInfo.entprId,
       partType: type,
     };
     this.dataMajorInfo = await this.dataService.getMajorList(majorParam);
+    this.getPartNoOptions(type, index);
+    this.mediumArray.controls[index].get('partId').reset();
+    this.mediumArray.controls[index].get('partNo').reset();
     this.cdr.markForCheck();
   }
+
+  changeMajorNo(partId, index) {
+    if (partId) {
+      const selectObject = this.selMajorNoArray.find(item => {
+        return item.value === partId;
+      });
+      this.mediumArray.controls[index].get('partName').setValue(selectObject.label);
+      this.mediumArray.controls[index].get('partNo').setValue(selectObject.partNo);
+    }
+  }
+
 
 // 创建组成单元
   createMedium(): FormGroup {
@@ -181,7 +170,7 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       partNo: [null, [Validators.required]],
       entprId: [this.loginInfo.entprId],
       partId: [null, []],
-      partTypeLabel: [null, []],
+      partName: [null, []],
     });
   }
 
@@ -206,9 +195,10 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
   edit(index: number) {
     this.editIndex = index;
     this.editObj = { ...this.mediumArray.at(index).value };
-    this.mediumArray.at(index).get('partType').setValue('' + (this.editObj as any).partType);
-    this.mediumArray.at(index).get('partNo').setValue((this.editObj as any).partNo);
+    /*console.log(this.mediumArray);*/
+    this.mediumArray.at(index).get('partType').setValue((this.editObj as any).partType);
     this.mediumArray.at(index).get('partId').setValue((this.editObj as any).partId);
+    this.mediumArray.at(index).get('partNo').setValue((this.editObj as any).partNo);
   }
 
   // 保存单个组成单元

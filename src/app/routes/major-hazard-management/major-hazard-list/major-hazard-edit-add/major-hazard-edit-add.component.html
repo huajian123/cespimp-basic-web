@@ -144,7 +144,7 @@
         <td>
           <span *ngIf="editIndex !== i">{{ mediumArray.value[i].partType|map:'partType'}}</span>
           <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入组成类型">
-             <nz-select (ngModelChange)="changeMajorType($event,i)" formControlName="partType" [nzShowSearch]="true"
+             <nz-select  (ngModelChange)="changeMajorType($event,i)" formControlName="partType" [nzShowSearch]="true"
                         [nzPlaceHolder]="'请选择组成类型'">
               <nz-option *ngFor="let item of majorList" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
             </nz-select>
@@ -158,10 +158,10 @@
             </nz-select>
           </span>
         </td>
-        <td>
+        <td style="width: 450px;">
           <span *ngIf="editIndex !== i">{{ mediumArray.value[i].partNo }}</span>
           <span *ngIf="editIndex === i" nz-form-control nzErrorTip="请输入组成部分编号">
-            <input nz-input  formControlName="partNo" placeholder="请输入组成部分编号" readonly>
+            <input nz-input   formControlName="partNo" placeholder="请输入组成部分编号" readonly>
           </span>
         </td>
         <td>

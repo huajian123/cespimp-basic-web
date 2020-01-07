@@ -29,6 +29,7 @@ export class BasicInfoProductionMaterialsInfoEditAddComponent implements OnInit 
   @Input() currentPageNum: number;
   @Output() returnBack: EventEmitter<any>;
   loginInfo: LoginInfoModel;
+
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: EnterpriseOriginalProductService) {
     this.returnBack = new EventEmitter<any>();
@@ -47,6 +48,7 @@ export class BasicInfoProductionMaterialsInfoEditAddComponent implements OnInit 
       userName: '',
     };
   }
+
   initForm() {
     this.validateForm = this.fb.group({
       productType: [null, []],
