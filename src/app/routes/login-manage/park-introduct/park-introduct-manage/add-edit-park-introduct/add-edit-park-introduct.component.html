@@ -1,1 +1,76 @@
-123
+<login-manage-head headName="园区介绍管理" [bg]="currentTopBg"></login-manage-head>
+
+<nz-card [nzBordered]="true">
+  <form nz-form [formGroup]="validateForm" se-container="1" labelWidth="200">
+
+    <se label="标题">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="title" placeholder="标题"/>
+        <nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">请填写标题
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+
+    <se label="图片"  *ngIf="noticeType===pageTypeEnum.ParkIntroduction">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <nz-upload
+          (nzChange)="uploadFn($event,'pic')"
+          [nzRemove]="handleRemove.bind(this)"
+          [nzLimit]="1"
+          [nzAction]="uploadUrl"
+          nzListType="picture-card"
+          [(nzFileList)]="fileList"
+          [nzShowButton]="fileList.length < 1"
+          [nzShowUploadList]="showUploadList"
+          [nzPreview]="handlePreview.bind(this)">
+          <i nz-icon nzType="plus"></i>
+          <div class="ant-upload-text">上传</div>
+        </nz-upload>
+        <input nz-input formControlName="pictureUrl" placeholder="图片" [hidden]="true">
+        <nz-form-explain *ngIf="validateForm.get('pictureUrl').dirty && validateForm.get('pictureUrl').errors">请上传图片
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+
+    <se label="文件" *ngIf="noticeType===pageTypeEnum.FileNotifi">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <nz-upload
+          [nzRemove]="handleRemove.bind(this)"
+          (nzChange)="uploadFn($event,'file')"
+          [nzShowButton]="fileList.length < 1"
+          [nzFileType]="fileMineType"
+          [nzAction]="uploadUrl" [nzFileList]="fileList">
+          <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+        </nz-upload>
+        <input nz-input formControlName="fileUrl" placeholder="文件" [hidden]="true">
+        <nz-form-explain *ngIf="validateForm.get('fileUrl').dirty && validateForm.get('fileUrl').errors">请选文件
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+
+    <se label="内容"  *ngIf="noticeType===pageTypeEnum.Announcement||noticeType===pageTypeEnum.IndustryNews||noticeType===pageTypeEnum.ParkIntroduction">
+      <nz-form-control nzLg="8" nzMd="12" nzSm="24">
+        <input nz-input formControlName="title" placeholder="标题"/>
+        <nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">请填写标题
+        </nz-form-explain>
+      </nz-form-control>
+    </se>
+
+    <se>
+      <button nz-button nzType="primary" type="submit">提交</button>
+      <button nz-button class="ml-sm" (click)="returnToList()">返回</button>
+    </se>
+  </form>
+</nz-card>
+
+
+<nz-modal
+  [nzVisible]="previewVisible"
+  [nzContent]="modalContent"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-template #modalContent>
+    <img [src]="previewImage" [ngStyle]="{ width: '100%' }"/>
+  </ng-template>
+</nz-modal>
