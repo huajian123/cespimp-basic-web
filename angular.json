@@ -25,14 +25,18 @@
             "aot": false,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              { "glob": "**/*", "input": "./node_modules/tinymce/skins", "output": "/skins/" },
+              { "glob": "**/*", "input": "./node_modules/tinymce/plugins", "output": "/plugins/" },
+              { "glob": "**/*", "input": "./node_modules/tinymce/themes", "output": "/themes/" }
             ],
             "styles": [
               "src/styles.less",
               "node_modules/video.js/dist/video-js.min.css"
             ],
             "scripts": [
-              "node_modules/ajv/dist/ajv.bundle.js"
+              "node_modules/ajv/dist/ajv.bundle.js",
+              "node_modules/tinymce/tinymce.min.js"
             ]
           },
           "configurations": {

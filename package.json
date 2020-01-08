@@ -37,6 +37,7 @@
     "@delon/mock": "^8.5.1",
     "@delon/theme": "^8.5.1",
     "@delon/util": "^8.5.1",
+    "@tinymce/tinymce-angular": "^3.3.1",
     "@types/arcgis-js-api": "^4.13.0",
     "@types/d3": "^3.5.43",
     "@types/video.js": "^7.3.3",
@@ -49,6 +50,7 @@
     "ngx-echarts": "^4.2.2",
     "rxjs": "~6.4.0",
     "screenfull": "^4.2.1",
+    "tinymce": "^5.1.5",
     "tslib": "^1.10.0",
     "video.js": "^7.6.6",
     "zone.js": "~0.9.1"
