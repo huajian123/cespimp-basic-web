@@ -35,6 +35,10 @@ interface MajorHazardPartModel {
   partId: number;
 }
 
+interface SelectMajorHazardPart extends MajorHazardPartModel {
+  partType: number;
+}
+
 @Component({
   selector: 'app-major-hazard-management-major-hazard-edit-add',
   templateUrl: './major-hazard-edit-add.component.html',
@@ -52,12 +56,13 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
   HazardNatureOptions: OptionsInterface[];
   loginInfo: LoginInfoModel;
   editIndex = -1;
-  editObj = {};
+  editObj: SelectMajorHazardPart;
   majorList: OptionsInterface[];
   majorAllNo: MajorHazardPartModel[];
   selMajorNoArray: OptionsInterface[];
   currentPolygonList: any[];
   dataMajorInfo: MajorHazardUnitList[];
+
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: MajorHazardListInfoService, private positionPickerService: PositionPickerService,
               private positionPickerPolygonService: PositionPickerPolygonService) {
@@ -108,10 +113,10 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
   }
 
   async getPartNoOptions(type, index) {
-   /* if (this.id !== null) {//id不为空表示此时是编辑不是新增重新调用接口插值
-      this.changeMajorType(type, index);
-    }*/
-    this.selMajorNoArray = [];//初始化组成类型下拉的菜单内容
+    /* if(this.id !== null){
+       this.changeMajorType(type, index);
+     }*/
+    this.selMajorNoArray.length = 0;//初始化组成类型下拉的菜单内容
     if (this.dataMajorInfo) {
       this.dataMajorInfo.forEach(item => {
         const MajorInfoObject = { value: item.partId, label: item.partName, partNo: item.partNo };
@@ -194,11 +199,14 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
   // 编辑组成单元
   edit(index: number) {
     this.editIndex = index;
-    this.editObj = { ...this.mediumArray.at(index).value };
-    /*console.log(this.mediumArray);*/
-    this.mediumArray.at(index).get('partType').setValue((this.editObj as any).partType);
-    this.mediumArray.at(index).get('partId').setValue((this.editObj as any).partId);
-    this.mediumArray.at(index).get('partNo').setValue((this.editObj as any).partNo);
+    if (this.editIndex !== -1 && this.editObj) {
+      this.mediumArray.at(this.editIndex).patchValue(this.editObj);
+    }
+    this.editObj = { ...this.mediumArray.at(this.editIndex).value };
+    //console.log(this.editObj);
+    /*  this.mediumArray.at(this.editIndex).get('partType').setValue(this.editObj.partType);
+      this.mediumArray.at(this.editIndex).get('partId').setValue(this.editObj.partName);
+      this.mediumArray.at(this.editIndex).get('partNo').setValue(this.editObj.partNo);*/
   }
 
   // 保存单个组成单元
