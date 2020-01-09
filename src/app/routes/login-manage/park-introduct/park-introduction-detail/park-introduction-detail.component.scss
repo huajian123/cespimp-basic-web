@@ -5,11 +5,11 @@ p{
 }
 .to-left{
   z-index: 999;
-  font-size: 32px;
-  color: #ffffff;
+  font-size: 32px!important;
+  color: #ffffff!important;
   position: fixed;
-  top: 40px;
-  left: 50px;
+  top: 55px;
+  right: 50px;
   cursor: pointer;
 }
 

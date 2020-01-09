@@ -6,7 +6,7 @@ import { SafetyMapService, SafetyMapServiceNs } from '@core/biz-services/safety-
 import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
 import SensorInfoWebSocketModel = SafetyMapServiceNs.SensorInfoWebSocketModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
-import { subDays, addDays } from 'date-fns';
+import { subDays, addDays, endOfDay } from 'date-fns';
 
 @Component({
   selector: 'temp-modal',
@@ -556,7 +556,11 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   disabledDate(current: Date) {
-    return current.getTime() < this.dateRange[0].getTime() || current.getTime() >= (addDays(this.dateRange[0], 4).getTime());
+    return current.getTime() <= subDays(this.dateRange[0],1).getTime() || endOfDay(current).getTime() >= (addDays(this.dateRange[0], 4).getTime());
+  }
+
+  disabledStartDate(current: Date) {
+    return current.getTime() < subDays(new Date(),20).getTime();
   }
 
   // 选择历史数据tab

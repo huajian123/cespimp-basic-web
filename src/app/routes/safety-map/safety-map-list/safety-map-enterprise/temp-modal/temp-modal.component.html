@@ -24,7 +24,7 @@
               <nz-form-item>
                 <nz-form-label nzFor="no">开始时间</nz-form-label>
                 <nz-form-control>
-                  <nz-date-picker nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss"
+                  <nz-date-picker  [nzDisabledDate]="disabledStartDate" nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss"
                                   (ngModelChange)="changeStartSearchDate($event)" placeholder="请输入开始时间"
                                   [(ngModel)]="dateRange[0]" [ngModelOptions]="{standalone: true}"></nz-date-picker>
                 </nz-form-control>

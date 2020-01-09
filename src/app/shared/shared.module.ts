@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { EditorModule } from '@tinymce/tinymce-angular';
+
 // delon
 import { AlainThemeModule } from '@delon/theme';
 import { DelonABCModule } from '@delon/abc';
@@ -20,7 +22,8 @@ const THIRDMODULES = [
   NgZorroAntdModule,
   CountdownModule,
   NgxEchartsModule,
-  G2WaterWaveModule
+  G2WaterWaveModule,
+  EditorModule,
 ];
 // #endregion
 

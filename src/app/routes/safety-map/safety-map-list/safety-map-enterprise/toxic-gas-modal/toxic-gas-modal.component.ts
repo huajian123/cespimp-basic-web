@@ -13,7 +13,7 @@ import SensorInfoWebSocketModel = SafetyMapServiceNs.SensorInfoWebSocketModel;
 import { webSocketIp } from '@env/environment';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
-import { subDays, addDays } from 'date-fns';
+import { subDays, addDays, endOfDay } from 'date-fns';
 
 @Component({
   selector: 'toxic-gas-modal',
@@ -566,7 +566,11 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
   }
 
   disabledDate(current: Date) {
-    return current.getTime() < this.dateRange[0].getTime() || current.getTime() >= (addDays(this.dateRange[0], 4).getTime());
+    return current.getTime() <= subDays(this.dateRange[0],1).getTime() || endOfDay(current).getTime() >= (addDays(this.dateRange[0], 4).getTime());
+  }
+
+  disabledStartDate(current: Date) {
+    return current.getTime() < subDays(new Date(),20).getTime();
   }
 
   // 选择历史数据tab
