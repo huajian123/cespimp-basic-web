@@ -30,14 +30,14 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
     realTimeMin: number
   };
   /*实时数据相关*/
-  legendData = ['实时压力'];
+  legendData = ['实时液位'];
   time = 0;
   zoomStart = 0;
   zoomEnd = 100;
   xAxisData = [];
   seriesData = [
     {
-      name: '实时压力',
+      name: '实时液位',
       type: 'line',
       lineStyle: {
         width: 1,
