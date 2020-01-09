@@ -203,8 +203,8 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
       this.mediumArray.at(this.editIndex).patchValue(this.editObj);
     }
     this.editObj = { ...this.mediumArray.at(this.editIndex).value };
-    //console.log(this.editObj);
-    /*  this.mediumArray.at(this.editIndex).get('partType').setValue(this.editObj.partType);
+    /*console.log(this.editObj);
+     this.mediumArray.at(this.editIndex).get('partType').setValue(this.editObj.partType);
       this.mediumArray.at(this.editIndex).get('partId').setValue(this.editObj.partName);
       this.mediumArray.at(this.editIndex).get('partNo').setValue(this.editObj.partNo);*/
   }

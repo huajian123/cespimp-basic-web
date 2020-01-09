@@ -23,12 +23,12 @@ export class SensorManagementSensorListDetailComponent implements OnInit {
   @Output() returnBack: EventEmitter<any>;
   @Input() id: number;
   @Input() currentPageNum: number;
-  sensorTrue: boolean;
+ /* sensorTrue: boolean;*/
   dataInfo: SensorManagementListInfoModel;
 
   constructor(private dataService: SensorManagementListInfoService, private cdr: ChangeDetectorRef) {
     this.returnBack = new EventEmitter<any>();
-    this.sensorTrue = true;
+    //this.sensorTrue = true;
     this.dataInfo = {
       id: null,
       sensorType: '',
@@ -55,9 +55,9 @@ export class SensorManagementSensorListDetailComponent implements OnInit {
 
   async getDetailInfo() {
     this.dataInfo = await this.dataService.getSensorInfoDetail(this.id);
-    if (this.dataInfo.sensorType == '' + 3) {
+    /*if (this.dataInfo.sensorType == '' + 3) {
       this.sensorTrue = false;
-    }
+    }*/
     this.cdr.markForCheck();
   }
 

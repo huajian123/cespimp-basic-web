@@ -4,16 +4,16 @@
     <sv label="传感器编号">{{dataInfo.sensorNo}}</sv>
     <sv label="传感器名称">{{dataInfo.sensorName}}</sv>
     <sv label="传感器类型">{{dataInfo.sensorType|map:'sensorType'}}</sv>
-    <div *ngIf="sensorTrue">
+    <!--<div *ngIf="sensorTrue">
       <sv label="一级阈值">{{dataInfo.firstAlarmThreshold}}</sv>
       <sv label="二级阈值">{{dataInfo.secondAlarmThreshold}}</sv>
-    </div>
-    <div *ngIf="!sensorTrue">
+    </div>-->
+   <!-- <div *ngIf="!sensorTrue">-->
       <sv label="低低报">{{dataInfo.firstAlarmThreshold}}</sv>
       <sv label="低报">{{dataInfo.secondAlarmThreshold}}</sv>
       <sv label="高报">{{dataInfo.thirdAlarmThreshold}}</sv>
       <sv label="高高报">{{dataInfo.fourthAlarmThreshold}}</sv>
-    </div>
+    <!--</div>-->
   </sv-container>
   <nz-divider></nz-divider>
   <sv-container size="large" title="位置信息">
