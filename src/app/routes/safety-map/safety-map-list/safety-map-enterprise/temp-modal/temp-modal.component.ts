@@ -55,7 +55,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
             yAxis: 20,
             label: {
               show: 'true',
-              formatter: '一级阈值',
+              formatter: '高高报',
             },
             lineStyle: {
               normal: {
@@ -70,7 +70,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
             yAxis: 100,
             label: {
               show: 'true',
-              formatter: '二级阈值',
+              formatter: '高报',
             },
             lineStyle: {
               normal: {
@@ -106,7 +106,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
             yAxis: 300,
             label: {
               show: 'true',
-              formatter: '一级阈值',
+              formatter: '高高报',
             },
             lineStyle: {
               normal: {
@@ -121,7 +121,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
             yAxis: 100,
             label: {
               show: 'true',
-              formatter: '二级阈值',
+              formatter: '高报',
             },
             lineStyle: {
               normal: {
@@ -143,6 +143,8 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
       locFactory: '',
       firstAlarmThreshold: 0,
       secondAlarmThreshold: 0,
+      thirdAlarmThreshold: 0,
+      fourthAlarmThreshold: 0,
       status: 0,
       currentValue: 0,
       historyData: [],

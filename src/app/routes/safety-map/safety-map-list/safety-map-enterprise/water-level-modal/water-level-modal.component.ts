@@ -52,7 +52,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
             yAxis: 20,
             label: {
               show: 'true',
-              formatter: '上上限阈值',
+              formatter: '高高报',
             },
             lineStyle: {
               normal: {
@@ -67,7 +67,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
             yAxis: 100,
             label: {
               show: 'true',
-              formatter: '上限阈值',
+              formatter: '高报',
             },
             lineStyle: {
               normal: {
@@ -81,7 +81,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
             yAxis: 20,
             label: {
               show: 'true',
-              formatter: '下限阈值',
+              formatter: '低报',
             },
             lineStyle: {
               normal: {
@@ -96,7 +96,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
             yAxis: 100,
             label: {
               show: 'true',
-              formatter: '下下限阈值',
+              formatter: '低低报',
             },
             lineStyle: {
               normal: {
@@ -133,7 +133,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
             yAxis: 300,
             label: {
               show: 'true',
-              formatter: '上上限阈值',
+              formatter: '高高报',
             },
             lineStyle: {
               normal: {
@@ -148,7 +148,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
             yAxis: 100,
             label: {
               show: 'true',
-              formatter: '上限阈值',
+              formatter: '高报',
             },
             lineStyle: {
               normal: {
@@ -162,7 +162,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
             yAxis: 300,
             label: {
               show: 'true',
-              formatter: '下限阈值',
+              formatter: '低报',
             },
             lineStyle: {
               normal: {
@@ -177,7 +177,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
             yAxis: 100,
             label: {
               show: 'true',
-              formatter: '下下限阈值',
+              formatter: '低低报',
             },
             lineStyle: {
               normal: {
