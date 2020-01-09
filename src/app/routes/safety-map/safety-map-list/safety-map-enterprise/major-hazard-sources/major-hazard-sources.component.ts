@@ -343,6 +343,7 @@ export class MajorHazardSourcesComponent implements OnInit {
     this.dataInfo.unitType = new MapPipe().transform(this.dataInfo.unitType, 'unitType');
     this.dataInfo.majorHazardLevel = new MapPipe().transform(this.dataInfo.majorHazardLevel, 'majorHazardLevel');
     this.dataInfo.majorHazardNature = new MapPipe().transform(this.dataInfo.majorHazardNature, 'majorHazardNature');
+    this.dataInfo.useDate = new MapPipe().transform(this.dataInfo.useDate, 'date:yyyy-MM-dd HH:mm');
     this.validateForm.patchValue(this.dataInfo);
     this.cdr.markForCheck();
   }
