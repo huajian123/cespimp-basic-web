@@ -157,11 +157,13 @@ export class CameraManagementCameraListEditAddComponent implements OnInit {
   }
 
   showMap() {
+    const longitude = this.validateForm.get('longitude').value;
+    const latitude = this.validateForm.get('latitude').value;
     const isEntprScope = this.dataInfo.entprScope;
     this.positionPickerService.show({
       isRemoteImage: true,
-      longitude: enterpriseInfo.longitude,
-      latitude: enterpriseInfo.latitude,
+      longitude: longitude,
+      latitude: latitude,
       zoom: 18,
       isEntprScope: isEntprScope,
     }).then(res => {
