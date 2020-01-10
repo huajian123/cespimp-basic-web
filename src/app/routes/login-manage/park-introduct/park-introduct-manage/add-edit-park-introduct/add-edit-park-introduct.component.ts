@@ -73,6 +73,8 @@ export class AddEditParkIntroductComponent implements OnInit {
       + '| link unlink image code | removeformat | h2 h4 | fullscreen preview paste',
     height: 700,
     width: 1200,
+    image_advtab: true,
+    images_upload_url:environment.baseUrl[getwayKey.Bs] + 'richUpload?_allow_anonymous=true',
     codesample_languages: [
       { text: 'JavaScript', value: 'javascript' },
       { text: 'HTML/XML', value: 'markup' },
@@ -85,7 +87,7 @@ export class AddEditParkIntroductComponent implements OnInit {
     paste_data_images: true,
     imagetools_toolbar: 'rotateleft rotateright | flipv fliph | editimage imageoptions',
     // 这个便是自定义上传图片方法
-    images_upload_handler: function(blobInfo, success, failure) {
+  /*  images_upload_handler: function(blobInfo, success, failure) {
       let xhr, formData;
       xhr = new XMLHttpRequest();
       xhr.withCredentials = false;
@@ -106,7 +108,7 @@ export class AddEditParkIntroductComponent implements OnInit {
       formData = new FormData();
       formData.append('file', blobInfo.blob(), blobInfo.filename());
       xhr.send(formData);
-    },
+    },*/
   };
 
 
@@ -115,7 +117,6 @@ export class AddEditParkIntroductComponent implements OnInit {
     this.noticeType = PageTypeEnum.Announcement;
     this.fileMineType = '';
     this.uploadUrl = environment.baseUrl[getwayKey.Bs] + 'upload?_allow_anonymous=true';
-    console.log(this.uploadUrl);
     this.returnBack = new EventEmitter<any>();
     this.fileList = [];
   }
@@ -166,8 +167,6 @@ export class AddEditParkIntroductComponent implements OnInit {
       fileUrl: [null, [Validators.required]],
       fileName: [null],
     });
-    console.log(this.noticeType);
-    console.log(this.noticeType === PageTypeEnum.Announcement || this.noticeType === PageTypeEnum.IndustryNews);
     if (this.noticeType === PageTypeEnum.Announcement || this.noticeType === PageTypeEnum.IndustryNews) {
       this.validateForm.controls['pictureUrl'].disable();
       this.validateForm.controls['fileUrl'].disable();
@@ -184,8 +183,6 @@ export class AddEditParkIntroductComponent implements OnInit {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     });
-    console.log(this.validateForm.invalid);
-    console.log(this.validateForm);
     if (this.validateForm.invalid) {
       return;
     }
@@ -219,7 +216,6 @@ export class AddEditParkIntroductComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(1234);
     this.initForm();
     if (this.id) {
       this.getDetail();
