@@ -11,7 +11,7 @@
 
     <st #st [page]="{showSize:true, front: false}"
         [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true"
-        [scroll]="{x: '1000px'}"
+        [scroll]="{x: '1000px'}"  (change)="changePage($event)"
         [widthMode]="{ type: 'strict' }" [data]="dataList"  [columns]="columns" class="mt-sm"></st>
   </nz-card>
 </ng-container>

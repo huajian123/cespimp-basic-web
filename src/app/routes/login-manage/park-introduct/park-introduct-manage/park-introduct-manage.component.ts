@@ -70,6 +70,13 @@ export class ParkIntroductManageComponent implements OnInit {
     this.currentPage = this.currentNoticeType;
   }
 
+
+  changePage(e) {
+    if (e.type === 'click' || e.type === 'dblClick') return;
+    this.listPageInfo = e;
+    this.getDataList();
+  }
+
   del(item) {
     const modalCtrl = this.messageService.showAlertMessage('', '您确定要删除吗？', MessageType.Confirm);
     modalCtrl.afterClose.subscribe((type: string) => {

@@ -123,5 +123,12 @@
     text-align: right;
     margin-right: 20px;
     margin-bottom: -40px;
+    ::ng-deep .ant-pagination-item a{
+      color: white;
+    }
+    ::ng-deep .ant-pagination-item-active a{
+      color: #1890ff!important;
+    }
   }
 }
+

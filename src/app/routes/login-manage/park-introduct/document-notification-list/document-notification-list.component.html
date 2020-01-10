@@ -5,50 +5,20 @@
     <div class="content-wrap">
       <div class="notice-list">
 
-        <div class="notice-item" down-file  file-name="关于吴中化工园区实行封闭化管理试运行的公告"   [http-data]="data" http-url="../../../../../assets/tmp/5.docx">
-          <div class="time">2019-11-29 10:02:39</div>
+        <div class="notice-item" *ngFor="let item of dataList;let i=index;" down-file file-name="{{item.title}}"   [http-data]="data" [http-url]="item.fileUrl+'?_allow_anonymous=true'">
+          <div class="time">{{item.createTime|map:'date:yyyy-MM-dd HH:mm:ss'}}</div>
           <div class="line"></div>
           <span class="icon iconfont text"></span>
-          <span class="one-line">关于吴中化工园区实行封闭化管理试运行的公告</span>
-          <span class="icon iconfont download"></span>
-        </div>
-
-        <div class="notice-item" down-file  file-name="全面实施危险化学品企业安全风险研判与承诺公告制度的通知  应急〔2018〕74号"   [http-data]="data" http-url="../../../../../assets/tmp/1.doc">
-          <div class="time">2019-11-06 10:02:13</div>
-          <div class="line"></div>
-          <span class="icon iconfont text"></span>
-          <span class="one-line">全面实施危险化学品企业安全风险研判与承诺公告制度的通知  应急〔2018〕74号</span>
-          <span class="icon iconfont download"></span>
-        </div>
-        <div class="notice-item" down-file  file-name="危险化学品重大危险源监督管理暂行规定"  [http-data]="data" http-url="../../../../../assets/tmp/2.docx">
-          <div class="time">2019-10-28 11:41:31</div>
-          <div class="line"></div>
-          <span class="icon iconfont text"></span>
-          <span class="one-line">危险化学品重大危险源监督管理暂行规定</span>
-          <span class="icon iconfont download"></span>
-        </div>
-        <div class="notice-item" down-file  file-name="危险化学品重大危险源在线监控及事故预警系统建设指南（试行）"  [http-data]="data" http-url="../../../../../assets/tmp/3.pdf">
-          <div class="time">2019-10-14 15:32:31</div>
-          <div class="line"></div>
-          <span class="icon iconfont text"></span>
-          <span class="one-line">危险化学品重大危险源在线监控及事故预警系统建设指南（试行）</span>
-          <span class="icon iconfont download"></span>
-        </div>
-        <div class="notice-item" down-file  file-name="江苏省涉及一、二级重大危险源企业情况"  [http-data]="data" http-url="../../../../../assets/tmp/4.docx">
-          <div class="time">2019-09-24 11:42:26</div>
-          <div class="line"></div>
-          <span class="icon iconfont text"></span>
-          <span class="one-line">江苏省涉及一、二级重大危险源企业情况</span>
+          <span class="one-line">{{item.title}}</span>
           <span class="icon iconfont download"></span>
         </div>
       </div>
-
       <div class="pagination">
-
         <nz-pagination
           [nzPageIndex]="1"
-          [nzTotal]="10"
+          [nzTotal]="listPageInfo.total"
           [nzSize]="'small'"
+          (nzPageIndexChange)="getDataList($event)"
           nzShowQuickJumper
         ></nz-pagination>
       </div>

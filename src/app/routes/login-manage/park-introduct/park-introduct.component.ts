@@ -94,7 +94,7 @@ export class ParkIntroductComponent implements OnInit {
     params.pageSize = 5;
     params.filters.noticeType = this.parkIntroductPageTypeEnum.FileNotifi;
     this.dataService.getAnnouncementList(params).then(res => {
-      this.fileNotifiList = res.list
+      this.fileNotifiList = res.list;
       this.cdr.markForCheck();
     });
   }
