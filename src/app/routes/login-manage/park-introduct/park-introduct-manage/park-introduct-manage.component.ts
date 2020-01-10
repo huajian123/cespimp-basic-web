@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ListPageInfo, OptionsInterface, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import { STColumn, STData } from '@delon/abc';
 import { EVENT_KEY } from '@env/staticVariable';
@@ -49,7 +49,7 @@ export class ParkIntroductManageComponent implements OnInit {
   itemId: number;
 
 
-  constructor(private dataService: ParkIntroductManageService,private messageService: ShowMessageService) {
+  constructor(private dataService: ParkIntroductManageService, private messageService: ShowMessageService, private cdr: ChangeDetectorRef) {
     this.currentPage = this.pageTypeEnum.List;
     this.listPageInfo = {
       total: 0,
@@ -70,14 +70,19 @@ export class ParkIntroductManageComponent implements OnInit {
     this.currentPage = this.currentNoticeType;
   }
 
-  del(id) {
+  del(item) {
     const modalCtrl = this.messageService.showAlertMessage('', '您确定要删除吗？', MessageType.Confirm);
     modalCtrl.afterClose.subscribe((type: string) => {
       if (type !== 'onOk') {
         return;
       }
-      this.dataService.delNotice(id).then(() => this.getDataList(this.listPageInfo.pi));
+      this.dataService.delNotice(item.id).then(() => this.getDataList(this.listPageInfo.pi));
     });
+  }
+
+  goEditPage(item) {
+    this.itemId = item.id;
+    this.currentPage = this.currentNoticeType;
   }
 
   async returnToList(e?: GoBackParam) {
@@ -120,6 +125,7 @@ export class ParkIntroductManageComponent implements OnInit {
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
     this.dataList = list || [];
+    this.cdr.markForCheck();
   }
 
   format(toBeFormat, arg) {
@@ -145,6 +151,18 @@ export class ParkIntroductManageComponent implements OnInit {
         title: '操作',
         fixed: 'right',
         width: '130px',
+        buttons: [
+          {
+            text: '编辑',
+            icon: 'edit',
+            click: this.goEditPage.bind(this),
+          },
+          {
+            text: '删除',
+            icon: 'delete',
+            click: this.del.bind(this),
+          },
+        ],
       },
     ];
   }
@@ -152,6 +170,7 @@ export class ParkIntroductManageComponent implements OnInit {
   ngOnInit() {
     this.noticeTypeOptions = [...MapPipe.transformMapToArray(MapSet.noticeType)];
     this.initTable();
+    this.getDataList(1);
   }
 
 }

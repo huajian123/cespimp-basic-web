@@ -12,10 +12,10 @@
     <st #st [page]="{showSize:true, front: false}"
         [pi]="listPageInfo.pi" [ps]="listPageInfo.ps" [total]="listPageInfo.total" [bordered]="true"
         [scroll]="{x: '1000px'}"
-        [widthMode]="{ type: 'strict' }" [columns]="columns" class="mt-sm"></st>
+        [widthMode]="{ type: 'strict' }" [data]="dataList"  [columns]="columns" class="mt-sm"></st>
   </nz-card>
 </ng-container>
 
 <ng-container  *ngIf="currentPage===pageTypeEnum.Announcement||currentPage===pageTypeEnum.IndustryNews||currentPage===pageTypeEnum.FileNotifi||currentPage===pageTypeEnum.ParkIntroduction">
-  <add-edit-park-introduct [id]="itemId" (returnBack)="returnToList($event)" [noticeType]="currentNoticeType"></add-edit-park-introduct>
+  <add-edit-park-introduct [currentPageNum]="this.listPageInfo.pi"  [id]="itemId" (returnBack)="returnToList($event)" [noticeType]="currentNoticeType"></add-edit-park-introduct>
 </ng-container>

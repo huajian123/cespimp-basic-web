@@ -114,7 +114,8 @@ export class AddEditParkIntroductComponent implements OnInit {
     this.currentTopBg = `url(../../../../assets/imgs/login-manage/manage-top.png) center no-repeat, #000949`;
     this.noticeType = PageTypeEnum.Announcement;
     this.fileMineType = '';
-    this.uploadUrl = environment.baseUrl[getwayKey.Bs] + '/upload';
+    this.uploadUrl = environment.baseUrl[getwayKey.Bs] + 'upload?_allow_anonymous=true';
+    console.log(this.uploadUrl);
     this.returnBack = new EventEmitter<any>();
     this.fileList = [];
   }
@@ -207,8 +208,21 @@ export class AddEditParkIntroductComponent implements OnInit {
     this.returnBack.emit();
   }
 
+  async getDetail() {
+    const dataInfo = await this.dataService.getNoticeInfo(this.id);
+    this.fileList = [{
+      name: dataInfo.fileName,
+      status: 'done',
+      url: dataInfo.fileUrl || dataInfo.pictureUrl
+    }];
+    this.validateForm.patchValue(dataInfo);
+  }
+
   ngOnInit() {
     console.log(1234);
     this.initForm();
+    if (this.id) {
+      this.getDetail();
+    }
   }
 }
