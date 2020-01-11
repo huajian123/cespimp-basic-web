@@ -28,7 +28,7 @@ export const menus = [
           {
             'text': '企业信息列表',
             'link': '/hazard/basic-info/basic-info',
-            'acl': RoleEnum[RoleEnum.ParkManage],
+            'acl': [RoleEnum[RoleEnum.ParkManage], RoleEnum[RoleEnum.SafeMonitor]],
           },
           /*企业管理员操作菜单*/
           {
@@ -73,7 +73,7 @@ export const menus = [
           {
             'text': '企业信息统计',
             'link': '/hazard/basic-info/basic-info-statistics',
-            'acl': RoleEnum[RoleEnum.ParkManage],
+            'acl': [RoleEnum[RoleEnum.ParkManage], RoleEnum[RoleEnum.SafeMonitor]],
           },
         ],
       },
@@ -146,7 +146,7 @@ export const menus = [
           {
             'text': '重大危险源列表',
             'acl': RoleEnum[RoleEnum.Enterprise],
-             get link() {
+            get link() {
               if (window.sessionStorage.getItem(EVENT_KEY.role) === RoleEnum[RoleEnum.Enterprise]) {
                 return '/hazard/major-hazard-management/major-hazard-list';
               } else {
@@ -161,7 +161,7 @@ export const menus = [
           {
             'text': '重大危险源统计',
             'link': '/hazard/major-hazard-management/major-hazard-statistics-list',
-            'acl': RoleEnum[RoleEnum.ParkManage],
+            'acl': [RoleEnum[RoleEnum.ParkManage], RoleEnum[RoleEnum.SafeMonitor]],
           },
         ],
       },
@@ -171,7 +171,7 @@ export const menus = [
     text: '储罐管理',
     group: false,
     hideInBreadcrumb: false,
-    'acl': RoleEnum[RoleEnum.ParkManage],
+    'acl': [RoleEnum[RoleEnum.ParkManage], RoleEnum[RoleEnum.SafeMonitor]],
     children: [
       {
         'text': '储罐管理',
@@ -179,9 +179,10 @@ export const menus = [
         'children': [
           {
             'text': '储罐列表',
-            'acl': RoleEnum[RoleEnum.ParkManage],
+            'acl': [RoleEnum[RoleEnum.ParkManage], RoleEnum[RoleEnum.SafeMonitor]],
             get link() {
-              if (window.sessionStorage.getItem(EVENT_KEY.role) === RoleEnum[RoleEnum.ParkManage]) {
+              const role=window.sessionStorage.getItem(EVENT_KEY.role);
+              if (role === RoleEnum[RoleEnum.ParkManage]||role === RoleEnum[RoleEnum.SafeMonitor]) {
                 return '/hazard/storage-tank-management/tank-list';
               } else {
                 return '/hazard/storage-tank-management/tank-list1';
@@ -196,7 +197,7 @@ export const menus = [
     text: '库房管理',
     group: false,
     hideInBreadcrumb: false,
-    'acl': RoleEnum[RoleEnum.ParkManage],
+    'acl': [RoleEnum[RoleEnum.ParkManage], RoleEnum[RoleEnum.SafeMonitor]],
     children: [
       {
         'text': '库房管理',
@@ -204,9 +205,10 @@ export const menus = [
         'children': [
           {
             'text': '库房列表',
-            'acl': RoleEnum[RoleEnum.ParkManage],
+            'acl': [RoleEnum[RoleEnum.ParkManage], RoleEnum[RoleEnum.SafeMonitor]],
             get link() {
-              if (window.sessionStorage.getItem(EVENT_KEY.role) === RoleEnum[RoleEnum.ParkManage]) {
+              const role=window.sessionStorage.getItem(EVENT_KEY.role);
+              if (role === RoleEnum[RoleEnum.ParkManage]||role === RoleEnum[RoleEnum.SafeMonitor]) {
                 return '/hazard/warehouse-management/warehouse-list';
               } else {
                 return '/hazard/warehouse-management/warehouse-list1';
@@ -221,7 +223,7 @@ export const menus = [
     text: '生产场所管理',
     group: false,
     hideInBreadcrumb: false,
-    'acl': RoleEnum[RoleEnum.ParkManage],
+    'acl': [RoleEnum[RoleEnum.ParkManage], RoleEnum[RoleEnum.SafeMonitor]],
     children: [
       {
         'text': '生产场所管理',
@@ -229,9 +231,10 @@ export const menus = [
         'children': [
           {
             'text': '生产场所列表',
-            'acl': RoleEnum[RoleEnum.ParkManage],
+            'acl':[RoleEnum[RoleEnum.ParkManage], RoleEnum[RoleEnum.SafeMonitor]],
             get link() {
-              if (window.sessionStorage.getItem(EVENT_KEY.role) === RoleEnum[RoleEnum.ParkManage]) {
+              const role=window.sessionStorage.getItem(EVENT_KEY.role);
+              if (role === RoleEnum[RoleEnum.ParkManage]||role === RoleEnum[RoleEnum.SafeMonitor]) {
                 return '/hazard/production-management/production-list';
               } else {
                 return '/hazard/production-management/production-list1';
@@ -255,14 +258,18 @@ export const menus = [
             'text': '传感器列表',
             'link': '/hazard/sensor-management/sensor-list',
           },
- /*         {
-            'text': '传感器实时数据',
-            'link': '/sensor-management/sensor-realtime-data-list',
-          },
           {
-            'text': '传感器历史数据',
-            'link': '/sensor-management/sensor-history-data-list',
-          },*/
+            'text': '传感器数据',
+            'link': '/hazard/sensor-management/sensor-data',
+          },
+          /*         {
+                     'text': '传感器实时数据',
+                     'link': '/sensor-management/sensor-realtime-data-list',
+                   },
+                   {
+                     'text': '传感器历史数据',
+                     'link': '/sensor-management/sensor-history-data-list',
+                   },*/
         ],
       },
     ],

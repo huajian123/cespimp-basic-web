@@ -10,6 +10,7 @@ import { SensorManagementSensorHistoryDataListDetailComponent } from './sensor-h
 import { SensorManagementSensorHistoryDataListEditAddComponent } from './sensor-history-data-list/sensor-history-data-list-edit-add/sensor-history-data-list-edit-add.component';
 import { SensorManagementSensorRealtimeDataListEditAddComponent } from './sensor-realtime-data-list/sensor-realtime-data-list-edit-add/sensor-realtime-data-list-edit-add.component';
 import { SensorManagementSensorRealtimeDataListDetailComponent } from './sensor-realtime-data-list/sensor-realtime-data-list-detail/sensor-realtime-data-list-detail.component';
+import { SensorDataComponent } from './sensor-data/sensor-data.component';
 
 const COMPONENTS = [
   SensorManagementSensorListComponent,
@@ -22,7 +23,8 @@ const COMPONENTS_NOROUNT = [
   SensorManagementSensorHistoryDataListDetailComponent,
   SensorManagementSensorHistoryDataListEditAddComponent,
   SensorManagementSensorRealtimeDataListEditAddComponent,
-  SensorManagementSensorRealtimeDataListDetailComponent];
+  SensorManagementSensorRealtimeDataListDetailComponent,
+  SensorDataComponent];
 
 @NgModule({
   imports: [
@@ -31,7 +33,7 @@ const COMPONENTS_NOROUNT = [
   ],
   declarations: [
     ...COMPONENTS,
-    ...COMPONENTS_NOROUNT
+    ...COMPONENTS_NOROUNT,
   ],
   entryComponents: COMPONENTS_NOROUNT
 })
