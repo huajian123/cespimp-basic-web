@@ -103,8 +103,8 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
       partType: [null, []],
       partNo: [null, []],
       firstAlarmThreshold: [null, []],
-      secondAlarmThreshold: [null, [Validators.required]],
-      thirdAlarmThreshold: [null, [Validators.required]],
+      secondAlarmThreshold: [null, []],
+      thirdAlarmThreshold: [null, []],
       fourthAlarmThreshold: [null, []],
     });
   }
