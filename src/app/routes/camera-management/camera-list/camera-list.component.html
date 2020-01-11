@@ -45,3 +45,7 @@
   <app-camera-management-camera-list-edit-add [id]="this.itemId" [currentPageNum]="listPageInfo.pi" (returnBack)="returnToList($event)"></app-camera-management-camera-list-edit-add>
 </ng-container>
 
+<ng-container *ngIf="showCameraModal">
+  <camera-list-modal [(showModel)]="showCameraModal" [id]="itemId"></camera-list-modal>
+</ng-container>
+

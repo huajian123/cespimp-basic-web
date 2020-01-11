@@ -27,6 +27,7 @@ export class CameraManagementCameraListComponent implements OnInit {
   listPageInfo: ListPageInfo;
   itemId: number;
   searchParam: CameraSearchModel;
+  showCameraModal: boolean;
 
   constructor(private dataService: CameraManagementListInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
     this.expandForm = false;
@@ -40,6 +41,7 @@ export class CameraManagementCameraListComponent implements OnInit {
     this.dataList = [];
     this.itemId = -1;
     this.searchParam = {};
+    this.showCameraModal = false;
   }
 
   changePage(e) {
@@ -88,6 +90,13 @@ export class CameraManagementCameraListComponent implements OnInit {
     this.currentPage = this.pageTypeEnum.DetailOrExamine;
   }
 
+  showCamera(item) {
+    this.itemId = item.id;
+    this.cdr.markForCheck();
+    this.showCameraModal = true;
+  }
+
+
   reset() {
     this.searchParam = {};
   }
@@ -99,7 +108,7 @@ export class CameraManagementCameraListComponent implements OnInit {
         return;
       }
       this.itemId = item.id;
-       this.dataService.delCameraInfo(this.itemId).then(() => this.getDataList(1));
+      this.dataService.delCameraInfo(this.itemId).then(() => this.getDataList(1));
     });
   }
 
@@ -153,6 +162,11 @@ export class CameraManagementCameraListComponent implements OnInit {
             icon: 'eye',
             click: this.goDetailPage.bind(this),
           },
+          {
+            text: '实时视频',
+            icon: 'eye',
+            click: this.showCamera.bind(this),
+          },
         ],
       },
     ];
@@ -164,6 +178,6 @@ export class CameraManagementCameraListComponent implements OnInit {
   }
 
   _onReuseInit() {
-    this.ngOnInit()
+    this.ngOnInit();
   }
 }

@@ -13,7 +13,8 @@ export interface ListPageInfo {
 export enum RoleEnum {
   SysAdmin = 1,
   Enterprise, // 企业
-  ParkManage  // 园区
+  ParkManage,
+  SafeMonitor// 园区
 }
 
 export class SearchCommonVO {

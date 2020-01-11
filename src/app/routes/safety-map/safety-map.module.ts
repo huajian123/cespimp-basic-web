@@ -38,6 +38,9 @@ const COMPONENTS_NOROUNT = [
     MajorHazardSourcesComponent,
   ],
   entryComponents: COMPONENTS_NOROUNT,
+  exports: [
+    CameraListModalComponent,
+  ],
 })
 export class SafetyMapModule {
 }
