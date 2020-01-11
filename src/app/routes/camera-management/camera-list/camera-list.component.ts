@@ -122,7 +122,7 @@ export class CameraManagementCameraListComponent implements OnInit {
 
   private initTable(): void {
     this.columns = [
-      { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
+      { title: '企业名称', index: 'entprName', width: 120, acl: [this.roleEnum[this.roleEnum.ParkManage],this.roleEnum[this.roleEnum.SafeMonitor]] },
       { title: '摄像头编号', index: 'cameraNo', width: 120 },
       { title: '摄像头名称', index: 'cameraName', width: 100 },
       { title: '重大危险源名称', index: 'majorHazardName', width: 120 },

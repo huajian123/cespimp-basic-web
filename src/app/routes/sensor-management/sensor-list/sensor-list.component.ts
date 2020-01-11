@@ -112,7 +112,7 @@ export class SensorManagementSensorListComponent implements OnInit {
 
   private initTable(): void {
     this.columns = [
-      { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
+      { title: '企业名称', index: 'entprName', width: 120, acl: [this.roleEnum[this.roleEnum.ParkManage],this.roleEnum[this.roleEnum.SafeMonitor]] },
       { title: '传感器编号', index: 'sensorNo', width: 100 },
       { title: '传感器名称', index: 'sensorName', width: 100 },
       { title: '经度', index: 'longitude', width: 100 },

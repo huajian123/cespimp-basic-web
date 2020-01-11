@@ -115,7 +115,7 @@ export class TankListComponent implements OnInit {
 
   private initTable(): void {
     this.columns = [
-      { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
+      { title: '企业名称', index: 'entprName', width: 120, acl: [this.roleEnum[this.roleEnum.ParkManage],this.roleEnum[this.roleEnum.SafeMonitor]] },
       { title: '储罐编号', index: 'tankNo', width: 120 },
       { title: '储罐名称', index: 'tankName', width: 100 },
       {

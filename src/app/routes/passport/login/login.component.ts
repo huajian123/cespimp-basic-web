@@ -77,7 +77,11 @@ export class UserLoginComponent {
       this.router.navigateByUrl('/hazard/login-manage/login-plant');
     } else if (data.user.role === RoleEnum.Enterprise) {
       this.router.navigateByUrl('/hazard/safety-map/safety-map-list');
+    }else if (data.user.role === RoleEnum.SafeMonitor) {
+      this.router.navigateByUrl('/hazard/safety-map/safety-map-list');
     }
+
+
   }
 
 

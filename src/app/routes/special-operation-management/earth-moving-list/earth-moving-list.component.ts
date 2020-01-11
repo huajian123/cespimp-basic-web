@@ -103,7 +103,7 @@ export class SpecialOperationManagementEarthMovingListComponent implements OnIni
 
   private initTable(): void {
     this.columns = [
-      { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
+      { title: '企业名称', index: 'entprName', width: 120, acl: [this.roleEnum[this.roleEnum.ParkManage],this.roleEnum[this.roleEnum.SafeMonitor]] },
       { title: '作业名称', index: 'operationName', width: 100 },
       { title: '作业地点', index: 'operationPlace', width: 120 },
       { title: '作业内容', index: 'operationContent', width: 100 },

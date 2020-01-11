@@ -107,7 +107,7 @@ export class KeySupervisionManagementKeyHazardousChemicalsListComponent implemen
   }
   private initTable(): void {
     this.columns = [
-      { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
+      { title: '企业名称', index: 'entprName', width: 120, acl: [this.roleEnum[this.roleEnum.ParkManage],this.roleEnum[this.roleEnum.SafeMonitor]] },
       { title: '品名', index: 'productName', width: 80 },
       { title: '别名', index: 'alias', width: 80 },
       { title: 'CAS号', index: 'casNo', width: 80 },

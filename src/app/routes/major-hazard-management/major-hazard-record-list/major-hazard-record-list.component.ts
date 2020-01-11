@@ -144,7 +144,7 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
 
   private initTable(): void {
     this.columns = [
-      { title: '企业名称', index: 'entprName', width: 120, acl: this.roleEnum[this.roleEnum.ParkManage] },
+      { title: '企业名称', index: 'entprName', width: 120, acl: [this.roleEnum[this.roleEnum.ParkManage],this.roleEnum[this.roleEnum.SafeMonitor]] },
       { title: '重大危险源ID', index: 'majorHazardId', width: 100 },
       { title: '申请人', index: 'applicationName', width: 100 },
       { title: '申请时间', index: 'applicationTime', width: 100, type: 'date' },
@@ -166,7 +166,7 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
             text: '审核',
             icon: 'edit',
             click: this.goExamine.bind(this),
-            acl: this.roleEnum[this.roleEnum.ParkManage],
+            acl: [this.roleEnum[this.roleEnum.ParkManage],this.roleEnum[this.roleEnum.SafeMonitor]],
           },
           {
             text: '查看',

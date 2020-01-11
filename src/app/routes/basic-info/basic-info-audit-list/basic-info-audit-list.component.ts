@@ -139,7 +139,7 @@ export class BasicInfoBasicInfoAuditListComponent implements OnInit {
             text: '审核',
             icon: 'edit',
             click: this.goExamine.bind(this),
-            acl: this.roleEnum[this.roleEnum.ParkManage],
+            acl: [this.roleEnum[this.roleEnum.ParkManage], this.roleEnum[this.roleEnum.SafeMonitor]],
             iif: this.canJudge.bind(this),
             iifBehavior: 'hide',
           },
