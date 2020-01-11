@@ -126,6 +126,11 @@ export class SafetyMapSafetyMapListComponent implements OnInit, AfterViewInit {
 
   // 修改搜索下拉框
   changeSelValue(event) {
+    this.enterpriseArray.forEach((item) => {
+      if (item.setOptions.id === event) {
+        this.map.centerAndZoom(new T.LngLat(item.or.lng, item.or.lat), 14);
+      }
+    });
     this.createEnterpriseMarker(event);
   }
 

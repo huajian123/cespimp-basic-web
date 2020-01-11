@@ -80,7 +80,6 @@ export class SensorDataComponent implements OnInit {
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
     this.dataList = list || [];
-    console.log(this.dataList);
     this.cdr.markForCheck();
   }
 
