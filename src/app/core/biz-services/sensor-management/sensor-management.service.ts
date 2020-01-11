@@ -46,6 +46,8 @@ export namespace SensorManagementListServiceNs {
   export interface SensorSearchModel {
     entprName?: string;
     sensorNo?: string;
+    endTime?: Date;
+    beginTime?: Date;
   }
 
   export class SensorManagementListInfoServiceClass {
@@ -70,6 +72,11 @@ export namespace SensorManagementListServiceNs {
     /*传感器列表*/
     public getSensorManagementList(param: SearchCommonVO & SensorSearchModel): Promise<PageInfo<SensorManagementListInfoModel>> {
       return this.http.get('data/major/hazard/sensors', param).toPromise();
+    }
+
+    /*传感器数据列表*/
+    public getSensorManagementDataList(param: SearchCommonVO & SensorSearchModel): Promise<PageInfo<SensorManagementListInfoModel>> {
+      return this.http.get('data/major/hazard/sensor/data', param).toPromise();
     }
 
     /*删除接口*/

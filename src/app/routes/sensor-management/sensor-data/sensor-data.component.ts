@@ -11,11 +11,12 @@ import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import SensorManagementListInfoModel = SensorManagementListServiceNs.SensorManagementListInfoModel;
 import SensorSearchModel = SensorManagementListServiceNs.SensorSearchModel;
+import { addDays, endOfDay, subDays } from 'date-fns';
 
 @Component({
   selector: 'app-sensor-data',
   templateUrl: './sensor-data.component.html',
-  styles: []
+  styles: [],
 })
 export class SensorDataComponent implements OnInit {
   roleEnum = RoleEnum;
@@ -48,6 +49,19 @@ export class SensorDataComponent implements OnInit {
     this.getDataList();
   }
 
+
+  changeStartSearchDate(e) {
+    this.searchParam.endTime = null;
+  }
+
+  disabledDate(current: Date) {
+    return current.getTime() <= subDays(this.searchParam.beginTime,1).getTime() || endOfDay(current).getTime() >= (addDays(this.searchParam.beginTime, 4).getTime());
+  }
+
+  disabledStartDate(current: Date) {
+    return current.getTime() < subDays(new Date(),20).getTime();
+  }
+
   async getDataList(pageNumber?: number) {
     const currentRole = window.sessionStorage.getItem('role');
     const params = {
@@ -62,10 +76,11 @@ export class SensorDataComponent implements OnInit {
     } else {
       delete params.entprId;
     }
-    const { total, list, pageNum } = await this.dataService.getSensorManagementList(params);
+    const { total, list, pageNum } = await this.dataService.getSensorManagementDataList(params);
     this.listPageInfo.total = total;
     this.listPageInfo.pi = pageNum;
     this.dataList = list || [];
+    console.log(this.dataList);
     this.cdr.markForCheck();
   }
 
@@ -113,48 +128,21 @@ export class SensorDataComponent implements OnInit {
 
   private initTable(): void {
     this.columns = [
-      { title: '企业名称', index: 'entprName', width: 120, acl: [this.roleEnum[this.roleEnum.ParkManage],this.roleEnum[this.roleEnum.SafeMonitor]] },
-      { title: '传感器编号', index: 'sensorNo', width: 100 },
-      { title: '传感器名称', index: 'sensorName', width: 100 },
-      { title: '经度', index: 'longitude', width: 100 },
-      { title: '经度', index: 'latitude', width: 100 },
-      { title: '在厂区的位置', index: 'locFactory', width: 100 },
-      { title: '重大危险源名称', index: 'majorHazardName', width: 120 },
       {
-        title: '重大危险源组成类型',
-        index: 'partType',
-        width: 100,
+        title: '企业名称',
+        index: 'entprName',
+        width: 50,
+        acl: [this.roleEnum[this.roleEnum.ParkManage], this.roleEnum[this.roleEnum.SafeMonitor]],
+      },
+      {
+        title: '传感器类型',
+        index: 'sensorType',
+        width: 50,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      {
-        title: '组成部分名称',
-        index: 'partName',
-        width: 100,
-      },
-      {
-        title: '操作',
-        fixed: 'right',
-        width: '130px',
-        buttons: [
-          {
-            text: '编辑',
-            icon: 'edit',
-            click: this.goEditAddPage.bind(this),
-            acl: this.roleEnum[this.roleEnum.Enterprise],
-          },
-          {
-            text: '删除',
-            icon: 'delete',
-            click: this.goDeletePage.bind(this),
-            acl: this.roleEnum[this.roleEnum.Enterprise],
-          },
-          {
-            text: '查看',
-            icon: 'eye',
-            click: this.goDetailPage.bind(this),
-          },
-        ],
-      },
+      { title: '传感器编号', index: 'sensorNo', width: 50 },
+      { title: '实时数据', index: 'sensorValue', width: 50 },
+      { title: '上传时间', index: 'reportTime', width: 50, type: 'date' },
     ];
   }
 
