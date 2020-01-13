@@ -507,8 +507,9 @@ export class CombustibleGasModalComponent implements OnInit, OnDestroy {
     this.realTimeOptions.dataZoom[0].end = this.zoomEnd;
     this.realTimeOptions.yAxis.max = this.dataRange.realTimeMax;
     this.realTimeOptions.yAxis.min = this.dataRange.realTimeMin;
-    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.first;
-    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.second;
+
+    this.seriesData[0].markLine.data[0].yAxis =  alarmThresold.first?alarmThresold.first:'';
+    this.seriesData[0].markLine.data[1].yAxis =  alarmThresold.second?alarmThresold.second:'';
     this.realTimeChart.setOption(this.realTimeOptions);
   }
 
@@ -518,8 +519,8 @@ export class CombustibleGasModalComponent implements OnInit, OnDestroy {
     this.historyOption.series[0].data.push(p);
     this.historyOption.dataZoom[0].start = this.historyZoomStart;
     this.historyOption.dataZoom[0].end = this.historyZoomEnd;
-    this.historySeriesData[0].markLine.data[0].yAxis = alarmThresold.first;
-    this.historySeriesData[0].markLine.data[1].yAxis = alarmThresold.second;
+    this.historySeriesData[0].markLine.data[0].yAxis = alarmThresold.first?alarmThresold.first:'' ;
+    this.historySeriesData[0].markLine.data[1].yAxis = alarmThresold.second?alarmThresold.second:'' ;
   }
 
   // 获取历史数据
@@ -586,12 +587,31 @@ export class CombustibleGasModalComponent implements OnInit, OnDestroy {
     this.getHistoryData();
   }
 
+  async getCurrentValue() {
+    this.currentDataInfo = await this.safetyMapService.getSensorCurrentValue(this.id);
+    if (this.currentDataInfo.currentValue > this.dataRange.realTimeMax) {
+      this.dataRange.realTimeMax = Math.ceil(this.currentDataInfo.currentValue * 1.1);
+    }
+    if (this.currentDataInfo.currentValue < this.dataRange.realTimeMin) {
+      this.dataRange.realTimeMin = Math.ceil(this.currentDataInfo.currentValue * 0.9);
+    }
+
+    this.setPercent(this.currentDataInfo.currentValue, {
+      first: this.currentDataInfo.firstAlarmThreshold,
+      second: this.currentDataInfo.secondAlarmThreshold,
+    });
+    this.cdr.markForCheck();
+  }
+
   ngOnInit() {
-    this.openWebSocketFn();
+    this.getCurrentValue();
+    setInterval(() => {
+      this.getCurrentValue();
+    }, 3000);
+   // this.openWebSocketFn();
   }
 
   ngOnDestroy(): void {
-    this.ws.close();
   }
 
   ngAfterViewInit(): void {

@@ -27,7 +27,7 @@
   <div class="alarm-list" *ngIf="currentSelLayerBtnIndex===layerEnum.Alarm">
 
     <div class="list-wrap">
-      <alarm-list [entprId]="enterpriseInfo.id"></alarm-list>
+      <alarm-list [dataList]="enterpriseSafeOneMapDataNumInfo.majorHazardAlarmSelectDTOS" [entprId]="enterpriseInfo.id"></alarm-list>
     </div>
   </div>
 

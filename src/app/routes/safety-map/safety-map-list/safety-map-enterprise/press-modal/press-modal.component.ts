@@ -446,53 +446,6 @@ export class PressModalComponent implements OnInit, OnDestroy {
     this.historyChart = chart;
   }
 
-  connectWs() {
-    if (this.ws != null) {
-      this.ws.close();
-    }
-    this.ws = new WebSocket(`ws://${webSocketIp}:8081/websocket/${WebSocketTypeEnum.Press}`);
-    this.ws.onopen = (e) => {
-      //socket 开启后执行，可以向后端传递信息
-      // this.ws.send('sonmething');
-    };
-    this.ws.onmessage = (e) => {
-      //socket 获取后端传递到前端的信息
-      // this.ws.send('sonmething');
-      if (e.data !== '-连接已建立-') {
-        const tempArray = JSON.parse(e.data);
-        if (tempArray.length === 0) {
-          return;
-        }
-        this.currentDataInfo = tempArray.filter(({ id }) => {
-          return id === this.id;
-        })[0];
-        if (this.currentDataInfo.currentValue > this.dataRange.realTimeMax) {
-          this.dataRange.realTimeMax = Math.ceil(this.currentDataInfo.currentValue * 1.1);
-        }
-        if (this.currentDataInfo.currentValue < this.dataRange.realTimeMin) {
-          this.dataRange.realTimeMin = Math.ceil(this.currentDataInfo.currentValue * 0.9);
-        }
-
-        this.setPercent(this.currentDataInfo.currentValue, {
-          first: this.currentDataInfo.firstAlarmThreshold,
-          second: this.currentDataInfo.secondAlarmThreshold,
-        });
-        this.cdr.markForCheck();
-      }
-    };
-    this.ws.onerror = (e) => {
-      //socket error信息
-    };
-    this.ws.onclose = (e) => {
-      //socket 关闭后执行
-    };
-  }
-
-  async openWebSocketFn() {
-    this.connectWs();
-    await this.safetyMapService.openWebsocket();
-  }
-
   /*实时数据*/
   timef() {
     let str;
@@ -513,8 +466,8 @@ export class PressModalComponent implements OnInit, OnDestroy {
     this.realTimeOptions.dataZoom[0].end = this.zoomEnd;
     this.realTimeOptions.yAxis.max = this.dataRange.realTimeMax;
     this.realTimeOptions.yAxis.min = this.dataRange.realTimeMin;
-    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.first;
-    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.second;
+    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.first?alarmThresold.first:'' ;
+    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.second?alarmThresold.second:'' ;
     this.realTimeChart.setOption(this.realTimeOptions);
   }
 
@@ -524,8 +477,8 @@ export class PressModalComponent implements OnInit, OnDestroy {
     this.historyOption.series[0].data.push(p);
     this.historyOption.dataZoom[0].start = this.historyZoomStart;
     this.historyOption.dataZoom[0].end = this.historyZoomEnd;
-    this.historySeriesData[0].markLine.data[0].yAxis = alarmThresold.first;
-    this.historySeriesData[0].markLine.data[1].yAxis = alarmThresold.second;
+    this.historySeriesData[0].markLine.data[0].yAxis = alarmThresold.first?alarmThresold.first:'';
+    this.historySeriesData[0].markLine.data[1].yAxis = alarmThresold.second?alarmThresold.second:'';
   }
 
   // 获取历史数据
@@ -591,13 +544,30 @@ export class PressModalComponent implements OnInit, OnDestroy {
     this.dateRange = [subDays(new Date(), 1), new Date()];
     this.getHistoryData();
   }
+  async getCurrentValue() {
+    this.currentDataInfo = await this.safetyMapService.getSensorCurrentValue(this.id);
+    if (this.currentDataInfo.currentValue > this.dataRange.realTimeMax) {
+      this.dataRange.realTimeMax = Math.ceil(this.currentDataInfo.currentValue * 1.1);
+    }
+    if (this.currentDataInfo.currentValue < this.dataRange.realTimeMin) {
+      this.dataRange.realTimeMin = Math.ceil(this.currentDataInfo.currentValue * 0.9);
+    }
+
+    this.setPercent(this.currentDataInfo.currentValue, {
+      first: this.currentDataInfo.firstAlarmThreshold,
+      second: this.currentDataInfo.secondAlarmThreshold,
+    });
+    this.cdr.markForCheck();
+  }
 
   ngOnInit() {
-    this.openWebSocketFn();
+    this.getCurrentValue();
+    setInterval(() => {
+      this.getCurrentValue();
+    }, 3000);
   }
 
   ngOnDestroy(): void {
-    this.ws.close();
   }
 
   ngAfterViewInit(): void {

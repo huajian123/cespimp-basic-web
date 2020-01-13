@@ -526,6 +526,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
         if (this.currentDataInfo.currentValue < this.dataRange.realTimeMin) {
           this.dataRange.realTimeMin = Math.ceil(this.currentDataInfo.currentValue * 0.9);
         }
+        console.log(this.currentDataInfo);
 
         this.setPercent(this.currentDataInfo.currentValue, {
           first: this.currentDataInfo.firstAlarmThreshold,
@@ -563,16 +564,17 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
 
   // 实时数据塞值
   setPercent(p, alarmThresold) {
+    console.log(alarmThresold);
     this.realTimeOptions.xAxis.data.push(this.timef());
     this.realTimeOptions.series[0].data.push(p);
     this.realTimeOptions.dataZoom[0].start = this.zoomStart;
     this.realTimeOptions.dataZoom[0].end = this.zoomEnd;
     this.realTimeOptions.yAxis.max = this.dataRange.realTimeMax;
     this.realTimeOptions.yAxis.min = this.dataRange.realTimeMin;
-    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.fourth;
-    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.third;
-    this.seriesData[0].markLine.data[2].yAxis = alarmThresold.second;
-    this.seriesData[0].markLine.data[3].yAxis = alarmThresold.first;
+    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.fourth?alarmThresold.fourth:'';
+    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.third?alarmThresold.third:'';
+    this.seriesData[0].markLine.data[2].yAxis = alarmThresold.second?alarmThresold.second:'';
+    this.seriesData[0].markLine.data[3].yAxis =  alarmThresold.first?alarmThresold.first:'';
     this.realTimeChart.setOption(this.realTimeOptions);
   }
 
@@ -654,12 +656,33 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
     this.getHistoryData();
   }
 
+  async getCurrentValue() {
+    this.currentDataInfo = await this.safetyMapService.getSensorCurrentValue(this.id);
+    if (this.currentDataInfo.currentValue > this.dataRange.realTimeMax) {
+      this.dataRange.realTimeMax = Math.ceil(this.currentDataInfo.currentValue * 1.1);
+    }
+    if (this.currentDataInfo.currentValue < this.dataRange.realTimeMin) {
+      this.dataRange.realTimeMin = Math.ceil(this.currentDataInfo.currentValue * 0.9);
+    }
+    console.log(this.currentDataInfo);
+
+    this.setPercent(this.currentDataInfo.currentValue, {
+      first: this.currentDataInfo.firstAlarmThreshold,
+      second: this.currentDataInfo.secondAlarmThreshold,
+      third: this.currentDataInfo.thirdAlarmThreshold,
+      fourth: this.currentDataInfo.fourthAlarmThreshold,
+    });
+    this.cdr.markForCheck();
+  }
+
   ngOnInit() {
-    this.openWebSocketFn();
+    this.getCurrentValue();
+    setInterval(() => {
+      this.getCurrentValue();
+    }, 3000);
   }
 
   ngOnDestroy(): void {
-    this.ws.close();
   }
 
   ngAfterViewInit(): void {

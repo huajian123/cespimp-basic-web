@@ -20,6 +20,7 @@ import EnterpriseInfoModel = EnterpriseBasicInfoServiceNs.EnterpriseInfoModel;
 import { webSocketIp } from '@env/environment';
 import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
 import HazardDatas = EnterpriseBasicInfoServiceNs.HazardDatas;
+import EnterpriseSafeOneMapDataNum = EnterpriseBasicInfoServiceNs.EnterpriseSafeOneMapDataNum;
 
 enum IdentificationUrlEnum {
   FireNormal = '../../../../../assets/imgs/safeOnePage/fire.png',
@@ -76,6 +77,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   @Input() enterprisePosition: LatitudeLongitudeModel;
   @Output() returnBackBtn: EventEmitter<any>;
   enterpriseInfo: EnterpriseInfoModel;
+  enterpriseSafeOneMapDataNumInfo: EnterpriseSafeOneMapDataNum;
   hazardDataNums: HazardDatas; // 存储所有标识数量的数组
   map;
   layerEnum = LayerEnum;
@@ -146,6 +148,25 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
       hazardInfo: 0,
       combustible: 0,
       major: 0,
+    };
+
+    this.enterpriseSafeOneMapDataNumInfo = {
+      temp: 0,
+      liquid: 0,
+      camera: 0,
+      alarm: 0,
+      pressure: 0,
+      poisonous: 0,
+      combustible: 0,
+      major: 0,
+      majorHazardAlarmSelectDTOS: {
+        sensorNo: 0,
+        alarmType: 0,
+        alarmStatus: 0,
+        alarmStartTime: 0,
+        entprName: '',
+        alarmContent: '',
+      },
     };
   }
 
@@ -229,7 +250,7 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
               const infoWinPosition = { lat: polygonPoints[0].lat, lng: polygonPoints[0].lng };
               const infoWin = new T.InfoWindow();
               infoWin.setLngLat(new T.LngLat(infoWinPosition.lng, infoWinPosition.lat));
-              infoWin.setContent("重大危险源");
+              infoWin.setContent('重大危险源');
               this.map.addOverLay(infoWin);
             }
 
@@ -422,51 +443,67 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
   // 获取企业详情
   async getEnterpriseInfo() {
     this.enterpriseInfo = await this.enterpriseBasicInfoService.getEnterpriseInfoDetail({ entprId: this.enterpriseId });
-    this.hazardDataNums.alarm = this.enterpriseInfo.safeOneMapDataNumDTO.alarm;
-    this.hazardDataNums.temp = this.enterpriseInfo.safeOneMapDataNumDTO.temp;
-    this.hazardDataNums.pressure = this.enterpriseInfo.safeOneMapDataNumDTO.pressure;
-    this.hazardDataNums.liquid = this.enterpriseInfo.safeOneMapDataNumDTO.liquid;
-    this.hazardDataNums.combustible = this.enterpriseInfo.safeOneMapDataNumDTO.combustible;
-    this.hazardDataNums.poisonous = this.enterpriseInfo.safeOneMapDataNumDTO.poisonous;
-    this.hazardDataNums.camera = this.enterpriseInfo.safeOneMapDataNumDTO.camera;
-    this.hazardDataNums.major = this.enterpriseInfo.safeOneMapDataNumDTO.major;
+    this.cdr.markForCheck();
+  }
+
+  // 获取危险源数量以及实时报警数据
+  async getDataNum() {
+    this.enterpriseSafeOneMapDataNumInfo = await this.enterpriseBasicInfoService.getEnterpriseSafeOneMapDataNum({ entprId: this.enterpriseId });
+    this.hazardDataNums.alarm = this.enterpriseSafeOneMapDataNumInfo.alarm;
+    this.hazardDataNums.temp = this.enterpriseSafeOneMapDataNumInfo.temp;
+    this.hazardDataNums.pressure = this.enterpriseSafeOneMapDataNumInfo.pressure;
+    this.hazardDataNums.liquid = this.enterpriseSafeOneMapDataNumInfo.liquid;
+    this.hazardDataNums.combustible = this.enterpriseSafeOneMapDataNumInfo.combustible;
+    this.hazardDataNums.poisonous = this.enterpriseSafeOneMapDataNumInfo.poisonous;
+    this.hazardDataNums.camera = this.enterpriseSafeOneMapDataNumInfo.camera;
+    this.hazardDataNums.major = this.enterpriseSafeOneMapDataNumInfo.major;
+    // this.initIdentificationObj();
+    this.identificationBtnObjArray[0].count = this.hazardDataNums.alarm;
+    this.identificationBtnObjArray[1].count = this.hazardDataNums.temp;
+    this.identificationBtnObjArray[2].count = this.hazardDataNums.pressure;
+    this.identificationBtnObjArray[3].count = this.hazardDataNums.liquid;
+    this.identificationBtnObjArray[4].count = this.hazardDataNums.combustible;
+    this.identificationBtnObjArray[5].count = this.hazardDataNums.poisonous;
+    this.identificationBtnObjArray[6].count = this.hazardDataNums.camera;
+    this.layerObjArray[0].count = this.hazardDataNums.major;
+    this.cdr.markForCheck();
   }
 
   // 开启websocket
-  connectWs() {
-    if (this.ws != null) {
-      this.ws.close();
-    }
-    this.ws = new WebSocket(`ws://${webSocketIp}:8081/websocket/${WebSocketTypeEnum.NormaL}`);
-    this.ws.onopen = (e) => {
-      //socket 开启后执行，可以向后端传递信息
-      // this.ws.send('sonmething');
-
-    };
-    this.ws.onmessage = (e) => {
-      //socket 获取后端传递到前端的信息
-      // this.ws.send('sonmething');
-      if (e.data !== '-连接已建立-') {
-        const tempArray = JSON.parse(e.data);
-        if (tempArray.length === 0) {
-          return;
-        }
-        this.hazardDataNums = (tempArray as any[]).filter((item) => {
-          return item.entprId === this.enterpriseId;
-        })[0];
-        this.cdr.markForCheck();
+  /*  connectWs() {
+      if (this.ws != null) {
+        this.ws.close();
       }
-    };
-    this.ws.onerror = (e) => {
-      //socket error信息
-      console.log(e);
+      this.ws = new WebSocket(`ws://${webSocketIp}:8081/websocket/${WebSocketTypeEnum.NormaL}`);
+      this.ws.onopen = (e) => {
+        //socket 开启后执行，可以向后端传递信息
+        // this.ws.send('sonmething');
 
-    };
-    this.ws.onclose = (e) => {
-      //socket 关闭后执行
-      console.log(e);
-    };
-  }
+      };
+      this.ws.onmessage = (e) => {
+        //socket 获取后端传递到前端的信息
+        // this.ws.send('sonmething');
+        if (e.data !== '-连接已建立-') {
+          const tempArray = JSON.parse(e.data);
+          if (tempArray.length === 0) {
+            return;
+          }
+          this.hazardDataNums = (tempArray as any[]).filter((item) => {
+            return item.entprId === this.enterpriseId;
+          })[0];
+          this.cdr.markForCheck();
+        }
+      };
+      this.ws.onerror = (e) => {
+        //socket error信息
+        console.log(e);
+
+      };
+      this.ws.onclose = (e) => {
+        //socket 关闭后执行
+        console.log(e);
+      };
+    }*/
 
   // 初始化标识对象和图层对象
   initIdentificationObj() {
@@ -546,9 +583,11 @@ export class SafetyMapEnterpriseComponent implements OnInit, AfterViewInit {
 
   async ngAfterViewInit() {
     this.initMap();
-    await this.getEnterpriseInfo();
     this.initIdentificationObj();
-    this.connectWs();
+    await this.getEnterpriseInfo();
+    setInterval(() => {
+      this.getDataNum();
+    }, 3000);
     // 初始化企业范围
     this.initEnterpriseArea();
 

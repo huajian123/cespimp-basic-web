@@ -441,53 +441,6 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.historyChart = chart;
   }
 
-  connectWs() {
-    if (this.ws != null) {
-      this.ws.close();
-    }
-    this.ws = new WebSocket(`ws://${webSocketIp}:8081/websocket/${WebSocketTypeEnum.Temp}`);
-    this.ws.onopen = (e) => {
-      //socket 开启后执行，可以向后端传递信息
-      // this.ws.send('sonmething');
-    };
-    this.ws.onmessage = (e) => {
-      //socket 获取后端传递到前端的信息
-      // this.ws.send('sonmething');
-      if (e.data !== '-连接已建立-') {
-        const tempArray = JSON.parse(e.data);
-        if (tempArray.length === 0) {
-          return;
-        }
-        this.currentDataInfo = tempArray.filter(({ id }) => {
-          return id === this.id;
-        })[0];
-        if (this.currentDataInfo.currentValue > this.dataRange.realTimeMax) {
-          this.dataRange.realTimeMax = Math.ceil(this.currentDataInfo.currentValue * 1.1);
-        }
-        if (this.currentDataInfo.currentValue < this.dataRange.realTimeMin) {
-          this.dataRange.realTimeMin = Math.ceil(this.currentDataInfo.currentValue * 0.9);
-        }
-
-        this.setPercent(this.currentDataInfo.currentValue, {
-          first: this.currentDataInfo.firstAlarmThreshold,
-          second: this.currentDataInfo.secondAlarmThreshold,
-        });
-        this.cdr.markForCheck();
-      }
-    };
-    this.ws.onerror = (e) => {
-      //socket error信息
-    };
-    this.ws.onclose = (e) => {
-      //socket 关闭后执行
-    };
-  }
-
-  async openWebSocketFn() {
-    this.connectWs();
-    await this.safetyMapService.openWebsocket();
-  }
-
   /*实时数据*/
   timef() {
     let str;
@@ -508,8 +461,8 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.realTimeOptions.dataZoom[0].end = this.zoomEnd;
     this.realTimeOptions.yAxis.max = this.dataRange.realTimeMax;
     this.realTimeOptions.yAxis.min = this.dataRange.realTimeMin;
-    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.first;
-    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.second;
+    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.first?alarmThresold.first:'' ;
+    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.second?alarmThresold.second:'';
     this.realTimeChart.setOption(this.realTimeOptions);
   }
 
@@ -519,8 +472,8 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.historyOption.series[0].data.push(p);
     this.historyOption.dataZoom[0].start = this.historyZoomStart;
     this.historyOption.dataZoom[0].end = this.historyZoomEnd;
-    this.historySeriesData[0].markLine.data[0].yAxis = alarmThresold.first;
-    this.historySeriesData[0].markLine.data[1].yAxis = alarmThresold.second;
+    this.historySeriesData[0].markLine.data[0].yAxis = alarmThresold.first?alarmThresold.first:'';
+    this.historySeriesData[0].markLine.data[1].yAxis = alarmThresold.second?alarmThresold.second:'';
   }
 
   // 获取历史数据
@@ -531,7 +484,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.historyOption.xAxis.data = [];
     this.historyOption.series[0].data = [];
     const data = await this.safetyMapService.getSensorHistory(params);
-    if(!data.sensorData){
+    if (!data.sensorData) {
       return;
     }
     data.sensorData.forEach(({ reportTime, sensorValue }) => {
@@ -558,11 +511,11 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   disabledDate(current: Date) {
-    return current.getTime() <= subDays(this.dateRange[0],1).getTime() || endOfDay(current).getTime() >= (addDays(this.dateRange[0], 4).getTime());
+    return current.getTime() <= subDays(this.dateRange[0], 1).getTime() || endOfDay(current).getTime() >= (addDays(this.dateRange[0], 4).getTime());
   }
 
   disabledStartDate(current: Date) {
-    return current.getTime() < subDays(new Date(),20).getTime();
+    return current.getTime() < subDays(new Date(), 20).getTime();
   }
 
   // 选择历史数据tab
@@ -587,12 +540,30 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getHistoryData();
   }
 
+  async getCurrentValue() {
+    this.currentDataInfo = await this.safetyMapService.getSensorCurrentValue(this.id);
+    if (this.currentDataInfo.currentValue > this.dataRange.realTimeMax) {
+      this.dataRange.realTimeMax = Math.ceil(this.currentDataInfo.currentValue * 1.1);
+    }
+    if (this.currentDataInfo.currentValue < this.dataRange.realTimeMin) {
+      this.dataRange.realTimeMin = Math.ceil(this.currentDataInfo.currentValue * 0.9);
+    }
+
+    this.setPercent(this.currentDataInfo.currentValue, {
+      first: this.currentDataInfo.firstAlarmThreshold,
+      second: this.currentDataInfo.secondAlarmThreshold,
+    });
+    this.cdr.markForCheck();
+  }
+
   ngOnInit() {
-    this.openWebSocketFn();
+    this.getCurrentValue();
+    setInterval(() => {
+      this.getCurrentValue();
+    }, 3000);
   }
 
   ngOnDestroy(): void {
-    this.ws.close();
   }
 
   ngAfterViewInit(): void {

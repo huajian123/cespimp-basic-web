@@ -15,7 +15,7 @@ import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
 })
 export class AlarmListComponent implements OnInit,OnDestroy {
   columns: STColumn[];
-  dataList: RealTimeAlarmModel[];
+  @Input() dataList: RealTimeAlarmModel[];
   @Input() entprId: number;
   ws: WebSocket;//定义websocket
 
@@ -40,12 +40,12 @@ export class AlarmListComponent implements OnInit,OnDestroy {
     return new MapPipe().transform(toBeFormat, arg);
   }
 
-  async getAlarmList() {
-    this.dataList = await this.alarmListService.getRealTimeAlarm();
+/*  async getAlarmList() {
+    // this.dataList = await this.alarmListService.getRealTimeAlarm();
     this.cdr.markForCheck();
-  };
+  };*/
 
-  connectWs() {
+/*  connectWs() {
     if (this.ws != null) {
       this.ws.close();
     }
@@ -80,16 +80,16 @@ export class AlarmListComponent implements OnInit,OnDestroy {
       //socket 关闭后执行
       console.log(e);
     };
-  }
+  }*/
 
   ngOnInit() {
     this.initTable();
-    this.getAlarmList();
-    this.connectWs();
+    // this.getAlarmList();
+    //this.connectWs();
   }
 
   ngOnDestroy(): void {
-    this.ws.close();
+  //  this.ws.close();
   }
 
 }
