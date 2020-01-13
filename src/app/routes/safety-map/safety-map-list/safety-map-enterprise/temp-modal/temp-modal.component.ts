@@ -1,9 +1,7 @@
 import {
   AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output,
 } from '@angular/core';
-import { webSocketIp } from '@env/environment';
 import { SafetyMapService, SafetyMapServiceNs } from '@core/biz-services/safety-map/safety-map.service';
-import WebSocketTypeEnum = SafetyMapServiceNs.WebSocketTypeEnum;
 import SensorInfoWebSocketModel = SafetyMapServiceNs.SensorInfoWebSocketModel;
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { subDays, addDays, endOfDay } from 'date-fns';
@@ -141,10 +139,10 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
       sensorName: '',
       sensorNo: '',
       locFactory: '',
-      firstAlarmThreshold: 0,
-      secondAlarmThreshold: 0,
-      thirdAlarmThreshold: 0,
-      fourthAlarmThreshold: 0,
+      firstAlarmThreshold: null,
+      secondAlarmThreshold: null,
+      thirdAlarmThreshold: null,
+      fourthAlarmThreshold: null,
       status: 0,
       currentValue: 0,
       historyData: [],
@@ -461,8 +459,8 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.realTimeOptions.dataZoom[0].end = this.zoomEnd;
     this.realTimeOptions.yAxis.max = this.dataRange.realTimeMax;
     this.realTimeOptions.yAxis.min = this.dataRange.realTimeMin;
-    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.first?alarmThresold.first:'' ;
-    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.second?alarmThresold.second:'';
+    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.first ? alarmThresold.first : '';
+    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.second ? alarmThresold.second : '';
     this.realTimeChart.setOption(this.realTimeOptions);
   }
 
@@ -472,8 +470,8 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.historyOption.series[0].data.push(p);
     this.historyOption.dataZoom[0].start = this.historyZoomStart;
     this.historyOption.dataZoom[0].end = this.historyZoomEnd;
-    this.historySeriesData[0].markLine.data[0].yAxis = alarmThresold.first?alarmThresold.first:'';
-    this.historySeriesData[0].markLine.data[1].yAxis = alarmThresold.second?alarmThresold.second:'';
+    this.historySeriesData[0].markLine.data[0].yAxis = alarmThresold.first ? alarmThresold.first : '';
+    this.historySeriesData[0].markLine.data[1].yAxis = alarmThresold.second ? alarmThresold.second : '';
   }
 
   // 获取历史数据

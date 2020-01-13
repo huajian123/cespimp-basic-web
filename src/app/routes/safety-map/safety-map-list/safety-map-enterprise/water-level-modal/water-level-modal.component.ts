@@ -198,10 +198,10 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
       sensorName: '',
       sensorNo: '',
       locFactory: '',
-      firstAlarmThreshold: 0,
-      secondAlarmThreshold: 0,
-      thirdAlarmThreshold: 0,
-      fourthAlarmThreshold: 0,
+      firstAlarmThreshold: null,
+      secondAlarmThreshold: null,
+      thirdAlarmThreshold: null,
+      fourthAlarmThreshold: null,
       status: 0,
       currentValue: 0,
       historyData: [],
@@ -657,7 +657,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
   }
 
   async getCurrentValue() {
-    this.currentDataInfo = await this.safetyMapService.getSensorCurrentValue(this.id);
+  /*  this.currentDataInfo = await this.safetyMapService.getSensorCurrentValue(this.id);
     if (this.currentDataInfo.currentValue > this.dataRange.realTimeMax) {
       this.dataRange.realTimeMax = Math.ceil(this.currentDataInfo.currentValue * 1.1);
     }
@@ -671,7 +671,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
       second: this.currentDataInfo.secondAlarmThreshold,
       third: this.currentDataInfo.thirdAlarmThreshold,
       fourth: this.currentDataInfo.fourthAlarmThreshold,
-    });
+    });*/
     this.cdr.markForCheck();
   }
 
