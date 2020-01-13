@@ -466,8 +466,8 @@ export class PressModalComponent implements OnInit, OnDestroy {
     this.realTimeOptions.dataZoom[0].end = this.zoomEnd;
     this.realTimeOptions.yAxis.max = this.dataRange.realTimeMax;
     this.realTimeOptions.yAxis.min = this.dataRange.realTimeMin;
-    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.first?alarmThresold.first:'' ;
-    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.second?alarmThresold.second:'' ;
+    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.first?alarmThresold.first:-100000000000000000;
+    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.second?alarmThresold.second:-100000000000000000;
     this.realTimeChart.setOption(this.realTimeOptions);
   }
 
@@ -477,8 +477,8 @@ export class PressModalComponent implements OnInit, OnDestroy {
     this.historyOption.series[0].data.push(p);
     this.historyOption.dataZoom[0].start = this.historyZoomStart;
     this.historyOption.dataZoom[0].end = this.historyZoomEnd;
-    this.historySeriesData[0].markLine.data[0].yAxis = alarmThresold.first?alarmThresold.first:'';
-    this.historySeriesData[0].markLine.data[1].yAxis = alarmThresold.second?alarmThresold.second:'';
+    this.historySeriesData[0].markLine.data[0].yAxis = alarmThresold.first?alarmThresold.first:-100000000000000000;
+    this.historySeriesData[0].markLine.data[1].yAxis = alarmThresold.second?alarmThresold.second:-100000000000000000;
   }
 
   // 获取历史数据
