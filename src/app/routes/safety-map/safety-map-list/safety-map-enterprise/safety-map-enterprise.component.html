@@ -9,7 +9,7 @@
       <span>（{{item.count}}）</span>
     </div>
 
-    <div class="back-btn" *ngIf="currentRole===roleEnum[roleEnum.ParkManage]">
+    <div class="back-btn" *ngIf="currentRole===roleEnum[roleEnum.ParkManage]||currentRole===roleEnum[roleEnum.SafeMonitor]">
       <button nzBlock nz-button (click)="returnBack()" [nzType]="'primary'">返回</button>
     </div>
   </div>

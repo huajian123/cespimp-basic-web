@@ -6,15 +6,35 @@ import { PageInfo } from '@core/vo/comm/PageInfo';
 export namespace EnterpriseBasicInfoServiceNs {
 
   export interface HazardDatas {
-    temp:number;
-    liquid:number;
-    camera:number;
-    alarm:number;
-    pressure:number;
-    poisonous:number;
-    hazardInfo:number;
-    combustible:number;
-    major:number;
+    temp: number;
+    liquid: number;
+    camera: number;
+    alarm: number;
+    pressure: number;
+    poisonous: number;
+    hazardInfo: number;
+    combustible: number;
+    major: number;
+  }
+
+  export interface EnterpriseSafeOneMapDataNum {
+    major: number;
+    alarm: number;
+    temp: number;
+    pressure: number;
+    liquid: number;
+    poisonous: number;
+    combustible: number;
+    camera: number;
+    majorHazardAlarmSelectDTOS:{
+      entprId?:number;
+      sensorNo:number;
+      alarmType:number;
+      alarmStatus:number;
+      alarmStartTime:number;
+      entprName:string;
+      alarmContent:string;
+    }
   }
 
   export interface EnterpriseInfoModel {
@@ -43,15 +63,15 @@ export namespace EnterpriseBasicInfoServiceNs {
     standLevel?: number;
     safetySupervisionLevel?: number;
     localSafetyAdmin?: number;
-    safeOneMapDataNumDTO?:{
-      major:number;
-      alarm:number;
-      temp:number;
-      pressure:number;
-      liquid:number;
-      poisonous:number;
-      combustible:number;
-      camera:number;
+    safeOneMapDataNumDTO?: {
+      major: number;
+      alarm: number;
+      temp: number;
+      pressure: number;
+      liquid: number;
+      poisonous: number;
+      combustible: number;
+      camera: number;
 
     }
   }
@@ -70,6 +90,10 @@ export namespace EnterpriseBasicInfoServiceNs {
 
     public getEnterpriseInfoDetail(param: EntprSearch): Promise<EnterpriseInfoModel> {
       return this.http.get('data/basic/enterprise/' + param.entprId).toPromise();
+    }
+
+    public getEnterpriseSafeOneMapDataNum(param: EntprSearch): Promise<EnterpriseSafeOneMapDataNum> {
+      return this.http.get('data/major/hazard/safeOneMapDataNum', { entprId: param.entprId }).toPromise();
     }
 
     /*修改接口*/

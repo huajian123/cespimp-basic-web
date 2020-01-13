@@ -5,7 +5,7 @@ import { HttpUtilService } from '@core/net/http-util.service';
 export namespace SafetyMapServiceNs {
   export enum WebSocketTypeEnum {
     NormaL,
-    Alarm ,
+    Alarm,
     Temp,
     Press,
     WaterLevel,
@@ -134,7 +134,7 @@ export namespace SafetyMapServiceNs {
   }
 
   export interface SensorInfoWebSocketModel {
-    id?:number;
+    id?: number;
     sensorName: string;
     sensorNo: string;
     sensorType?: number;
@@ -173,6 +173,10 @@ export namespace SafetyMapServiceNs {
 
     public getSensorHistory(params: { id: number, beginTime: Date, endTime: Date }): Promise<any> {
       return this.http.get('data/major/hazard/searchSensorRecord/' + params.id, params).toPromise();
+    }
+
+    public getSensorCurrentValue(id: number): Promise<any> {
+      return this.http.get('data/major/hazard/sensorData', { sensorId: id }).toPromise();
     }
 
   }
