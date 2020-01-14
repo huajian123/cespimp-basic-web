@@ -75,7 +75,7 @@ export class ParkIntroductComponent implements OnInit {
     });
 
     // 获取公告
-    params.pageSize = 5;
+    params.pageSize = 11;
     params.filters.noticeType = this.parkIntroductPageTypeEnum.Announcement;
     this.dataService.getAnnouncementList(params).then(res => {
       this.announcementList = res.list;
@@ -83,7 +83,7 @@ export class ParkIntroductComponent implements OnInit {
     });
 
     // 获取行业动态
-    params.pageSize = 2;
+    params.pageSize = 6;
     params.filters.noticeType = this.parkIntroductPageTypeEnum.IndustryNews;
     this.dataService.getAnnouncementList(params).then(res => {
       this.industryNewsList = res.list;
@@ -91,7 +91,7 @@ export class ParkIntroductComponent implements OnInit {
     });
 
     // 获取文件通知列表
-    params.pageSize = 5;
+    params.pageSize = 11;
     params.filters.noticeType = this.parkIntroductPageTypeEnum.FileNotifi;
     this.dataService.getAnnouncementList(params).then(res => {
       this.fileNotifiList = res.list;
