@@ -11,7 +11,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd';
 import { PositionPickerService } from '../../../../widget/position-picker/position-picker.service';
 import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
-import { enterpriseInfo } from '@env/environment';
 import { EVENT_KEY } from '@env/staticVariable';
 import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
 import {
@@ -31,11 +30,11 @@ interface PartNoOptionsInterface extends OptionsInterface {
 }
 
 
-/*
 enum sensorTypeNum {
-  number = 3
+  temperature = 1,
+  press = 2,
+  level = 3,
 }
-*/
 
 
 @Component({
@@ -57,7 +56,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
   majorHazardNameList: OptionsInterface[];
   selMajorNoArray: PartNoOptionsInterface[];
   currentPolygonList: any[];
-  //showTrue: boolean;
+  unitOptions: OptionsInterface[];
   dataNameList: any;
   hazardObject: MajorHazardUnitList[];
   dataInfo: SensorManagementListInfoModel;
@@ -100,6 +99,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
       locFactory: [null, []],
       majorHazardId: [null, []],
       partId: [null, []],
+      unit: [null, []],
       partType: [null, []],
       partNo: [null, []],
       firstAlarmThreshold: [null, []],
@@ -175,16 +175,33 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  /*  changeSensorType(e) {
-      switch (e) {
-        case sensorTypeNum.number:
-          this.showTrue = false;
-          break;
-        default:
-          this.showTrue = true;
-          break;
-      }
-    }*/
+  changeSensorType(e) {
+    this.unitOptions = [];
+    switch (e) {
+      case sensorTypeNum.temperature:
+        this.unitOptions = [
+          { value: '℃', label: '℃' },
+          { value: '℉', label: '℉' },
+        ];
+        break;
+      case  sensorTypeNum.press:
+        this.unitOptions = [
+          { value: 'Pa', label: 'Pa' },
+          { value: 'hPa', label: 'hPa' },
+          { value: 'kPa', label: 'kPa' },
+        ];
+        break;
+      case  sensorTypeNum.level:
+        this.unitOptions = [
+          { value: 'MM', label: 'MM' },
+          { value: 'CM', label: 'CM' },
+          { value: 'M', label: 'M' },
+        ];
+        break;
+      default:
+        return;
+    }
+  }
 
 
   showMap() {

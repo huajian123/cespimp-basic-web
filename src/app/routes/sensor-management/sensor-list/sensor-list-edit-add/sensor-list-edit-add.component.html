@@ -22,7 +22,8 @@
         <nz-form-item>
           <nz-form-label>传感器类型</nz-form-label>
           <nz-form-control nzErrorTip="请选择传感器类型">
-            <nz-select  formControlName="sensorType" [nzPlaceHolder]="'请选择火灾危险性类型'" [nzShowSearch]="true">
+            <nz-select (ngModelChange)="changeSensorType($event)" formControlName="sensorType"
+                       [nzPlaceHolder]="'请选择火灾危险性类型'" [nzShowSearch]="true">
               <nz-option *ngFor="let i of sensorTypeOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
             </nz-select>
           </nz-form-control>
@@ -32,13 +33,23 @@
     <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
+          <nz-form-label>单位</nz-form-label>
+          <nz-form-control nzErrorTip="请选择传单位">
+            <nz-select formControlName="unit" [nzPlaceHolder]="'请选择传单位'" [nzShowSearch]="true">
+              <nz-option *ngFor="let i of unitOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
           <nz-form-label nzFor="name">低低报</nz-form-label>
           <nz-form-control nzErrorTip="请输入低低报">
             <input nz-input formControlName="firstAlarmThreshold" placeholder="请输入低低报"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
-      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="name">低报</nz-form-label>
           <nz-form-control nzErrorTip="请输入低报">
@@ -46,7 +57,9 @@
           </nz-form-control>
         </nz-form-item>
       </nz-col>
-      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
           <nz-form-label>高报</nz-form-label>
           <nz-form-control nzErrorTip="请输入高报">
@@ -54,9 +67,7 @@
           </nz-form-control>
         </nz-form-item>
       </nz-col>
-    </nz-row>
-    <nz-row nzGutter="16">
-      <nz-col nzLg="6" nzMd="12" nzSm="24">
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="name">高高报</nz-form-label>
           <nz-form-control nzErrorTip="请输入高高报">
@@ -72,7 +83,8 @@
         <nz-form-item>
           <nz-form-label>经度</nz-form-label>
           <nz-form-control nzErrorTip="请输入经度">
-            <input nz-input  class="cursor-pointer" readonly (click)="showMap()" formControlName="longitude" placeholder="请输入经度" />
+            <input nz-input class="cursor-pointer" readonly (click)="showMap()" formControlName="longitude"
+                   placeholder="请输入经度"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -80,7 +92,8 @@
         <nz-form-item>
           <nz-form-label>纬度</nz-form-label>
           <nz-form-control nzErrorTip="请输入纬度">
-            <input nz-input  class="cursor-pointer" readonly (click)="showMap()" formControlName="latitude" placeholder="请输入纬度" />
+            <input nz-input class="cursor-pointer" readonly (click)="showMap()" formControlName="latitude"
+                   placeholder="请输入纬度"/>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -88,7 +101,8 @@
         <nz-form-item>
           <nz-form-label>厂区中位置</nz-form-label>
           <nz-form-control nzErrorTip="请输入厂区中位置">
-            <textarea nz-input formControlName="locFactory"  [nzAutosize]="{ minRows: 4 }" placeholder="请输入厂区中位置"></textarea>
+            <textarea nz-input formControlName="locFactory" [nzAutosize]="{ minRows: 4 }"
+                      placeholder="请输入厂区中位置"></textarea>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -99,19 +113,23 @@
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="name">重大危险源名称</nz-form-label>
-            <nz-form-control nzErrorTip="请选择重大危险源名称">
-              <nz-select (ngModelChange)="changeMajorNameList($event)" formControlName="majorHazardId" [nzShowSearch]="true" [nzPlaceHolder]="'请选择重大危险源名称'">
-                <nz-option *ngFor="let item of majorHazardNameList" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
-              </nz-select>
-            </nz-form-control>
+          <nz-form-control nzErrorTip="请选择重大危险源名称">
+            <nz-select (ngModelChange)="changeMajorNameList($event)" formControlName="majorHazardId"
+                       [nzShowSearch]="true" [nzPlaceHolder]="'请选择重大危险源名称'">
+              <nz-option *ngFor="let item of majorHazardNameList" [nzLabel]="item.label"
+                         [nzValue]="item.value"></nz-option>
+            </nz-select>
+          </nz-form-control>
         </nz-form-item>
       </nz-col>
       <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="name">重大危险源类型</nz-form-label>
           <nz-form-control nzErrorTip="请选择重大危险源类型">
-            <nz-select  (ngModelChange)="changeMajorTypeList($event)" formControlName="partType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择组成类型'">
-              <nz-option *ngFor="let item of majorHazardTypeList" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+            <nz-select (ngModelChange)="changeMajorTypeList($event)" formControlName="partType" [nzShowSearch]="true"
+                       [nzPlaceHolder]="'请选择组成类型'">
+              <nz-option *ngFor="let item of majorHazardTypeList" [nzLabel]="item.label"
+                         [nzValue]="item.value"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -120,7 +138,8 @@
         <nz-form-item>
           <nz-form-label nzFor="name">重大危险源组成部分名称</nz-form-label>
           <nz-form-control nzErrorTip="请选择重大危险源组成部分名称">
-            <nz-select (ngModelChange)="changeMajorNoList($event)"  formControlName="partId" [nzShowSearch]="true" [nzPlaceHolder]="'请选择重大危险源组成部分名称'">
+            <nz-select (ngModelChange)="changeMajorNoList($event)" formControlName="partId" [nzShowSearch]="true"
+                       [nzPlaceHolder]="'请选择重大危险源组成部分名称'">
               <nz-option *ngFor="let item of selMajorNoArray" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
             </nz-select>
           </nz-form-control>
@@ -130,10 +149,10 @@
     <nz-row nzGutter="16">
       <nz-col nzLg="6" nzMd="12" nzSm="24">
         <nz-form-item>
-        <nz-form-label nzFor="name">重大危险源组成部分编号</nz-form-label>
-        <nz-form-control nzErrorTip="重大危险源组成部分编号">
-          <input nz-input formControlName="partNo" readonly placeholder="重大危险源组成部分编号">
-        </nz-form-control>
+          <nz-form-label nzFor="name">重大危险源组成部分编号</nz-form-label>
+          <nz-form-control nzErrorTip="重大危险源组成部分编号">
+            <input nz-input formControlName="partNo" readonly placeholder="重大危险源组成部分编号">
+          </nz-form-control>
         </nz-form-item>
       </nz-col>
     </nz-row>

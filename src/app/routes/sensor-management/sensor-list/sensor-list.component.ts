@@ -118,6 +118,7 @@ export class SensorManagementSensorListComponent implements OnInit {
       { title: '经度', index: 'longitude', width: 100 },
       { title: '经度', index: 'latitude', width: 100 },
       { title: '在厂区的位置', index: 'locFactory', width: 100 },
+      { title: '单位', index: 'unit', width: 70 },
       { title: '重大危险源名称', index: 'majorHazardName', width: 120 },
       {
         title: '重大危险源组成类型',

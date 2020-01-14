@@ -15,6 +15,7 @@ export namespace SensorManagementListServiceNs {
     partType?: number;
     partId?: number;
     partName?: string;
+    unit?: string;
     partNo?: string;
     longitude: number; // 经度
     latitude: number; // 纬度

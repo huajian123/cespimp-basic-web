@@ -23,7 +23,7 @@ export class SensorManagementSensorListDetailComponent implements OnInit {
   @Output() returnBack: EventEmitter<any>;
   @Input() id: number;
   @Input() currentPageNum: number;
- /* sensorTrue: boolean;*/
+  /* sensorTrue: boolean;*/
   dataInfo: SensorManagementListInfoModel;
 
   constructor(private dataService: SensorManagementListInfoService, private cdr: ChangeDetectorRef) {
@@ -36,6 +36,7 @@ export class SensorManagementSensorListDetailComponent implements OnInit {
       sensorName: '',
       majorHazardId: null,
       majorHazardName: '',
+      unit: '',
       partName: '',
       partType: null,
       partId: null,
