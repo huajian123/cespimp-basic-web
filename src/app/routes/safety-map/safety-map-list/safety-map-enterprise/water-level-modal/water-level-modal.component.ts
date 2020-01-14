@@ -564,18 +564,20 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
 
   // 实时数据塞值
   setPercent(p, alarmThresold) {
-    console.log(alarmThresold);
     this.realTimeOptions.xAxis.data.push(this.timef());
     this.realTimeOptions.series[0].data.push(p);
     this.realTimeOptions.dataZoom[0].start = this.zoomStart;
     this.realTimeOptions.dataZoom[0].end = this.zoomEnd;
     this.realTimeOptions.yAxis.max = this.dataRange.realTimeMax;
     this.realTimeOptions.yAxis.min = this.dataRange.realTimeMin;
-    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.fourth?alarmThresold.fourth:-100000000000000000;
-    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.third?alarmThresold.third:-100000000000000000;
-    this.seriesData[0].markLine.data[2].yAxis = alarmThresold.second?alarmThresold.second:-100000000000000000;
-    this.seriesData[0].markLine.data[3].yAxis =  alarmThresold.first?alarmThresold.first:-100000000000000000;
+    this.seriesData[0].markLine.data[0].yAxis = alarmThresold.fourth ? alarmThresold.fourth : -100000000000000000;
+    this.seriesData[0].markLine.data[1].yAxis = alarmThresold.third ? alarmThresold.third : -100000000000000000;
+    this.seriesData[0].markLine.data[2].yAxis = alarmThresold.second ? alarmThresold.second : -100000000000000000;
+    this.seriesData[0].markLine.data[3].yAxis = alarmThresold.first ? alarmThresold.first : -100000000000000000;
     this.realTimeOptions.yAxis.name = this.currentDataInfo.unit;
+    if (!!this.currentDataInfo.unit) {
+      this.realTimeOptions.tooltip.formatter = `{a} <br/>{b}: {c}(${this.currentDataInfo.unit})`;
+    }
     this.realTimeChart.setOption(this.realTimeOptions);
   }
 
@@ -585,10 +587,10 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
     this.historyOption.series[0].data.push(p);
     this.historyOption.dataZoom[0].start = this.historyZoomStart;
     this.historyOption.dataZoom[0].end = this.historyZoomEnd;
-    this.historySeriesData[0].markLine.data[0].yAxis = alarmThresold.fourth?alarmThresold.fourth:-100000000000000000;
-    this.historySeriesData[0].markLine.data[1].yAxis = alarmThresold.third?alarmThresold.third:-100000000000000000;
-    this.historySeriesData[0].markLine.data[2].yAxis = alarmThresold.second?alarmThresold.second:-100000000000000000;
-    this.historySeriesData[0].markLine.data[3].yAxis =  alarmThresold.first?alarmThresold.first:-100000000000000000;
+    this.historySeriesData[0].markLine.data[0].yAxis = alarmThresold.fourth ? alarmThresold.fourth : -100000000000000000;
+    this.historySeriesData[0].markLine.data[1].yAxis = alarmThresold.third ? alarmThresold.third : -100000000000000000;
+    this.historySeriesData[0].markLine.data[2].yAxis = alarmThresold.second ? alarmThresold.second : -100000000000000000;
+    this.historySeriesData[0].markLine.data[3].yAxis = alarmThresold.first ? alarmThresold.first : -100000000000000000;
   }
 
   // 获取历史数据
@@ -599,7 +601,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
     this.historyOption.xAxis.data = [];
     this.historyOption.series[0].data = [];
     const data = await this.safetyMapService.getSensorHistory(params);
-    if(!data.sensorData){
+    if (!data.sensorData) {
       return;
     }
     data.sensorData.forEach(({ reportTime, sensorValue }) => {
@@ -620,6 +622,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
     this.historyOption.yAxis.name = this.currentDataInfo.unit;
     this.historyOption.yAxis.max = this.dataRange.historyMax;
     this.historyOption.yAxis.min = this.dataRange.historyMin;
+    this.historyOption.tooltip.formatter = `{a} <br/>{b}: {c}(${this.currentDataInfo.unit})`;
     this.historyChart.setOption(this.historyOption);
   }
 
@@ -629,11 +632,11 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
   }
 
   disabledDate(current: Date) {
-    return current.getTime() <= subDays(this.dateRange[0],1).getTime() || endOfDay(current).getTime() >= (addDays(this.dateRange[0], 4).getTime());
+    return current.getTime() <= subDays(this.dateRange[0], 1).getTime() || endOfDay(current).getTime() >= (addDays(this.dateRange[0], 4).getTime());
   }
 
   disabledStartDate(current: Date) {
-    return current.getTime() < subDays(new Date(),20).getTime();
+    return current.getTime() < subDays(new Date(), 20).getTime();
   }
 
   // 选择历史数据tab

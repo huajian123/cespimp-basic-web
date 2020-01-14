@@ -462,6 +462,10 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.realTimeOptions.yAxis.name = this.currentDataInfo.unit;
     this.seriesData[0].markLine.data[0].yAxis = alarmThresold.first ? alarmThresold.first : -100000000000000000;
     this.seriesData[0].markLine.data[1].yAxis = alarmThresold.second ? alarmThresold.second : -100000000000000000;
+    this.realTimeOptions.yAxis.name = this.currentDataInfo.unit;
+    if (!!this.currentDataInfo.unit) {
+      this.realTimeOptions.tooltip.formatter = `{a} <br/>{b}: {c}(${this.currentDataInfo.unit})`;
+    }
     this.realTimeChart.setOption(this.realTimeOptions);
   }
 
@@ -502,6 +506,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.historyOption.yAxis.max = this.dataRange.historyMax;
     this.historyOption.yAxis.min = this.dataRange.historyMin;
     this.historyOption.yAxis.name = this.currentDataInfo.unit;
+    this.historyOption.tooltip.formatter = `{a} <br/>{b}: {c}(${this.currentDataInfo.unit})`;
     this.historyChart.setOption(this.historyOption);
   }
 
