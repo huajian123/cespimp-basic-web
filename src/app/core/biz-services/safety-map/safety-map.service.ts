@@ -145,6 +145,7 @@ export namespace SafetyMapServiceNs {
     fourthAlarmThreshold?: number;
     status?: number;
     currentValue?: number;
+    unit?:string;
     historyData?: { reportTime: number, sensorValue: number }[];
   }
 

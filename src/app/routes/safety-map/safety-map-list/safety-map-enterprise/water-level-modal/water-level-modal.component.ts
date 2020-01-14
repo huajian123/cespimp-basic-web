@@ -575,6 +575,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
     this.seriesData[0].markLine.data[1].yAxis = alarmThresold.third?alarmThresold.third:-100000000000000000;
     this.seriesData[0].markLine.data[2].yAxis = alarmThresold.second?alarmThresold.second:-100000000000000000;
     this.seriesData[0].markLine.data[3].yAxis =  alarmThresold.first?alarmThresold.first:-100000000000000000;
+    this.realTimeOptions.yAxis.name = this.currentDataInfo.unit;
     this.realTimeChart.setOption(this.realTimeOptions);
   }
 
@@ -616,6 +617,7 @@ export class WaterLevelModalComponent implements OnInit, OnDestroy {
         fourth: this.currentDataInfo.fourthAlarmThreshold,
       });
     });
+    this.historyOption.yAxis.name = this.currentDataInfo.unit;
     this.historyOption.yAxis.max = this.dataRange.historyMax;
     this.historyOption.yAxis.min = this.dataRange.historyMin;
     this.historyChart.setOption(this.historyOption);

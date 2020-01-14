@@ -466,6 +466,7 @@ export class PressModalComponent implements OnInit, OnDestroy {
     this.realTimeOptions.dataZoom[0].end = this.zoomEnd;
     this.realTimeOptions.yAxis.max = this.dataRange.realTimeMax;
     this.realTimeOptions.yAxis.min = this.dataRange.realTimeMin;
+    this.realTimeOptions.yAxis.name = this.currentDataInfo.unit;
     this.seriesData[0].markLine.data[0].yAxis = alarmThresold.first?alarmThresold.first:-100000000000000000;
     this.seriesData[0].markLine.data[1].yAxis = alarmThresold.second?alarmThresold.second:-100000000000000000;
     this.realTimeChart.setOption(this.realTimeOptions);
@@ -505,6 +506,7 @@ export class PressModalComponent implements OnInit, OnDestroy {
         second: this.currentDataInfo.secondAlarmThreshold,
       });
     });
+    this.historyOption.yAxis.name = this.currentDataInfo.unit;
     this.historyOption.yAxis.max = this.dataRange.historyMax;
     this.historyOption.yAxis.min = this.dataRange.historyMin;
     this.historyChart.setOption(this.historyOption);

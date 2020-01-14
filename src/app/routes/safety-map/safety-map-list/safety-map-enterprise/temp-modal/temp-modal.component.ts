@@ -269,7 +269,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
       }],
       yAxis: {
         type: 'value',
-        name: '℃',
+        name: this.currentDataInfo.unit,
         nameTextStyle: {
           color: '#bac7e5',
         },
@@ -405,7 +405,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
       }],
       yAxis: {
         type: 'value',
-        name: '℃',
+        name: this.currentDataInfo.unit,
         nameTextStyle: {
           color: '#bac7e5',
         },
@@ -459,6 +459,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.realTimeOptions.dataZoom[0].end = this.zoomEnd;
     this.realTimeOptions.yAxis.max = this.dataRange.realTimeMax;
     this.realTimeOptions.yAxis.min = this.dataRange.realTimeMin;
+    this.realTimeOptions.yAxis.name = this.currentDataInfo.unit;
     this.seriesData[0].markLine.data[0].yAxis = alarmThresold.first ? alarmThresold.first : -100000000000000000;
     this.seriesData[0].markLine.data[1].yAxis = alarmThresold.second ? alarmThresold.second : -100000000000000000;
     this.realTimeChart.setOption(this.realTimeOptions);
@@ -500,6 +501,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.historyOption.yAxis.max = this.dataRange.historyMax;
     this.historyOption.yAxis.min = this.dataRange.historyMin;
+    this.historyOption.yAxis.name = this.currentDataInfo.unit;
     this.historyChart.setOption(this.historyOption);
   }
 
@@ -540,6 +542,7 @@ export class TempModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async getCurrentValue() {
     this.currentDataInfo = await this.safetyMapService.getSensorCurrentValue(this.id);
+    console.log(this.currentDataInfo);
     if (this.currentDataInfo.currentValue > this.dataRange.realTimeMax) {
       this.dataRange.realTimeMax = Math.ceil(this.currentDataInfo.currentValue * 1.1);
     }
