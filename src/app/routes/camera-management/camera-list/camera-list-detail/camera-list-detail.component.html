@@ -5,10 +5,10 @@
     <sv label="摄像头名称">{{dataInfo.cameraName}}</sv>
   </sv-container>
   <nz-divider></nz-divider>
-  <sv-container size="large" title="位置信息">
-    <sv label="经度">{{dataInfo.longitude}}</sv>
-    <sv label="纬度">{{dataInfo.latitude}}</sv>
-    <sv label="在厂区的位置">{{dataInfo.locFactory}}</sv>
+  <sv-container size="large" title="位置管理">
+    <sv><div #mapDivModal style="width: 1000px;height:300px;z-index: 1"></div></sv>
+    <sv></sv>
+    <sv label="厂区中位置">{{dataInfo.locFactory}}</sv>
   </sv-container>
   <nz-divider></nz-divider>
   <sv-container size="large" title="重大危险源信息">

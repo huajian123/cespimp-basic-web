@@ -10,7 +10,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd';
 import { PositionPickerService } from '../../../../widget/position-picker/position-picker.service';
-import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
+import { EntprScopeModel, LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import { EVENT_KEY } from '@env/staticVariable';
 import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
 import {
@@ -34,8 +34,6 @@ enum sensorTypeNum {
   temperature = 1,
   press = 2,
   level = 3,
-  Toxic,
-  Fire
 }
 
 
@@ -51,6 +49,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
   @Input() currentPageNum: number;
   @Output() returnBack: EventEmitter<any>;
   loginInfo: LoginInfoModel;
+  entprBasicInfo: EntprScopeModel;
   unitTypeOptions: OptionsInterface[];
   sensorTypeOptions: OptionsInterface[];
   HazardNatureOptions: OptionsInterface[];
@@ -101,7 +100,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
       locFactory: [null, []],
       majorHazardId: [null, []],
       partId: [null, []],
-      unit: [null, [Validators.required]],
+      unit: [null, []],
       partType: [null, []],
       partNo: [null, []],
       firstAlarmThreshold: [null, []],
@@ -195,29 +194,21 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
         break;
       case  sensorTypeNum.level:
         this.unitOptions = [
-          { value: 'mm', label: 'mm' },
-          { value: 'cm', label: 'cm' },
-          { value: 'm', label: 'm' },
-        ];
-        break;
-      case  sensorTypeNum.Fire:
-      case sensorTypeNum.Toxic:
-        this.unitOptions = [
-          { value: 'ppm', label: 'ppm' },
-          { value: 'mg/m3', label: 'mg/m3' },
+          { value: 'MM', label: 'MM' },
+          { value: 'CM', label: 'CM' },
+          { value: 'M', label: 'M' },
         ];
         break;
       default:
         return;
     }
-    this.validateForm.get('unit').reset();
   }
 
 
   showMap() {
     const longitude = this.validateForm.get('longitude').value;
     const latitude = this.validateForm.get('latitude').value;
-    const isEntprScope = this.dataInfo.entprScope;
+    const isEntprScope = this.entprBasicInfo.entprScope;
     this.positionPickerService.show({
       isRemoteImage: true,
       longitude: longitude,
@@ -268,6 +259,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+    this.entprBasicInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
     this.sensorTypeOptions = [...MapPipe.transformMapToArray(MapSet.sensorType)];
     this.getMajorNameList();
     this.initForm();

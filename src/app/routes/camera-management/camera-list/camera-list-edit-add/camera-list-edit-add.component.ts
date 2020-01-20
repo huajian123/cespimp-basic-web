@@ -9,10 +9,9 @@ import {
 } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
+import { EntprScopeModel, LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import { PositionPickerService } from '../../../../widget/position-picker/position-picker.service';
 import { PositionPickerPolygonService } from '../../../../widget/position-picker-polygon/position-picker-polygon.service';
-import { enterpriseInfo } from '@env/environment';
 import { EVENT_KEY } from '@env/staticVariable';
 import {
   CameraManagementListInfoService,
@@ -44,6 +43,7 @@ export class CameraManagementCameraListEditAddComponent implements OnInit {
   @Input() currentPageNum: number;
   @Output() returnBack: EventEmitter<any>;
   loginInfo: LoginInfoModel;
+  entprBasicInfo: EntprScopeModel;
   majorHazardTypeList: OptionsInterface[];
   majorHazardNameList: OptionsInterface[];
   selMajorNoArray: PartNoOptionsInterface[];
@@ -159,7 +159,7 @@ export class CameraManagementCameraListEditAddComponent implements OnInit {
   showMap() {
     const longitude = this.validateForm.get('longitude').value;
     const latitude = this.validateForm.get('latitude').value;
-    const isEntprScope = this.dataInfo.entprScope;
+    const isEntprScope = this.entprBasicInfo.entprScope;
     this.positionPickerService.show({
       isRemoteImage: true,
       longitude: longitude,
@@ -209,6 +209,7 @@ export class CameraManagementCameraListEditAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+    this.entprBasicInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
     this.getMajorNameList();
     this.initForm();
     if (this.id) {

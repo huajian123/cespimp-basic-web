@@ -11,7 +11,7 @@ import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EVENT_KEY } from '@env/staticVariable';
 import FiltersInfoModel = MajorHazardRecordListServiceNs.FiltersInfoModel;
-import EntprSearch = MajorHazardRecordListServiceNs.EntprSearch;
+
 
 @Component({
   selector: 'app-major-hazard-management-major-hazard-record-list',
@@ -48,7 +48,7 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
     this.itemId = -1;
     this.seacher = {
       id: null,
-      majorHazardId: '',
+      majorHazardName: '',
       applicationName: '',
       applicationTime: new Date(),
       reviewName: '',
@@ -144,8 +144,13 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
 
   private initTable(): void {
     this.columns = [
-      { title: '企业名称', index: 'entprName', width: 120, acl: [this.roleEnum[this.roleEnum.ParkManage],this.roleEnum[this.roleEnum.SafeMonitor]] },
-      { title: '重大危险源ID', index: 'majorHazardId', width: 100 },
+      {
+        title: '企业名称',
+        index: 'entprName',
+        width: 120,
+        acl: [this.roleEnum[this.roleEnum.ParkManage], this.roleEnum[this.roleEnum.SafeMonitor]],
+      },
+      { title: '重大危险源名称', index: 'majorHazardName', width: 100 },
       { title: '申请人', index: 'applicationName', width: 100 },
       { title: '申请时间', index: 'applicationTime', width: 100, type: 'date' },
       { title: '审核人', index: 'reviewName', width: 100 },
@@ -166,7 +171,7 @@ export class MajorHazardManagementMajorHazardRecordListComponent implements OnIn
             text: '审核',
             icon: 'edit',
             click: this.goExamine.bind(this),
-            acl: [this.roleEnum[this.roleEnum.ParkManage],this.roleEnum[this.roleEnum.SafeMonitor]],
+            acl: [this.roleEnum[this.roleEnum.ParkManage], this.roleEnum[this.roleEnum.SafeMonitor]],
           },
           {
             text: '查看',

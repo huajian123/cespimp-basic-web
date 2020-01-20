@@ -27,7 +27,7 @@ export class MajorHazardManagementMajorHazardRecordDetailComponent implements On
   constructor(private dataService: MajorHazardRecordListInfoService, private cdr: ChangeDetectorRef) {
     this.dataInfo = {
       id: null,
-      majorHazardId: '',
+      majorHazardName: '',
       applicationName: '',
       applicationTime: new Date(),
       reviewName: '',

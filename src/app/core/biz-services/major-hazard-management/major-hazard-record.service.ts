@@ -6,7 +6,7 @@ import { PageInfo } from '@core/vo/comm/PageInfo';
 export namespace MajorHazardRecordListServiceNs {
   export interface MajorHazardRecordListInfoModel {
     id?: number;
-    majorHazardId?: string;
+    majorHazardName?: string;
     applicationName?: string;
     applicationTime?: Date;
     reviewName?: string;

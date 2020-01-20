@@ -5,22 +5,16 @@
     <sv label="传感器名称">{{dataInfo.sensorName}}</sv>
     <sv label="传感器类型">{{dataInfo.sensorType|map:'sensorType'}}</sv>
     <sv label="单位">{{dataInfo.unit}}</sv>
-    <!--<div *ngIf="sensorTrue">
-      <sv label="一级阈值">{{dataInfo.firstAlarmThreshold}}</sv>
-      <sv label="二级阈值">{{dataInfo.secondAlarmThreshold}}</sv>
-    </div>-->
-   <!-- <div *ngIf="!sensorTrue">-->
-      <sv label="低低报">{{dataInfo.firstAlarmThreshold}}</sv>
-      <sv label="低报">{{dataInfo.secondAlarmThreshold}}</sv>
-      <sv label="高报">{{dataInfo.thirdAlarmThreshold}}</sv>
-      <sv label="高高报">{{dataInfo.fourthAlarmThreshold}}</sv>
-    <!--</div>-->
+    <sv label="低低报">{{dataInfo.firstAlarmThreshold}}</sv>
+    <sv label="低报">{{dataInfo.secondAlarmThreshold}}</sv>
+    <sv label="高报">{{dataInfo.thirdAlarmThreshold}}</sv>
+    <sv label="高高报">{{dataInfo.fourthAlarmThreshold}}</sv>
   </sv-container>
   <nz-divider></nz-divider>
-  <sv-container size="large" title="位置信息">
-    <sv label="经度">{{dataInfo.longitude}}</sv>
-    <sv label="纬度">{{dataInfo.latitude}}</sv>
-    <sv label="在厂区的位置">{{dataInfo.locFactory}}</sv>
+  <sv-container size="large" title="位置管理">
+    <sv><div #mapDivModal style="width: 1000px;height:300px;z-index: 1"></div></sv>
+    <sv></sv>
+    <sv label="厂区中位置">{{dataInfo.locFactory}}</sv>
   </sv-container>
   <nz-divider></nz-divider>
   <sv-container size="large" title="重大危险源信息">
