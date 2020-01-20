@@ -34,6 +34,8 @@ enum sensorTypeNum {
   temperature = 1,
   press = 2,
   level = 3,
+  Toxic,
+  Fire
 }
 
 
@@ -99,7 +101,7 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
       locFactory: [null, []],
       majorHazardId: [null, []],
       partId: [null, []],
-      unit: [null, []],
+      unit: [null, [Validators.required]],
       partType: [null, []],
       partNo: [null, []],
       firstAlarmThreshold: [null, []],
@@ -193,14 +195,22 @@ export class SensorManagementSensorListEditAddComponent implements OnInit {
         break;
       case  sensorTypeNum.level:
         this.unitOptions = [
-          { value: 'MM', label: 'MM' },
-          { value: 'CM', label: 'CM' },
-          { value: 'M', label: 'M' },
+          { value: 'mm', label: 'mm' },
+          { value: 'cm', label: 'cm' },
+          { value: 'm', label: 'm' },
+        ];
+        break;
+      case  sensorTypeNum.Fire:
+      case sensorTypeNum.Toxic:
+        this.unitOptions = [
+          { value: 'ppm', label: 'ppm' },
+          { value: 'mg/m3', label: 'mg/m3' },
         ];
         break;
       default:
         return;
     }
+    this.validateForm.get('unit').reset();
   }
 
 
