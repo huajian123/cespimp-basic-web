@@ -304,6 +304,9 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
       this.getEnterpriseEnviron();
       this.changeTap(TabEnum.EnterpriseEnvirTab);
     }
+    if (args.index === TabEnum.BaseInfoTab) {
+     this.getFactoryInfo();
+    }
     if (args.index === TabEnum.ProductionDeviceTab) {
       this.getProductionDevice();
       this.changeTap(TabEnum.ProductionDeviceTab);
@@ -384,7 +387,6 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
       entprId: this.entprId,
     };
     this.dataInfo = await this.dataService.getFactoryInfoDetail(param);
-    console.log(this.dataInfo);
     this.initMap(this.dataInfo.latitude, this.dataInfo.longitude);
     this.cdr.markForCheck();
   }
