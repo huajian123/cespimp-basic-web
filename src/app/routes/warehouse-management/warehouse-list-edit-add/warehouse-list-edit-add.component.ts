@@ -14,7 +14,7 @@ import {
   WarehouseListServiceNs,
 } from '@core/biz-services/warehouse-management/warehouse-list.service';
 import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
-import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
+import { EntprScopeModel, LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import { PositionPickerService } from '../../../widget/position-picker/position-picker.service';
 import { EVENT_KEY } from '@env/staticVariable';
 import WarehouseListInfoModel = WarehouseListServiceNs.WarehouseListInfoModel;
@@ -41,6 +41,7 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
   editIndex = -1;
   editObj = {};
   dataInfo: WarehouseListInfoModel;
+  entprBasicInfo: EntprScopeModel;
 
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: WarehouseListInfoService, private positionPickerService: PositionPickerService) {
@@ -124,7 +125,7 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
   showMap() {
     const longitude = this.validateForm.get('longitude').value;
     const latitude = this.validateForm.get('latitude').value;
-    const isEntprScope = this.dataInfo.entprScope;
+    const isEntprScope = this.entprBasicInfo.entprScope;
     this.positionPickerService.show({
       isRemoteImage: true,
       longitude: longitude,
@@ -194,6 +195,7 @@ export class WarehouseManagementWarehouseListEditAddComponent implements OnInit 
 
   ngOnInit() {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+    this.entprBasicInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
     this.fireLevelOptions = [...MapPipe.transformMapToArray(MapSet.fireLevel)];
     this.roomFormOptions = [...MapPipe.transformMapToArray(MapSet.roomForm)];
     this.initForm();

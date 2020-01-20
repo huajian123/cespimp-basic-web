@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PositionPickerService } from '../../../widget/position-picker/position-picker.service';
-import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
+import { EntprScopeModel, LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import { EVENT_KEY } from '@env/staticVariable';
 import { TankListInfoService, TankListServiceNs } from '@core/biz-services/storage-tank-management/tank-list.service';
 import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
@@ -34,7 +34,7 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
   validateForm: FormGroup;
   loginInfo: LoginInfoModel;
   dataInfo: TankListInfoModel;
-
+  entprBasicInfo: EntprScopeModel;
   @Input() id: number;
   @Input() currentPageNum: number;
   @Output() returnBack: EventEmitter<any>;
@@ -70,7 +70,7 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
   showMap() {
     const longitude = this.validateForm.get('longitude').value;
     const latitude = this.validateForm.get('latitude').value;
-    const isEntprScope = this.dataInfo.entprScope;
+    const isEntprScope = this.entprBasicInfo.entprScope;
     this.positionPickerService
       .show({
         isRemoteImage: true,
@@ -200,6 +200,7 @@ export class StorageTankManagementTankListEditAddComponent implements OnInit {
 
   ngOnInit() {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+    this.entprBasicInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
     this.initForm();
     this.initTypeOptions();
     if (this.id) {

@@ -141,7 +141,7 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
 
   async getDetailInfo(id?) {
     this.dataInfo = await this.dataService.getMajorHazardInfoDetail(id ? id : this.id);
-    console.log(this.dataInfo);
+    //console.log(this.dataInfo);
     this.initMap(this.dataInfo.majorScope);
     this.cdr.markForCheck();
   }

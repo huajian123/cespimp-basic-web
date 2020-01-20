@@ -10,7 +10,7 @@ import {
 import { NzMessageService } from 'ng-zorro-antd';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PositionPickerService } from '../../../widget/position-picker/position-picker.service';
-import { LoginInfoModel } from '@core/vo/comm/BusinessEnum';
+import { EntprScopeModel, LoginInfoModel } from '@core/vo/comm/BusinessEnum';
 import {
   ProductionListInfoService,
   ProductionListServiceNs,
@@ -33,6 +33,7 @@ export class ProductionManagementProductionListEditAddComponent implements OnIni
   editIndex = -1;
   editObj = {};
   dataInfo: ProductionListInfoModel;
+  entprBasicInfo: EntprScopeModel;
 
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: ProductionListInfoService, private positionPickerService: PositionPickerService) {
@@ -139,7 +140,7 @@ export class ProductionManagementProductionListEditAddComponent implements OnIni
   showMap() {
     const longitude = this.validateForm.get('longitude').value;
     const latitude = this.validateForm.get('latitude').value;
-    const isEntprScope = this.dataInfo.entprScope;
+    const isEntprScope = this.entprBasicInfo.entprScope;
     this.positionPickerService.show({
       isRemoteImage: true,
       longitude: longitude,
@@ -182,6 +183,7 @@ export class ProductionManagementProductionListEditAddComponent implements OnIni
 
   ngOnInit() {
     this.loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+    this.entprBasicInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
     this.initForm();
     if (this.id) {
       this.getDetail();

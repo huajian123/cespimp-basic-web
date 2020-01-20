@@ -38,6 +38,10 @@ export interface LoginInfoModel {
   userName: string;
 }
 
+export interface EntprScopeModel {
+  entprScope: { lng: number; lat: number }[];
+}
+
 export interface OptionsInterface {
   value: string | number;
   label: string;
