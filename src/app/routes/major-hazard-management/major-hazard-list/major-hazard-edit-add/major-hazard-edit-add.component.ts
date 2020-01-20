@@ -70,9 +70,9 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
     this.majorAllNo = [];
     this.selMajorNoArray = [];
     this.majorList = [
-      { value: '1', label: '储罐' },
-      { value: '2', label: '库房' },
-      { value: '3', label: '生产场所' },
+      { value: 1, label: '储罐' },
+      { value: 2, label: '库房' },
+      { value: 3, label: '生产场所' },
     ];
     this.unitTypeOptions = [];
     this.HazardLevelOptions = [];
@@ -197,16 +197,19 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
   }
 
   // 编辑组成单元
-  edit(index: number) {
+  async edit(index: number) {
     this.editIndex = index;
     if (this.editIndex !== -1 && this.editObj) {
       this.mediumArray.at(this.editIndex).patchValue(this.editObj);
     }
     this.editObj = { ...this.mediumArray.at(this.editIndex).value };
-    /*console.log(this.editObj);
-     this.mediumArray.at(this.editIndex).get('partType').setValue(this.editObj.partType);
-      this.mediumArray.at(this.editIndex).get('partId').setValue(this.editObj.partName);
-      this.mediumArray.at(this.editIndex).get('partNo').setValue(this.editObj.partNo);*/
+    await this.changeMajorType(this.mediumArray.value[index].partType, index);
+    this.mediumArray.at(this.editIndex).get('partId').setValue(this.editObj.partId);
+    /*
+    this.mediumArray.at(this.editIndex).get('partType').setValue(this.editObj.partType);
+    this.mediumArray.at(this.editIndex).get('partId').setValue(this.editObj.partName);
+    this.mediumArray.at(this.editIndex).get('partNo').setValue(this.editObj.partNo);
+    */
   }
 
   // 保存单个组成单元
