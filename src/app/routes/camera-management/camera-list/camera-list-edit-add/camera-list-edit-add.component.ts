@@ -130,6 +130,9 @@ export class CameraManagementCameraListEditAddComponent implements OnInit {
 
 
   async changeMajorNameList(event) {
+    if (event == null) {
+      return;
+    }
     this.hazardObject = await this.dataService.getMajorHazardTypeList(event);
     //构建重大危险源类型下拉数据
     this.majorHazardTypeList.length = 0;
