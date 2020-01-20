@@ -55,11 +55,11 @@ export class SensorDataComponent implements OnInit {
   }
 
   disabledDate(current: Date) {
-    return current.getTime() <= subDays(this.searchParam.beginTime,1).getTime() || endOfDay(current).getTime() >= (addDays(this.searchParam.beginTime, 4).getTime());
+    return current.getTime() <= subDays(this.searchParam.beginTime, 1).getTime() || endOfDay(current).getTime() >= (addDays(this.searchParam.beginTime, 4).getTime());
   }
 
   disabledStartDate(current: Date) {
-    return current.getTime() < subDays(new Date(),20).getTime();
+    return current.getTime() < subDays(new Date(), 20).getTime();
   }
 
   async getDataList(pageNumber?: number) {
@@ -142,6 +142,11 @@ export class SensorDataComponent implements OnInit {
       { title: '传感器编号', index: 'sensorNo', width: 50 },
       { title: '实时数据', index: 'sensorValue', width: 50 },
       { title: '上传时间', index: 'reportTime', width: 50, type: 'date' },
+      {
+        title: '单位',
+        index: 'unit',
+        width: 50,
+      },
     ];
   }
 
