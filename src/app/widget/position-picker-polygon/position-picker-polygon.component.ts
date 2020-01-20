@@ -30,8 +30,8 @@ export class PositionPickerPolygonComponent extends BaseConfirmModal.BasicConfir
 
   constructor(private cdr: ChangeDetectorRef, private nzModalRef: NzModalRef) {
     super();
-    this.zoom = 10;
     this.entprBasicInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
+    console.log(this.entprBasicInfo);
     this.polygonPoints = [];
     this.polygon = {};
     this.canEdit = false;
