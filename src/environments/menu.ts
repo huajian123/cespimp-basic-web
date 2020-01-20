@@ -145,6 +145,10 @@ export const menus = [
 
           {
             'text': '重大危险源列表',
+            'link': '/hazard/major-hazard-management/major-hazard-list',
+          },
+    /*      {
+            'text': '重大危险源列表',
             'acl': RoleEnum[RoleEnum.Enterprise],
             get link() {
               if (window.sessionStorage.getItem(EVENT_KEY.role) === RoleEnum[RoleEnum.Enterprise]) {
@@ -153,7 +157,7 @@ export const menus = [
                 return '/hazard/major-hazard-management/major-hazard-list1';
               }
             },
-          },
+          },*/
           {
             'text': '重大危险源备案列表 ',
             'link': '/hazard/major-hazard-management/major-hazard-record-list',
