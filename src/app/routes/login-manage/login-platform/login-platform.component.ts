@@ -180,12 +180,12 @@ export class LoginPlatformComponent implements OnInit {
         },
         nameGap: 2, // 名字与指示器的距离
         indicator: [
-          { name: 'Ⅰ', max: 6500, fontSize: 12 },
-          { name: '劣Ⅴ', max: 16000, fontSize: 12 },
-          { name: 'Ⅴ', max: 30000, fontSize: 12 },
-          { name: 'Ⅳ', max: 38000, fontSize: 12 },
-          { name: 'Ⅲ', max: 52000, fontSize: 12 },
-          { name: 'Ⅱ', max: 25000, fontSize: 12 },
+          { name: 'Ⅰ', max: 52, fontSize: 12 },
+          { name: '劣Ⅴ', max: 52, fontSize: 12 },
+          { name: 'Ⅴ', max: 52, fontSize: 12 },
+          { name: 'Ⅳ', max: 52, fontSize: 12 },
+          { name: 'Ⅲ', max: 52, fontSize: 12 },
+          { name: 'Ⅱ', max: 52, fontSize: 12 },
         ],
         splitNumber: 4,
         splitArea: {
@@ -209,7 +209,7 @@ export class LoginPlatformComponent implements OnInit {
         },
       },
       series: [{
-        name: '全年周水质入水口 vs 全年周水质出水口',  // 系列名称,全年周水质分布雷达图。
+        name: '化工园区下游水站 vs 化工园区上游水站',  // 系列名称,全年周水质分布雷达图。
         type: 'radar',
         data: [
           {
@@ -229,7 +229,7 @@ export class LoginPlatformComponent implements OnInit {
 
             },
           },
-          {
+      /*    {
             value: [1000, 7000, 20000, 38000, 25000, 7000],
             itemStyle: {
               normal: {
@@ -246,7 +246,7 @@ export class LoginPlatformComponent implements OnInit {
 
             },
 
-          },
+          },*/
         ],
       }],
     };
