@@ -10,6 +10,7 @@ import {
   LoginWorkBoardServiceNs,
 } from '@core/biz-services/login-work-board/login-work-board.service';
 import AirQualityModel = LoginWorkBoardServiceNs.AirQualityModel;
+import WaterQualityModel = LoginWorkBoardServiceNs.WaterQualityModel;
 
 enum SideEnum {
   IntegratedMnageControl, // 综合管控
@@ -57,6 +58,7 @@ export class LoginPlatformComponent implements OnInit {
   loginUrls: UrlsModelInterface;
   localUrl: string;
   airQualityData: AirQualityModel;
+  waterQualityData: WaterQualityModel;
   airLevelColor: string;
   realName: string;
 
@@ -103,6 +105,32 @@ export class LoginPlatformComponent implements OnInit {
       'pmTen': '',
       'co': '',
       'othree': '',
+    };
+    this.waterQualityData = {
+      'levelOne': 0,
+      'levelTwo': 0,
+      'levelThree': 1,
+      'levelFour': 0,
+      'levelFive': 0,
+      'levelSix': 7,
+      'siteName': '化工园区下游水站',
+      'dissolveOxygen': 0,
+      'ammoniaNitrogen': 0,
+      'standardLevel': 4,
+      'totalPhosphorus': 0,
+      'thisLevel': 6,
+      'overFlag': true,
+      'permanganate': 0,
+      'itemNames': [
+        '氨氮',
+        '高锰酸盐指数',
+        '总磷',
+        '总氮',
+        'PH',
+        '溶解氧',
+      ],
+      'totalNitrogen': 7,
+      'ph': 0,
     };
     this.airLevelColor = '#30d284';
     this.realName = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo)).realName;
@@ -185,7 +213,7 @@ export class LoginPlatformComponent implements OnInit {
         type: 'radar',
         data: [
           {
-            value: [1000, 7000, 23500, 38000, 27000, 7000],
+            value: [this.waterQualityData.levelOne, this.waterQualityData.levelSix, this.waterQualityData.levelFive, this.waterQualityData.levelFour, this.waterQualityData.levelThree, this.waterQualityData.levelTwo],
             itemStyle: {
               normal: {
                 color: '#00E3FF',
@@ -328,9 +356,9 @@ export class LoginPlatformComponent implements OnInit {
         formatter: (params) => {
           switch (params.data.name) {
             case '一级':
-              return ;
+              return;
             case '二级':
-              return ;
+              return;
             case '三级':
               return '华统食品:<br/>液氨';
             case '四级':
@@ -546,11 +574,39 @@ export class LoginPlatformComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
+  // 获取水质质量
+  async getWaterQualityData() {
+    this.waterQualityData = await this.loginWorkBoardService.getWaterQuality();
+    /* switch (this.airQualityData.status) {
+       case AirQualityLevelEnum.Excellent:
+         this.airLevelColor = '#30d284';
+         break;
+       case AirQualityLevelEnum.Good:
+         this.airLevelColor = '#ffd802';
+         break;
+       case AirQualityLevelEnum.MildPollution:
+         this.airLevelColor = '#ff9902';
+         break;
+       case AirQualityLevelEnum.ModeratePollution:
+         this.airLevelColor = '#ff0201';
+         break;
+       case AirQualityLevelEnum.SeverePollution:
+         this.airLevelColor = '#980098';
+         break;
+       case AirQualityLevelEnum.SeriousPollution:
+         this.airLevelColor = '#990000';
+         break;
+     }*/
+    console.log(this.waterQualityData);
+    this.cdr.markForCheck();
+  }
+
   ngOnInit() {
     // this.loginUserInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
     this.intiRadarOption();
     this.initPipeOption();
     this.getPageUrls();
     this.getAirQualityData();
+    this.getWaterQualityData();
   }
 }

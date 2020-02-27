@@ -19,6 +19,26 @@ export namespace LoginWorkBoardServiceNs {
     'othree': string;
   }
 
+  export interface WaterQualityModel {
+    'levelOne': number;
+    'levelTwo': number;
+    'levelThree': number;
+    'levelFour': number;
+    'levelFive': number;
+    'levelSix': number;
+    'siteName': string;
+    'dissolveOxygen': number;
+    'ammoniaNitrogen': number;
+    'standardLevel': number;
+    'totalPhosphorus': number;
+    'thisLevel': number;
+    'overFlag': boolean,
+    'permanganate': number;
+    'itemNames': string[],
+    'totalNitrogen': number;
+    'ph': number;
+  }
+
   export class LoginWorkBoardServiceClass {
     constructor(private http: HttpUtilService) {
     }
@@ -26,6 +46,11 @@ export namespace LoginWorkBoardServiceNs {
     // 获取空气质量
     public getAirQuality(): Promise<AirQualityModel> {
       return this.http.get('basic/subsystem/airQuality').toPromise();
+    }
+
+    // 获取水质质量
+    public getWaterQuality(): Promise<WaterQualityModel> {
+      return this.http.get('basic/subsystem/waterQuality').toPromise();
     }
   }
 }
