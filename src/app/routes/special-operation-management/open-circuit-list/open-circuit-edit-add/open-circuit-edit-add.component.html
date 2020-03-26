@@ -37,6 +37,7 @@
     <se label="作业证附件">
       <nz-form-control nzLg="8" nzMd="12" nzSm="24">
         <nz-upload
+          [nzSize]="10240"
           (nzChange)="uploadFn($event,'operationCertificate')"
           [nzRemove]="handleRemove"
           [nzLimit]="1"

@@ -14,6 +14,7 @@
     <se label="图片"  *ngIf="noticeType===pageTypeEnum.ParkIntroduction">
       <nz-form-control nzLg="8" nzMd="12" nzSm="24">
         <nz-upload
+          [nzSize]="10240"
           (nzChange)="uploadFn($event,'pic')"
           [nzRemove]="handleRemove.bind(this)"
           [nzLimit]="1"
@@ -35,6 +36,7 @@
     <se label="文件" *ngIf="noticeType===pageTypeEnum.FileNotifi">
       <nz-form-control nzLg="8" nzMd="12" nzSm="24">
         <nz-upload
+          [nzSize]="10240"
           [nzRemove]="handleRemove.bind(this)"
           (nzChange)="uploadFn($event,'file')"
           [nzShowButton]="fileList.length < 1"

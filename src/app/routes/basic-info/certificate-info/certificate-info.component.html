@@ -55,6 +55,7 @@
             <nz-form-label>附件</nz-form-label>
             <nz-form-control>
               <nz-upload
+                [nzSize]="10240"
                 (nzChange)="uploadFn($event,'businessLicencesAccessory')"
                 [nzRemove]="handleRemove"
                 [nzLimit]="1"
@@ -128,6 +129,7 @@
             <nz-form-label>附件</nz-form-label>
             <nz-form-control>
               <nz-upload
+                [nzSize]="10240"
                 (nzChange)="uploadFn($event,'safetyCertificateAccessory')"
                 [nzRemove]="handleRemove"
                 [nzLimit]="1"
@@ -201,6 +203,7 @@
             <nz-form-label>附件</nz-form-label>
             <nz-form-control>
               <nz-upload
+                [nzSize]="10240"
                 (nzChange)="uploadFn($event,'dischargePermitAccessory')"
                 [nzRemove]="handleRemove"
                 [nzLimit]="1"
@@ -262,6 +265,7 @@
             <nz-form-label>安评报告附件</nz-form-label>
             <nz-form-control>
               <nz-upload
+                [nzSize]="10240"
                 (nzChange)="uploadFn($event,'safetyReportAccessory')"
                 [nzRemove]="handleRemove"
                 [nzLimit]="1"
@@ -323,6 +327,7 @@
             <nz-form-label>环评报告附件</nz-form-label>
             <nz-form-control>
               <nz-upload
+                [nzSize]="10240"
                 (nzChange)="uploadFn($event,'environmentReportAccessory')"
                 [nzRemove]="handleRemove"
                 [nzLimit]="1"
