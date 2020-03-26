@@ -114,28 +114,28 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
     this.idCardInfo = {
       id: -1,
       uscCode: '',
-      businessLicencesEndTime: new Date(),
-      businessLicencesBeginTime: new Date(),
+      businessLicencesEndTime: '',
+      businessLicencesBeginTime: '',
       businessLicencesRange: '',
       businessLicencesAuthority: '',
       businessLicencesAccessory: '',
-      safetyCertificateBeginTime: new Date(),
-      safetyCertificateEndTime: new Date(),
+      safetyCertificateBeginTime: '',
+      safetyCertificateEndTime: '',
       safetyPermitRange: '',
       safetyCertificateAuthority: '',
       safetyCertificateAccessory: '',
       dischargePermitCode: '',
       safetyCertificateCode: '',
-      dischargePermitBeginTime: new Date(),
-      dischargePermitEndTime: new Date(),
+      dischargePermitBeginTime: '',
+      dischargePermitEndTime: '',
       dischargePermitType: '',
       dischargePermitAuthority: '',
       safetyReportName: '',
-      safetyReportRecordTime: new Date(),
+      safetyReportRecordTime: '',
       safetyReportAgency: '',
       safetyReportAccessory: '',
       environmentReportName: '',
-      environmentRecordTime: new Date(),
+      environmentRecordTime: '',
       environmentReportAgency: '',
       environmentReportAccessory: '',
     };
@@ -145,6 +145,8 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
       pi: 1,// 当前页码
     };
   }
+
+
 
   format(toBeFormat, arg) {
     return new MapPipe().transform(toBeFormat, arg);
@@ -305,7 +307,7 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
       this.changeTap(TabEnum.EnterpriseEnvirTab);
     }
     if (args.index === TabEnum.BaseInfoTab) {
-     this.getFactoryInfo();
+      this.getFactoryInfo();
     }
     if (args.index === TabEnum.ProductionDeviceTab) {
       this.getProductionDevice();
@@ -399,6 +401,7 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
     };
     const { list } = await this.dataService.getIdCardInfoDetail(param);
     this.idCardInfo = list[0];
+    console.log(list);
     if (!this.idCardInfo) {
       this.initData();
     }
@@ -418,6 +421,15 @@ export class BasicInfoDetailComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.getFactoryInfo();
     this.getLastExamineInfo();
+  }
+
+  //判断详情页面中是否有日期
+  judgeHasData(preDate, nexDate) {
+    if (preDate) {
+      return '' + new MapPipe().transform(preDate, 'date:yyyy-MM-dd') + '~' + new MapPipe().transform(nexDate, 'date:yyyy-MM-dd');
+    } else {
+      return '-';
+    }
   }
 
   ngOnInit(): void {

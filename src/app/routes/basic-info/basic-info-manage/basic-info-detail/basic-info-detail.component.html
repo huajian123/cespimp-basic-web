@@ -89,20 +89,20 @@
   <nz-card nzType="inner" nzTitle="1、营业执照">
     <sv-container size="large" title="">
       <sv label="统一社会信用代码">{{idCardInfo.uscCode}}</sv>
-      <sv label="有效时间">{{idCardInfo.businessLicencesBeginTime|map:'date:yyyy-MM-dd'}}~{{idCardInfo.businessLicencesEndTime|map:'date:yyyy-MM-dd'}}</sv>
+      <sv label="有效时间">{{this.judgeHasData(idCardInfo.businessLicencesBeginTime,idCardInfo.businessLicencesEndTime)}}</sv>
       <sv label="经营范围">{{idCardInfo.businessLicencesRange}}</sv>
       <sv label="发证机关">{{idCardInfo.businessLicencesAuthority}}</sv>
-      <sv label="附件"><a [href]="idCardInfo.businessLicencesAccessory"  target="_blank" download="营业执照.jpg">查看</a></sv>
+      <sv label="附件"><a *ngIf="idCardInfo.businessLicencesAccessory;else ignoreTpl" [href]="idCardInfo.businessLicencesAccessory"  target="_blank" download="营业执照.jpg">查看</a></sv>
     </sv-container>
   </nz-card>
   <nz-divider></nz-divider>
   <nz-card nzType="inner" nzTitle="2、安全许可证">
     <sv-container size="large" title="">
       <sv label="编号">{{idCardInfo.safetyCertificateCode}}</sv>
-      <sv label="有效期">{{idCardInfo.safetyCertificateBeginTime|map:'date:yyyy-MM-dd'}}~{{idCardInfo.safetyCertificateEndTime|map:'date:yyyy-MM-dd'}}</sv>
+      <sv label="有效期">{{this.judgeHasData(idCardInfo.safetyCertificateBeginTime,idCardInfo.safetyCertificateEndTime)}}</sv>
       <sv label="许可范围">{{idCardInfo.safetyPermitRange}}</sv>
       <sv label="发证机关">{{idCardInfo.safetyCertificateAuthority}}</sv>
-      <sv label="附件"><a [href]="idCardInfo.safetyCertificateAccessory" target="_blank">查看</a></sv>
+      <sv label="附件"><a *ngIf="idCardInfo.safetyCertificateAccessory;else ignoreTpl" [href]="idCardInfo.safetyCertificateAccessory" target="_blank">查看</a></sv>
 
     </sv-container>
   </nz-card>
@@ -110,10 +110,10 @@
   <nz-card nzType="inner" nzTitle="3、排污许可证">
     <sv-container size="large" title="">
       <sv label="许可证编号">{{idCardInfo.dischargePermitCode}}</sv>
-      <sv label="有效期">{{idCardInfo.dischargePermitBeginTime|map:'date:yyyy-MM-dd'}}~{{idCardInfo.dischargePermitEndTime|map:'date:yyyy-MM-dd'}}</sv>
+      <sv label="有效期">{{this.judgeHasData(idCardInfo.dischargePermitBeginTime,idCardInfo.dischargePermitEndTime)}}</sv>
       <sv label="排污种类">{{idCardInfo.dischargePermitType}}</sv>
       <sv label="发证机关">{{idCardInfo.dischargePermitAuthority}}</sv>
-      <sv label="附件"><a [href]="idCardInfo.dischargePermitAccessory"  target="_blank"  download="w3logo.jpg">查看</a></sv>
+      <sv label="附件"><a *ngIf="idCardInfo.dischargePermitAccessory;else ignoreTpl" [href]="idCardInfo.dischargePermitAccessory"  target="_blank"  download="w3logo.jpg">查看</a></sv>
     </sv-container>
   </nz-card>
   <nz-divider></nz-divider>
@@ -122,7 +122,7 @@
       <sv label="报告名称">{{idCardInfo.safetyReportName}}</sv>
       <sv label="备案时间">{{idCardInfo.safetyReportRecordTime|map:'date:yyyy-MM-dd'}}</sv>
       <sv label="安评机构名称">{{idCardInfo.safetyReportAgency}}</sv>
-      <sv label="安评报告附件"><a [href]="idCardInfo.safetyReportAccessory"  target="_blank"  download="w3logo.jpg">查看</a></sv>
+      <sv label="安评报告附件"><a *ngIf="idCardInfo.safetyReportAccessory;else ignoreTpl" [href]="idCardInfo.safetyReportAccessory"  target="_blank"  download="w3logo.jpg">查看</a></sv>
     </sv-container>
   </nz-card>
   <nz-divider></nz-divider>
@@ -131,10 +131,12 @@
       <sv label="环评报告名称">{{idCardInfo.environmentReportName}}</sv>
       <sv label="备案时间">{{idCardInfo.environmentRecordTime|map:'date:yyyy-MM-dd'}}</sv>
       <sv label="环评机构名称">{{idCardInfo.environmentReportAgency}}</sv>
-      <sv label="环评报告附件"><a [href]="idCardInfo.environmentReportAccessory"  target="_blank">查看</a></sv>
+      <sv label="环评报告附件"><a  *ngIf="idCardInfo.environmentReportAccessory;else ignoreTpl"  [href]="idCardInfo.environmentReportAccessory"  target="_blank">查看</a></sv>
     </sv-container>
   </nz-card>
 </nz-card>
+<ng-template #ignoreTpl>-</ng-template>
+
 
 <nz-card [nzHoverable]="false" [nzBordered]="true" [hidden]="currentTab!==tabEnum.PositionTab">
   <div #mapDivModal style="width: 100%;height:500px"></div>

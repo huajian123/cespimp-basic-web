@@ -5,7 +5,7 @@
 import { EVENT_KEY } from '@env/staticVariable';
 
 export const webSocketIp = '172.16.1.18';
-export const localUrl = 'http://172.16.0.136:4201';
+export const localUrl = 'http://192.168.1.116:4201';
 export const webServerUrl = `${localUrl}/site`;
 
 export const getwayKey = {
