@@ -64,6 +64,9 @@ export class SensorDataComponent implements OnInit {
 
   async getDataList(pageNumber?: number) {
     const currentRole = window.sessionStorage.getItem('role');
+    if(this.searchParam.endTime===null){
+      delete this.searchParam.endTime
+    }
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
