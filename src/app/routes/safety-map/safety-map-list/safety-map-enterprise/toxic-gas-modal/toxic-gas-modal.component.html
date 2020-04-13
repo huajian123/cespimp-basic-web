@@ -5,8 +5,10 @@
         <page-header title="" [autoBreadcrumb]="false">
           <sv-container size="large" col="3">
             <sv label="传感器名称">{{currentDataInfo.sensorName}}</sv>
-            <sv label="一级阈值">{{currentDataInfo.firstAlarmThreshold}}（mg/m³）</sv>
-            <sv label="二级阈值">{{currentDataInfo.secondAlarmThreshold}}（mg/m³）</sv>
+            <sv label="低低报">{{currentDataInfo.firstAlarmThreshold}}（mg/m³）</sv>
+            <sv label="低报">{{currentDataInfo.secondAlarmThreshold}}（mg/m³）</sv>
+            <sv label="高报">{{currentDataInfo.thirdAlarmThreshold}}（mg/m³）</sv>
+            <sv label="高高报">{{currentDataInfo.fourthAlarmThreshold}}（mg/m³）</sv>
 
             <sv label="传感器编号">{{currentDataInfo.sensorNo}}</sv>
             <sv label="位置">{{currentDataInfo.locFactory}}</sv>
