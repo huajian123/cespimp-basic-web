@@ -20,7 +20,9 @@ export const appInfo = {
   'description': 'Ng-zorro admin panel front-end framework',
 };
 
-export const enterpriseInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
+export class EnterpriseInfoService {
+  public enterpriseInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
+}
 
 export const loginUserInfo = {
   'name': JSON.parse(window.sessionStorage.getItem('loginInfo')) ? JSON.parse(window.sessionStorage.getItem('loginInfo')).userName : 'admin',

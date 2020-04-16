@@ -3,9 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 import { EVENT_KEY } from '@env/staticVariable';
+import { Injectable } from '@angular/core';
 
 export const webSocketIp = '172.16.1.18';
-export const localUrl = 'http://192.168.1.116:4201';
+export const localUrl = 'http://192.168.1.118:4201';
 export const webServerUrl = `${localUrl}/site`;
 
 export const getwayKey = {
@@ -24,7 +25,16 @@ export const loginUserInfo = {
   'email': 'cipchk@qq.com',
 };
 
-export const enterpriseInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
+
+@Injectable({
+  providedIn: 'root',
+})
+export class EnterpriseInfoService {
+  public enterpriseInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
+}
+
+
+// export var enterpriseInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
 
 export const environment = {
   SERVER_URL: `${webServerUrl}`,
