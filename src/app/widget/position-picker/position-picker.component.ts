@@ -75,9 +75,11 @@ export class PositionPickerComponent extends BaseConfirmModal.BasicConfirmModalC
 
       // 初始化企业范围
       const points = [];
-      this.params.isEntprScope.forEach(({ lat, lng }) => {
-        points.push(new T.LngLat(lng, lat));
-      });
+      if(this.params.isEntprScope){
+        this.params.isEntprScope.forEach(({ lat, lng }) => {
+          points.push(new T.LngLat(lng, lat));
+        });
+      }
       const polygon = new T.Polygon(points, {
         color: 'blue', weight: 3, opacity: 0.5, fillColor: '#FFFFFF', fillOpacity: 0,
       });

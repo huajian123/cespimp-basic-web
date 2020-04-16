@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { SocialService, SocialOpenType, ITokenService, DA_SERVICE_TOKEN } from '@delon/auth';
 import { ReuseTabService } from '@delon/abc';
-import { environment } from '@env/environment';
+import { EnterpriseInfoService, environment } from '@env/environment';
 import { StartupService } from '@core';
 import { LoginService } from '@core/biz-services/login-services/login.service';
 import { ACLService } from '@delon/acl';
@@ -25,7 +25,7 @@ export class UserLoginComponent {
   currentErrorMsg: string;
   isSubmit: boolean;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: FormBuilder,public enterpriseInfoService:EnterpriseInfoService,
               private router: Router, private dataService: LoginService,
               fb: FormBuilder,
               modalSrv: NzModalService,
@@ -69,6 +69,7 @@ export class UserLoginComponent {
     window.sessionStorage.setItem(EVENT_KEY.role, [RoleEnum[data.user.role]].toString());
     window.sessionStorage.setItem(EVENT_KEY.loginInfo, JSON.stringify(data.user));
     window.sessionStorage.setItem(EVENT_KEY.entprBasicInfo, JSON.stringify(data.entprBasicInfo));
+    this.enterpriseInfoService.enterpriseInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo))
     this.menuSrv.resume();
     this.tokenService.set({ token: data.user.realName });
     this.startupSrv.load();

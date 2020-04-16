@@ -18,7 +18,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { MapPipe } from '@shared/directives/pipe/map.pipe';
 import { Router } from '@angular/router';
 import { EVENT_KEY } from '@env/staticVariable';
-import { enterpriseInfo } from '@env/environment';
+import { EnterpriseInfoService } from '@env/environment';
 
 
 enum PartTypeEnum {
@@ -44,7 +44,7 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
 
   constructor(private http: _HttpClient, private msg: NzMessageService,
               private dataService: MajorHazardListInfoService, private cdr: ChangeDetectorRef,
-              private router: Router) {
+              private router: Router,public enterpriseInfoService:EnterpriseInfoService) {
     this.returnBack = new EventEmitter<any>();
     this.dataInfo = {
       id: -1,
@@ -121,7 +121,7 @@ export class MajorHazardManagementMajorHazardDetailComponent implements OnInit {
       if(polygonPoints.length != 0){
         this.map.centerAndZoom(new T.LngLat(polygonPoints[0].lng, polygonPoints[0].lat), zoom);
       }else{
-        this.map.centerAndZoom(new T.LngLat(enterpriseInfo.longitude, enterpriseInfo.latitude), zoom);
+        this.map.centerAndZoom(new T.LngLat(this.enterpriseInfoService.enterpriseInfo.longitude, this.enterpriseInfoService.enterpriseInfo.latitude), zoom);
       }
       const imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?' +
         'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles' +

@@ -20,8 +20,8 @@ import {
 import EntprSearch = EnterpriseBasicInfoServiceNs.EntprSearch;
 import { NzMessageService } from 'ng-zorro-antd';
 import EnterpriseName = EnterpriseBasicInfoServiceNs.EnterpriseName;
-import { enterpriseInfo } from '@env/environment';
 import { PositionPickerPolygonService } from '../../../widget/position-picker-polygon/position-picker-polygon.service';
+import { EnterpriseInfoService } from '@env/environment';
 
 interface OptionsInterface {
   value: string;
@@ -51,7 +51,7 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private positionPickerService: PositionPickerService, private dataService: EnterpriseBasicInfoService,
               private cdr: ChangeDetectorRef, private messageService: ShowMessageService, private msg: NzMessageService,
-              private positionPickerPolygonService: PositionPickerPolygonService) {
+              private positionPickerPolygonService: PositionPickerPolygonService,public enterpriseInfoService:EnterpriseInfoService) {
     this.operatingOptions = [];
     this.ecoTypeOptions = [];
     this.entprScaleOptions = [];
@@ -109,8 +109,8 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
   showPolygonMap() {
     this.positionPickerPolygonService.show({
       isRemoteImage: true,
-      longitude: enterpriseInfo.longitude,
-      latitude: enterpriseInfo.latitude,
+      longitude: this.enterpriseInfoService.enterpriseInfo.longitude,
+      latitude: this.enterpriseInfoService.enterpriseInfo.latitude,
       currentPolygonList: this.currentPolygonList,
     }).then((res: ({ lat: number, lng: number }[])) => {
       const tempArray = [];
@@ -128,8 +128,8 @@ export class BasicInfoEnterpriseBasicInfoComponent implements OnInit {
   showMap() {
     this.positionPickerService.show({
       isRemoteImage: true,
-      longitude: enterpriseInfo.longitude,
-      latitude: enterpriseInfo.latitude,
+      longitude: this.enterpriseInfoService.enterpriseInfo.longitude,
+      latitude: this.enterpriseInfoService.enterpriseInfo.latitude,
     }).then(res => {
       this.validateForm.get('longitude').setValue(res.longitude);
       this.validateForm.get('latitude').setValue(res.latitude);

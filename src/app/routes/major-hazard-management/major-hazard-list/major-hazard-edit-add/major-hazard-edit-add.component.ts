@@ -17,9 +17,10 @@ import {
 import { EVENT_KEY } from '@env/staticVariable';
 import { MapPipe, MapSet } from '@shared/directives/pipe/map.pipe';
 import { PositionPickerService } from '../../../../widget/position-picker/position-picker.service';
-import { enterpriseInfo } from '@env/environment';
+
 import { PositionPickerPolygonService } from '../../../../widget/position-picker-polygon/position-picker-polygon.service';
 import MajorHazardUnitList = MajorHazardListServiceNs.MajorHazardUnitList;
+import { EnterpriseInfoService } from '@env/environment';
 
 
 interface OptionsInterface {
@@ -65,7 +66,7 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
 
   constructor(private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef,
               private dataService: MajorHazardListInfoService, private positionPickerService: PositionPickerService,
-              private positionPickerPolygonService: PositionPickerPolygonService) {
+              private positionPickerPolygonService: PositionPickerPolygonService,public enterpriseInfoService:EnterpriseInfoService) {
     this.returnBack = new EventEmitter<any>();
     this.majorAllNo = [];
     this.selMajorNoArray = [];
@@ -262,8 +263,8 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
   showMap() {
     this.positionPickerService.show({
       isRemoteImage: true,
-      longitude: enterpriseInfo.longitude,
-      latitude: enterpriseInfo.latitude,
+      longitude: this.enterpriseInfoService.enterpriseInfo.longitude,
+      latitude: this.enterpriseInfoService.enterpriseInfo.latitude,
     }).then(res => {
       this.validateForm.get('longitude').setValue(res.longitude);
       this.validateForm.get('latitude').setValue(res.latitude);
@@ -274,8 +275,8 @@ export class MajorHazardManagementMajorHazardEditAddComponent implements OnInit 
   showPolygonMap() {
     this.positionPickerPolygonService.show({
       isRemoteImage: true,
-      longitude: enterpriseInfo.longitude,
-      latitude: enterpriseInfo.latitude,
+      longitude: this.enterpriseInfoService.enterpriseInfo.longitude,
+      latitude: this.enterpriseInfoService.enterpriseInfo.latitude,
       currentPolygonList: this.currentPolygonList,
     }).then((res: ({ lat: number, lng: number }[])) => {
       const tempArray = [];
