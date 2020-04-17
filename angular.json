@@ -36,7 +36,9 @@
             ],
             "scripts": [
               "node_modules/ajv/dist/ajv.bundle.js",
-              "node_modules/tinymce/tinymce.min.js"
+              "node_modules/tinymce/tinymce.min.js",
+              "src/assets/tianditu.js",
+              "src/assets/d3svgOverlay.js"
             ]
           },
           "configurations": {
