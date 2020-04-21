@@ -1,5 +1,5 @@
 import { EVENT_KEY } from '@env/staticVariable';
-
+import { Injectable } from '@angular/core';
 //export const webSocketIp = '172.16.1.18';
 export const webSocketIp = '192.168.1.116';
 // export const webSocketIp = '223.111.224.2';
@@ -20,6 +20,9 @@ export const appInfo = {
   'description': 'Ng-zorro admin panel front-end framework',
 };
 
+@Injectable({
+  providedIn: 'root',
+})
 export class EnterpriseInfoService {
   public enterpriseInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.entprBasicInfo));
 }
