@@ -46,6 +46,7 @@ export namespace SensorManagementListServiceNs {
 
   export interface SensorSearchModel {
     entprId?: number;
+    entprName?: string;
     sensorNo?: string;
     endTime?: Date;
     beginTime?: Date;
