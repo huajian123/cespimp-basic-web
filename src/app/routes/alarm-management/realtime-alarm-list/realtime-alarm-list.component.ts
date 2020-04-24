@@ -57,7 +57,7 @@ export class AlarmManagementRealtimeAlarmListComponent implements OnInit {
         title: '报警类型', index: 'alarmType', width: 100,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '报警内容', index: 'alarmContent', width: 120 },
+      { title: '报警内容', index: 'alarmContent', width: 240 },
       {
         title: '报警开始时间',
         index: 'alarmStartTime',
@@ -73,12 +73,12 @@ export class AlarmManagementRealtimeAlarmListComponent implements OnInit {
       {
         title: '报警状态',
         index: 'alarmStatus',
-        width: 100,
+        width: 80,
         format: (item: STData, _col: STColumn, index) => this.format(item[_col.indexKey], _col.indexKey),
       },
-      { title: '处理人', index: 'handleName', width: 120 },
+      { title: '处理人', index: 'handleName', width: 80 },
       { title: '处理时间', index: 'handleTime', width: 100, type: 'date' },
-      { title: '处理结果', index: 'handleResult', width: 120 },
+      { title: '处理结果', index: 'handleResult', width: 80 },
     /*  {
         title: '操作',
         fixed: 'right',
