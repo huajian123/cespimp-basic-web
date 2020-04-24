@@ -14,7 +14,12 @@ import WaterQualityModel = LoginWorkBoardServiceNs.WaterQualityModel;
 import HighProcessModel = LoginWorkBoardServiceNs.HighProcessModel;
 import HazardLevelModel = LoginWorkBoardServiceNs.HazardLevelModel;
 
-
+enum levelNum {
+  one =1,
+  two =2,
+  three =3,
+  four =4,
+}
 
 enum SideEnum {
   IntegratedMnageControl, // 综合管控
@@ -355,10 +360,10 @@ export class LoginPlatformComponent implements OnInit {
   initPipeOption() {
     const that = this;
     const hazardLevelPipeObj: any = {
-      level1: [],
-      level2: [],
-      level3: [],
-      level4: [],
+      levelOne: [],
+      levelTwo: [],
+      levelThree: [],
+      levelFour: [],
     };
 
     this.hazardLevelData.forEach(levelItem => {
@@ -366,15 +371,16 @@ export class LoginPlatformComponent implements OnInit {
         let tempEntprObj: any = {};
         tempEntprObj.entprName = hazardsItem.entprName;
         tempEntprObj.hazardName = hazardsItem.hazardName;
-        if (levelItem.majorHazardLevel === 1) {
-          hazardLevelPipeObj.level1.push(tempEntprObj);
-        } else if (levelItem.majorHazardLevel === 2) {
-          hazardLevelPipeObj.level2.push(tempEntprObj);
-        } else if (levelItem.majorHazardLevel === 3) {
-          hazardLevelPipeObj.level3.push(tempEntprObj);
-        } else if (levelItem.majorHazardLevel === 4) {
-          hazardLevelPipeObj.level4.push(tempEntprObj);
-        }
+       switch (levelItem.majorHazardLevel) {
+         case  levelNum.one:
+          return  hazardLevelPipeObj.levelOne.push(tempEntprObj);
+         case  levelNum.two:
+           return  hazardLevelPipeObj.levelTwo.push(tempEntprObj);
+         case  levelNum.three:
+           return  hazardLevelPipeObj.levelThree.push(tempEntprObj);
+         case  levelNum.four:
+           return  hazardLevelPipeObj.levelFour.push(tempEntprObj);
+       }
       });
     });
 
@@ -395,29 +401,29 @@ export class LoginPlatformComponent implements OnInit {
         formatter: (params) => {
           switch (params.data.name) {
             case '一级':
-              let str1 = '';
-              hazardLevelPipeObj.level1.forEach(item => {
-                str1= str1 + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
+              let strOne = '';
+              hazardLevelPipeObj.levelOne.forEach(item => {
+                strOne= strOne + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
               });
-              return str1;
+              return strOne;
             case '二级':
-              let str2 = '';
-              hazardLevelPipeObj.level2.forEach(item => {
-                str2= str2 + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
+              let strTwo = '';
+              hazardLevelPipeObj.levelTwo.forEach(item => {
+                strTwo= strTwo + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
               });
-              return str2;
+              return strTwo;
             case '三级':
-              let str3 = '';
-              hazardLevelPipeObj.level3.forEach(item => {
-                str3= str3 + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
+              let strThree = '';
+              hazardLevelPipeObj.levelThree.forEach(item => {
+                strThree= strThree + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
               });
-             return str3;
+             return strThree;
             case '四级':
-              let str4 = '';
-              hazardLevelPipeObj.level4.forEach(item => {
-                str4= str4 + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
+              let strFour = '';
+              hazardLevelPipeObj.levelFour.forEach(item => {
+                strFour= strFour + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
               });
-              return str4;
+              return strFour;
           }
         },
       },
@@ -510,6 +516,7 @@ export class LoginPlatformComponent implements OnInit {
         },
       },
       legend: {
+        type:'scroll',
         orient: 'vertical',
         data: ['氯化工艺', '磺化工艺', '氧化工艺', '聚合工艺'],
         x: 'left',
@@ -665,8 +672,6 @@ export class LoginPlatformComponent implements OnInit {
     this.hazardLevelData.sort((a, b) => {
       return a.majorHazardLevel - b.majorHazardLevel;
     });
-    console.log(this.hazardLevelData);
-
     this.cdr.markForCheck();
   }
 
