@@ -37,8 +37,28 @@ export namespace LoginWorkBoardServiceNs {
     'itemNames': string[],
     'totalNitrogen': number;
     'ph': number;
+
   }
 
+
+  export  interface HazardLevelModel {
+    'majorHazardLevel': number;
+    'entprHazards': EntprHazardsModel[];
+    'majorHazardNum': number;
+  }
+
+  export interface EntprHazardsModel {
+    entprName:string;
+    hazardName:string[];
+  }
+
+
+
+  export interface HighProcessModel {
+    'processesType': number;
+    'processesRatio': number;
+
+  }
   export class LoginWorkBoardServiceClass {
     constructor(private http: HttpUtilService) {
     }
@@ -51,6 +71,14 @@ export namespace LoginWorkBoardServiceNs {
     // 获取水质质量
     public getWaterQuality(): Promise<WaterQualityModel> {
       return this.http.get('basic/subsystem/waterQuality').toPromise();
+    }
+    // 获取重大危险源等级
+    public getMajorHazard(): Promise<HazardLevelModel[]> {
+      return this.http.get('homepage/major/hazard/statistics').toPromise();
+    }
+    // 获取高危工艺统计
+    public getMajorProcess(): Promise<HighProcessModel> {
+      return this.http.get('data/major/hazard/process/statistics').toPromise();
     }
   }
 }

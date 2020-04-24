@@ -11,6 +11,10 @@ import {
 } from '@core/biz-services/login-work-board/login-work-board.service';
 import AirQualityModel = LoginWorkBoardServiceNs.AirQualityModel;
 import WaterQualityModel = LoginWorkBoardServiceNs.WaterQualityModel;
+import HighProcessModel = LoginWorkBoardServiceNs.HighProcessModel;
+import HazardLevelModel = LoginWorkBoardServiceNs.HazardLevelModel;
+
+
 
 enum SideEnum {
   IntegratedMnageControl, // 综合管控
@@ -41,6 +45,7 @@ enum AirQualityLevelEnum {
   SeriousPollution
 }
 
+
 @Component({
   selector: 'app-login-platform',
   templateUrl: './login-platform.component.html',
@@ -59,8 +64,11 @@ export class LoginPlatformComponent implements OnInit {
   localUrl: string;
   airQualityData: AirQualityModel;
   waterQualityData: WaterQualityModel;
+  hazardLevelData: HazardLevelModel[];
+  highProcessData: HighProcessModel;
   airLevelColor: string;
   realName: string;
+
 
   constructor(private router: Router, private loginService: LoginService, private loginWorkBoardService: LoginWorkBoardService, private cdr: ChangeDetectorRef) {
     this.currentSideIndex = this.sideEnum.IntegratedMnageControl;
@@ -132,9 +140,14 @@ export class LoginPlatformComponent implements OnInit {
       'totalNitrogen': 7,
       'ph': 0,
     };
+    this.hazardLevelData = [];
+    this.highProcessData = {
+      'processesType': null,
+      'processesRatio': null,
+    };
     this.airLevelColor = '#30d284';
     this.realName = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo)).realName;
-    console.log(this.realName);
+
   }
 
   changeSideIndex(currentSideIndex) {
@@ -229,24 +242,24 @@ export class LoginPlatformComponent implements OnInit {
 
             },
           },
-      /*    {
-            value: [1000, 7000, 20000, 38000, 25000, 7000],
-            itemStyle: {
-              normal: {
-                color: 'rgba(255,64,192)',
-                lineStyle: {
-                  color: 'rgba(255,64,192)',
+          /*    {
+                value: [1000, 7000, 20000, 38000, 25000, 7000],
+                itemStyle: {
+                  normal: {
+                    color: 'rgba(255,64,192)',
+                    lineStyle: {
+                      color: 'rgba(255,64,192)',
+                    },
+                  },
                 },
-              },
-            },
-            areaStyle: {
-              normal: {
-                color: 'rgba(255,64,192,0.6)',
-              },
+                areaStyle: {
+                  normal: {
+                    color: 'rgba(255,64,192,0.6)',
+                  },
 
-            },
+                },
 
-          },*/
+              },*/
         ],
       }],
     };
@@ -340,6 +353,32 @@ export class LoginPlatformComponent implements OnInit {
   }
 
   initPipeOption() {
+    const that = this;
+    const hazardLevelPipeObj: any = {
+      level1: [],
+      level2: [],
+      level3: [],
+      level4: [],
+    };
+
+    this.hazardLevelData.forEach(levelItem => {
+      levelItem.entprHazards.forEach((hazardsItem) => {
+        let tempEntprObj: any = {};
+        tempEntprObj.entprName = hazardsItem.entprName;
+        tempEntprObj.hazardName = hazardsItem.hazardName;
+        if (levelItem.majorHazardLevel === 1) {
+          hazardLevelPipeObj.level1.push(tempEntprObj);
+        } else if (levelItem.majorHazardLevel === 2) {
+          hazardLevelPipeObj.level2.push(tempEntprObj);
+        } else if (levelItem.majorHazardLevel === 3) {
+          hazardLevelPipeObj.level3.push(tempEntprObj);
+        } else if (levelItem.majorHazardLevel === 4) {
+          hazardLevelPipeObj.level4.push(tempEntprObj);
+        }
+      });
+    });
+
+
     this.pipeOption = {
       title: {
         text: '重大危险源等级',
@@ -356,13 +395,29 @@ export class LoginPlatformComponent implements OnInit {
         formatter: (params) => {
           switch (params.data.name) {
             case '一级':
-              return;
+              let str1 = '';
+              hazardLevelPipeObj.level1.forEach(item => {
+                str1= str1 + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
+              });
+              return str1;
             case '二级':
-              return;
+              let str2 = '';
+              hazardLevelPipeObj.level2.forEach(item => {
+                str2= str2 + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
+              });
+              return str2;
             case '三级':
-              return '华统食品:<br/>液氨';
+              let str3 = '';
+              hazardLevelPipeObj.level3.forEach(item => {
+                str3= str3 + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
+              });
+             return str3;
             case '四级':
-              return '晶瑞化学:<br/>双氧水<br/>双桥液化气站:<br/>瓶装液化气';
+              let str4 = '';
+              hazardLevelPipeObj.level4.forEach(item => {
+                str4= str4 + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
+              });
+              return str4;
           }
         },
       },
@@ -379,7 +434,11 @@ export class LoginPlatformComponent implements OnInit {
         formatter(name) {
           let index = 0;
           const clientlabels = ['一级', '二级', '三级', '四级'];
-          const clientcounts = [0, 0, 1, 2];
+          const clientcounts = [that.hazardLevelData[0].majorHazardNum,
+            that.hazardLevelData[1].majorHazardNum,
+            that.hazardLevelData[2].majorHazardNum,
+            that.hazardLevelData[3].majorHazardNum,
+          ];
           clientlabels.forEach(function(value, i) {
             if (value == name) {
               index = i;
@@ -415,10 +474,10 @@ export class LoginPlatformComponent implements OnInit {
             },
           },
           data: [
-            { value: 0, name: '一级' },
-            { value: 0, name: '二级' },
-            { value: 1, name: '三级' },
-            { value: 2, name: '四级' },
+            { value: this.hazardLevelData[0].majorHazardNum, name: '一级' },
+            { value: this.hazardLevelData[1].majorHazardNum, name: '二级' },
+            { value: this.hazardLevelData[2].majorHazardNum, name: '三级' },
+            { value: this.hazardLevelData[3].majorHazardNum, name: '四级' },
           ],
         },
       ],
@@ -597,16 +656,28 @@ export class LoginPlatformComponent implements OnInit {
          this.airLevelColor = '#990000';
          break;
      }*/
-    console.log(this.waterQualityData);
     this.cdr.markForCheck();
   }
 
-  ngOnInit() {
+//获取重大危险源等级
+  async getMajorHazardData() {
+    this.hazardLevelData = await this.loginWorkBoardService.getMajorHazard();
+    this.hazardLevelData.sort((a, b) => {
+      return a.majorHazardLevel - b.majorHazardLevel;
+    });
+    console.log(this.hazardLevelData);
+
+    this.cdr.markForCheck();
+  }
+
+  async ngOnInit() {
     // this.loginUserInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
-    this.intiRadarOption();
-    this.initPipeOption();
     this.getPageUrls();
     this.getAirQualityData();
     this.getWaterQualityData();
+    await this.getMajorHazardData();
+
+    this.intiRadarOption();
+    this.initPipeOption();
   }
 }
