@@ -148,7 +148,7 @@ export class SensorDataComponent implements OnInit {
       },
       { title: '传感器编号', index: 'sensorNo', width: 50 },
       { title: '实时数据', index: 'sensorValue', width: 50 },
-      { title: '上传时间', index: 'reportTime', width: 50, type: 'date' },
+      { title: '上传时间', index: 'time', width: 50, type: 'date' },
       {
         title: '单位',
         index: 'unit',
@@ -180,17 +180,14 @@ export class SensorDataComponent implements OnInit {
       this.entprScaleOptions.push({ label: obj.entprName, value: obj.entprId });
     });
     this.searchParam.entprId = Number(this.entprScaleOptions[0].value);
-    console.log(this.searchParam);
     this.cdr.markForCheck();
   }
 
   async ngOnInit() {
     this.initTable();
     const currentRole = window.sessionStorage.getItem('role');
-    console.log(currentRole !== RoleEnum[RoleEnum.Enterprise]);
     if (currentRole !== RoleEnum[RoleEnum.Enterprise]) {
       await this.getEnterpriseList();
-      console.log(this.searchParam);
       this.getDataList();
     } else {
       this.getDataList();
