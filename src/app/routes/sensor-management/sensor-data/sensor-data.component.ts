@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ListPageInfo, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
+import { ListPageInfo, OptionsInterface, PageTypeEnum, RoleEnum } from '@core/vo/comm/BusinessEnum';
 import { STColumn, STData } from '@delon/abc';
 import {
   SensorManagementListInfoService,
@@ -12,6 +12,7 @@ import { GoBackParam } from '@core/vo/comm/ReturnBackVo';
 import SensorManagementListInfoModel = SensorManagementListServiceNs.SensorManagementListInfoModel;
 import SensorSearchModel = SensorManagementListServiceNs.SensorSearchModel;
 import { addDays, endOfDay, subDays } from 'date-fns';
+import { BasicInfoService } from '@core/biz-services/basic-info/basic-info.service';
 
 @Component({
   selector: 'app-sensor-data',
@@ -28,8 +29,10 @@ export class SensorDataComponent implements OnInit {
   listPageInfo: ListPageInfo;
   itemId: number;
   searchParam: SensorSearchModel;
+  entprScaleOptions: OptionsInterface[];
 
-  constructor(private dataService: SensorManagementListInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService) {
+  constructor(private dataService: SensorManagementListInfoService, private cdr: ChangeDetectorRef, private messageService: ShowMessageService,
+              private basicInfoService: BasicInfoService) {
     this.expandForm = false;
     this.currentPage = this.pageTypeEnum.List;
     this.columns = [];
@@ -41,6 +44,7 @@ export class SensorDataComponent implements OnInit {
     this.dataList = [];
     this.itemId = -1;
     this.searchParam = {};
+    this.entprScaleOptions = [];
   }
 
   changePage(e) {
@@ -64,8 +68,8 @@ export class SensorDataComponent implements OnInit {
 
   async getDataList(pageNumber?: number) {
     const currentRole = window.sessionStorage.getItem('role');
-    if(this.searchParam.endTime===null){
-      delete this.searchParam.endTime
+    if (this.searchParam.endTime === null) {
+      delete this.searchParam.endTime;
     }
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
@@ -153,12 +157,43 @@ export class SensorDataComponent implements OnInit {
     ];
   }
 
-  ngOnInit() {
+
+  async getEnterpriseList() {
+    const currentRole = window.sessionStorage.getItem('role');
+    const params = {
+      pageNum: 1,
+      pageSize: 0,
+      entprId: null,
+    };
+    if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
+      let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
+      params.entprId = loginInfo.entprId;
+    } else {
+      delete params.entprId;
+    }
+
+
+    const { list } = await this.basicInfoService.getFactoryList(params);
+    this.entprScaleOptions.length = 0;
+    list.forEach(({ entprName }) => {
+      const obj = { entprName };
+      this.entprScaleOptions.push({ label: obj.entprName, value: obj.entprName });
+    });
+    this.searchParam.entprName = this.entprScaleOptions[0].label;
+    this.cdr.markForCheck();
+  }
+
+  async ngOnInit() {
     this.initTable();
+    const currentRole = window.sessionStorage.getItem('role');
+    if (currentRole !== RoleEnum[RoleEnum.Enterprise]) {
+      await this.getEnterpriseList();
+    }
+
     this.getDataList();
   }
 
-  _onReuseInit() {
+   _onReuseInit() {
     this.ngOnInit();
   }
 }
