@@ -7,7 +7,7 @@
           <nz-form-item>
             <nz-form-label nzFor="no">企业名称</nz-form-label>
             <nz-form-control>
-              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="请输入企业名称" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchParam.entprName">
+              <nz-select (ngModelChange)="getDataList(1,$event)" nzShowSearch nzAllowClear nzPlaceHolder="请输入企业名称" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchParam.entprId">
                 <nz-option *ngFor="let i of entprScaleOptions" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
               </nz-select>
             </nz-form-control>

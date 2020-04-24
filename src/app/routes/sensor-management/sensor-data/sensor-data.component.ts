@@ -66,7 +66,7 @@ export class SensorDataComponent implements OnInit {
     return current.getTime() < subDays(new Date(), 20).getTime();
   }
 
-  async getDataList(pageNumber?: number) {
+  async getDataList(pageNumber?: number, entprId?: number) {
     const currentRole = window.sessionStorage.getItem('role');
     if (this.searchParam.endTime === null) {
       delete this.searchParam.endTime;
@@ -75,13 +75,13 @@ export class SensorDataComponent implements OnInit {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
       ...this.searchParam,
-      entprId: null,
     };
     if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
       let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
       params.entprId = loginInfo.entprId;
-    } else {
-      delete params.entprId;
+    }
+    if (entprId) {
+      params.entprId = entprId;
     }
     const { total, list, pageNum } = await this.dataService.getSensorManagementDataList(params);
     this.listPageInfo.total = total;
@@ -134,12 +134,12 @@ export class SensorDataComponent implements OnInit {
 
   private initTable(): void {
     this.columns = [
-      {
-        title: '企业名称',
-        index: 'entprName',
-        width: 50,
-        acl: [this.roleEnum[this.roleEnum.ParkManage], this.roleEnum[this.roleEnum.SafeMonitor]],
-      },
+      /* {
+         title: '企业名称',
+         index: 'entprName',
+         width: 50,
+         acl: [this.roleEnum[this.roleEnum.ParkManage], this.roleEnum[this.roleEnum.SafeMonitor]],
+       },*/
       {
         title: '传感器类型',
         index: 'sensorType',
@@ -175,25 +175,30 @@ export class SensorDataComponent implements OnInit {
 
     const { list } = await this.basicInfoService.getFactoryList(params);
     this.entprScaleOptions.length = 0;
-    list.forEach(({ entprName }) => {
-      const obj = { entprName };
-      this.entprScaleOptions.push({ label: obj.entprName, value: obj.entprName });
+    list.forEach(({ entprName, id }) => {
+      const obj = { entprName: entprName, entprId: id };
+      this.entprScaleOptions.push({ label: obj.entprName, value: obj.entprId });
     });
-    this.searchParam.entprName = this.entprScaleOptions[0].label;
+    this.searchParam.entprId = Number(this.entprScaleOptions[0].value);
+    console.log(this.searchParam);
     this.cdr.markForCheck();
   }
 
   async ngOnInit() {
     this.initTable();
     const currentRole = window.sessionStorage.getItem('role');
+    console.log(currentRole !== RoleEnum[RoleEnum.Enterprise]);
     if (currentRole !== RoleEnum[RoleEnum.Enterprise]) {
       await this.getEnterpriseList();
+      console.log(this.searchParam);
+      this.getDataList();
+    } else {
+      this.getDataList();
     }
 
-    this.getDataList();
   }
 
-   _onReuseInit() {
+  _onReuseInit() {
     this.ngOnInit();
   }
 }
