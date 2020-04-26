@@ -539,17 +539,17 @@ export class ToxicGasModalComponent implements OnInit, OnDestroy {
     this.historyOption.xAxis.data = [];
     this.historyOption.series[0].data = [];
     const data = await this.safetyMapService.getSensorHistory(params);
-    if(!data.sensorData){
+    if (data.length===0) {
       return;
     }
-    data.sensorData.forEach(({ reportTime, sensorValue }) => {
+    data.forEach(({ time, sensorValue }) => {
       if (sensorValue > this.dataRange.historyMax) {
         this.dataRange.historyMax = Math.ceil(sensorValue * 1.1);
       }
       if (sensorValue < this.dataRange.historyMin) {
         this.dataRange.historyMin = Math.ceil(sensorValue * 1.1);
       }
-      const t = new MapPipe().transform(reportTime, 'date:MM-dd HH:mm:ss');
+      const t = new MapPipe().transform(time, 'date:MM-dd HH:mm:ss');
       this.historySetPercent(sensorValue, t, {
         first: this.currentDataInfo.firstAlarmThreshold,
         second: this.currentDataInfo.secondAlarmThreshold,
