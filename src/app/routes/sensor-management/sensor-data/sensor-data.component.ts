@@ -77,7 +77,7 @@ export class SensorDataComponent implements OnInit {
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
-      ...this.searchParam,
+      ...this.searchParam ,
     };
     if (currentRole === RoleEnum[RoleEnum.Enterprise]) {
       let loginInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
