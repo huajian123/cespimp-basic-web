@@ -13,6 +13,7 @@ import AirQualityModel = LoginWorkBoardServiceNs.AirQualityModel;
 import WaterQualityModel = LoginWorkBoardServiceNs.WaterQualityModel;
 import HighProcessModel = LoginWorkBoardServiceNs.HighProcessModel;
 import HazardLevelModel = LoginWorkBoardServiceNs.HazardLevelModel;
+import { MapSet } from '@shared/directives/pipe/map.pipe';
 
 enum levelNum {
   one =1,
@@ -51,6 +52,7 @@ enum AirQualityLevelEnum {
 }
 
 
+
 @Component({
   selector: 'app-login-platform',
   templateUrl: './login-platform.component.html',
@@ -70,14 +72,16 @@ export class LoginPlatformComponent implements OnInit {
   airQualityData: AirQualityModel;
   waterQualityData: WaterQualityModel;
   hazardLevelData: HazardLevelModel[];
-  highProcessData: HighProcessModel;
+  highProcessData: HighProcessModel[];
   airLevelColor: string;
   realName: string;
+  DataValueArray:any;
 
 
   constructor(private router: Router, private loginService: LoginService, private loginWorkBoardService: LoginWorkBoardService, private cdr: ChangeDetectorRef) {
     this.currentSideIndex = this.sideEnum.IntegratedMnageControl;
     this.currentPageNum = this.pageTypeEnum.MainPage;
+    this.DataValueArray =[];
     this.loginUrls = {
       synthesisMonitoring: {
         oneGrandOneFile: '',
@@ -146,10 +150,7 @@ export class LoginPlatformComponent implements OnInit {
       'ph': 0,
     };
     this.hazardLevelData = [];
-    this.highProcessData = {
-      'processesType': null,
-      'processesRatio': null,
-    };
+    this.highProcessData = [];
     this.airLevelColor = '#30d284';
     this.realName = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo)).realName;
 
@@ -499,26 +500,93 @@ export class LoginPlatformComponent implements OnInit {
         },
         top: '5px',
       },
-      color: ['#c487ee', '#deb140', '#49dff0', '#034079', '#6f81da'],
+      color: [
+        '#c487ee',
+        '#deb140',
+        '#49dff0',
+        '#034079',
+        '#6f81da',
+        '#4472C5',
+        '#ED7C30',
+        '#80FF80',
+        '#FF8096',
+        '#800080',
+        '#c23531',
+        '#2f4554',
+        '#61a0a8',
+        '#d48265',
+        '#91c7ae',
+        '#749f83',
+        '#ca8622',
+        '#bda29a'
+      ],
       tooltip: {
         trigger: 'item',
         // formatter: '{a} <br/>{b}: {c} ({d}%)',
         formatter: (params) => {
           switch (params.data.name) {
-            case '氯化工艺':
-              return '长征欣凯';
-            case '磺化工艺':
-            case '氧化工艺':
-              return '吴中医药';
-            case '聚合工艺':
-              return '瑞红电子';
+            case MapSet.processType[this.highProcessData[0].processesType]:
+              return this.highProcessData[0].entprName.join(',');
+            case MapSet.processType[this.highProcessData[1].processesType]:
+              return this.highProcessData[1].entprName.join(',');
+            case MapSet.processType[this.highProcessData[2].processesType]:
+              return this.highProcessData[2].entprName.join(',');
+            case MapSet.processType[this.highProcessData[3].processesType]:
+              return this.highProcessData[3].entprName.join(',');
+            case MapSet.processType[this.highProcessData[4].processesType]:
+              return this.highProcessData[4].entprName.join(',');
+            case MapSet.processType[this.highProcessData[5].processesType]:
+              return this.highProcessData[5].entprName.join(',');
+            case MapSet.processType[this.highProcessData[6].processesType]:
+              return this.highProcessData[6].entprName.join(',');
+            case MapSet.processType[this.highProcessData[7].processesType]:
+              return this.highProcessData[7].entprName.join(',');
+            case MapSet.processType[this.highProcessData[8].processesType]:
+              return this.highProcessData[8].entprName.join(',');
+            case MapSet.processType[this.highProcessData[9].processesType]:
+              return this.highProcessData[9].entprName.join(',');
+            case MapSet.processType[this.highProcessData[10].processesType]:
+              return this.highProcessData[10].entprName.join(',');
+            case MapSet.processType[this.highProcessData[11].processesType]:
+              return this.highProcessData[11].entprName.join(',');
+            case MapSet.processType[this.highProcessData[12].processesType]:
+              return this.highProcessData[12].entprName.join(',');
+            case MapSet.processType[this.highProcessData[13].processesType]:
+              return this.highProcessData[13].entprName.join(',');
+            case MapSet.processType[this.highProcessData[14].processesType]:
+              return this.highProcessData[14].entprName.join(',');
+            case MapSet.processType[this.highProcessData[15].processesType]:
+              return this.highProcessData[15].entprName.join(',');
+            case MapSet.processType[this.highProcessData[16].processesType]:
+              return this.highProcessData[16].entprName.join(',');
+            case MapSet.processType[this.highProcessData[17].processesType]:
+              return this.highProcessData[17].entprName.join(',');
           }
         },
       },
       legend: {
         type:'scroll',
         orient: 'vertical',
-        data: ['氯化工艺', '磺化工艺', '氧化工艺', '聚合工艺'],
+        data: [
+          '光气及光气化工艺',
+          '电解工艺（氯碱）',
+          '氯化工艺',
+          '硝化工艺',
+          '合成氨工艺',
+          '裂解（裂化）工艺',
+           '氟化工艺',
+          '加氢工艺',
+          '重氮化工艺',
+           '氧化工艺',
+          '过氧化工艺',
+           '氨基化工艺',
+           '磺化工艺',
+           '聚合工艺',
+           '烷基化工艺',
+           '新型煤化工工艺',
+           '电石生产工艺',
+           '偶氮化工艺',
+        ],
         x: 'left',
         y: 'center',
         left: '135px',
@@ -551,12 +619,7 @@ export class LoginPlatformComponent implements OnInit {
               show: true,
             },
           },
-          data: [
-            { value: 1, name: '氯化工艺' },
-            { value: 1, name: '磺化工艺' },
-            { value: 1, name: '氧化工艺' },
-            { value: 1, name: '聚合工艺' },
-          ],
+         data:this.DataValueArray,
         },
 
       ],
@@ -674,6 +737,19 @@ export class LoginPlatformComponent implements OnInit {
     });
     this.cdr.markForCheck();
   }
+//获取高危工艺
+   async getHighProcessData() {
+     this.highProcessData = await this.loginWorkBoardService.getMajorProcess();
+     //console.log(this.highProcessData);
+     this.highProcessData.forEach((item)=>{
+        const ProcessDataObject ={
+          value:item.processesNum,
+          name:MapSet.processType[item.processesType],
+        }
+        this.DataValueArray.push(ProcessDataObject);
+     });
+     this.cdr.markForCheck();
+   }
 
   async ngOnInit() {
     // this.loginUserInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
@@ -681,7 +757,7 @@ export class LoginPlatformComponent implements OnInit {
     this.getAirQualityData();
     this.getWaterQualityData();
     await this.getMajorHazardData();
-
+    await this.getHighProcessData();
     this.intiRadarOption();
     this.initPipeOption();
   }

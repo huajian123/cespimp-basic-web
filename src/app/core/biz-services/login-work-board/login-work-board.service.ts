@@ -56,7 +56,8 @@ export namespace LoginWorkBoardServiceNs {
 
   export interface HighProcessModel {
     'processesType': number;
-    'processesRatio': number;
+    'processesNum': number;
+    'entprName':[];
 
   }
   export class LoginWorkBoardServiceClass {
@@ -77,7 +78,7 @@ export namespace LoginWorkBoardServiceNs {
       return this.http.get('homepage/major/hazard/statistics').toPromise();
     }
     // 获取高危工艺统计
-    public getMajorProcess(): Promise<HighProcessModel> {
+    public getMajorProcess(): Promise<HighProcessModel[]> {
       return this.http.get('data/major/hazard/process/statistics').toPromise();
     }
   }
