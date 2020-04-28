@@ -71,6 +71,9 @@ export class SensorDataComponent implements OnInit {
     if (this.searchParam.endTime === null) {
       delete this.searchParam.endTime;
     }
+    if (this.searchParam.beginTime === null) {
+      delete this.searchParam.beginTime;
+    }
     const params = {
       pageNum: pageNumber || this.listPageInfo.pi,
       pageSize: this.listPageInfo.ps,
