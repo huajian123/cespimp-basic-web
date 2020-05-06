@@ -336,7 +336,7 @@ export class LoginPlatformComponent implements OnInit {
             },
 
           },
-          {
+        /*  {
             value: [3700, 8000, 17000, 20000, 24000, 13000],
             itemStyle: {
               normal: {
@@ -352,7 +352,7 @@ export class LoginPlatformComponent implements OnInit {
               },
 
             },
-          },
+          },*/
         ],
       }],
     };
