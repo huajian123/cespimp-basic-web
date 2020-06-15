@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EVENT_KEY } from '@env/staticVariable';
 import { localUrl } from '@env/environment';
@@ -16,10 +16,10 @@ import HazardLevelModel = LoginWorkBoardServiceNs.HazardLevelModel;
 import { MapSet } from '@shared/directives/pipe/map.pipe';
 
 enum levelNum {
-  one =1,
-  two =2,
-  three =3,
-  four =4,
+  one = 1,
+  two = 2,
+  three = 3,
+  four = 4,
 }
 
 enum SideEnum {
@@ -52,13 +52,12 @@ enum AirQualityLevelEnum {
 }
 
 
-
 @Component({
   selector: 'app-login-platform',
   templateUrl: './login-platform.component.html',
   styleUrls: ['./login-platform.scss'],
 })
-export class LoginPlatformComponent implements OnInit {
+export class LoginPlatformComponent implements OnInit, OnDestroy {
   sideEnum = SideEnum;
   currentSideIndex: number;
   radarWaterOption: any;
@@ -75,13 +74,13 @@ export class LoginPlatformComponent implements OnInit {
   highProcessData: HighProcessModel[];
   airLevelColor: string;
   realName: string;
-  DataValueArray:any;
-
+  DataValueArray: any;
+  getDataFun: any;
 
   constructor(private router: Router, private loginService: LoginService, private loginWorkBoardService: LoginWorkBoardService, private cdr: ChangeDetectorRef) {
     this.currentSideIndex = this.sideEnum.IntegratedMnageControl;
     this.currentPageNum = this.pageTypeEnum.MainPage;
-    this.DataValueArray =[];
+    this.DataValueArray = [];
     this.loginUrls = {
       synthesisMonitoring: {
         oneGrandOneFile: '',
@@ -336,23 +335,23 @@ export class LoginPlatformComponent implements OnInit {
             },
 
           },
-        /*  {
-            value: [3700, 8000, 17000, 20000, 24000, 13000],
-            itemStyle: {
-              normal: {
-                color: 'rgba(255,64,192)',
-                lineStyle: {
+          /*  {
+              value: [3700, 8000, 17000, 20000, 24000, 13000],
+              itemStyle: {
+                normal: {
                   color: 'rgba(255,64,192)',
+                  lineStyle: {
+                    color: 'rgba(255,64,192)',
+                  },
                 },
               },
-            },
-            areaStyle: {
-              normal: {
-                color: 'rgba(255,64,192,0.6)',
-              },
+              areaStyle: {
+                normal: {
+                  color: 'rgba(255,64,192,0.6)',
+                },
 
-            },
-          },*/
+              },
+            },*/
         ],
       }],
     };
@@ -372,16 +371,16 @@ export class LoginPlatformComponent implements OnInit {
         let tempEntprObj: any = {};
         tempEntprObj.entprName = hazardsItem.entprName;
         tempEntprObj.hazardName = hazardsItem.hazardName;
-       switch (levelItem.majorHazardLevel) {
-         case  levelNum.one:
-          return  hazardLevelPipeObj.levelOne.push(tempEntprObj);
-         case  levelNum.two:
-           return  hazardLevelPipeObj.levelTwo.push(tempEntprObj);
-         case  levelNum.three:
-           return  hazardLevelPipeObj.levelThree.push(tempEntprObj);
-         case  levelNum.four:
-           return  hazardLevelPipeObj.levelFour.push(tempEntprObj);
-       }
+        switch (levelItem.majorHazardLevel) {
+          case  levelNum.one:
+            return hazardLevelPipeObj.levelOne.push(tempEntprObj);
+          case  levelNum.two:
+            return hazardLevelPipeObj.levelTwo.push(tempEntprObj);
+          case  levelNum.three:
+            return hazardLevelPipeObj.levelThree.push(tempEntprObj);
+          case  levelNum.four:
+            return hazardLevelPipeObj.levelFour.push(tempEntprObj);
+        }
       });
     });
 
@@ -404,25 +403,25 @@ export class LoginPlatformComponent implements OnInit {
             case '一级':
               let strOne = '';
               hazardLevelPipeObj.levelOne.forEach(item => {
-                strOne= strOne + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
+                strOne = strOne + item.entprName + ':<br/>' + item.hazardName.join(',') + '<br/>';
               });
               return strOne;
             case '二级':
               let strTwo = '';
               hazardLevelPipeObj.levelTwo.forEach(item => {
-                strTwo= strTwo + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
+                strTwo = strTwo + item.entprName + ':<br/>' + item.hazardName.join(',') + '<br/>';
               });
               return strTwo;
             case '三级':
               let strThree = '';
               hazardLevelPipeObj.levelThree.forEach(item => {
-                strThree= strThree + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
+                strThree = strThree + item.entprName + ':<br/>' + item.hazardName.join(',') + '<br/>';
               });
-             return strThree;
+              return strThree;
             case '四级':
               let strFour = '';
               hazardLevelPipeObj.levelFour.forEach(item => {
-                strFour= strFour + item.entprName + ':<br/>' + item.hazardName.join(',')+ '<br/>' ;
+                strFour = strFour + item.entprName + ':<br/>' + item.hazardName.join(',') + '<br/>';
               });
               return strFour;
           }
@@ -518,7 +517,7 @@ export class LoginPlatformComponent implements OnInit {
         '#91c7ae',
         '#749f83',
         '#ca8622',
-        '#bda29a'
+        '#bda29a',
       ],
       tooltip: {
         trigger: 'item',
@@ -565,7 +564,7 @@ export class LoginPlatformComponent implements OnInit {
         },
       },
       legend: {
-        type:'scroll',
+        type: 'scroll',
         orient: 'vertical',
         data: [
           '光气及光气化工艺',
@@ -591,16 +590,16 @@ export class LoginPlatformComponent implements OnInit {
         y: 'bottom',
         left: '140px',
         height: '120px',
-        pageTextStyle:{
+        pageTextStyle: {
           color: '#fff',
         },
         textStyle: {
           color: '#ffffff',
         },
       },
-    /*  grid:{
-        left:'-20',
-      },*/
+      /*  grid:{
+          left:'-20',
+        },*/
       calculable: true,
       series: [
         {
@@ -625,7 +624,7 @@ export class LoginPlatformComponent implements OnInit {
               show: true,
             },
           },
-         data:this.DataValueArray,
+          data: this.DataValueArray,
         },
 
       ],
@@ -743,19 +742,20 @@ export class LoginPlatformComponent implements OnInit {
     });
     this.cdr.markForCheck();
   }
+
 //获取高危工艺
-   async getHighProcessData() {
-     this.highProcessData = await this.loginWorkBoardService.getMajorProcess();
-     //console.log(this.highProcessData);
-     this.highProcessData.forEach((item)=>{
-        const ProcessDataObject ={
-          value:item.processesNum,
-          name:MapSet.processType[item.processesType],
-        }
-        this.DataValueArray.push(ProcessDataObject);
-     });
-     this.cdr.markForCheck();
-   }
+  async getHighProcessData() {
+    this.highProcessData = await this.loginWorkBoardService.getMajorProcess();
+    //console.log(this.highProcessData);
+    this.highProcessData.forEach((item) => {
+      const ProcessDataObject = {
+        value: item.processesNum,
+        name: MapSet.processType[item.processesType],
+      };
+      this.DataValueArray.push(ProcessDataObject);
+    });
+    this.cdr.markForCheck();
+  }
 
   async ngOnInit() {
     // this.loginUserInfo = JSON.parse(window.sessionStorage.getItem(EVENT_KEY.loginInfo));
@@ -766,5 +766,16 @@ export class LoginPlatformComponent implements OnInit {
     await this.getHighProcessData();
     this.intiRadarOption();
     this.initPipeOption();
+
+    this.getDataFun = setInterval(() => {
+      this.getAirQualityData();
+      this.getWaterQualityData();
+    }, 30000);
+  }
+
+  ngOnDestroy() {
+    if (this.getDataFun) {
+      clearInterval(this.getDataFun);
+    }
   }
 }
